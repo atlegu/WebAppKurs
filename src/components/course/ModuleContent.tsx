@@ -59,25 +59,6 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({ selectedModule, to
         <p className="text-lg text-muted-foreground mb-6">{selectedModule.description}</p>
       </div>
 
-      {/* Learning Objectives */}
-      {selectedModule.content?.learning_objectives && (
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Target className="w-5 h-5 text-primary" />
-              🎯 Læringsmål
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="mb-4">Etter gjennomført modul skal studenten:</p>
-            <ul className="list-disc list-inside space-y-2">
-              {selectedModule.content.learning_objectives.map((objective: string, index: number) => (
-                <li key={index}>{objective}</li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      )}
 
       <Separator className="mb-6" />
 
