@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { PlayCircle, Target, CheckCircle, FileText, TrendingUp, Calculator } from 'lucide-react';
 import AksjesparingKalkulator from './AksjesparingKalkulator';
+import StockPricingQuiz from './StockPricingQuiz';
 
 export const StockPricingModule: React.FC = () => {
   return (
@@ -505,6 +506,9 @@ export const StockPricingModule: React.FC = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Self-test Section */}
+      <StockPricingQuiz />
 
       {/* Section 10 - Calculator */}
       <Card>
