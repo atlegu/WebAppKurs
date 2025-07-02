@@ -11,6 +11,20 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
     console.log('DEBUG: No content provided');
     return null;
   }
+
+  // Helper function to process bold text within any string
+  const processBoldText = (text: string) => {
+    if (!text.includes('**')) return text;
+    
+    const parts = text.split('**');
+    return parts.map((part, partIndex) => {
+      if (partIndex % 2 === 1) {
+        // This is content between ** - make it bold
+        return <strong key={partIndex} className="font-bold">{part}</strong>;
+      }
+      return part;
+    });
+  };
   
   return (
     <div className="space-y-4">
@@ -20,7 +34,7 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
         if (!trimmedLine) return <div key={index} className="h-2" />;
         
         // Handle bold headers with ** 
-        if (trimmedLine.startsWith('**') && trimmedLine.endsWith('**')) {
+        if (trimmedLine.startsWith('**') && trimmedLine.endsWith('**') && trimmedLine.split('**').length === 3) {
           const text = trimmedLine.slice(2, -2);
           return (
             <h3 key={index} className="text-lg font-bold text-primary mb-3 mt-6">
@@ -29,13 +43,13 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           );
         }
         
-        // Handle bullet points
+        // Handle bullet points (with bold text support)
         if (trimmedLine.startsWith('•') || trimmedLine.startsWith('- ')) {
           const text = trimmedLine.slice(2);
           return (
             <div key={index} className="flex items-start gap-2 mb-2">
               <span className="text-primary mt-1">•</span>
-              <span className="text-foreground">{text}</span>
+              <span className="text-foreground">{processBoldText(text)}</span>
             </div>
           );
         }
@@ -49,10 +63,10 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           );
         }
         
-        // Regular paragraphs
+        // Regular paragraphs (with bold text support)
         return (
           <p key={index} className="text-foreground leading-relaxed mb-3">
-            {trimmedLine}
+            {processBoldText(trimmedLine)}
           </p>
         );
       })}
