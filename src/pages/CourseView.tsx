@@ -101,27 +101,21 @@ const CourseView = () => {
   const renderContent = (content: string) => {
     if (!content) return null;
     
-    // Clean up content and split into lines
-    const cleanContent = content
-      .replace(/\\n\\n/g, '\n\n')
-      .replace(/\\n/g, '\n')
-      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>'); // Convert ** to strong tags
-    
-    const lines = cleanContent.split('\n').filter(line => line.trim());
+    const lines = content.split('\n').filter(line => line.trim());
     const elements = [];
     let currentList = [];
-    let listType = null;
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim();
       
       if (!line) continue;
 
-      // Handle section headers with emojis (📗, 📘, etc.)
-      if (line.match(/^📗|📘|🧩|💡|⚠️|🧱|🏢|📊|🇳🇴|🧠|📌|🌍|🌱|💶|🧭|📐|🔁|🧾|📉|📈/)) {
+      // Handle section headers with emojis
+      if (line.match(/^(🎯|📘|📗|🧩|💡|⚠️|🧱|🏢|📊|🇳🇴|🧠|📌|🌍|🌱|💶|🧭|📐|🔁|🧾|📉|📈)/)) {
+        // Add any pending list
         if (currentList.length > 0) {
           elements.push(
-            <ul key={`list-${i}`} className="space-y-2 mb-6 ml-6">
+            <ul key={`list-${i}`} className="space-y-2 mb-6 ml-6 list-disc">
               {currentList}
             </ul>
           );
@@ -139,64 +133,42 @@ const CourseView = () => {
         continue;
       }
 
-      // Handle subsection headers with icons (💡, 📐, etc.)
-      if (line.match(/^(💡|📐|🧮|📊|🎯|🔁)/)) {
+      // Handle bold headers with **
+      if (line.startsWith('**') && line.endsWith('**')) {
         if (currentList.length > 0) {
           elements.push(
-            <ul key={`list-${i}`} className="space-y-2 mb-6 ml-6">
+            <ul key={`list-${i}`} className="space-y-2 mb-6 ml-6 list-disc">
               {currentList}
             </ul>
           );
           currentList = [];
         }
         
+        const text = line.slice(2, -2);
         elements.push(
-          <div key={i} className="flex items-start gap-2 mb-4 mt-6">
-            <span className="text-lg">{line.charAt(0)}</span>
-            <h3 className="text-lg font-semibold text-foreground">
-              {line.slice(2)}
-            </h3>
-          </div>
-        );
-        continue;
-      }
-
-      // Handle bold headers without emojis
-      if (line.startsWith('<strong>') && line.endsWith('</strong>')) {
-        if (currentList.length > 0) {
-          elements.push(
-            <ul key={`list-${i}`} className="space-y-2 mb-6 ml-6">
-              {currentList}
-            </ul>
-          );
-          currentList = [];
-        }
-        
-        const text = line.replace(/<\/?strong>/g, '');
-        elements.push(
-          <h4 key={i} className="font-semibold text-foreground mb-3 mt-4">
+          <h3 key={i} className="font-semibold text-foreground mb-3 mt-6 text-lg">
             {text}
-          </h4>
+          </h3>
         );
         continue;
       }
 
-      // Handle bullet points and lists
+      // Handle bullet points
       if (line.startsWith('•') || line.startsWith('- ')) {
         const text = line.slice(2).trim();
         currentList.push(
-          <li key={`item-${i}`} className="text-foreground list-disc">
-            <span dangerouslySetInnerHTML={{ __html: text }} />
+          <li key={`item-${i}`} className="text-foreground">
+            {text}
           </li>
         );
         continue;
       }
 
-      // Handle formulas and math
+      // Handle formulas
       if (line.includes('=') && (line.includes('(') || line.includes('+') || line.includes('^'))) {
         if (currentList.length > 0) {
           elements.push(
-            <ul key={`list-${i}`} className="space-y-2 mb-6 ml-6">
+            <ul key={`list-${i}`} className="space-y-2 mb-6 ml-6 list-disc">
               {currentList}
             </ul>
           );
@@ -204,30 +176,8 @@ const CourseView = () => {
         }
         
         elements.push(
-          <div key={i} className="bg-muted p-4 rounded-lg my-4 border border-border">
-            <code className="text-sm font-mono text-foreground">{line}</code>
-          </div>
-        );
-        continue;
-      }
-
-      // Handle example sections
-      if (line.includes('Eksempel:') || line.includes('eksempel')) {
-        if (currentList.length > 0) {
-          elements.push(
-            <ul key={`list-${i}`} className="space-y-2 mb-6 ml-6">
-              {currentList}
-            </ul>
-          );
-          currentList = [];
-        }
-        
-        elements.push(
-          <div key={i} className="bg-accent/10 border border-accent/30 p-4 rounded-lg my-4">
-            <h4 className="font-semibold text-accent-foreground mb-2 flex items-center gap-2">
-              <span>🧾</span>
-              {line}
-            </h4>
+          <div key={i} className="bg-muted p-4 rounded-lg my-4 border border-border overflow-x-auto">
+            <code className="text-sm font-mono text-foreground whitespace-pre">{line}</code>
           </div>
         );
         continue;
@@ -236,7 +186,7 @@ const CourseView = () => {
       // Handle regular paragraphs
       if (currentList.length > 0) {
         elements.push(
-          <ul key={`list-${i}`} className="space-y-2 mb-6 ml-6">
+          <ul key={`list-${i}`} className="space-y-2 mb-6 ml-6 list-disc">
             {currentList}
           </ul>
         );
@@ -245,7 +195,7 @@ const CourseView = () => {
       
       elements.push(
         <p key={i} className="text-foreground leading-relaxed mb-3">
-          <span dangerouslySetInnerHTML={{ __html: line }} />
+          {line}
         </p>
       );
     }
@@ -253,7 +203,7 @@ const CourseView = () => {
     // Add any remaining list items
     if (currentList.length > 0) {
       elements.push(
-        <ul key="final-list" className="space-y-2 mb-6 ml-6">
+        <ul key="final-list" className="space-y-2 mb-6 ml-6 list-disc">
           {currentList}
         </ul>
       );
