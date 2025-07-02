@@ -87,16 +87,16 @@ const Index = () => {
           <h2 className="text-3xl font-bold mb-8">Kursmodulene</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {[
-              "Struktur Regnskap",
-              "Obligasjoner og bærekraftige gjeldsinstrumenter", 
+              "Introduksjon til finans",
+              "Regnskap",
+              "Tidsverdien av penger",
+              "Obligasjoner",
+              "Aksjer og aksjeprising",
+              "Avkastning og risiko",
               "Investeringsanalyse",
-              "ESG-integrering",
-              "Grønne obligasjoner",
-              "EU-taksonomi",
-              "Risikoanalyse",
-              "Etiske vurderinger",
-              "Klimafinans",
-              "Praktisk anvendelse"
+              "Kapitalstruktur",
+              "EU taksonomi og klimafinans",
+              "ESG og \"grønn\" finans"
             ].map((module, index) => (
               <div key={index} className="p-4 border rounded-lg bg-card">
                 <div className="text-sm text-primary font-medium mb-1">
