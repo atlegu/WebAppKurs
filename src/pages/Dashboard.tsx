@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { BookOpen, Users, BarChart3, LogOut } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import { LogOut, PlayCircle, FileText, CheckCircle, BookOpen, Target, Users, BarChart3 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import type { User } from "@supabase/supabase-js";
 
@@ -20,7 +21,6 @@ interface Course {
   id: string;
   title: string;
   description: string | null;
-  modules?: Module[];
 }
 
 interface Module {
@@ -28,13 +28,27 @@ interface Module {
   course_id: string;
   title: string;
   description: string | null;
+  content: any;
   order_index: number;
+}
+
+interface ContentSection {
+  title: string;
+  type: string;
+  content: string;
+  video?: string;
+  reflection?: string;
+  exercise?: string;
+  selftest?: boolean;
+  download?: string;
 }
 
 const Dashboard = () => {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [course, setCourse] = useState<Course | null>(null);
+  const [modules, setModules] = useState<Module[]>([]);
+  const [selectedModule, setSelectedModule] = useState<Module | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -64,7 +78,9 @@ const Dashboard = () => {
       
       setUser(mockUser);
       setProfile(mockProfile);
-      setIsLoading(false);
+      
+      // Load course data in dev mode
+      loadCourseData();
       return;
     }
 
@@ -92,20 +108,8 @@ const Dashboard = () => {
         setProfile(profileData);
       }
 
-      // Fetch courses with modules
-      const { data: coursesData, error: coursesError } = await supabase
-        .from("courses")
-        .select(`
-          *,
-          modules(*)
-        `)
-        .order("created_at");
-
-      if (coursesError) {
-        console.error("Error fetching courses:", coursesError);
-      } else {
-        setCourses(coursesData || []);
-      }
+      // Load course data
+      await loadCourseData();
 
       setIsLoading(false);
     };
@@ -126,6 +130,45 @@ const Dashboard = () => {
     }
   }, [navigate]);
 
+  const loadCourseData = async () => {
+    try {
+      // Fetch the course
+      const { data: courseData, error: courseError } = await supabase
+        .from("courses")
+        .select("*")
+        .limit(1)
+        .single();
+
+      if (courseError) {
+        console.error("Error fetching course:", courseError);
+        setIsLoading(false);
+        return;
+      }
+
+      setCourse(courseData);
+
+      // Fetch modules for the course
+      const { data: modulesData, error: modulesError } = await supabase
+        .from("modules")
+        .select("*")
+        .eq("course_id", courseData.id)
+        .order("order_index");
+
+      if (modulesError) {
+        console.error("Error fetching modules:", modulesError);
+      } else {
+        setModules(modulesData || []);
+        if (modulesData && modulesData.length > 0) {
+          setSelectedModule(modulesData[0]);
+        }
+      }
+    } catch (error) {
+      console.error("Error loading course data:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleSignOut = async () => {
     // Check if in dev mode
     const urlParams = new URLSearchParams(window.location.search);
@@ -140,6 +183,93 @@ const Dashboard = () => {
     navigate("/auth");
   };
 
+  const renderContent = (content: string) => {
+    // Simple markdown-like rendering
+    return content
+      .split('\n')
+      .map((line, index) => {
+        if (line.startsWith('**') && line.endsWith('**')) {
+          return <h4 key={index} className="font-semibold mb-2 mt-4">{line.slice(2, -2)}</h4>;
+        }
+        if (line.startsWith('- ')) {
+          return <li key={index} className="ml-4 mb-1">{line.slice(2)}</li>;
+        }
+        if (line.trim() === '') {
+          return <br key={index} />;
+        }
+        if (line.startsWith('📌')) {
+          return (
+            <div key={index} className="bg-blue-50 border-l-4 border-blue-400 p-3 my-3">
+              <p className="text-blue-800">{line}</p>
+            </div>
+          );
+        }
+        return <p key={index} className="mb-2">{line}</p>;
+      });
+  };
+
+  const renderSection = (section: ContentSection, index: number) => (
+    <Card key={index} className="mb-6">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <BookOpen className="w-5 h-5 text-primary" />
+          {section.title}
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="prose max-w-none">
+          {renderContent(section.content)}
+        </div>
+
+        {section.video && (
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <div className="flex items-center gap-2 mb-2">
+              <PlayCircle className="w-5 h-5 text-red-500" />
+              <span className="font-medium">Video</span>
+            </div>
+            <p className="text-sm text-gray-600">{section.video}</p>
+          </div>
+        )}
+
+        {section.exercise && (
+          <div className="bg-green-50 p-4 rounded-lg">
+            <div className="flex items-center gap-2 mb-2">
+              <CheckCircle className="w-5 h-5 text-green-500" />
+              <span className="font-medium">Oppgave</span>
+            </div>
+            <p className="text-sm text-green-700">{section.exercise}</p>
+          </div>
+        )}
+
+        {section.reflection && (
+          <div className="bg-purple-50 p-4 rounded-lg">
+            <div className="flex items-center gap-2 mb-2">
+              <Target className="w-5 h-5 text-purple-500" />
+              <span className="font-medium">Refleksjonsspørsmål</span>
+            </div>
+            <p className="text-sm text-purple-700">{section.reflection}</p>
+          </div>
+        )}
+
+        {section.download && (
+          <div className="bg-yellow-50 p-4 rounded-lg">
+            <div className="flex items-center gap-2 mb-2">
+              <FileText className="w-5 h-5 text-yellow-600" />
+              <span className="font-medium">Nedlasting</span>
+            </div>
+            <p className="text-sm text-yellow-700">{section.download}</p>
+          </div>
+        )}
+
+        {section.selftest && (
+          <Button variant="outline" className="w-full">
+            Start selvtest
+          </Button>
+        )}
+      </CardContent>
+    </Card>
+  );
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -153,160 +283,172 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b bg-white">
+      <header className="border-b bg-white sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div>
-            <h1 className="text-2xl font-bold">Bærekraftig Foretaksfinans</h1>
+            <h1 className="text-2xl font-bold">{course?.title || "Bærekraftig Foretaksfinans"}</h1>
             <p className="text-muted-foreground">
               Velkommen, {profile?.full_name || user?.email}
             </p>
           </div>
-            <div className="flex items-center gap-4">
-              {/* Show dev mode indicator */}
-              {new URLSearchParams(window.location.search).get('dev') === 'true' && (
-                <Badge variant="outline" className="text-orange-600 border-orange-600">
-                  🚀 Dev Mode
-                </Badge>
-              )}
+          <div className="flex items-center gap-4">
+            {/* Show dev mode indicator */}
+            {new URLSearchParams(window.location.search).get('dev') === 'true' && (
+              <Badge variant="outline" className="text-orange-600 border-orange-600">
+                🚀 Dev Mode
+              </Badge>
+            )}
             <Badge variant={isInstructor ? "default" : "secondary"}>
               {profile?.role === "admin" ? "Administrator" : 
                profile?.role === "instructor" ? "Foreleser" : "Student"}
             </Badge>
+            {isInstructor && (
+              <Button variant="outline" onClick={() => navigate("/admin")}>
+                Admin
+              </Button>
+            )}
             <Button variant="outline" onClick={handleSignOut}>
               <LogOut className="w-4 h-4 mr-2" />
               Logg ut
             </Button>
           </div>
         </div>
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-muted-foreground">Kursframgang</span>
+            <span className="text-sm font-medium">0%</span>
+          </div>
+          <Progress value={0} className="w-full h-2" />
+        </div>
       </header>
 
       <div className="container mx-auto px-4 py-8">
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <BookOpen className="h-8 w-8 text-primary" />
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-muted-foreground">Tilgjengelige kurs</p>
-                  <p className="text-2xl font-bold">{courses.length}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <BarChart3 className="h-8 w-8 text-primary" />
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-muted-foreground">Fremgang</p>
-                  <p className="text-2xl font-bold">0%</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {isInstructor && (
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center">
-                  <Users className="h-8 w-8 text-primary" />
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-muted-foreground">Studenter</p>
-                    <p className="text-2xl font-bold">0</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-
-        {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Course List */}
-          <div className="lg:col-span-2">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-semibold">Kurs</h2>
-              {isInstructor && (
-                <Button onClick={() => navigate("/admin")}>
-                  Administrer kurs
-                </Button>
-              )}
-            </div>
-            
-            {courses.length === 0 ? (
-              <Card>
-                <CardContent className="p-8 text-center">
-                  <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-medium mb-2">Ingen kurs tilgjengelig ennå</h3>
-                  <p className="text-muted-foreground">
-                    {isInstructor 
-                      ? "Klikk 'Administrer kurs' for å opprette ditt første kurs."
-                      : "Kurs vil vises her når de er tilgjengelige."
-                    }
-                  </p>
+        {course ? (
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            {/* Sidebar - Module List */}
+            <div className="lg:col-span-1">
+              <Card className="sticky top-24">
+                <CardHeader>
+                  <CardTitle className="text-lg">Kursmoduler</CardTitle>
+                  <CardDescription>
+                    {modules.length} moduler tilgjengelig
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  {modules.map((module, index) => (
+                    <Button
+                      key={module.id}
+                      variant={selectedModule?.id === module.id ? "default" : "ghost"}
+                      className="w-full justify-start text-left h-auto p-3"
+                      onClick={() => setSelectedModule(module)}
+                    >
+                      <div>
+                        <div className="font-medium">
+                          Modul {index + 1}
+                        </div>
+                        <div className="text-sm opacity-80">
+                          {module.title}
+                        </div>
+                      </div>
+                    </Button>
+                  ))}
                 </CardContent>
               </Card>
-            ) : (
-              <div className="space-y-4">
-                {courses.map((course) => (
-                  <Card key={course.id} className="cursor-pointer hover:shadow-md transition-shadow">
-                    <CardHeader>
-                      <CardTitle className="flex justify-between items-start">
-                        {course.title}
-                        <Badge variant="outline">
-                          {course.modules?.length || 0} moduler
-                        </Badge>
-                      </CardTitle>
-                      <CardDescription>{course.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span>Fremgang</span>
-                          <span>0%</span>
-                        </div>
-                        <Progress value={0} className="w-full" />
-                      </div>
-                      <Button 
-                        className="w-full mt-4" 
-                        onClick={() => navigate(`/course/${course.id}?dev=true`)}
-                      >
-                        Fortsett kurs
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </div>
+            </div>
 
-          {/* Sidebar */}
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Siste aktivitet</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-sm">
-                  Ingen aktivitet ennå
-                </p>
-              </CardContent>
-            </Card>
+            {/* Main Content */}
+            <div className="lg:col-span-3">
+              {selectedModule ? (
+                <div>
+                  {/* Module Header */}
+                  <div className="mb-8">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge>Modul {selectedModule.order_index}</Badge>
+                      <Badge variant="outline">📘</Badge>
+                    </div>
+                    <h2 className="text-3xl font-bold mb-4">{selectedModule.title}</h2>
+                    <p className="text-lg text-muted-foreground mb-6">{selectedModule.description}</p>
+                  </div>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Kommende deadlines</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-sm">
-                  Ingen deadlines
-                </p>
-              </CardContent>
-            </Card>
+                  {/* Learning Objectives */}
+                  {selectedModule.content?.learning_objectives && (
+                    <Card className="mb-6">
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                          <Target className="w-5 h-5 text-primary" />
+                          🎯 Læringsmål
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="mb-4">Etter gjennomført modul skal studenten:</p>
+                        <ul className="list-disc list-inside space-y-2">
+                          {selectedModule.content.learning_objectives.map((objective: string, index: number) => (
+                            <li key={index}>{objective}</li>
+                          ))}
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  )}
+
+                  <Separator className="mb-6" />
+
+                  {/* Module Sections */}
+                  {selectedModule.content?.sections?.map((section: ContentSection, index: number) => 
+                    renderSection(section, index)
+                  )}
+
+                  {/* Module Navigation */}
+                  <div className="flex justify-between mt-8 pt-6 border-t">
+                    <Button 
+                      variant="outline" 
+                      disabled={selectedModule.order_index <= 1}
+                      onClick={() => {
+                        const prevModule = modules.find(m => m.order_index === selectedModule.order_index - 1);
+                        if (prevModule) setSelectedModule(prevModule);
+                      }}
+                    >
+                      Forrige modul
+                    </Button>
+                    <Button 
+                      disabled={selectedModule.order_index >= modules.length}
+                      onClick={() => {
+                        const nextModule = modules.find(m => m.order_index === selectedModule.order_index + 1);
+                        if (nextModule) setSelectedModule(nextModule);
+                      }}
+                    >
+                      Neste modul
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Card>
+                  <CardContent className="p-8 text-center">
+                    <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                    <h3 className="text-lg font-medium mb-2">Velkommen til kurset</h3>
+                    <p className="text-muted-foreground">
+                      Velg en modul fra sidemenyen for å starte læringen.
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          <Card>
+            <CardContent className="p-8 text-center">
+              <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-lg font-medium mb-2">Ingen kurs funnet</h3>
+              <p className="text-muted-foreground">
+                Kurset er ikke tilgjengelig ennå.
+              </p>
+              {isInstructor && (
+                <Button className="mt-4" onClick={() => navigate("/admin")}>
+                  Gå til admin for å opprette kurs
+                </Button>
+              )}
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );
