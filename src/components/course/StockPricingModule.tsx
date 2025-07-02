@@ -556,24 +556,6 @@ export const StockPricingModule: React.FC = () => {
           </div>
         </CardContent>
       </Card>
-
-      {/* Final Section */}
-      <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-l-4 border-l-green-500">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <TrendingUp className="w-5 h-5" />
-            📚 Veien videre: Forberedelse til semesteroppgave
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className="list-disc list-inside space-y-2">
-            <li>Velg et selskap på Oslo Børs med tydelig bærekraftsprofil</li>
-            <li>Samle regnskapsdata, beregn minst to verdsettingsestimater</li>
-            <li>Drøft avvik mellom metodene og ESG-faktorers betydning</li>
-            <li>Lever en rapport (3 000–4 000 ord) med vedlegg av alle beregninger</li>
-          </ul>
-        </CardContent>
-      </Card>
     </div>
   );
 };
