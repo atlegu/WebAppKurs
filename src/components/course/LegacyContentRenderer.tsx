@@ -11,10 +11,13 @@ export const LegacyContentRenderer: React.FC<LegacyContentRendererProps> = ({ co
   const processBoldText = (text: string) => {
     if (!text.includes('**')) return text;
     
+    console.log('Processing bold text:', text);
     const parts = text.split('**');
+    console.log('Split parts:', parts);
     return parts.map((part, partIndex) => {
       if (partIndex % 2 === 1) {
         // This is content between ** - make it bold
+        console.log('Making bold:', part);
         return <strong key={partIndex} className="font-bold">{part}</strong>;
       }
       return part;
