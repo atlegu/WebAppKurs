@@ -40,6 +40,34 @@ const Dashboard = () => {
   const { toast } = useToast();
 
   useEffect(() => {
+    // Check for dev mode
+    const urlParams = new URLSearchParams(window.location.search);
+    const isDevMode = urlParams.get('dev') === 'true';
+    
+    if (isDevMode) {
+      // Set mock user data for dev mode
+      const mockUser = {
+        id: 'dev-user-123',
+        email: 'dev@example.com',
+        user_metadata: {},
+        app_metadata: {},
+        aud: 'authenticated',
+        created_at: new Date().toISOString()
+      } as User;
+      
+      const mockProfile = {
+        id: 'dev-profile-123',
+        user_id: 'dev-user-123',
+        full_name: 'Dev Bruker',
+        role: 'student'
+      } as Profile;
+      
+      setUser(mockUser);
+      setProfile(mockProfile);
+      setIsLoading(false);
+      return;
+    }
+
     // Check authentication and fetch user data
     const initializeUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -84,19 +112,30 @@ const Dashboard = () => {
 
     initializeUser();
 
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (!session) {
-          navigate("/auth");
+    // Set up auth state listener only if not in dev mode
+    if (!isDevMode) {
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(
+        (event, session) => {
+          if (!session) {
+            navigate("/auth");
+          }
         }
-      }
-    );
+      );
 
-    return () => subscription.unsubscribe();
+      return () => subscription.unsubscribe();
+    }
   }, [navigate]);
 
   const handleSignOut = async () => {
+    // Check if in dev mode
+    const urlParams = new URLSearchParams(window.location.search);
+    const isDevMode = urlParams.get('dev') === 'true';
+    
+    if (isDevMode) {
+      navigate("/");
+      return;
+    }
+    
     await supabase.auth.signOut();
     navigate("/auth");
   };
@@ -122,7 +161,13 @@ const Dashboard = () => {
               Velkommen, {profile?.full_name || user?.email}
             </p>
           </div>
-          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4">
+              {/* Show dev mode indicator */}
+              {new URLSearchParams(window.location.search).get('dev') === 'true' && (
+                <Badge variant="outline" className="text-orange-600 border-orange-600">
+                  🚀 Dev Mode
+                </Badge>
+              )}
             <Badge variant={isInstructor ? "default" : "secondary"}>
               {profile?.role === "admin" ? "Administrator" : 
                profile?.role === "instructor" ? "Foreleser" : "Student"}
