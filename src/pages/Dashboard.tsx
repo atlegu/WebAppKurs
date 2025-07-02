@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { LogOut, PlayCircle, FileText, CheckCircle, BookOpen, Target, Users, BarChart3 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import type { User } from "@supabase/supabase-js";
+import QuizDialog from "@/components/QuizDialog";
 
 interface Profile {
   id: string;
@@ -50,6 +51,8 @@ const Dashboard = () => {
   const [modules, setModules] = useState<Module[]>([]);
   const [selectedModule, setSelectedModule] = useState<Module | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showQuiz, setShowQuiz] = useState(false);
+  const [userProgress, setUserProgress] = useState<Record<string, boolean>>({});
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -162,11 +165,54 @@ const Dashboard = () => {
           setSelectedModule(modulesData[0]);
         }
       }
+
+      // Load user progress if user exists
+      if (user) {
+        await loadUserProgress();
+      }
     } catch (error) {
       console.error("Error loading course data:", error);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const loadUserProgress = async () => {
+    if (!user) return;
+    
+    try {
+      const { data: progressData } = await supabase
+        .from("user_progress")
+        .select("module_id, completed")
+        .eq("user_id", user.id);
+
+      const progressMap: Record<string, boolean> = {};
+      progressData?.forEach(p => {
+        progressMap[p.module_id] = p.completed || false;
+      });
+      setUserProgress(progressMap);
+    } catch (error) {
+      console.error("Error loading user progress:", error);
+    }
+  };
+
+  const handleQuizPassed = () => {
+    if (selectedModule) {
+      setUserProgress(prev => ({
+        ...prev,
+        [selectedModule.id]: true
+      }));
+      toast({
+        title: "Gratulerer!",
+        description: "Du har fullført modulen og kan nå gå videre.",
+      });
+    }
+  };
+
+  const canAccessModule = (moduleIndex: number) => {
+    if (moduleIndex === 1) return true; // First module is always accessible
+    const previousModule = modules[moduleIndex - 2]; // Index is 1-based, array is 0-based
+    return previousModule ? userProgress[previousModule.id] : false;
   };
 
   const handleSignOut = async () => {
@@ -271,7 +317,7 @@ const Dashboard = () => {
         )}
 
         {section.selftest && (
-          <Button variant="outline" className="w-full">
+          <Button variant="outline" className="w-full" onClick={() => setShowQuiz(true)}>
             Start selvtest
           </Button>
         )}
@@ -344,23 +390,37 @@ const Dashboard = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  {modules.map((module, index) => (
-                    <Button
-                      key={module.id}
-                      variant={selectedModule?.id === module.id ? "default" : "ghost"}
-                      className="w-full justify-start text-left h-auto p-3"
-                      onClick={() => setSelectedModule(module)}
-                    >
-                      <div>
-                        <div className="font-medium">
-                          Modul {index + 1}
+                  {modules.map((module, index) => {
+                    const isCompleted = userProgress[module.id];
+                    const canAccess = canAccessModule(module.order_index);
+                    
+                    return (
+                      <Button
+                        key={module.id}
+                        variant={selectedModule?.id === module.id ? "default" : "ghost"}
+                        className={`w-full justify-start text-left h-auto p-3 ${!canAccess ? "opacity-50" : ""}`}
+                        onClick={() => canAccess && setSelectedModule(module)}
+                        disabled={!canAccess}
+                      >
+                        <div className="flex items-center justify-between w-full">
+                          <div>
+                            <div className="font-medium">
+                              Modul {index + 1}
+                            </div>
+                            <div className="text-sm opacity-80">
+                              {module.title}
+                            </div>
+                          </div>
+                          {isCompleted && (
+                            <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                          )}
+                          {!canAccess && index > 0 && (
+                            <div className="text-xs text-muted-foreground">Låst</div>
+                          )}
                         </div>
-                        <div className="text-sm opacity-80">
-                          {module.title}
-                        </div>
-                      </div>
-                    </Button>
-                  ))}
+                      </Button>
+                    );
+                  })}
                 </CardContent>
               </Card>
             </div>
@@ -419,10 +479,15 @@ const Dashboard = () => {
                       Forrige modul
                     </Button>
                     <Button 
-                      disabled={selectedModule.order_index >= modules.length}
+                      disabled={
+                        selectedModule.order_index >= modules.length || 
+                        !canAccessModule(selectedModule.order_index + 1)
+                      }
                       onClick={() => {
                         const nextModule = modules.find(m => m.order_index === selectedModule.order_index + 1);
-                        if (nextModule) setSelectedModule(nextModule);
+                        if (nextModule && canAccessModule(nextModule.order_index)) {
+                          setSelectedModule(nextModule);
+                        }
                       }}
                     >
                       Neste modul
@@ -459,6 +524,17 @@ const Dashboard = () => {
           </Card>
         )}
       </div>
+
+      {/* Quiz Dialog */}
+      {selectedModule && (
+        <QuizDialog
+          moduleId={selectedModule.id}
+          isOpen={showQuiz}
+          onOpenChange={setShowQuiz}
+          onQuizPassed={handleQuizPassed}
+          userId={user?.id}
+        />
+      )}
     </div>
   );
 };
