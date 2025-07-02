@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { PlayCircle, Target, CheckCircle, FileText, TrendingUp } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { PlayCircle, Target, CheckCircle, FileText, TrendingUp, Calculator } from 'lucide-react';
+import AksjesparingKalkulator from './AksjesparingKalkulator';
 
 export const StockPricingModule: React.FC = () => {
   return (
@@ -499,6 +502,53 @@ export const StockPricingModule: React.FC = () => {
               <p>1. Hva er hovedantagelsen i Gordon-modellen?</p>
               <p>2. Hvilken multipel inkluderer gjeld i verdsettelsen?</p>
             </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Section 10 - Calculator */}
+      <Card>
+        <CardHeader>
+          <CardTitle>🔟 Praktisk kalkulator: aksjesparing</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p>
+            <strong>Aksjesparing</strong> er en av de mest effektive måtene å bygge langsiktig formue på. 
+            Ved å investere jevnlige beløp over tid, kan du dra nytte av renters rente-effekten og 
+            utjevne kortsiktige svingninger i markedet.
+          </p>
+          <p>
+            Kalkulatoren nedenfor hjelper deg med å visualisere hvordan dine investeringer kan vokse 
+            over tid, basert på ulike parametere som startbeløp, månedlige innbetalinger og forventet avkastning.
+          </p>
+          
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="w-full" size="lg">
+                <Calculator className="w-5 h-5 mr-2" />
+                Åpne aksjesparingskalkulator
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-screen-2xl max-h-[90vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>Aksjesparingskalkulator</DialogTitle>
+              </DialogHeader>
+              <AksjesparingKalkulator />
+            </DialogContent>
+          </Dialog>
+
+          <div className="bg-blue-50 p-4 rounded-lg">
+            <div className="flex items-center gap-2 mb-2">
+              <CheckCircle className="w-5 h-5 text-blue-500" />
+              <span className="font-medium">Viktige prinsipper for aksjesparing</span>
+            </div>
+            <ul className="text-sm text-blue-700 space-y-1">
+              <li>• Start tidlig - tid i markedet slår timing av markedet</li>
+              <li>• Invester jevnlig for å utjevne volatilitet (dollar cost averaging)</li>
+              <li>• Diversifiser risiko gjennom indeksfond eller flere enkeltaksjer</li>
+              <li>• Ha en langsiktig horisont - minimum 5-10 år</li>
+              <li>• Vurder skatteoptimalisering gjennom aksjesparekonto (ASK)</li>
+            </ul>
           </div>
         </CardContent>
       </Card>
