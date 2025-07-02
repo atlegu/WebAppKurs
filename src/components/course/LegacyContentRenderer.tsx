@@ -17,7 +17,7 @@ export const LegacyContentRenderer: React.FC<LegacyContentRendererProps> = ({ co
         // This is content between ** - make it bold
         return <strong key={partIndex} className="font-bold">{part}</strong>;
       }
-      return <React.Fragment key={partIndex}>{part}</React.Fragment>;
+      return part; // Return string directly, not wrapped in Fragment
     });
   };
 
