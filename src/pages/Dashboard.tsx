@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { LogOut, PlayCircle, FileText, CheckCircle, BookOpen, Target, Users, BarChart3 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import type { User } from "@supabase/supabase-js";
+import { BondPricingFormula } from "@/components/course/BondPricingFormula";
 import QuizDialog from "@/components/QuizDialog";
 
 interface Profile {
@@ -269,6 +270,12 @@ const Dashboard = () => {
               <p className="text-blue-800">{trimmedLine}</p>
             </div>
           );
+        }
+        
+        // Handle bond pricing formula specifically
+        if (trimmedLine.includes('Pris = (Kupong/(1+r)') || 
+            (trimmedLine.includes('Pris =') && trimmedLine.includes('Kupong') && trimmedLine.includes('Pålydende'))) {
+          return <BondPricingFormula key={index} />;
         }
         
         // Handle mathematical formulas
