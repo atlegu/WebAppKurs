@@ -210,9 +210,7 @@ const Dashboard = () => {
   };
 
   const canAccessModule = (moduleIndex: number) => {
-    if (moduleIndex === 1) return true; // First module is always accessible
-    const previousModule = modules[moduleIndex - 2]; // Index is 1-based, array is 0-based
-    return previousModule ? userProgress[previousModule.id] : false;
+    return true; // Allow access to all modules
   };
 
   const handleSignOut = async () => {
@@ -398,9 +396,8 @@ const Dashboard = () => {
                       <Button
                         key={module.id}
                         variant={selectedModule?.id === module.id ? "default" : "ghost"}
-                        className={`w-full justify-start text-left h-auto p-3 ${!canAccess ? "opacity-50" : ""}`}
-                        onClick={() => canAccess && setSelectedModule(module)}
-                        disabled={!canAccess}
+                        className="w-full justify-start text-left h-auto p-3"
+                        onClick={() => setSelectedModule(module)}
                       >
                         <div className="flex items-center justify-between w-full">
                           <div>
@@ -413,9 +410,6 @@ const Dashboard = () => {
                           </div>
                           {isCompleted && (
                             <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                          )}
-                          {!canAccess && index > 0 && (
-                            <div className="text-xs text-muted-foreground">Låst</div>
                           )}
                         </div>
                       </Button>
@@ -478,20 +472,17 @@ const Dashboard = () => {
                     >
                       Forrige modul
                     </Button>
-                    <Button 
-                      disabled={
-                        selectedModule.order_index >= modules.length || 
-                        !canAccessModule(selectedModule.order_index + 1)
-                      }
-                      onClick={() => {
-                        const nextModule = modules.find(m => m.order_index === selectedModule.order_index + 1);
-                        if (nextModule && canAccessModule(nextModule.order_index)) {
-                          setSelectedModule(nextModule);
-                        }
-                      }}
-                    >
-                      Neste modul
-                    </Button>
+                     <Button 
+                       disabled={selectedModule.order_index >= modules.length}
+                       onClick={() => {
+                         const nextModule = modules.find(m => m.order_index === selectedModule.order_index + 1);
+                         if (nextModule) {
+                           setSelectedModule(nextModule);
+                         }
+                       }}
+                     >
+                       Neste modul
+                     </Button>
                   </div>
                 </div>
               ) : (
