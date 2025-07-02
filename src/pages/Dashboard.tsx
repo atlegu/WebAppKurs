@@ -10,6 +10,7 @@ import { LogOut, PlayCircle, FileText, CheckCircle, BookOpen, Target, Users, Bar
 import { useToast } from "@/hooks/use-toast";
 import type { User } from "@supabase/supabase-js";
 import { BondPricingFormula } from "@/components/course/BondPricingFormula";
+import { StockPricingModule } from "@/components/course/StockPricingModule";
 import QuizDialog from "@/components/QuizDialog";
 
 interface Profile {
@@ -276,6 +277,12 @@ const Dashboard = () => {
         if (trimmedLine.includes('Pris = (Kupong/(1+r)') || 
             (trimmedLine.includes('Pris =') && trimmedLine.includes('Kupong') && trimmedLine.includes('Pålydende'))) {
           return <BondPricingFormula key={index} />;
+        }
+
+        // Handle stock pricing module specifically
+        if (trimmedLine.includes('Modul 4: Verdsettelse av aksjer') || 
+            (trimmedLine.includes('aksjeprising') && trimmedLine.includes('verdsettelse'))) {
+          return <StockPricingModule key={index} />;
         }
         
         // Handle mathematical formulas
