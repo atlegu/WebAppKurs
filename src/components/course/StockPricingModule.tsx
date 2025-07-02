@@ -365,13 +365,67 @@ export const StockPricingModule: React.FC = () => {
             <Badge variant="outline">Video 7 - 7 min</Badge>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <ul className="list-disc list-inside space-y-2">
-            <li>Effisiente markeds-hypotesen (EMH) – svake, semi-sterke, sterke former</li>
-            <li>Faktorer som fører til misprising: behavioral finance, asymmetrisk informasjon</li>
-            <li>Hvordan utnytte eventuelle ineffisienser?</li>
-          </ul>
-          <p>En fullstendig effektiv markedsplass er sjelden realistisk. Ulike studier viser at anomalier som momentum og verdi-premier kan gi meravkastning.</p>
+        <CardContent className="space-y-6">
+          <div>
+            <h3 className="text-xl font-bold mb-4">Efficient Market Hypothesis (EMH)</h3>
+            <p className="mb-4">
+              <strong>Efficient Market Hypothesis</strong> (EMH) hevder at konkurranse mellom investorer gjør at ingen
+              konsekvent kan tjene meravkastning uten å ta ekstra risiko: så snart ny informasjon 
+              blir kjent, justeres prisene umiddelbart.
+            </p>
+
+            <h4 className="text-lg font-semibold mb-3">Tre grader av markedseffisiens</h4>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse border border-border">
+                <thead>
+                  <tr className="bg-muted">
+                    <th className="border border-border p-3 text-left font-semibold">Form</th>
+                    <th className="border border-border p-3 text-left font-semibold">Informasjonssett som er «priset inn»</th>
+                    <th className="border border-border p-3 text-left font-semibold">Praktisk implikasjon</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-border p-3"><strong>Svak form</strong></td>
+                    <td className="border border-border p-3">Historiske priser og volumdata</td>
+                    <td className="border border-border p-3">Teknisk analyse og trend-strategier skal ikke gi systematisk meravkastning.</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-border p-3"><strong>Semisterk form</strong></td>
+                    <td className="border border-border p-3">All offentlig informasjon (regnskaper, nyheter, analytikerrapporter …)</td>
+                    <td className="border border-border p-3">Fundamental analyse basert på publiserte data skal ikke gi meravkastning over tid.</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-border p-3"><strong>Sterk form</strong></td>
+                    <td className="border border-border p-3">All informasjon – også innsideinformasjon</td>
+                    <td className="border border-border p-3">Selv investorer med privat informasjon kan ikke tjene ekstra (i praksis motbevist av insider-dommer).</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h4 className="text-lg font-semibold mb-3 mt-6">Hvorfor viktig for prisdannelse?</h4>
+            <ul className="list-disc list-inside space-y-1">
+              <li>Jo større informasjonssett som reflekteres i prisene, desto nærmere «fair value» ligger markedet.</li>
+              <li>I <em>svakt</em> effektive markeder kan fundamental analyse fortsatt avdekke feilprising.</li>
+              <li>I <em>semisterke</em> markeder må man lete etter unik innsikt – f.eks. ESG-faktorer som ikke er fullt forstått.</li>
+              <li><em>Sterk</em> form er en teoretisk øvre grense; total sterk effektivitet er urealistisk pga. informasjonsasymmetri og innsideforbud.</li>
+            </ul>
+
+            <h4 className="text-lg font-semibold mb-3 mt-6">Empirisk status</h4>
+            <ul className="list-disc list-inside space-y-1">
+              <li><strong>Momentum- og faktorpremier</strong> (SMB, HML, PR1YR) indikerer brudd på svak/semisterk effektivitet i perioder.</li>
+              <li>De fleste aktive fond <strong>underyter</strong> brede markedsindekser etter kostnader, noe som støtter semisterk effektivitet.</li>
+            </ul>
+
+            <h4 className="text-lg font-semibold mb-3 mt-6">Hva betyr dette for deg som analytiker?</h4>
+            <ol className="list-decimal list-inside space-y-1">
+              <li><strong>Modellvalg:</strong> Anta semisterk effektivitet som grunnscenario, men test sensitiviteter mot svak form.</li>
+              <li><strong>Datakrav:</strong> Spør alltid om informasjonen du bruker allerede er allment kjent – hvis ja, hvorfor er den ikke priset inn?</li>
+              <li><strong>Bærekrafts-edge:</strong> Nye ESG-forskrifter og taksonomi-data kan gi midlertidige informasjonsfortrinn før de blir standardiserte.</li>
+            </ol>
+          </div>
+
           <div className="bg-purple-50 p-4 rounded-lg">
             <div className="flex items-center gap-2 mb-2">
               <Target className="w-5 h-5 text-purple-500" />
