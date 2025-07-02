@@ -233,7 +233,7 @@ const Dashboard = () => {
       .split('\n')
       .map((line, index) => {
         if (line.startsWith('**') && line.endsWith('**')) {
-          return <h4 key={index} className="font-semibold mb-2 mt-4">{line.slice(2, -2)}</h4>;
+          return <h4 key={index} className="font-bold text-lg mb-3 mt-6">{line.slice(2, -2)}</h4>;
         }
         if (line.startsWith('- ')) {
           return <li key={index} className="ml-4 mb-1">{line.slice(2)}</li>;
