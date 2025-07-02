@@ -271,7 +271,7 @@ const Dashboard = () => {
                       </div>
                       <Button 
                         className="w-full mt-4" 
-                        onClick={() => navigate(`/course/${course.id}`)}
+                        onClick={() => navigate(`/course/${course.id}?dev=true`)}
                       >
                         Fortsett kurs
                       </Button>
