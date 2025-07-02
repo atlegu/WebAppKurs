@@ -71,15 +71,6 @@ const Dashboard = () => {
                     totalModules={modules.length}
                   />
 
-                  {/* Legacy content sections rendering */}
-                  {selectedModule.content?.sections?.map((section: ContentSection, index: number) => 
-                    <LegacySectionRenderer
-                      key={index}
-                      section={section}
-                      index={index}
-                      onQuizStart={() => setShowQuiz(true)}
-                    />
-                  )}
                 </div>
               ) : (
                 <Card>
