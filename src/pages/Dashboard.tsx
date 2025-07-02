@@ -271,6 +271,38 @@ const Dashboard = () => {
           );
         }
         
+        // Handle mathematical formulas
+        if (trimmedLine.includes('=') && (trimmedLine.includes('(') || trimmedLine.includes('^') || trimmedLine.includes('+'))) {
+          return (
+            <div key={index} className="bg-slate-50 border border-slate-200 p-6 rounded-lg my-4 overflow-x-auto">
+              <div className="text-center font-mono text-lg text-slate-800 leading-relaxed">
+                <div className="flex items-center justify-center gap-2 flex-wrap">
+                  {trimmedLine.split(' ').map((part, partIndex) => {
+                    if (part === '=') {
+                      return <span key={partIndex} className="text-green-600 font-bold text-xl mx-2">=</span>;
+                    }
+                    if (part === '+') {
+                      return <span key={partIndex} className="text-blue-600 font-bold text-xl mx-2">+</span>;
+                    }
+                    if (part === '...') {
+                      return <span key={partIndex} className="text-gray-500 mx-2">...</span>;
+                    }
+                    if (part.includes('^')) {
+                      const [base, exp] = part.split('^');
+                      return (
+                        <span key={partIndex} className="mx-1">
+                          {base}<sup className="text-sm">{exp}</sup>
+                        </span>
+                      );
+                    }
+                    return <span key={partIndex} className="mx-1">{part}</span>;
+                  })}
+                </div>
+              </div>
+            </div>
+          );
+        }
+        
         return <p key={index} className="mb-2">{trimmedLine}</p>;
       });
   };
