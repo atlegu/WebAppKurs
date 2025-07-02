@@ -99,27 +99,69 @@ const CourseView = () => {
   }, [courseId, navigate]);
 
   const renderContent = (content: string) => {
-    // Simple markdown-like rendering
+    // Enhanced content rendering with proper styling
     return content
       .split('\n')
       .map((line, index) => {
+        // Handle headers with emojis
+        if (line.match(/^🎯|📘|📗|🧩/)) {
+          return <h3 key={index} className="text-lg font-bold text-primary mb-4 mt-6 flex items-center gap-2">{line}</h3>;
+        }
+        
+        // Handle bold text
         if (line.startsWith('**') && line.endsWith('**')) {
-          return <h4 key={index} className="font-semibold mb-2 mt-4">{line.slice(2, -2)}</h4>;
+          return <h4 key={index} className="font-semibold mb-3 mt-4 text-foreground">{line.slice(2, -2)}</h4>;
         }
-        if (line.startsWith('- ')) {
-          return <li key={index} className="ml-4 mb-1">{line.slice(2)}</li>;
+        
+        // Handle bullet points
+        if (line.startsWith('•') || line.startsWith('- ')) {
+          return <li key={index} className="ml-6 mb-2 text-foreground list-disc">{line.slice(2)}</li>;
         }
-        if (line.trim() === '') {
-          return <br key={index} />;
+        
+        // Handle numbered lists
+        if (line.match(/^\d+\./)) {
+          return <li key={index} className="ml-6 mb-2 text-foreground list-decimal">{line}</li>;
         }
-        if (line.startsWith('📌')) {
+        
+        // Handle tables (basic detection)
+        if (line.includes('|') && line.split('|').length > 2) {
+          const cells = line.split('|').map(cell => cell.trim()).filter(cell => cell);
           return (
-            <div key={index} className="bg-blue-50 border-l-4 border-blue-400 p-3 my-3">
-              <p className="text-blue-800">{line}</p>
+            <div key={index} className="grid grid-cols-2 gap-4 p-3 border border-border rounded-lg mb-3 bg-muted/30">
+              {cells.map((cell, cellIndex) => (
+                <div key={cellIndex} className={`${cellIndex === 0 ? 'font-medium' : ''} text-sm`}>
+                  {cell}
+                </div>
+              ))}
             </div>
           );
         }
-        return <p key={index} className="mb-2">{line}</p>;
+        
+        // Handle callout boxes
+        if (line.startsWith('📌')) {
+          return (
+            <div key={index} className="bg-accent/20 border-l-4 border-primary p-4 my-4 rounded-r-lg">
+              <p className="text-accent-foreground font-medium">{line}</p>
+            </div>
+          );
+        }
+        
+        // Handle formulas or special content
+        if (line.includes('=') && line.includes('(') && line.includes(')')) {
+          return (
+            <div key={index} className="bg-muted p-3 rounded-lg my-3 font-mono text-sm border border-border">
+              {line}
+            </div>
+          );
+        }
+        
+        // Handle empty lines
+        if (line.trim() === '') {
+          return <div key={index} className="mb-2" />;
+        }
+        
+        // Regular paragraphs
+        return <p key={index} className="mb-3 text-foreground leading-relaxed">{line}</p>;
       });
   };
 
@@ -137,42 +179,48 @@ const CourseView = () => {
         </div>
 
         {section.video && (
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <div className="flex items-center gap-2 mb-2">
-              <PlayCircle className="w-5 h-5 text-red-500" />
-              <span className="font-medium">Video</span>
+          <div className="bg-muted/50 border border-border p-4 rounded-lg">
+            <div className="flex items-center gap-2 mb-3">
+              <PlayCircle className="w-5 h-5 text-destructive" />
+              <span className="font-semibold text-foreground">Video</span>
             </div>
-            <p className="text-sm text-gray-600">{section.video}</p>
+            <p className="text-sm text-muted-foreground leading-relaxed">{section.video}</p>
           </div>
         )}
 
         {section.exercise && (
-          <div className="bg-green-50 p-4 rounded-lg">
-            <div className="flex items-center gap-2 mb-2">
-              <CheckCircle className="w-5 h-5 text-green-500" />
-              <span className="font-medium">Oppgave</span>
+          <div className="bg-muted/30 border border-border p-4 rounded-lg">
+            <div className="flex items-center gap-2 mb-3">
+              <CheckCircle className="w-5 h-5 text-primary" />
+              <span className="font-semibold text-foreground">Oppgave</span>
             </div>
-            <p className="text-sm text-green-700">{section.exercise}</p>
+            <div className="text-sm text-muted-foreground leading-relaxed">
+              {renderContent(section.exercise)}
+            </div>
           </div>
         )}
 
         {section.reflection && (
-          <div className="bg-purple-50 p-4 rounded-lg">
-            <div className="flex items-center gap-2 mb-2">
-              <Target className="w-5 h-5 text-purple-500" />
-              <span className="font-medium">Refleksjonsspørsmål</span>
+          <div className="bg-accent/10 border border-accent/30 p-4 rounded-lg">
+            <div className="flex items-center gap-2 mb-3">
+              <Target className="w-5 h-5 text-accent-foreground" />
+              <span className="font-semibold text-foreground">Refleksjonsspørsmål</span>
             </div>
-            <p className="text-sm text-purple-700">{section.reflection}</p>
+            <div className="text-sm text-muted-foreground leading-relaxed">
+              {renderContent(section.reflection)}
+            </div>
           </div>
         )}
 
         {section.download && (
-          <div className="bg-yellow-50 p-4 rounded-lg">
-            <div className="flex items-center gap-2 mb-2">
-              <FileText className="w-5 h-5 text-yellow-600" />
-              <span className="font-medium">Nedlasting</span>
+          <div className="bg-secondary/50 border border-secondary p-4 rounded-lg">
+            <div className="flex items-center gap-2 mb-3">
+              <FileText className="w-5 h-5 text-secondary-foreground" />
+              <span className="font-semibold text-foreground">Nedlasting</span>
             </div>
-            <p className="text-sm text-yellow-700">{section.download}</p>
+            <div className="text-sm text-muted-foreground leading-relaxed">
+              {renderContent(section.download)}
+            </div>
           </div>
         )}
 
