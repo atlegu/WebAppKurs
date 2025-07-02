@@ -228,15 +228,17 @@ const Dashboard = () => {
   };
 
   const renderContent = (content: string) => {
-    // Simple markdown-like rendering
+    // Simple markdown-like rendering with cleanup
     return content
+      .replace(/\*{3,}/g, '') // Remove *** or more asterisks
       .split('\n')
       .map((line, index) => {
         if (line.startsWith('**') && line.endsWith('**')) {
           return <h4 key={index} className="font-bold text-lg mb-3 mt-6">{line.slice(2, -2)}</h4>;
         }
-        if (line.startsWith('- ')) {
-          return <li key={index} className="ml-4 mb-1">{line.slice(2)}</li>;
+        if (line.startsWith('- ') || line.startsWith('• ')) {
+          const text = line.startsWith('- ') ? line.slice(2) : line.slice(2);
+          return <li key={index} className="flex items-start gap-2 mb-2 ml-2"><span className="text-primary mt-1">•</span><span>{text}</span></li>;
         }
         if (line.trim() === '') {
           return <br key={index} />;
