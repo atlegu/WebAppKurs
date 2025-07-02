@@ -99,75 +99,60 @@ const CourseView = () => {
   }, [courseId, navigate]);
 
   const renderContent = (content: string) => {
-    if (!content) return null;
+    console.log('DEBUG: renderContent called with:', { content, type: typeof content });
     
-    // Split content by lines and process each line
-    const lines = content.split('\n');
-    const processedElements = [];
-    
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-      
-      // Skip empty lines
-      if (!line.trim()) {
-        processedElements.push(<div key={i} className="h-2" />);
-        continue;
-      }
-      
-      // Handle section headers with emojis (like 💡, 📐, etc.)
-      if (line.match(/^\*\*(💡|📐|🧮|📊|🎯|🔁|⚠️|🧠|🧾|📉|📈)/)) {
-        const cleanLine = line.replace(/^\*\*/, '').replace(/\*\*$/, '');
-        processedElements.push(
-          <h3 key={i} className="font-bold text-lg text-primary mb-4 mt-6 flex items-center gap-2">
-            {cleanLine}
-          </h3>
-        );
-        continue;
-      }
-      
-      // Handle bold text (remove ** markers)
-      if (line.startsWith('**') && line.endsWith('**') && !line.includes('💡')) {
-        const cleanLine = line.replace(/^\*\*/, '').replace(/\*\*$/, '');
-        processedElements.push(
-          <h4 key={i} className="font-semibold text-foreground mb-3 mt-4">
-            {cleanLine}
-          </h4>
-        );
-        continue;
-      }
-      
-      // Handle bullet points
-      if (line.startsWith('•') || line.startsWith('- ')) {
-        const text = line.replace(/^[•-]\s*/, '');
-        processedElements.push(
-          <li key={i} className="ml-6 mb-2 text-foreground list-disc">
-            {text}
-          </li>
-        );
-        continue;
-      }
-      
-      // Handle formulas (lines with mathematical expressions)
-      if (line.includes('=') && (line.includes('(') || line.includes('^') || line.includes('+'))) {
-        processedElements.push(
-          <div key={i} className="bg-muted p-4 rounded-lg my-4 border border-border">
-            <code className="text-sm font-mono text-foreground block whitespace-pre-wrap">
-              {line}
-            </code>
-          </div>
-        );
-        continue;
-      }
-      
-      // Handle regular text lines
-      processedElements.push(
-        <p key={i} className="text-foreground leading-relaxed mb-3">
-          {line}
-        </p>
-      );
+    if (!content) {
+      console.log('DEBUG: No content provided');
+      return null;
     }
     
-    return processedElements;
+    // Simply render content as formatted text for now to see what we're working with
+    return (
+      <div className="space-y-4">
+        {content.split('\n').map((line, index) => {
+          const trimmedLine = line.trim();
+          
+          if (!trimmedLine) return <div key={index} className="h-2" />;
+          
+          // Handle bold headers with ** 
+          if (trimmedLine.startsWith('**') && trimmedLine.endsWith('**')) {
+            const text = trimmedLine.slice(2, -2);
+            return (
+              <h3 key={index} className="text-lg font-bold text-primary mb-3 mt-6">
+                {text}
+              </h3>
+            );
+          }
+          
+          // Handle bullet points
+          if (trimmedLine.startsWith('•') || trimmedLine.startsWith('- ')) {
+            const text = trimmedLine.slice(2);
+            return (
+              <div key={index} className="flex items-start gap-2 mb-2">
+                <span className="text-primary mt-1">•</span>
+                <span className="text-foreground">{text}</span>
+              </div>
+            );
+          }
+          
+          // Handle formulas and code
+          if (trimmedLine.includes('=') && (trimmedLine.includes('(') || trimmedLine.includes('^'))) {
+            return (
+              <div key={index} className="bg-muted p-3 rounded-lg my-3 border">
+                <code className="text-sm font-mono">{trimmedLine}</code>
+              </div>
+            );
+          }
+          
+          // Regular paragraphs
+          return (
+            <p key={index} className="text-foreground leading-relaxed mb-3">
+              {trimmedLine}
+            </p>
+          );
+        })}
+      </div>
+    );
   };
 
   const renderSection = (section: ContentSection, index: number) => (
