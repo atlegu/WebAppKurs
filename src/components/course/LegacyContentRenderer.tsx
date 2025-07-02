@@ -7,6 +7,20 @@ interface LegacyContentRendererProps {
 }
 
 export const LegacyContentRenderer: React.FC<LegacyContentRendererProps> = ({ content }) => {
+  // Helper function to process bold text within any string
+  const processBoldText = (text: string) => {
+    if (!text.includes('**')) return text;
+    
+    const parts = text.split('**');
+    return parts.map((part, partIndex) => {
+      if (partIndex % 2 === 1) {
+        // This is content between ** - make it bold
+        return <strong key={partIndex} className="font-bold">{part}</strong>;
+      }
+      return part;
+    });
+  };
+
   // Simple markdown-like rendering with cleanup
   return content
     .replace(/\*{3,}/g, '') // Remove *** or more asterisks
@@ -28,29 +42,26 @@ export const LegacyContentRenderer: React.FC<LegacyContentRendererProps> = ({ co
         return <StockPricingModule key={index} />;
       }
       
-      // Handle bold headers with ** (including inline bold text)
-      if (trimmedLine.includes('**')) {
-        const parts = trimmedLine.split('**');
-        const rendered = parts.map((part, partIndex) => {
-          if (partIndex % 2 === 1) {
-            // This is content between ** - make it bold
-            return <strong key={partIndex} className="font-bold">{part}</strong>;
-          }
-          return part;
-        });
-        
-        // If it's a standalone header (starts and ends with **), make it a heading
-        if (trimmedLine.startsWith('**') && trimmedLine.endsWith('**') && parts.length === 3) {
-          return <h4 key={index} className="font-bold text-lg mb-3 mt-6">{parts[1]}</h4>;
-        }
-        
-        return <p key={index} className="mb-2">{rendered}</p>;
-      }
-      
-      // Handle bullet points
+      // Handle bullet points (with bold text support)
       if (trimmedLine.startsWith('- ') || trimmedLine.startsWith('• ')) {
         const text = trimmedLine.startsWith('- ') ? trimmedLine.slice(2) : trimmedLine.slice(2);
-        return <li key={index} className="flex items-start gap-2 mb-2 ml-2"><span className="text-primary mt-1">•</span><span>{text}</span></li>;
+        return (
+          <li key={index} className="flex items-start gap-2 mb-2 ml-2">
+            <span className="text-primary mt-1">•</span>
+            <span>{processBoldText(text)}</span>
+          </li>
+        );
+      }
+      
+      // Handle standalone headers (starts and ends with **)
+      if (trimmedLine.startsWith('**') && trimmedLine.endsWith('**') && trimmedLine.split('**').length === 3) {
+        const headerText = trimmedLine.slice(2, -2);
+        return <h4 key={index} className="font-bold text-lg mb-3 mt-6">{headerText}</h4>;
+      }
+      
+      // Handle any line with bold text
+      if (trimmedLine.includes('**')) {
+        return <p key={index} className="mb-2">{processBoldText(trimmedLine)}</p>;
       }
       
       // Handle special callouts
