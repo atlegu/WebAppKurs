@@ -99,70 +99,97 @@ const CourseView = () => {
   }, [courseId, navigate]);
 
   const renderContent = (content: string) => {
-    // Enhanced content rendering with proper styling
-    return content
+    if (!content) return null;
+    
+    // Clean up and split content properly
+    const lines = content
+      .replace(/\\n\\n/g, '\n\n')
+      .replace(/\\n/g, '\n')
       .split('\n')
-      .map((line, index) => {
-        // Handle headers with emojis
-        if (line.match(/^🎯|📘|📗|🧩/)) {
-          return <h3 key={index} className="text-lg font-bold text-primary mb-4 mt-6 flex items-center gap-2">{line}</h3>;
-        }
-        
-        // Handle bold text
-        if (line.startsWith('**') && line.endsWith('**')) {
-          return <h4 key={index} className="font-semibold mb-3 mt-4 text-foreground">{line.slice(2, -2)}</h4>;
-        }
-        
-        // Handle bullet points
-        if (line.startsWith('•') || line.startsWith('- ')) {
-          return <li key={index} className="ml-6 mb-2 text-foreground list-disc">{line.slice(2)}</li>;
-        }
-        
-        // Handle numbered lists
-        if (line.match(/^\d+\./)) {
-          return <li key={index} className="ml-6 mb-2 text-foreground list-decimal">{line}</li>;
-        }
-        
-        // Handle tables (basic detection)
-        if (line.includes('|') && line.split('|').length > 2) {
-          const cells = line.split('|').map(cell => cell.trim()).filter(cell => cell);
+      .filter(line => line.trim() !== '');
+
+    return lines.map((line, index) => {
+      const trimmedLine = line.trim();
+      
+      // Skip empty lines
+      if (!trimmedLine) return null;
+      
+      // Handle section headers with emojis
+      if (trimmedLine.match(/^(🎯|📘|📗|🧩|💡|⚠️|🧱|🏢|📊|🇳🇴|🧠|📌|🌍|🌱|💶|🧭|📐|🔁|🧾|📉|📈)/)) {
+        return (
+          <h3 key={index} className="text-xl font-bold text-primary mb-4 mt-8 flex items-start gap-3">
+            {trimmedLine}
+          </h3>
+        );
+      }
+      
+      // Handle bold text with **
+      if (trimmedLine.startsWith('**') && trimmedLine.endsWith('**')) {
+        const text = trimmedLine.slice(2, -2);
+        return (
+          <h4 key={index} className="text-lg font-semibold mb-3 mt-6 text-foreground">
+            {text}
+          </h4>
+        );
+      }
+      
+      // Handle bullet points
+      if (trimmedLine.startsWith('•') || trimmedLine.startsWith('- ')) {
+        const text = trimmedLine.slice(2).trim();
+        return (
+          <li key={index} className="ml-6 mb-2 text-foreground list-disc">
+            {text}
+          </li>
+        );
+      }
+      
+      // Handle numbered lists
+      if (trimmedLine.match(/^\d+\./)) {
+        return (
+          <li key={index} className="ml-6 mb-2 text-foreground list-decimal">
+            {trimmedLine}
+          </li>
+        );
+      }
+      
+      // Handle table rows (simple detection)
+      if (trimmedLine.includes('|') && trimmedLine.split('|').length > 2) {
+        const cells = trimmedLine.split('|').map(cell => cell.trim()).filter(cell => cell);
+        if (cells.length >= 2) {
           return (
             <div key={index} className="grid grid-cols-2 gap-4 p-3 border border-border rounded-lg mb-3 bg-muted/30">
-              {cells.map((cell, cellIndex) => (
-                <div key={cellIndex} className={`${cellIndex === 0 ? 'font-medium' : ''} text-sm`}>
-                  {cell}
-                </div>
-              ))}
+              <div className="font-medium text-sm">{cells[0]}</div>
+              <div className="text-sm">{cells[1]}</div>
             </div>
           );
         }
-        
-        // Handle callout boxes
-        if (line.startsWith('📌')) {
-          return (
-            <div key={index} className="bg-accent/20 border-l-4 border-primary p-4 my-4 rounded-r-lg">
-              <p className="text-accent-foreground font-medium">{line}</p>
-            </div>
-          );
-        }
-        
-        // Handle formulas or special content
-        if (line.includes('=') && line.includes('(') && line.includes(')')) {
-          return (
-            <div key={index} className="bg-muted p-3 rounded-lg my-3 font-mono text-sm border border-border">
-              {line}
-            </div>
-          );
-        }
-        
-        // Handle empty lines
-        if (line.trim() === '') {
-          return <div key={index} className="mb-2" />;
-        }
-        
-        // Regular paragraphs
-        return <p key={index} className="mb-3 text-foreground leading-relaxed">{line}</p>;
-      });
+      }
+      
+      // Handle formulas and math expressions
+      if (trimmedLine.includes('=') && (trimmedLine.includes('(') || trimmedLine.includes('+'))) {
+        return (
+          <div key={index} className="bg-muted p-4 rounded-lg my-4 font-mono text-sm border border-border overflow-x-auto">
+            {trimmedLine}
+          </div>
+        );
+      }
+      
+      // Handle special callout boxes
+      if (trimmedLine.startsWith('📌')) {
+        return (
+          <div key={index} className="bg-accent/20 border-l-4 border-primary p-4 my-4 rounded-r-lg">
+            <p className="text-accent-foreground font-medium">{trimmedLine}</p>
+          </div>
+        );
+      }
+      
+      // Handle regular paragraphs
+      return (
+        <p key={index} className="mb-3 text-foreground leading-relaxed">
+          {trimmedLine}
+        </p>
+      );
+    }).filter(Boolean);
   };
 
   const renderSection = (section: ContentSection, index: number) => (
