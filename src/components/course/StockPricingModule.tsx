@@ -365,6 +365,22 @@ export const StockPricingModule: React.FC = () => {
             <Badge variant="outline">Video 7 - 7 min</Badge>
           </div>
         </CardHeader>
+        <CardContent className="space-y-4">
+          {/* Embedded Video */}
+          <div className="aspect-video w-full">
+            <iframe 
+              width="100%" 
+              height="100%" 
+              src="https://www.youtube.com/embed/UTHvfI9awBk?si=NwWG_eHEowgqEozP" 
+              title="YouTube video player" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              referrerPolicy="strict-origin-when-cross-origin" 
+              allowFullScreen
+              className="rounded-lg"
+            />
+          </div>
+        </CardContent>
         <CardContent className="space-y-6">
           <div>
             <h3 className="text-xl font-bold mb-4">Efficient Market Hypothesis (EMH)</h3>
