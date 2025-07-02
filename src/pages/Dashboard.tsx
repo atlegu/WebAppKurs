@@ -233,24 +233,45 @@ const Dashboard = () => {
       .replace(/\*{3,}/g, '') // Remove *** or more asterisks
       .split('\n')
       .map((line, index) => {
-        if (line.startsWith('**') && line.endsWith('**')) {
-          return <h4 key={index} className="font-bold text-lg mb-3 mt-6">{line.slice(2, -2)}</h4>;
+        const trimmedLine = line.trim();
+        
+        if (!trimmedLine) return <br key={index} />;
+        
+        // Handle bold headers with ** (including inline bold text)
+        if (trimmedLine.includes('**')) {
+          const parts = trimmedLine.split('**');
+          const rendered = parts.map((part, partIndex) => {
+            if (partIndex % 2 === 1) {
+              // This is content between ** - make it bold
+              return <strong key={partIndex} className="font-bold">{part}</strong>;
+            }
+            return part;
+          });
+          
+          // If it's a standalone header (starts and ends with **), make it a heading
+          if (trimmedLine.startsWith('**') && trimmedLine.endsWith('**') && parts.length === 3) {
+            return <h4 key={index} className="font-bold text-lg mb-3 mt-6">{parts[1]}</h4>;
+          }
+          
+          return <p key={index} className="mb-2">{rendered}</p>;
         }
-        if (line.startsWith('- ') || line.startsWith('• ')) {
-          const text = line.startsWith('- ') ? line.slice(2) : line.slice(2);
+        
+        // Handle bullet points
+        if (trimmedLine.startsWith('- ') || trimmedLine.startsWith('• ')) {
+          const text = trimmedLine.startsWith('- ') ? trimmedLine.slice(2) : trimmedLine.slice(2);
           return <li key={index} className="flex items-start gap-2 mb-2 ml-2"><span className="text-primary mt-1">•</span><span>{text}</span></li>;
         }
-        if (line.trim() === '') {
-          return <br key={index} />;
-        }
-        if (line.startsWith('📌')) {
+        
+        // Handle special callouts
+        if (trimmedLine.startsWith('📌')) {
           return (
             <div key={index} className="bg-blue-50 border-l-4 border-blue-400 p-3 my-3">
-              <p className="text-blue-800">{line}</p>
+              <p className="text-blue-800">{trimmedLine}</p>
             </div>
           );
         }
-        return <p key={index} className="mb-2">{line}</p>;
+        
+        return <p key={index} className="mb-2">{trimmedLine}</p>;
       });
   };
 
