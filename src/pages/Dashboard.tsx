@@ -222,12 +222,21 @@ const Dashboard = () => {
         </div>
 
         {section.video && (
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <div className="flex items-center gap-2 mb-2">
+          <div className="bg-muted/30 p-4 rounded-lg">
+            <div className="flex items-center gap-2 mb-3">
               <PlayCircle className="w-5 h-5 text-red-500" />
               <span className="font-medium">Video</span>
             </div>
-            <p className="text-sm text-gray-600">{section.video}</p>
+            <div className="relative bg-black rounded-lg overflow-hidden aspect-video group cursor-pointer hover:scale-[1.01] transition-transform">
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center">
+                <div className="bg-white/90 hover:bg-white rounded-full p-4 transition-colors">
+                  <PlayCircle className="w-12 h-12 text-gray-800" fill="currentColor" />
+                </div>
+              </div>
+              <div className="absolute bottom-4 left-4 right-4">
+                <p className="text-white text-sm font-medium drop-shadow-lg">{section.video}</p>
+              </div>
+            </div>
           </div>
         )}
 
