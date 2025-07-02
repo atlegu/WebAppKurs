@@ -127,29 +127,166 @@ export const StockPricingModule: React.FC = () => {
             <Badge variant="outline">Video 4 - 12 min</Badge>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-6">
           <ul className="list-disc list-inside space-y-2">
             <li>Dividend Discount Model (Gordon, multistadium)</li>
             <li>Fri kontantstrøm til egenkapital (FCFE)</li>
             <li>Fordeler og begrensninger ved hver metode</li>
           </ul>
-          
-          {/* Gordon Model Formula */}
-          <div className="bg-slate-50 border border-slate-200 p-6 rounded-lg my-4">
-            <div className="text-center">
-              <p className="font-semibold mb-4">Eksempel: Gordon-modellen</p>
-              <div className="flex items-center justify-center gap-4 text-xl flex-wrap">
-                <span className="font-bold text-slate-800">P₀</span>
-                <span className="font-bold text-red-600 text-2xl">=</span>
-                <div className="bg-blue-500 text-white px-4 py-2 rounded-lg">
-                  <div className="text-center">
-                    <div className="border-b border-white pb-1 mb-1">D₁</div>
-                    <div className="text-sm">(r - g)</div>
+
+          {/* Gordon Model Deep Dive */}
+          <div className="border-l-4 border-primary bg-muted/30 p-6 rounded-lg">
+            <h3 className="text-xl font-bold text-primary mb-4">Gordon-modellen (konstant vekst-DDM)</h3>
+            <p className="text-muted-foreground mb-4">
+              En kort, selvforklarende innføring i hvordan du verdsetter modne selskaper med stabil utbyttevekst.
+            </p>
+
+            {/* Why a separate model */}
+            <div className="mb-6">
+              <h4 className="text-lg font-semibold mb-3">1 · Hvorfor en egen modell for aksjeprising?</h4>
+              <p>
+                Når et selskap betaler <strong>jevne utbytter</strong> som forventes å vokse i et <em>stabilt</em> tempo, 
+                kan vi slippe tunge kontantstrøms-prognoser. Gordon-modellen kobler sammen forventet utbytte, vekst og 
+                avkastningskrav i én enkel formel.
+              </p>
+            </div>
+
+            {/* Core formula */}
+            <div className="mb-6">
+              <h4 className="text-lg font-semibold mb-3">2 · Kjerneformelen</h4>
+              <div className="bg-slate-50 border border-slate-200 p-6 rounded-lg text-center mb-4">
+                <div className="flex items-center justify-center gap-4 text-xl flex-wrap mb-4">
+                  <span className="font-bold text-slate-800">P₀</span>
+                  <span className="font-bold text-red-600 text-2xl">=</span>
+                  <div className="bg-primary text-primary-foreground px-4 py-2 rounded-lg">
+                    <div className="text-center">
+                      <div className="border-b border-primary-foreground pb-1 mb-1">Div₁</div>
+                      <div className="text-sm">(rₑ - g)</div>
+                    </div>
                   </div>
                 </div>
+                <p className="text-sm text-muted-foreground italic">
+                  Aksjens nåverdi er nåverdien av en evigvarende voksende utbytteserie.
+                </p>
               </div>
-              <p className="mt-4 text-sm text-slate-600">
-                der D₁ = 5, r = 8%, g = 3% ⇒ P₀ = 5 / (0,08 - 0,03) = 100
+
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <strong>P₀:</strong> Aksjens verdi i dag<br/>
+                  <strong>Div₁:</strong> Forventet utbytte neste år
+                </div>
+                <div>
+                  <strong>rₑ:</strong> Egenkapitalkostnad (avkastningskrav)<br/>
+                  <strong>g:</strong> Langsiktig årlig vekstrate i utbytte
+                </div>
+              </div>
+            </div>
+
+            {/* Important assumptions */}
+            <div className="mb-6">
+              <h4 className="text-lg font-semibold mb-3">3 · Viktige forutsetninger</h4>
+              <ul className="list-disc list-inside space-y-1">
+                <li><strong>Stabil vekst:</strong> Utbyttet øker med samme % hvert år</li>
+                <li><strong>Uendelig levetid:</strong> Selskapet fortsetter «for alltid»</li>
+                <li><strong>Konstant risiko:</strong> rₑ er stabil</li>
+                <li><strong>Fast utbyttepolitikk:</strong> Payout-raten er konstant</li>
+              </ul>
+            </div>
+
+            {/* How to use */}
+            <div className="mb-6">
+              <h4 className="text-lg font-semibold mb-3">4 · Slik bruker du modellen – trinn for trinn</h4>
+              <div className="space-y-3">
+                <div className="bg-background p-3 rounded border">
+                  <strong>Trinn 1:</strong> Start med siste utbytte Div₀ og beregn Div₁ = Div₀ × (1+g)
+                  <p className="text-sm text-muted-foreground mt-1">Tips: Bruk ordinært årlig utbytte – ignorer ekstraordinære engangsposter</p>
+                </div>
+                <div className="bg-background p-3 rounded border">
+                  <strong>Trinn 2:</strong> Estimer vekstraten g
+                  <p className="text-sm text-muted-foreground mt-1">Tips: Historisk trend eller Retention-growth: g = b × ROE</p>
+                </div>
+                <div className="bg-background p-3 rounded border">
+                  <strong>Trinn 3:</strong> Beregn avkastningskravet rₑ
+                  <p className="text-sm text-muted-foreground mt-1">Tips: Typisk CAPM: rₑ = rf + β(E[RM] - rf)</p>
+                </div>
+                <div className="bg-background p-3 rounded border">
+                  <strong>Trinn 4:</strong> Sett alt inn i formelen
+                  <p className="text-sm text-muted-foreground mt-1">Tips: Sjekk at g &lt; rₑ. Hvis ikke: bruk flertrinns-modell</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Numerical example */}
+            <div className="mb-6">
+              <h4 className="text-lg font-semibold mb-3">5 · Numerisk eksempel</h4>
+              <p className="mb-3">
+                <strong>Nordic Utilities ASA</strong> betalte nylig 3,40 kr i utbytte. Utbyttet forventes å vokse med 2% årlig. 
+                Avkastningskravet estimeres til 6%.
+              </p>
+              <div className="bg-slate-50 border border-slate-200 p-4 rounded-lg">
+                <p>Div₁ = 3,40 × 1,02 = 3,47 kr</p>
+                <p>P₀ = 3,47 / (0,06 - 0,02) ≈ 86,75 kr</p>
+                <p className="text-sm text-muted-foreground italic mt-2">
+                  Nåverdien av aksjen under forutsetning om konstant vekst.
+                </p>
+              </div>
+            </div>
+
+            {/* Strengths and weaknesses */}
+            <div className="mb-6">
+              <h4 className="text-lg font-semibold mb-3">6 · Styrker og svakheter</h4>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                  <h5 className="font-semibold text-green-800 mb-2">Styrker</h5>
+                  <ul className="text-sm text-green-700 space-y-1">
+                    <li>• Ekstremt enkel – få inndata</li>
+                    <li>• Intuitiv kobling mellom utbytte-politikk, vekst og verdi</li>
+                    <li>• Praktisk som terminalverdi i DCF</li>
+                  </ul>
+                </div>
+                <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+                  <h5 className="font-semibold text-red-800 mb-2">Svakheter</h5>
+                  <ul className="text-sm text-red-700 space-y-1">
+                    <li>• Svært følsom for små forskjeller i g og rₑ</li>
+                    <li>• Uegnet for selskaper uten stabilt utbytte</li>
+                    <li>• Forutsetter konstant risiko og evig levetid</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Sustainability perspective */}
+            <div className="mb-6">
+              <h4 className="text-lg font-semibold mb-3">7 · Bærekraftperspektivet</h4>
+              <p className="mb-2">Når du anslår g må du vurdere:</p>
+              <ul className="list-disc list-inside space-y-1 text-sm">
+                <li><strong>ESG-begrensninger</strong> kan redusere vekst for karbonintensive selskaper</li>
+                <li><strong>EU-taksonomien</strong> påvirker fremtidige investeringer og utbyttepolitikk</li>
+                <li><strong>Grønne investeringsmuligheter</strong> kan rettferdiggjøre lavere utbytte hvis IRR &gt; rₑ</li>
+              </ul>
+            </div>
+
+            {/* Quick test */}
+            <div className="mb-6">
+              <h4 className="text-lg font-semibold mb-3">8 · Hurtigtest (selvkontroll)</h4>
+              <ol className="list-decimal list-inside space-y-1 text-sm">
+                <li>Hvilket forhold mellom g og rₑ må være oppfylt?</li>
+                <li>Hvordan estimerer du g med Retention-growth?</li>
+                <li>Hvorfor kan et kutt i utbytte øke aksjeverdien?</li>
+              </ol>
+              <p className="text-sm text-muted-foreground italic mt-2">
+                Sammenlign med avsnittene over før du går videre.
+              </p>
+            </div>
+
+            {/* Summary */}
+            <div>
+              <h4 className="text-lg font-semibold mb-3">9 · Oppsummering</h4>
+              <p className="text-sm">
+                Gordon-modellen er et kraftig men enkelt verktøy for modne selskaper med <strong>forutsigbar</strong> utbyttevekst. 
+                For selskaper i tidlig vekst eller uten utbytte, kombiner den med flertrinns DCF eller alternative metoder 
+                (FCFE, multipler). Vær særlig oppmerksom på <em>realistiske vekstanslag</em> og konsekvensene av bærekraftige 
+                investeringsbeslutninger.
               </p>
             </div>
           </div>
