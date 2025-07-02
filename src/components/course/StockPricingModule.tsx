@@ -41,6 +41,102 @@ export const StockPricingModule: React.FC = () => {
         </CardContent>
       </Card>
 
+      {/* Introductory Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Hva er en aksje – og hvordan fungerer aksjemarkedet?</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div>
+            <p className="mb-4">
+              En <strong>aksje</strong> er en <em>eierandel</em> i et aksjeselskap. Når du kjøper én aksje,
+              blir du medeier og får rett til:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mb-6">
+              <li><strong>Utbytte</strong> – din andel av selskapets overskudd dersom styret beslutter utdeling.</li>
+              <li><strong>Stemmerett</strong> på generalforsamlingen, vanligvis én stemme per aksje.</li>
+              <li><strong>Kapitalgevinst</strong> hvis aksjekursen stiger og du selger dyrere enn du kjøpte.</li>
+              <li><strong>Restkrav</strong> på selskapets verdier ved avvikling (etter kreditorer).</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-bold mb-3">Slik havner aksjene på børsen</h3>
+            <p className="mb-4">
+              Når et selskap går på børs – en <strong>børsnotering</strong> eller «IPO»
+              (<em>Initial Public Offering</em>) – selger det aksjer i <em>primærmarkedet</em>
+              for å hente kapital til vekst, forskning eller nedbetaling av gjeld.
+              Etter IPO-en omsettes de samme aksjene fritt mellom investorer i
+              <em>sekundærmarkedet</em>.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-bold mb-3">Hvordan settes prisen?</h3>
+            <p className="mb-4">
+              Aksjekursen styres av <strong>tilbud og etterspørsel</strong> i sanntid.
+              Investorer vurderer:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mb-4">
+              <li><em>Forventet inntjening</em> – kontantstrøm og vekstutsikter.</li>
+              <li><em>Risiko</em> – både selskapsspesifikk og markedsrelatert.</li>
+              <li><em>Alternativavkastning</em> – hva de kunne tjent på andre investeringer.</li>
+              <li><em>Markedssentiment</em> – nyheter, makroøkonomi og psykologiske faktorer.</li>
+            </ul>
+            <p className="mb-6">
+              Selv små informasjonsendringer kan flytte kursen fordi millioner av kjøpere
+              og selgere konkurrerer om å være først til å <em>prise inn</em> ny kunnskap.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-bold mb-3">Hvorfor vil noen kjøpe aksjer?</h3>
+            <div className="bg-muted/50 p-4 rounded-lg mb-4">
+              <h4 className="font-semibold mb-2">To hovedkilder til avkastning</h4>
+              <ul className="list-disc list-inside space-y-1">
+                <li><strong>Kapitalgevinst</strong> – kursen stiger på grunn av forventninger om høyere fremtidig inntjening.</li>
+                <li><strong>Utbytte</strong> – kontantutbetaling fra årsoverskuddet.</li>
+              </ul>
+            </div>
+            <p className="mb-6">
+              Historisk har aksjer gitt høyere <em>forventet</em> avkastning enn bankinnskudd
+              og obligasjoner, men også høyere svingninger (<strong>volatilitet</strong>).
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-bold mb-3">Markedets økosystem</h3>
+            <p className="mb-6">
+              Aksjemarkedet består av alt fra småsparere til store pensjonsfond,
+              algoritmiske tradere og regulatorer som <em>Finanstilsynet</em>.
+              Meglere formidler handler, børser som <em>Oslo Børs</em> matcher kjøps- og
+              salgsordre, mens <em>Verdipapirsentralen</em> (VPS) registrerer eierskap.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-bold mb-3">Bærekraft og aksjer</h3>
+            <p className="mb-6">
+              Stadig flere investorer vurderer <strong>ESG-faktorer</strong>
+              (miljø, sosiale forhold og eierstyring) fordi de kan påvirke både risiko og
+              lønnsomhet. EUs taksonomi og rapporteringskrav gjør bærekraftsinformasjon
+              mer transparent – noe som gradvis prises inn i aksjekursene.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-bold mb-3">Oppsummering</h3>
+            <p>
+              Aksjer gir deg eierskap, med rett til både fremtidig fortjeneste og
+              medbestemmelse. Markedskursen reflekterer kontinuerlig investorers
+              kollektive oppfatning av selskapets verdi og risiko. Å forstå
+              <em>hvordan</em> og <em>hvorfor</em> disse prisene beveger seg er første
+              skritt før du dykker ned i detaljert aksjeprising.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Video 1 */}
       <Card>
         <CardHeader>
