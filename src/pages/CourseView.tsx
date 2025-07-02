@@ -101,115 +101,73 @@ const CourseView = () => {
   const renderContent = (content: string) => {
     if (!content) return null;
     
-    const lines = content.split('\n').filter(line => line.trim());
-    const elements = [];
-    let currentList = [];
-
+    // Split content by lines and process each line
+    const lines = content.split('\n');
+    const processedElements = [];
+    
     for (let i = 0; i < lines.length; i++) {
-      const line = lines[i].trim();
+      const line = lines[i];
       
-      if (!line) continue;
-
-      // Handle section headers with emojis
-      if (line.match(/^(🎯|📘|📗|🧩|💡|⚠️|🧱|🏢|📊|🇳🇴|🧠|📌|🌍|🌱|💶|🧭|📐|🔁|🧾|📉|📈)/)) {
-        // Add any pending list
-        if (currentList.length > 0) {
-          elements.push(
-            <ul key={`list-${i}`} className="space-y-2 mb-6 ml-6 list-disc">
-              {currentList}
-            </ul>
-          );
-          currentList = [];
-        }
-        
-        elements.push(
-          <div key={i} className="flex items-start gap-3 mb-6 mt-8">
-            <span className="text-2xl">{line.charAt(0)}</span>
-            <h2 className="text-xl font-bold text-primary flex-1">
-              {line.slice(2)}
-            </h2>
-          </div>
-        );
+      // Skip empty lines
+      if (!line.trim()) {
+        processedElements.push(<div key={i} className="h-2" />);
         continue;
       }
-
-      // Handle bold headers with **
-      if (line.startsWith('**') && line.endsWith('**')) {
-        if (currentList.length > 0) {
-          elements.push(
-            <ul key={`list-${i}`} className="space-y-2 mb-6 ml-6 list-disc">
-              {currentList}
-            </ul>
-          );
-          currentList = [];
-        }
-        
-        const text = line.slice(2, -2);
-        elements.push(
-          <h3 key={i} className="font-semibold text-foreground mb-3 mt-6 text-lg">
-            {text}
+      
+      // Handle section headers with emojis (like 💡, 📐, etc.)
+      if (line.match(/^\*\*(💡|📐|🧮|📊|🎯|🔁|⚠️|🧠|🧾|📉|📈)/)) {
+        const cleanLine = line.replace(/^\*\*/, '').replace(/\*\*$/, '');
+        processedElements.push(
+          <h3 key={i} className="font-bold text-lg text-primary mb-4 mt-6 flex items-center gap-2">
+            {cleanLine}
           </h3>
         );
         continue;
       }
-
+      
+      // Handle bold text (remove ** markers)
+      if (line.startsWith('**') && line.endsWith('**') && !line.includes('💡')) {
+        const cleanLine = line.replace(/^\*\*/, '').replace(/\*\*$/, '');
+        processedElements.push(
+          <h4 key={i} className="font-semibold text-foreground mb-3 mt-4">
+            {cleanLine}
+          </h4>
+        );
+        continue;
+      }
+      
       // Handle bullet points
       if (line.startsWith('•') || line.startsWith('- ')) {
-        const text = line.slice(2).trim();
-        currentList.push(
-          <li key={`item-${i}`} className="text-foreground">
+        const text = line.replace(/^[•-]\s*/, '');
+        processedElements.push(
+          <li key={i} className="ml-6 mb-2 text-foreground list-disc">
             {text}
           </li>
         );
         continue;
       }
-
-      // Handle formulas
-      if (line.includes('=') && (line.includes('(') || line.includes('+') || line.includes('^'))) {
-        if (currentList.length > 0) {
-          elements.push(
-            <ul key={`list-${i}`} className="space-y-2 mb-6 ml-6 list-disc">
-              {currentList}
-            </ul>
-          );
-          currentList = [];
-        }
-        
-        elements.push(
-          <div key={i} className="bg-muted p-4 rounded-lg my-4 border border-border overflow-x-auto">
-            <code className="text-sm font-mono text-foreground whitespace-pre">{line}</code>
+      
+      // Handle formulas (lines with mathematical expressions)
+      if (line.includes('=') && (line.includes('(') || line.includes('^') || line.includes('+'))) {
+        processedElements.push(
+          <div key={i} className="bg-muted p-4 rounded-lg my-4 border border-border">
+            <code className="text-sm font-mono text-foreground block whitespace-pre-wrap">
+              {line}
+            </code>
           </div>
         );
         continue;
       }
-
-      // Handle regular paragraphs
-      if (currentList.length > 0) {
-        elements.push(
-          <ul key={`list-${i}`} className="space-y-2 mb-6 ml-6 list-disc">
-            {currentList}
-          </ul>
-        );
-        currentList = [];
-      }
       
-      elements.push(
+      // Handle regular text lines
+      processedElements.push(
         <p key={i} className="text-foreground leading-relaxed mb-3">
           {line}
         </p>
       );
     }
-
-    // Add any remaining list items
-    if (currentList.length > 0) {
-      elements.push(
-        <ul key="final-list" className="space-y-2 mb-6 ml-6 list-disc">
-          {currentList}
-        </ul>
-      );
-    }
-
-    return elements;
+    
+    return processedElements;
   };
 
   const renderSection = (section: ContentSection, index: number) => (
