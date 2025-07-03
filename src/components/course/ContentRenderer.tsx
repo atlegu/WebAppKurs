@@ -88,9 +88,7 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           return <BondPricingFormula key={index} />;
         }
 
-        // Handle course map specifically - check if content contains course map trigger
-        console.log('ContentRenderer: Checking line for CourseMap:', trimmedLine);
-        
+        // Handle course map specifically
         if (trimmedLine.includes('3. Kurskart') || trimmedLine.includes('Kurskart – «Finans-linjen»')) {
           console.log('ContentRenderer: FOUND KURSKART! Rendering CourseMap for line:', trimmedLine);
           return (
