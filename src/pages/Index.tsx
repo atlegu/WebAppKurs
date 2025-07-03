@@ -50,9 +50,9 @@ const Index = () => {
               variant="secondary" 
               size="lg"
               onClick={() => navigate("/dashboard?dev=true")}
-              className="text-lg px-8 py-6"
+              className="text-lg px-8 py-6 bg-primary text-primary-foreground"
             >
-              🚀 Dev Mode (Se innhold)
+              🚀 KLIKK HER - Se obligasjonsmodulen med undersider
             </Button>
           </div>
         </div>
