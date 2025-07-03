@@ -44,6 +44,27 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           );
         }
         
+        // Handle links
+        if (trimmedLine.startsWith('[') && trimmedLine.includes('](') && trimmedLine.endsWith(')')) {
+          const linkMatch = trimmedLine.match(/\[([^\]]+)\]\(([^)]+)\)/);
+          if (linkMatch) {
+            const [, linkText, linkUrl] = linkMatch;
+            return (
+              <div key={index} className="mb-3">
+                <a 
+                  href={linkUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-primary hover:text-primary/80 underline"
+                >
+                  {linkText}
+                  <span className="text-xs">↗</span>
+                </a>
+              </div>
+            );
+          }
+        }
+
         // Handle bullet points (with bold text support)
         if (trimmedLine.startsWith('•') || trimmedLine.startsWith('- ')) {
           const text = trimmedLine.slice(2);
