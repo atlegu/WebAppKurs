@@ -38,12 +38,14 @@ interface ContentSectionData {
 interface ModuleContentProps {
   selectedModule: Module | null;
   selectedSubModule?: SubModule | null;
+  onSubModuleSelect?: (subModule: SubModule) => void;
   totalModules: number;
 }
 
 export const ModuleContent: React.FC<ModuleContentProps> = ({ 
   selectedModule, 
   selectedSubModule, 
+  onSubModuleSelect,
   totalModules 
 }) => {
   if (!selectedModule) {
@@ -61,13 +63,14 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({
   }
 
   // If a sub-module is selected, show that instead
-  if (selectedSubModule) {
+  if (selectedSubModule && onSubModuleSelect) {
     return (
       <SubModuleContent
         subModule={selectedSubModule}
-        moduleTitle={selectedModule.title}
+        module={selectedModule}
         moduleIndex={selectedModule.order_index}
         subModuleIndex={selectedModule.subModules?.findIndex(sub => sub.id === selectedSubModule.id) + 1 || 1}
+        onSubModuleSelect={onSubModuleSelect}
       />
     );
   }

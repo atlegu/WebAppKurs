@@ -53,6 +53,7 @@ const CourseView = () => {
             <ModuleContent
               selectedModule={selectedModule}
               selectedSubModule={selectedSubModule}
+              onSubModuleSelect={setSelectedSubModule}
               totalModules={modules.length}
             />
           </div>

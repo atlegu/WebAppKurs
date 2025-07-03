@@ -73,6 +73,7 @@ const Dashboard = () => {
                   <ModuleContent
                     selectedModule={selectedModule}
                     selectedSubModule={selectedSubModule}
+                    onSubModuleSelect={setSelectedSubModule}
                     totalModules={modules.length}
                   />
 
