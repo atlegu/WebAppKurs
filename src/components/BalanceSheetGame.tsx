@@ -1,4 +1,4 @@
-tsximport React from 'react';
+import React from 'react';
 
 const BalanceSheetGame = () => {
   return (
