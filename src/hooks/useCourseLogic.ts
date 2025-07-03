@@ -121,6 +121,11 @@ export const useCourseLogic = () => {
                   id: `${module.id}-sub-8`,
                   title: "Durasjon - obligasjonens følsomhet for renteendringer",
                   content: sections[7] || {}
+                },
+                {
+                  id: `${module.id}-sub-9`,
+                  title: "Oppgaver",
+                  content: { title: "Oppgaver", type: "exercise", content: "Praktiske oppgaver for obligasjonsmodulen kommer her." }
                 }
               ]
             };
