@@ -87,18 +87,16 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
         }
 
         // Handle course map specifically - check if content contains course map trigger
-        if (content.includes('3. Kurskart') || content.includes('Kurskart – «Finans-linjen»')) {
-          // Show course map after the "3. Kurskart" heading
-          if (trimmedLine.includes('3. Kurskart') || 
-              (trimmedLine.includes('Kurskart') && trimmedLine.includes('Finans-linjen'))) {
-            console.log('ContentRenderer: FOUND KURSKART! Rendering CourseMap for line:', trimmedLine);
-            return (
-              <div key={index}>
-                <h3 className="text-lg font-bold text-primary mb-4">{trimmedLine.replace(/\*\*/g, '')}</h3>
-                <CourseMap />
-              </div>
-            );
-          }
+        console.log('ContentRenderer: Checking line for CourseMap:', trimmedLine);
+        
+        if (trimmedLine.includes('3. Kurskart') || trimmedLine.includes('Kurskart – «Finans-linjen»')) {
+          console.log('ContentRenderer: FOUND KURSKART! Rendering CourseMap for line:', trimmedLine);
+          return (
+            <div key={index}>
+              <h3 className="text-lg font-bold text-primary mb-4">{trimmedLine.replace(/\*\*/g, '')}</h3>
+              <CourseMap />
+            </div>
+          );
         }
         
         // Handle iframe embeds
