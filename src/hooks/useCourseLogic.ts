@@ -76,6 +76,104 @@ export const useCourseLogic = () => {
         console.log('Dashboard: Processing modules:', modulesData);
         const processedModules = modulesData?.map(module => {
           console.log('Dashboard: Checking module:', module.title, 'order_index:', module.order_index);
+          
+          // Create sub-modules for Introduction module (Module 1)
+          if (module.order_index === 1 && (module.title.includes("Introduksjon") || module.title.includes("introduksjon"))) {
+            console.log('Dashboard: Found introduction module! Creating sub-modules...');
+            const sections = (module.content as any)?.sections || [];
+            console.log('Dashboard: Sections found:', sections.length);
+            
+            const processedModule = {
+              ...module,
+              subModules: [
+                {
+                  id: `${module.id}-sub-1`,
+                  title: "Velkommen",
+                  content: { title: "Velkommen", type: "text", content: "Velkommen til kurset i finans! Her begynner din reise inn i finansverdenen." }
+                },
+                {
+                  id: `${module.id}-sub-2`, 
+                  title: "Læringsmål og hva er finans",
+                  content: { 
+                    title: "Læringsmål og hva er finans", 
+                    type: "text", 
+                    content: `**Læringsmål & kurskart**
+
+**1. Overordnede læringsmål for hele kurset**
+
+Etter å ha fullført alle ti moduler skal du kunne:
+
+• Beskrive hvordan finansmarkedene fungerer og hvilken rolle de spiller i økonomien.
+
+• Analysere finansregnskapet og bruke det som basis for verdsettelse og risikovurdering.
+
+• Beregne nåverdi, internrente og andre nøkkeltall for investerings- og finansieringsbeslutninger.
+
+• Verdsette obligasjoner, aksjer og selskaper med både kontantstrøms- og multippelmetoder.
+
+• Vurdere kapitalstruktur, avkastningskrav og risiko i lys av moderne porteføljeteori.
+
+• Integrere bærekraft, ESG-faktorer og EU-taksonomi i finansielle analyser.
+
+• Kommunisere finansielle anbefalinger muntlig og skriftlig – etisk, presist og beslutningsrettet.
+
+**2. Modul-spesifikke læringsmål**
+
+**Modul 1 - Introduksjon til finans:** forklare hva finans er, navngi hovedrollene i kapitalmarkedet og kjenne til bærekraftstrender som former faget.
+
+**Modul 2 - Regnskap:** lese balanse, resultat- og kontantstrømoppstilling; justere tall for analyseformål.
+
+**Modul 3 - Tidsverdien av penger:** bruke nåverdi, fremtidsverdi, annuitets- og perpetuitetsformler i enkle beslutninger.
+
+**Modul 4 - Obligasjoner:** beregne pris, effektiv rente (YTM), durasjon og forklare hva som gjør en grønn obligasjon "grønn".
+
+**Modul 5 - Aksjer og aksjeprising:** tolke nøkkeltall som P/E, EV/EBITDA, dividendeyield og utføre en enkel DDM- og FCFE-verdsettelse.
+
+**Modul 6 - Avkastning og risiko:** estimere forventet avkastning og volatilitet, forklare beta, diversifisering og CAPM-logikken.
+
+**Modul 7 - Investeringsanalyse:** bygge investerings-CF-budsjett, beregne NPV/IRR og gjennomføre følsomhets- og scenarioanalyse.
+
+**Modul 8 - Kapitalstruktur:** diskutere trade-off-, pecking-order- og signalleringsteori; beregne WACC og justere for gjeld.
+
+**Modul 9 - EU-taksonomi og klimafinans:** anvende taksonomi-kriterier og vurdere klimarisiko i prosjekter og porteføljer.
+
+**Modul 10 - ESG og "grønn" finans:** evaluere ESG-data, unngå grønnvasking og integrere bærekraft i verdsettelse og investeringsråd.
+
+**3. Kurskart – «Finans-linjen»**
+
+Start ──► 1 ──► 2 ──► 3 ──► 4 ──► 5 ──► 6 ──► 7 ──► 8 ──► 9 ──► 10 ──► Eksamen
+
+**Hvordan lese kartet:**
+
+**Lineær progresjon:** Hver stasjon (= modul) bygger på forrige, men 3, 4, 5 kan repeteres etter behov før du går videre.
+
+**Tematiske avstikkere:**
+• Tidsverdien av penger (3) henger tett sammen med Investeringsanalyse (7).
+• Risiko (6) spiller direkte inn i diskusjonen om Kapitalstruktur (8).
+• Bærekraft-sporene (9 og 10) brukes som "grønt filter" over alt du gjorde fra modul 2-8.
+
+**Fargekoding (i den interaktive versjonen):**
+• Blå = kvantitative kjernekonsepter
+• Grønn = bærekraft/ESG
+• Gul = beslutningsverktøy` 
+                  }
+                },
+                {
+                  id: `${module.id}-sub-3`,
+                  title: "Din første finansbeslutning",
+                  content: { title: "Din første finansbeslutning", type: "exercise", content: "Her vil du ta din første finansbeslutning og lære grunnleggende konsepter." }
+                },
+                {
+                  id: `${module.id}-sub-4`,
+                  title: "Quiz",
+                  content: { title: "Quiz", type: "quiz", content: "Test kunnskapen din om grunnleggende finanskonsepter." }
+                }
+              ]
+            };
+            console.log('Dashboard: Processed introduction module with sub-modules:', processedModule.subModules?.length);
+            return processedModule;
+          }
+          
           if (module.order_index === 4 && module.title === "Obligasjoner") {
             console.log('Dashboard: Found bonds module! Creating sub-modules...');
             const sections = (module.content as any)?.sections || [];
