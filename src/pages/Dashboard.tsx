@@ -7,6 +7,7 @@ import { ModuleSidebar } from "@/components/course/ModuleSidebar";
 import { ModuleContent } from "@/components/course/ModuleContent";
 import { LegacySectionRenderer } from "@/components/course/LegacySectionRenderer";
 import { useCourseLogic } from "@/hooks/useCourseLogic";
+import BalanceSheetGame from "@/components/BalanceSheetGame";
 
 interface ContentSection {
   title: string;
@@ -79,15 +80,22 @@ const Dashboard = () => {
 
                 </div>
               ) : (
-                <Card>
-                  <CardContent className="p-8 text-center">
-                    <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-medium mb-2">Velkommen til kurset</h3>
-                    <p className="text-muted-foreground">
-                      Velg en modul fra sidemenyen for å starte læringen.
-                    </p>
-                  </CardContent>
-                </Card>
+                <div className="space-y-8">
+                  <Card>
+                    <CardContent className="p-8 text-center">
+                      <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                      <h3 className="text-lg font-medium mb-2">Velkommen til kurset</h3>
+                      <p className="text-muted-foreground">
+                        Velg en modul fra sidemenyen for å starte læringen.
+                      </p>
+                    </CardContent>
+                  </Card>
+                  
+                  <div>
+                    <h3 className="text-lg font-medium mb-4">Balanseregneskap Spill</h3>
+                    <BalanceSheetGame />
+                  </div>
+                </div>
               )}
             </div>
           </div>
