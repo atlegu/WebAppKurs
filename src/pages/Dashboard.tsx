@@ -70,6 +70,7 @@ const Dashboard = () => {
                 <div>
                   <ModuleContent
                     selectedModule={selectedModule}
+                    selectedSubModule={null}
                     totalModules={modules.length}
                   />
 
