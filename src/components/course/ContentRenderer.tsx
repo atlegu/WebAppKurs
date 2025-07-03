@@ -1,4 +1,5 @@
 import React from "react";
+import { BondPricingFormula } from "./BondPricingFormula";
 
 interface ContentRendererProps {
   content: string;
@@ -52,6 +53,13 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
               <span className="text-foreground">{processBoldText(text)}</span>
             </div>
           );
+        }
+        
+        // Handle bond pricing formula specifically
+        if (trimmedLine.includes('Pris = (Kupong/(1+r)') || 
+            trimmedLine.includes('Pris = (Kupong/(1+r)¹') ||
+            (trimmedLine.includes('Pris =') && trimmedLine.includes('Kupong') && trimmedLine.includes('Pålydende'))) {
+          return <BondPricingFormula key={index} />;
         }
         
         // Handle formulas and code
