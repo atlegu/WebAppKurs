@@ -74,15 +74,14 @@ export const useCourseData = (courseId: string | undefined) => {
       if (modulesError) {
         console.error("Error fetching modules:", modulesError);
       } else {
-        // Process modules and add sub-modules for bonds module
         console.log('Processing modules:', modulesData);
         const processedModules = modulesData?.map(module => {
-          console.log('Checking module:', module.title, module.order_index);
+          console.log('Checking module:', module.title, 'order_index:', module.order_index);
           if (module.order_index === 4 && module.title === "Obligasjoner") {
-            console.log('Found bonds module, adding sub-modules');
+            console.log('Found bonds module! Creating sub-modules...');
             const sections = (module.content as any)?.sections || [];
-            console.log('Module sections:', sections);
-            return {
+            console.log('Sections found:', sections.length);
+            const processedModule = {
               ...module,
               subModules: [
                 {
@@ -127,6 +126,8 @@ export const useCourseData = (courseId: string | undefined) => {
                 }
               ]
             };
+            console.log('Processed bonds module with sub-modules:', processedModule.subModules?.length);
+            return processedModule;
           }
           return module;
         }) || [];

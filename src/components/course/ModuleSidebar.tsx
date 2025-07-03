@@ -37,11 +37,13 @@ export const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
   userProgress
 }) => {
   const [expandedModules, setExpandedModules] = useState<Record<string, boolean>>(() => {
-    // Auto-expand the bonds module if it's selected
+    // Auto-expand the bonds module if it has sub-modules
     const initialExpanded: Record<string, boolean> = {};
-    if (selectedModule?.subModules && selectedModule.subModules.length > 0) {
-      initialExpanded[selectedModule.id] = true;
-    }
+    modules.forEach(module => {
+      if (module.subModules && module.subModules.length > 0) {
+        initialExpanded[module.id] = true;
+      }
+    });
     return initialExpanded;
   });
   return (
