@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { BookOpen, PlayCircle, FileText, CheckCircle, Target, Brain } from "lucide-react";
 import { ContentRenderer } from "./ContentRenderer";
 import { BondQuiz } from "./BondQuiz";
+import { DurationCalculator } from "./DurationCalculator";
 
 interface ContentSectionData {
   title: string;
@@ -37,6 +38,13 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index }
           <div className="prose max-w-none">
             <ContentRenderer content={section.content} />
           </div>
+
+          {/* Duration Calculator - Show only for the duration section (4.8) */}
+          {section.title.toLowerCase().includes('durasjon') && (
+            <div className="my-6">
+              <DurationCalculator />
+            </div>
+          )}
 
           {section.video && (
             <div className="bg-muted/50 border border-border p-4 rounded-lg">
