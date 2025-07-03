@@ -98,16 +98,6 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           return <BondPricingFormula key={index} />;
         }
 
-        // Handle course map specifically
-        if (trimmedLine.includes('Kurskart')) {
-          console.log('ContentRenderer: FOUND KURSKART! Rendering CourseMap for line:', trimmedLine);
-          return (
-            <div key={index}>
-              <h3 className="text-lg font-bold text-primary mb-4">3. Kurskart – «Finans-linjen»</h3>
-              <CourseMap />
-            </div>
-          );
-        }
         
         // Handle iframe embeds
         if (trimmedLine.includes('<iframe')) {
