@@ -31,9 +31,11 @@ export const LegacyContentRenderer: React.FC<LegacyContentRendererProps> = ({ co
       if (!trimmedLine) return <br key={index} />;
       
       // Handle bond pricing formula specifically
+      console.log('Checking line for bond formula:', trimmedLine);
       if (trimmedLine.includes('Pris = (Kupong/(1+r)') || 
           trimmedLine.includes('Pris = (Kupong/(1+r)¹') ||
           (trimmedLine.includes('Pris =') && trimmedLine.includes('Kupong') && trimmedLine.includes('Pålydende'))) {
+        console.log('Bond formula MATCHED! Rendering BondPricingFormula component');
         return <BondPricingFormula key={index} />;
       }
 
