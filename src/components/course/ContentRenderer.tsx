@@ -1,5 +1,6 @@
 import React from "react";
 import { BondPricingFormula } from "./BondPricingFormula";
+import { CourseMap } from "./CourseMap";
 
 interface ContentRendererProps {
   content: string;
@@ -83,6 +84,12 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
             trimmedLine.includes('Pris = (Kupong/(1+r)¹') ||
             (trimmedLine.includes('Pris =') && trimmedLine.includes('Kupong') && trimmedLine.includes('Pålydende'))) {
           return <BondPricingFormula key={index} />;
+        }
+
+        // Handle course map specifically
+        if (trimmedLine.includes('Kurskart – «Finans-linjen»') || 
+            trimmedLine.includes('3. Kurskart')) {
+          return <CourseMap key={index} />;
         }
         
         // Handle iframe embeds
