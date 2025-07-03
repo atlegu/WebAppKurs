@@ -6,10 +6,12 @@ interface ContentRendererProps {
 }
 
 export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => {
-  console.log('DEBUG: renderContent called with:', { content, type: typeof content });
+  console.log('ContentRenderer: Content received:', content);
+  console.log('ContentRenderer: Content type:', typeof content);
+  console.log('ContentRenderer: Content length:', content?.length);
   
   if (!content) {
-    console.log('DEBUG: No content provided');
+    console.log('ContentRenderer: No content provided, returning null');
     return null;
   }
 
