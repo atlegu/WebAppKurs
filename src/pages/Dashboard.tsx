@@ -56,8 +56,8 @@ const Dashboard = () => {
 
       <div className="container mx-auto px-4 py-8">
         {course ? (
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            <div className="lg:col-span-1">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 min-h-0">
+            <div className="lg:col-span-1 max-w-full">
               <ModuleSidebar
                 modules={modules}
                 selectedModule={selectedModule}
@@ -68,7 +68,7 @@ const Dashboard = () => {
               />
             </div>
 
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-3 min-w-0 max-w-full overflow-hidden">
               {selectedModule ? (
                 <div>
                   <ModuleContent

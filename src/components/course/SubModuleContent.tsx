@@ -46,31 +46,33 @@ export const SubModuleContent: React.FC<SubModuleContentProps> = ({
     }
   };
   return (
-    <div>
+    <div className="w-full max-w-none overflow-hidden">
       {/* Sub-module Header */}
-      <div className="mb-8">
+      <div className="mb-8 border-b pb-6">
         <div className="flex items-center gap-2 mb-2">
           <Badge>Modul {moduleIndex}</Badge>
           <Badge variant="outline">{moduleIndex}.{subModuleIndex}</Badge>
         </div>
-        <h2 className="text-3xl font-bold mb-4">{subModule.title}</h2>
-        <p className="text-lg text-muted-foreground mb-6">
+        <h2 className="text-3xl font-bold mb-4 break-words">{subModule.title}</h2>
+        <p className="text-lg text-muted-foreground mb-2">
           Del av {module.title}
         </p>
       </div>
 
       {/* Sub-module Content */}
-      <div className="space-y-6">
+      <div className="w-full space-y-6 overflow-hidden">
         {subModule.content && (
-          <ContentSection 
-            section={subModule.content} 
-            index={0} 
-          />
+          <div className="w-full">
+            <ContentSection 
+              section={subModule.content} 
+              index={0} 
+            />
+          </div>
         )}
       </div>
 
       {/* Sub-module Navigation */}
-      <div className="flex justify-between mt-8 pt-6 border-t">
+      <div className="flex justify-between items-center mt-8 pt-6 border-t">
         <Button 
           variant="outline" 
           disabled={currentIndex <= 0}
