@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, ChevronDown, ChevronRight } from "lucide-react";
+
+interface SubModule {
+  id: string;
+  title: string;
+  content: any;
+}
 
 interface Module {
   id: string;
@@ -10,21 +16,34 @@ interface Module {
   description: string | null;
   content: any;
   order_index: number;
+  subModules?: SubModule[];
 }
 
 interface ModuleSidebarProps {
   modules: Module[];
   selectedModule: Module | null;
+  selectedSubModule: SubModule | null;
   onModuleSelect: (module: Module) => void;
+  onSubModuleSelect: (subModule: SubModule) => void;
   userProgress?: Record<string, boolean>;
 }
 
 export const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
   modules,
   selectedModule,
+  selectedSubModule,
   onModuleSelect,
+  onSubModuleSelect,
   userProgress
 }) => {
+  const [expandedModules, setExpandedModules] = useState<Record<string, boolean>>(() => {
+    // Auto-expand the bonds module if it's selected
+    const initialExpanded: Record<string, boolean> = {};
+    if (selectedModule?.subModules && selectedModule.subModules.length > 0) {
+      initialExpanded[selectedModule.id] = true;
+    }
+    return initialExpanded;
+  });
   return (
     <Card className="sticky top-24">
       <CardHeader>
@@ -36,28 +55,69 @@ export const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
       <CardContent className="space-y-2">
         {modules.map((module, index) => {
           const isCompleted = userProgress?.[module.id];
+          const isExpanded = expandedModules[module.id];
+          const hasSubModules = module.subModules && module.subModules.length > 0;
           
           return (
-            <Button
-              key={module.id}
-              variant={selectedModule?.id === module.id ? "default" : "ghost"}
-              className="w-full justify-start text-left h-auto p-3"
-              onClick={() => onModuleSelect(module)}
-            >
-              <div className="flex items-center justify-between w-full">
-                <div>
-                  <div className="font-medium">
-                    Modul {index + 1}
+            <div key={module.id} className="space-y-1">
+              <Button
+                variant={selectedModule?.id === module.id && !selectedSubModule ? "default" : "ghost"}
+                className="w-full justify-start text-left h-auto p-3"
+                onClick={() => {
+                  if (hasSubModules) {
+                    setExpandedModules(prev => ({
+                      ...prev,
+                      [module.id]: !prev[module.id]
+                    }));
+                  } else {
+                    onModuleSelect(module);
+                  }
+                }}
+              >
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center gap-2">
+                    {hasSubModules && (
+                      isExpanded ? 
+                        <ChevronDown className="w-4 h-4" /> : 
+                        <ChevronRight className="w-4 h-4" />
+                    )}
+                    <div>
+                      <div className="font-medium">
+                        Modul {index + 1}
+                      </div>
+                      <div className="text-sm opacity-80">
+                        {module.title}
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-sm opacity-80">
-                    {module.title}
-                  </div>
+                  {isCompleted && (
+                    <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                  )}
                 </div>
-                {isCompleted && (
-                  <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                )}
-              </div>
-            </Button>
+              </Button>
+              
+              {/* Sub-modules */}
+              {hasSubModules && isExpanded && (
+                <div className="ml-6 space-y-1">
+                  {module.subModules!.map((subModule, subIndex) => (
+                    <Button
+                      key={subModule.id}
+                      variant={selectedSubModule?.id === subModule.id ? "default" : "ghost"}
+                      className="w-full justify-start text-left h-auto p-2 text-sm"
+                      onClick={() => {
+                        onModuleSelect(module);
+                        onSubModuleSelect(subModule);
+                      }}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-muted-foreground">{index + 1}.{subIndex + 1}</span>
+                        <span>{subModule.title}</span>
+                      </div>
+                    </Button>
+                  ))}
+                </div>
+              )}
+            </div>
           );
         })}
       </CardContent>

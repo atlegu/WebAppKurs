@@ -9,6 +9,12 @@ interface Course {
   description: string | null;
 }
 
+interface SubModule {
+  id: string;
+  title: string;
+  content: any;
+}
+
 interface Module {
   id: string;
   course_id: string;
@@ -16,6 +22,7 @@ interface Module {
   description: string | null;
   content: any;
   order_index: number;
+  subModules?: SubModule[];
 }
 
 export const useCourseData = (courseId: string | undefined) => {
@@ -23,6 +30,7 @@ export const useCourseData = (courseId: string | undefined) => {
   const [course, setCourse] = useState<Course | null>(null);
   const [modules, setModules] = useState<Module[]>([]);
   const [selectedModule, setSelectedModule] = useState<Module | null>(null);
+  const [selectedSubModule, setSelectedSubModule] = useState<SubModule | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
 
@@ -66,9 +74,63 @@ export const useCourseData = (courseId: string | undefined) => {
       if (modulesError) {
         console.error("Error fetching modules:", modulesError);
       } else {
-        setModules(modulesData || []);
-        if (modulesData && modulesData.length > 0) {
-          setSelectedModule(modulesData[0]);
+        // Process modules and add sub-modules for bonds module
+        const processedModules = modulesData?.map(module => {
+          if (module.order_index === 4 && module.title === "Obligasjoner") {
+            // Split bonds module into sub-modules
+            const sections = (module.content as any)?.sections || [];
+            return {
+              ...module,
+              subModules: [
+                {
+                  id: `${module.id}-sub-1`,
+                  title: "Hva er en obligasjon?",
+                  content: sections[0] || {}
+                },
+                {
+                  id: `${module.id}-sub-2`, 
+                  title: "Obligasjonsstruktur og nøkkeltall",
+                  content: sections[1] || {}
+                },
+                {
+                  id: `${module.id}-sub-3`,
+                  title: "Pris og avkastning på obligasjoner", 
+                  content: sections[2] || {}
+                },
+                {
+                  id: `${module.id}-sub-4`,
+                  title: "Effektiv rente (Yield to Maturity - YTM)",
+                  content: sections[3] || {}
+                },
+                {
+                  id: `${module.id}-sub-5`,
+                  title: "Risikofaktorer ved obligasjoner",
+                  content: sections[4] || {}
+                },
+                {
+                  id: `${module.id}-sub-6`,
+                  title: "Kredittrating og markedsaktører",
+                  content: sections[5] || {}
+                },
+                {
+                  id: `${module.id}-sub-7`,
+                  title: "Grønne obligasjoner og bærekraftige lån",
+                  content: sections[6] || {}
+                },
+                {
+                  id: `${module.id}-sub-8`,
+                  title: "Durasjon - obligasjonens følsomhet for renteendringer",
+                  content: sections[7] || {}
+                }
+              ]
+            };
+          }
+          return module;
+        }) || [];
+        
+        setModules(processedModules);
+        if (processedModules && processedModules.length > 0) {
+          setSelectedModule(processedModules[0]);
         }
       }
 
@@ -82,7 +144,9 @@ export const useCourseData = (courseId: string | undefined) => {
     course,
     modules,
     selectedModule,
+    selectedSubModule,
     setSelectedModule,
+    setSelectedSubModule,
     isLoading,
     user
   };

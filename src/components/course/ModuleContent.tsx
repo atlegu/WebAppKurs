@@ -6,6 +6,13 @@ import { Separator } from "@/components/ui/separator";
 import { Target, BookOpen } from "lucide-react";
 import { ContentSection } from "./ContentSection";
 import { StockPricingModule } from "./StockPricingModule";
+import { SubModuleContent } from "./SubModuleContent";
+
+interface SubModule {
+  id: string;
+  title: string;
+  content: any;
+}
 
 interface Module {
   id: string;
@@ -14,6 +21,7 @@ interface Module {
   description: string | null;
   content: any;
   order_index: number;
+  subModules?: SubModule[];
 }
 
 interface ContentSectionData {
@@ -29,10 +37,15 @@ interface ContentSectionData {
 
 interface ModuleContentProps {
   selectedModule: Module | null;
+  selectedSubModule?: SubModule | null;
   totalModules: number;
 }
 
-export const ModuleContent: React.FC<ModuleContentProps> = ({ selectedModule, totalModules }) => {
+export const ModuleContent: React.FC<ModuleContentProps> = ({ 
+  selectedModule, 
+  selectedSubModule, 
+  totalModules 
+}) => {
   if (!selectedModule) {
     return (
       <Card>
@@ -47,6 +60,18 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({ selectedModule, to
     );
   }
 
+  // If a sub-module is selected, show that instead
+  if (selectedSubModule) {
+    return (
+      <SubModuleContent
+        subModule={selectedSubModule}
+        moduleTitle={selectedModule.title}
+        moduleIndex={selectedModule.order_index}
+        subModuleIndex={selectedModule.subModules?.findIndex(sub => sub.id === selectedSubModule.id) + 1 || 1}
+      />
+    );
+  }
+
   return (
     <div>
       {/* Module Header */}
@@ -57,18 +82,39 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({ selectedModule, to
         </div>
         <h2 className="text-3xl font-bold mb-4">{selectedModule.title}</h2>
         <p className="text-lg text-muted-foreground mb-6">{selectedModule.description}</p>
+        
+        {/* Show sub-modules overview if available */}
+        {selectedModule.subModules && selectedModule.subModules.length > 0 && (
+          <div className="bg-muted/50 rounded-lg p-4 mb-6">
+            <h3 className="font-semibold mb-3">Denne modulen inneholder:</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {selectedModule.subModules.map((subModule, index) => (
+                <div key={subModule.id} className="flex items-center gap-2 text-sm">
+                  <span className="font-medium text-primary">{selectedModule.order_index}.{index + 1}</span>
+                  <span>{subModule.title}</span>
+                </div>
+              ))}
+            </div>
+            <p className="text-sm text-muted-foreground mt-3">
+              Velg en underside fra menyen til venstre for å starte læringen.
+            </p>
+          </div>
+        )}
       </div>
-
 
       <Separator className="mb-6" />
 
-      {/* Module Sections */}
-      {selectedModule.order_index === 5 ? (
-        <StockPricingModule />
-      ) : (
-        selectedModule.content?.sections?.map((section: ContentSectionData, index: number) => 
-          <ContentSection key={index} section={section} index={index} />
-        )
+      {/* Module Sections - only show if no sub-modules */}
+      {(!selectedModule.subModules || selectedModule.subModules.length === 0) && (
+        <>
+          {selectedModule.order_index === 5 ? (
+            <StockPricingModule />
+          ) : (
+            selectedModule.content?.sections?.map((section: ContentSectionData, index: number) => 
+              <ContentSection key={index} section={section} index={index} />
+            )
+          )}
+        </>
       )}
 
       {/* Module Navigation */}

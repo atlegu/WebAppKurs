@@ -58,7 +58,9 @@ const Dashboard = () => {
               <ModuleSidebar
                 modules={modules}
                 selectedModule={selectedModule}
+                selectedSubModule={null}
                 onModuleSelect={setSelectedModule}
+                onSubModuleSelect={() => {}}
                 userProgress={userProgress}
               />
             </div>

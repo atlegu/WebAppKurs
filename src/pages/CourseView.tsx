@@ -6,7 +6,15 @@ import { ModuleContent } from "@/components/course/ModuleContent";
 
 const CourseView = () => {
   const { courseId } = useParams();
-  const { course, modules, selectedModule, setSelectedModule, isLoading } = useCourseData(courseId);
+  const { 
+    course, 
+    modules, 
+    selectedModule, 
+    selectedSubModule, 
+    setSelectedModule, 
+    setSelectedSubModule, 
+    isLoading 
+  } = useCourseData(courseId);
 
 
   if (isLoading) {
@@ -35,13 +43,16 @@ const CourseView = () => {
             <ModuleSidebar
               modules={modules}
               selectedModule={selectedModule}
+              selectedSubModule={selectedSubModule}
               onModuleSelect={setSelectedModule}
+              onSubModuleSelect={setSelectedSubModule}
             />
           </div>
 
           <div className="lg:col-span-3">
             <ModuleContent
               selectedModule={selectedModule}
+              selectedSubModule={selectedSubModule}
               totalModules={modules.length}
             />
           </div>
