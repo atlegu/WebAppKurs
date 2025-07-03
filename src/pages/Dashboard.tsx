@@ -27,7 +27,9 @@ const Dashboard = () => {
     course,
     modules,
     selectedModule,
+    selectedSubModule,
     setSelectedModule,
+    setSelectedSubModule,
     isLoading,
     userProgress,
     handleQuizPassed,
@@ -58,9 +60,9 @@ const Dashboard = () => {
               <ModuleSidebar
                 modules={modules}
                 selectedModule={selectedModule}
-                selectedSubModule={null}
+                selectedSubModule={selectedSubModule}
                 onModuleSelect={setSelectedModule}
-                onSubModuleSelect={() => {}}
+                onSubModuleSelect={setSelectedSubModule}
                 userProgress={userProgress}
               />
             </div>
@@ -70,7 +72,7 @@ const Dashboard = () => {
                 <div>
                   <ModuleContent
                     selectedModule={selectedModule}
-                    selectedSubModule={null}
+                    selectedSubModule={selectedSubModule}
                     totalModules={modules.length}
                   />
 

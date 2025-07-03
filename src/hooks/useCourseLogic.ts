@@ -39,6 +39,7 @@ export const useCourseLogic = () => {
   const [course, setCourse] = useState<Course | null>(null);
   const [modules, setModules] = useState<Module[]>([]);
   const [selectedModule, setSelectedModule] = useState<Module | null>(null);
+  const [selectedSubModule, setSelectedSubModule] = useState<SubModule | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userProgress, setUserProgress] = useState<Record<string, boolean>>({});
   const navigate = useNavigate();
@@ -287,7 +288,9 @@ export const useCourseLogic = () => {
     course,
     modules,
     selectedModule,
+    selectedSubModule,
     setSelectedModule,
+    setSelectedSubModule,
     isLoading,
     userProgress,
     handleQuizPassed,
