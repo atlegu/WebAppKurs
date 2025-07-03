@@ -87,8 +87,11 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
         }
 
         // Handle course map specifically
+        console.log('ContentRenderer: Checking line for CourseMap:', trimmedLine);
         if (trimmedLine.includes('Kurskart – «Finans-linjen»') || 
-            trimmedLine.includes('3. Kurskart')) {
+            trimmedLine.includes('3. Kurskart') ||
+            trimmedLine.includes('Kurskart –')) {
+          console.log('ContentRenderer: Rendering CourseMap for line:', trimmedLine);
           return <CourseMap key={index} />;
         }
         

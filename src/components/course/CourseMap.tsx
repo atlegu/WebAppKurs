@@ -1,6 +1,7 @@
 import React from "react";
 
 export const CourseMap: React.FC = () => {
+  console.log('CourseMap: Component is rendering');
   return (
     <div className="my-6">
       <h3 className="text-lg font-bold text-primary mb-4">3. Kurskart – «Finans-linjen»</h3>
