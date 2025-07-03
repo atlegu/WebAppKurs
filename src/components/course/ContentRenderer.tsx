@@ -88,11 +88,11 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
 
         // Handle course map specifically
         console.log('ContentRenderer: Checking line for CourseMap:', trimmedLine);
-        if (trimmedLine.includes('Kurskart') && trimmedLine.includes('Finans-linjen')) {
+        if (trimmedLine.includes('3. Kurskart') || (trimmedLine.includes('Kurskart') && trimmedLine.includes('Finans-linjen'))) {
           console.log('ContentRenderer: Rendering CourseMap for line:', trimmedLine);
           return (
             <div key={index}>
-              <h3 className="text-lg font-bold text-primary mb-4">{trimmedLine}</h3>
+              <h3 className="text-lg font-bold text-primary mb-4">{trimmedLine.replace(/\*\*/g, '')}</h3>
               <CourseMap />
             </div>
           );
