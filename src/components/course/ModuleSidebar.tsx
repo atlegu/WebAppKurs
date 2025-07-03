@@ -64,7 +64,7 @@ export const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
             <div key={module.id} className="space-y-1">
               <Button
                 variant={selectedModule?.id === module.id && !selectedSubModule ? "default" : "ghost"}
-                className="w-full justify-start text-left h-auto p-3 overflow-hidden"
+                className="w-full justify-start text-left h-auto p-3"
                 onClick={() => {
                   if (hasSubModules) {
                     setExpandedModules(prev => ({
@@ -77,24 +77,27 @@ export const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
                   }
                 }}
               >
-                <div className="flex items-center justify-between w-full min-w-0">
-                  <div className="flex items-center gap-2 min-w-0 flex-1">
+                <div className="flex items-start justify-between w-full min-w-0">
+                  <div className="flex items-start gap-2 min-w-0 flex-1">
                     {hasSubModules && (
-                      isExpanded ? 
-                        <ChevronDown className="w-4 h-4 flex-shrink-0" /> : 
-                        <ChevronRight className="w-4 h-4 flex-shrink-0" />
+                      <div className="mt-1 flex-shrink-0">
+                        {isExpanded ? 
+                          <ChevronDown className="w-4 h-4" /> : 
+                          <ChevronRight className="w-4 h-4" />
+                        }
+                      </div>
                     )}
                     <div className="min-w-0 flex-1">
                       <div className="font-medium text-sm">
                         Modul {index + 1}
                       </div>
-                      <div className="text-xs opacity-80 break-words hyphens-auto" style={{wordBreak: 'break-word'}}>
+                      <div className="text-xs opacity-80 leading-tight whitespace-normal break-words">
                         {module.title}
                       </div>
                     </div>
                   </div>
                   {isCompleted && (
-                    <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                    <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-1" />
                   )}
                 </div>
               </Button>
@@ -106,15 +109,15 @@ export const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
                     <Button
                       key={subModule.id}
                       variant={selectedSubModule?.id === subModule.id ? "default" : "ghost"}
-                      className="w-full justify-start text-left h-auto p-2 text-sm overflow-hidden"
+                      className="w-full justify-start text-left h-auto p-2 text-sm"
                       onClick={() => {
                         onModuleSelect(module);
                         onSubModuleSelect(subModule);
                       }}
                     >
-                      <div className="flex items-center gap-2 min-w-0 w-full">
-                        <span className="text-muted-foreground text-xs flex-shrink-0">{index + 1}.{subIndex + 1}</span>
-                        <span className="break-words hyphens-auto text-xs" style={{wordBreak: 'break-word'}}>
+                      <div className="flex items-start gap-2 min-w-0 w-full">
+                        <span className="text-muted-foreground text-xs flex-shrink-0 mt-0.5">{index + 1}.{subIndex + 1}</span>
+                        <span className="leading-tight whitespace-normal break-words text-xs">
                           {subModule.title}
                         </span>
                       </div>
