@@ -17,6 +17,12 @@ interface Course {
   description: string | null;
 }
 
+interface SubModule {
+  id: string;
+  title: string;
+  content: any;
+}
+
 interface Module {
   id: string;
   course_id: string;
@@ -24,6 +30,7 @@ interface Module {
   description: string | null;
   content: any;
   order_index: number;
+  subModules?: SubModule[];
 }
 
 export const useCourseLogic = () => {
@@ -64,9 +71,68 @@ export const useCourseLogic = () => {
       if (modulesError) {
         console.error("Error fetching modules:", modulesError);
       } else {
-        setModules(modulesData || []);
-        if (modulesData && modulesData.length > 0) {
-          setSelectedModule(modulesData[0]);
+        // Process modules and add sub-modules for bonds module
+        console.log('Dashboard: Processing modules:', modulesData);
+        const processedModules = modulesData?.map(module => {
+          console.log('Dashboard: Checking module:', module.title, 'order_index:', module.order_index);
+          if (module.order_index === 4 && module.title === "Obligasjoner") {
+            console.log('Dashboard: Found bonds module! Creating sub-modules...');
+            const sections = (module.content as any)?.sections || [];
+            console.log('Dashboard: Sections found:', sections.length);
+            const processedModule = {
+              ...module,
+              subModules: [
+                {
+                  id: `${module.id}-sub-1`,
+                  title: "Hva er en obligasjon?",
+                  content: sections[0] || {}
+                },
+                {
+                  id: `${module.id}-sub-2`, 
+                  title: "Obligasjonsstruktur og nøkkeltall",
+                  content: sections[1] || {}
+                },
+                {
+                  id: `${module.id}-sub-3`,
+                  title: "Pris og avkastning på obligasjoner", 
+                  content: sections[2] || {}
+                },
+                {
+                  id: `${module.id}-sub-4`,
+                  title: "Effektiv rente (Yield to Maturity - YTM)",
+                  content: sections[3] || {}
+                },
+                {
+                  id: `${module.id}-sub-5`,
+                  title: "Risikofaktorer ved obligasjoner",
+                  content: sections[4] || {}
+                },
+                {
+                  id: `${module.id}-sub-6`,
+                  title: "Kredittrating og markedsaktører",
+                  content: sections[5] || {}
+                },
+                {
+                  id: `${module.id}-sub-7`,
+                  title: "Grønne obligasjoner og bærekraftige lån",
+                  content: sections[6] || {}
+                },
+                {
+                  id: `${module.id}-sub-8`,
+                  title: "Durasjon - obligasjonens følsomhet for renteendringer",
+                  content: sections[7] || {}
+                }
+              ]
+            };
+            console.log('Dashboard: Processed bonds module with sub-modules:', processedModule.subModules?.length);
+            return processedModule;
+          }
+          return module;
+        }) || [];
+        
+        setModules(processedModules);
+        if (processedModules && processedModules.length > 0) {
+          setSelectedModule(processedModules[0]);
         }
       }
 
