@@ -87,13 +87,7 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
         }
 
         // Handle course map specifically
-        if (index === 42) {
-          console.log('ContentRenderer: Line 42 exact content:', JSON.stringify(trimmedLine));
-          console.log('ContentRenderer: Includes Kurskart?', trimmedLine.includes('Kurskart'));
-          console.log('ContentRenderer: Includes Finans-linjen?', trimmedLine.includes('Finans-linjen'));
-        }
-        
-        if (trimmedLine.includes('Kurskart') && trimmedLine.includes('Finans-linjen')) {
+        if (trimmedLine.includes('Kurskart')) {
           console.log('ContentRenderer: FOUND KURSKART! Rendering CourseMap for line:', trimmedLine);
           return (
             <div key={index}>
