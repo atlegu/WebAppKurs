@@ -35,8 +35,6 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
       {content.split('\n').map((line, index) => {
         const trimmedLine = line.trim();
         
-        console.log(`ContentRenderer: Processing line ${index}: "${trimmedLine}"`);
-        
         if (!trimmedLine) return <div key={index} className="h-2" />;
         
         // Handle bold headers with ** 
