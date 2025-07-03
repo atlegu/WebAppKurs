@@ -82,9 +82,13 @@ export const useCourseLogic = () => {
             
             // Match content to correct sub-modules by title
             const findSectionByTitle = (searchTitle: string) => {
-              return sections.find(section => 
+              console.log('Dashboard: Looking for section with title containing:', searchTitle);
+              console.log('Dashboard: Available sections:', sections.map(s => s.title));
+              const found = sections.find(section => 
                 section.title && section.title.toLowerCase().includes(searchTitle.toLowerCase())
               ) || {};
+              console.log('Dashboard: Found section:', found.title || 'NO MATCH');
+              return found;
             };
             
             const processedModule = {
