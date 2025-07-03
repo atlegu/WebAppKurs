@@ -52,7 +52,9 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index }
                 <PlayCircle className="w-5 h-5 text-destructive" />
                 <span className="font-semibold text-foreground">Video</span>
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed">{section.video}</p>
+              <div className="text-sm text-muted-foreground leading-relaxed">
+                <ContentRenderer content={section.video} />
+              </div>
             </div>
           )}
 
