@@ -41,8 +41,8 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
         if (trimmedLine.startsWith('**') && trimmedLine.endsWith('**') && trimmedLine.split('**').length === 3) {
           const text = trimmedLine.slice(2, -2);
           
-          // If this is the course map header, render the course map
-          if (text.includes('Kurskart') || text.includes('kurskart')) {
+          // If this is the course map header (specifically "3. Kurskart"), render the course map
+          if (text.includes('3. Kurskart')) {
             return (
               <div key={index}>
                 <h3 className="text-lg font-bold text-primary mb-4">{text}</h3>
