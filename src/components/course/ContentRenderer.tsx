@@ -43,7 +43,6 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           
           // If this is the course map header, render the course map
           if (text.includes('Kurskart') || text.includes('kurskart')) {
-            console.log('ContentRenderer: FOUND KURSKART HEADER! Rendering CourseMap');
             return (
               <div key={index}>
                 <h3 className="text-lg font-bold text-primary mb-4">{text}</h3>
