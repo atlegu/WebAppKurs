@@ -312,9 +312,9 @@ Etter å ha fullført alle ti moduler skal du kunne:
     const isDevMode = urlParams.get('dev') === 'true';
     
     if (isDevMode) {
-      // Set mock user data for dev mode
+      // Set mock user data for dev mode with valid UUID
       const mockUser = {
-        id: 'dev-user-123',
+        id: '00000000-0000-0000-0000-000000000001', // Valid UUID format
         email: 'dev@example.com',
         user_metadata: {},
         app_metadata: {},
@@ -323,8 +323,8 @@ Etter å ha fullført alle ti moduler skal du kunne:
       } as User;
       
       const mockProfile = {
-        id: 'dev-profile-123',
-        user_id: 'dev-user-123',
+        id: '00000000-0000-0000-0000-000000000002', // Valid UUID format
+        user_id: '00000000-0000-0000-0000-000000000001',
         full_name: 'Dev Bruker',
         role: 'student'
       } as Profile;
