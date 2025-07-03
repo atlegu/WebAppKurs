@@ -81,48 +81,56 @@ export const useCourseData = (courseId: string | undefined) => {
             console.log('Found bonds module! Creating sub-modules...');
             const sections = (module.content as any)?.sections || [];
             console.log('Sections found:', sections.length);
+            
+            // Match content to correct sub-modules by title
+            const findSectionByTitle = (searchTitle: string) => {
+              return sections.find(section => 
+                section.title && section.title.toLowerCase().includes(searchTitle.toLowerCase())
+              ) || {};
+            };
+            
             const processedModule = {
               ...module,
               subModules: [
                 {
                   id: `${module.id}-sub-1`,
                   title: "Hva er en obligasjon?",
-                  content: sections[0] || {}
+                  content: findSectionByTitle("Hva er en obligasjon")
                 },
                 {
                   id: `${module.id}-sub-2`, 
                   title: "Obligasjonsstruktur og nøkkeltall",
-                  content: sections[1] || {}
+                  content: findSectionByTitle("Obligasjonsstruktur og nøkkeltall")
                 },
                 {
                   id: `${module.id}-sub-3`,
                   title: "Pris og avkastning på obligasjoner", 
-                  content: sections[2] || {}
+                  content: findSectionByTitle("Pris og avkastning")
                 },
                 {
                   id: `${module.id}-sub-4`,
                   title: "Effektiv rente (Yield to Maturity - YTM)",
-                  content: sections[3] || {}
+                  content: findSectionByTitle("Effektiv rente")
                 },
                 {
                   id: `${module.id}-sub-5`,
                   title: "Risikofaktorer ved obligasjoner",
-                  content: sections[4] || {}
+                  content: findSectionByTitle("Risikofaktorer")
                 },
                 {
                   id: `${module.id}-sub-6`,
                   title: "Kredittrating og markedsaktører",
-                  content: sections[5] || {}
+                  content: findSectionByTitle("Kredittrating")
                 },
                 {
                   id: `${module.id}-sub-7`,
                   title: "Grønne obligasjoner og bærekraftige lån",
-                  content: sections[6] || {}
+                  content: findSectionByTitle("Grønne obligasjoner")
                 },
                 {
                   id: `${module.id}-sub-8`,
                   title: "Durasjon - obligasjonens følsomhet for renteendringer",
-                  content: sections[7] || {}
+                  content: findSectionByTitle("Durasjon")
                 },
                 {
                   id: `${module.id}-sub-9`,
