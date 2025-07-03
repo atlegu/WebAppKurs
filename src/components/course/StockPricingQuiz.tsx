@@ -405,11 +405,34 @@ const StockPricingQuiz: React.FC = () => {
             {currentQuestionIndex + 1} / {selectedQuestions.length}
           </Badge>
         </CardTitle>
-        <div className="w-full bg-gray-200 rounded-full h-2">
-          <div 
-            className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-            style={{ width: `${progress}%` }}
-          />
+        <div className="flex items-center gap-2">
+          <div className="w-full bg-gray-200 rounded-full h-2">
+            <div 
+              className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          <div className="flex gap-1">
+            {selectedQuestions.map((_, index) => {
+              const isAnswered = selectedAnswers[index] !== -1;
+              const isCorrect = isAnswered && selectedAnswers[index] === selectedQuestions[index]?.correctAnswer;
+              
+              return (
+                <div
+                  key={index}
+                  className={`w-3 h-3 rounded-full ${
+                    index === currentQuestionIndex 
+                      ? "bg-primary" 
+                      : !isAnswered
+                      ? "bg-muted"
+                      : isCorrect
+                      ? "bg-green-500"
+                      : "bg-red-500"
+                  }`}
+                />
+              );
+            })}
+          </div>
         </div>
       </CardHeader>
       <CardContent className="space-y-6">

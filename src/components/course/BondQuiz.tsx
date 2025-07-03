@@ -326,18 +326,25 @@ export const BondQuiz = ({ isOpen, onOpenChange }: BondQuizProps) => {
                 Spørsmål {currentQuestionIndex + 1} av {questions.length}
               </span>
               <div className="flex gap-1">
-                {questions.map((_, index) => (
-                  <div
-                    key={index}
-                    className={`w-3 h-3 rounded-full ${
-                      index === currentQuestionIndex 
-                        ? "bg-primary" 
-                        : userAnswers[index] !== undefined 
-                        ? "bg-green-500" 
-                        : "bg-muted"
-                    }`}
-                  />
-                ))}
+                {questions.map((_, index) => {
+                  const isAnswered = userAnswers[index] !== undefined;
+                  const isCorrect = isAnswered && userAnswers[index] === questions[index]?.correctAnswer;
+                  
+                  return (
+                    <div
+                      key={index}
+                      className={`w-3 h-3 rounded-full ${
+                        index === currentQuestionIndex 
+                          ? "bg-primary" 
+                          : !isAnswered
+                          ? "bg-muted"
+                          : isCorrect
+                          ? "bg-green-500"
+                          : "bg-red-500"
+                      }`}
+                    />
+                  );
+                })}
               </div>
             </div>
 
