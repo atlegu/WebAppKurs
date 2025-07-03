@@ -83,6 +83,17 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           return <BondPricingFormula key={index} />;
         }
         
+        // Handle iframe embeds
+        if (trimmedLine.includes('<iframe')) {
+          return (
+            <div 
+              key={index} 
+              className="my-6 flex justify-center"
+              dangerouslySetInnerHTML={{ __html: trimmedLine }}
+            />
+          );
+        }
+
         // Handle formulas and code
         if (trimmedLine.includes('=') && (trimmedLine.includes('(') || trimmedLine.includes('^'))) {
           return (
