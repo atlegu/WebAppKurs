@@ -47,7 +47,7 @@ export const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
     return initialExpanded;
   });
   return (
-    <Card className="sticky top-24">
+    <Card className="sticky top-24 w-full">
       <CardHeader>
         <CardTitle className="text-lg">Kursmoduler</CardTitle>
         <CardDescription>
@@ -64,7 +64,7 @@ export const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
             <div key={module.id} className="space-y-1">
               <Button
                 variant={selectedModule?.id === module.id && !selectedSubModule ? "default" : "ghost"}
-                className="w-full justify-start text-left h-auto p-3"
+                className="w-full justify-start text-left h-auto p-3 overflow-hidden"
                 onClick={() => {
                   if (hasSubModules) {
                     setExpandedModules(prev => ({
@@ -77,18 +77,18 @@ export const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
                   }
                 }}
               >
-                <div className="flex items-center justify-between w-full">
-                  <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between w-full min-w-0">
+                  <div className="flex items-center gap-2 min-w-0 flex-1">
                     {hasSubModules && (
                       isExpanded ? 
-                        <ChevronDown className="w-4 h-4" /> : 
-                        <ChevronRight className="w-4 h-4" />
+                        <ChevronDown className="w-4 h-4 flex-shrink-0" /> : 
+                        <ChevronRight className="w-4 h-4 flex-shrink-0" />
                     )}
-                    <div>
-                      <div className="font-medium">
+                    <div className="min-w-0 flex-1">
+                      <div className="font-medium text-sm">
                         Modul {index + 1}
                       </div>
-                      <div className="text-sm opacity-80">
+                      <div className="text-xs opacity-80 break-words hyphens-auto" style={{wordBreak: 'break-word'}}>
                         {module.title}
                       </div>
                     </div>
@@ -106,15 +106,17 @@ export const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
                     <Button
                       key={subModule.id}
                       variant={selectedSubModule?.id === subModule.id ? "default" : "ghost"}
-                      className="w-full justify-start text-left h-auto p-2 text-sm"
+                      className="w-full justify-start text-left h-auto p-2 text-sm overflow-hidden"
                       onClick={() => {
                         onModuleSelect(module);
                         onSubModuleSelect(subModule);
                       }}
                     >
-                      <div className="flex items-center gap-2">
-                        <span className="text-muted-foreground">{index + 1}.{subIndex + 1}</span>
-                        <span>{subModule.title}</span>
+                      <div className="flex items-center gap-2 min-w-0 w-full">
+                        <span className="text-muted-foreground text-xs flex-shrink-0">{index + 1}.{subIndex + 1}</span>
+                        <span className="break-words hyphens-auto text-xs" style={{wordBreak: 'break-word'}}>
+                          {subModule.title}
+                        </span>
                       </div>
                     </Button>
                   ))}
