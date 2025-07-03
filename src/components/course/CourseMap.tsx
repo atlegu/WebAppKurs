@@ -4,8 +4,6 @@ export const CourseMap: React.FC = () => {
   console.log('CourseMap: Component is rendering');
   return (
     <div className="my-6">
-      <h3 className="text-lg font-bold text-primary mb-4">3. Kurskart – «Finans-linjen»</h3>
-      
       <div className="bg-gradient-to-br from-slate-50 to-slate-200 p-8 rounded-xl border border-slate-300 mb-6">
         {/* Linear course progression - horizontal timeline */}
         <div className="flex items-center justify-center flex-wrap gap-3 mb-8">
