@@ -5,6 +5,7 @@ import { BookOpen, PlayCircle, FileText, CheckCircle, Target, Brain } from "luci
 import { ContentRenderer } from "./ContentRenderer";
 import { BondQuiz } from "./BondQuiz";
 import { DurationCalculator } from "./DurationCalculator";
+import { BondExercises } from "./BondExercises";
 
 interface ContentSectionData {
   title: string;
@@ -24,6 +25,7 @@ interface ContentSectionProps {
 
 export const ContentSection: React.FC<ContentSectionProps> = ({ section, index }) => {
   const [showBondQuiz, setShowBondQuiz] = useState(false);
+  const [showBondExercises, setShowBondExercises] = useState(false);
 
   return (
     <>
@@ -102,17 +104,32 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index }
 
           {/* Bond Quiz Button - Show only for "Oppgaver" sections */}
           {section.title.toLowerCase().includes('oppgaver') && (
-            <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
-              <div className="flex items-center gap-2 mb-3">
-                <Brain className="w-5 h-5 text-blue-600" />
-                <span className="font-semibold text-foreground">Flervalgsoppgaver</span>
+            <div className="space-y-4">
+              <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+                <div className="flex items-center gap-2 mb-3">
+                  <Brain className="w-5 h-5 text-blue-600" />
+                  <span className="font-semibold text-foreground">Flervalgsoppgaver</span>
+                </div>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Test kunnskapen din med 15 tilfeldige spørsmål om obligasjoner
+                </p>
+                <Button onClick={() => setShowBondQuiz(true)} className="w-full">
+                  Start flervalgsoppgaver
+                </Button>
               </div>
-              <p className="text-sm text-muted-foreground mb-3">
-                Test kunnskapen din med 15 tilfeldige spørsmål om obligasjoner
-              </p>
-              <Button onClick={() => setShowBondQuiz(true)} className="w-full">
-                Start flervalgsoppgaver
-              </Button>
+              
+              <div className="bg-green-50 border border-green-200 p-4 rounded-lg">
+                <div className="flex items-center gap-2 mb-3">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <span className="font-semibold text-foreground">Regneoppgaver</span>
+                </div>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Øv på obligasjonsberegninger med 11 praktiske oppgaver
+                </p>
+                <Button onClick={() => setShowBondExercises(true)} className="w-full" variant="outline">
+                  Start regneoppgaver
+                </Button>
+              </div>
             </div>
           )}
         </CardContent>
@@ -121,6 +138,11 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index }
       <BondQuiz 
         isOpen={showBondQuiz} 
         onOpenChange={setShowBondQuiz} 
+      />
+      
+      <BondExercises 
+        isOpen={showBondExercises} 
+        onOpenChange={setShowBondExercises} 
       />
     </>
   );
