@@ -2,6 +2,7 @@ import React from "react";
 import { BondPricingFormula } from "./BondPricingFormula";
 import { CourseMap } from "./CourseMap";
 import { LaTeX } from "./LaTeX";
+import { MarketEfficiencyTable } from "./MarketEfficiencyTable";
 import { PortfolioRiskCalculator } from "./PortfolioRiskCalculator";
 import { RiskMeasurementCalculator } from "./RiskMeasurementCalculator";
 import { ReturnCalculator } from "./ReturnCalculator";
@@ -304,6 +305,10 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
         
         if (trimmedLine.includes('!component:risk-return-viz')) {
           return <RiskReturnVisualization key={index} />;
+        }
+
+        if (trimmedLine.includes('!component:market-efficiency-table')) {
+          return <MarketEfficiencyTable key={index} />;
         }
 
         // Handle bond pricing formula
