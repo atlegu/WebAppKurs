@@ -3,6 +3,7 @@ import { BondPricingFormula } from "./BondPricingFormula";
 import { CourseMap } from "./CourseMap";
 import { LaTeX } from "./LaTeX";
 import { PortfolioRiskCalculator } from "./PortfolioRiskCalculator";
+import { RiskMeasurementCalculator } from "./RiskMeasurementCalculator";
 
 interface ContentRendererProps {
   content: string;
@@ -289,6 +290,10 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
         // Handle interactive components
         if (trimmedLine.includes('!component:portfolio-calculator')) {
           return <PortfolioRiskCalculator key={index} />;
+        }
+        
+        if (trimmedLine.includes('!component:risk-calculator')) {
+          return <RiskMeasurementCalculator key={index} />;
         }
 
         // Handle bond pricing formula
