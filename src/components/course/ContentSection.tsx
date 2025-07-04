@@ -244,7 +244,7 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
                 <span className="font-semibold text-foreground">Video</span>
               </div>
               <div className="text-sm text-muted-foreground leading-relaxed">
-                <ContentRenderer content={section.video} />
+                {section.video}
               </div>
             </div>
           )}
@@ -256,7 +256,7 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
                 <span className="font-semibold text-foreground">Oppgave</span>
               </div>
               <div className="text-sm text-muted-foreground leading-relaxed">
-                <ContentRenderer content={section.exercise} />
+                {section.exercise}
               </div>
             </div>
           )}
@@ -268,7 +268,7 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
                 <span className="font-semibold text-foreground">Refleksjonsspørsmål</span>
               </div>
               <div className="text-sm text-muted-foreground leading-relaxed">
-                <ContentRenderer content={section.reflection} />
+                {section.reflection}
               </div>
             </div>
           )}
