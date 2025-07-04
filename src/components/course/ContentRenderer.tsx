@@ -30,115 +30,125 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
       return part;
     });
   };
-  
-  // Pre-process ALL LaTeX content before any line processing
-  const preprocessLatex = (text: string) => {
-    const elements: { type: 'latex' | 'text'; content: string; key: string }[] = [];
-    let remainingText = text;
-    let elementIndex = 0;
 
-    // First, handle multi-line LaTeX blocks
-    const multiLinePattern = /\$\$\\begin\{aligned\}[\s\S]*?\\end\{aligned\}\$\$/g;
-    remainingText = remainingText.replace(multiLinePattern, (match) => {
-      const key = `__ELEMENT_${elementIndex++}__`;
-      elements.push({ type: 'latex', content: match, key });
-      return key;
-    });
+  // COMPLETELY separate LaTeX processing from text processing
+  const processContent = (text: string) => {
+    const elements: JSX.Element[] = [];
+    let elementKey = 0;
 
-    // Then handle single-line display math
-    const displayMathPattern = /\$\$[^$]+\$\$/g;
-    remainingText = remainingText.replace(displayMathPattern, (match) => {
-      const key = `__ELEMENT_${elementIndex++}__`;
-      elements.push({ type: 'latex', content: match, key });
-      return key;
-    });
+    // Split into blocks separated by double newlines
+    const blocks = text.split('\n\n');
+    
+    blocks.forEach((block, blockIndex) => {
+      const trimmedBlock = block.trim();
+      if (!trimmedBlock) return;
 
-    // Handle lines with inline math - process the whole line as one unit
-    const lines = remainingText.split('\n');
-    const processedLines = lines.map(line => {
-      if (line.includes('$') && !line.includes('__ELEMENT_')) {
-        const key = `__ELEMENT_${elementIndex++}__`;
-        elements.push({ type: 'latex', content: line, key });
-        return key;
-      }
-      return line;
-    });
-
-    return { processedText: processedLines.join('\n'), elements };
-  };
-
-  const { processedText, elements } = preprocessLatex(content);
-  
-  return (
-    <div className="space-y-4">
-      {processedText.split('\n').map((line, index) => {
-        const trimmedLine = line.trim();
-        console.log(`Line ${index}: "${trimmedLine}"`);
-        
-        if (!trimmedLine) return <div key={index} className="h-2" />;
-        
-        // Handle LaTeX element placeholders
-        const latexElement = elements.find(el => trimmedLine === el.key);
-        if (latexElement) {
-          console.log(`Rendering LaTeX element: ${latexElement.content}`);
-          
-          // Multi-line LaTeX
-          if (latexElement.content.includes('\\begin{aligned}')) {
-            const latexContent = latexElement.content.slice(2, -2); // Remove $$
-            return (
-              <div key={index} className="my-4">
-                <LaTeX displayMode={true}>{latexContent}</LaTeX>
-              </div>
-            );
-          }
-          
-          // Single-line display math
-          if (latexElement.content.startsWith('$$') && latexElement.content.endsWith('$$')) {
-            const latexContent = latexElement.content.slice(2, -2); // Remove $$
-            return (
-              <div key={index} className="my-4">
-                <LaTeX displayMode={true}>{latexContent}</LaTeX>
-              </div>
-            );
-          }
-          
-          // Inline math in text
-          const inlineMathMatches = latexElement.content.match(/\$([^$]+)\$/g);
-          if (inlineMathMatches) {
-            const parts = latexElement.content.split(/(\$[^$]+\$)/);
-            return (
-              <p key={index} className="text-foreground leading-relaxed mb-3">
-                {parts.map((part, partIndex) => {
-                  if (part.startsWith('$') && part.endsWith('$') && part.length > 2) {
-                    const latexContent = part.slice(1, -1);
-                    return <LaTeX key={partIndex}>{latexContent}</LaTeX>;
-                  }
-                  return processBoldText(part);
-                })}
-              </p>
-            );
-          }
+      // Check if entire block is a multi-line LaTeX equation
+      if (trimmedBlock.includes('$$\\begin{aligned}') && trimmedBlock.includes('\\end{aligned}$$')) {
+        const latexMatch = trimmedBlock.match(/\$\$([\s\S]*?)\$\$/);
+        if (latexMatch) {
+          console.log('Found multi-line LaTeX block:', latexMatch[1]);
+          elements.push(
+            <div key={`latex-${elementKey++}`} className="my-4">
+              <LaTeX displayMode={true}>{latexMatch[1]}</LaTeX>
+            </div>
+          );
+          return;
         }
+      }
+
+      // Process block line by line, but skip any line that contains LaTeX
+      const lines = trimmedBlock.split('\n');
+      
+      lines.forEach((line, lineIndex) => {
+        const trimmedLine = line.trim();
+        if (!trimmedLine) {
+          elements.push(<div key={`space-${elementKey++}`} className="h-2" />);
+          return;
+        }
+
+        // If line contains ANY LaTeX, handle it specially
+        if (trimmedLine.includes('$')) {
+          // Display math
+          if (trimmedLine.includes('$$') && trimmedLine.match(/\$\$(.*?)\$\$/)) {
+            const displayMathMatch = trimmedLine.match(/\$\$(.*?)\$\$/);
+            if (displayMathMatch) {
+              console.log('Found display math:', displayMathMatch[1]);
+              elements.push(
+                <div key={`latex-${elementKey++}`} className="my-4">
+                  <LaTeX displayMode={true}>{displayMathMatch[1]}</LaTeX>
+                </div>
+              );
+              return;
+            }
+          }
+          
+          // Inline math in regular text
+          const inlineMathMatches = trimmedLine.match(/\$([^$]+)\$/g);
+          if (inlineMathMatches) {
+            console.log('Found inline math:', inlineMathMatches);
+            const parts = trimmedLine.split(/(\$[^$]+\$)/);
+            
+            // Handle bullet points specially
+            if (trimmedLine.startsWith('•') || trimmedLine.startsWith('- ')) {
+              elements.push(
+                <div key={`bullet-${elementKey++}`} className="flex items-start gap-2 mb-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-foreground">
+                    {parts.map((part, partIndex) => {
+                      if (part.startsWith('$') && part.endsWith('$') && part.length > 2) {
+                        const latexContent = part.slice(1, -1);
+                        return <LaTeX key={partIndex}>{latexContent}</LaTeX>;
+                      }
+                      return <span key={partIndex}>{processBoldText(part)}</span>;
+                    })}
+                  </span>
+                </div>
+              );
+            } else {
+              elements.push(
+                <p key={`text-${elementKey++}`} className="text-foreground leading-relaxed mb-3">
+                  {parts.map((part, partIndex) => {
+                    if (part.startsWith('$') && part.endsWith('$') && part.length > 2) {
+                      const latexContent = part.slice(1, -1);
+                      return <LaTeX key={partIndex}>{latexContent}</LaTeX>;
+                    }
+                    return <span key={partIndex}>{processBoldText(part)}</span>;
+                  })}
+                </p>
+              );
+            }
+            return;
+          }
+          
+          // Line contains $ but no valid LaTeX - skip it entirely
+          console.log('Skipping line with $ but no valid LaTeX:', trimmedLine);
+          return;
+        }
+
+        // Regular text processing (NO LaTeX here)
         
-        // Handle bold headers with ** 
+        // Handle bold headers
         if (trimmedLine.startsWith('**') && trimmedLine.endsWith('**') && trimmedLine.split('**').length === 3) {
           const text = trimmedLine.slice(2, -2);
           
-          // If this is the course map header (specifically "3. Kurskart"), render the course map
+          // Course map header
           if (text.includes('3. Kurskart')) {
-            return (
-              <div key={index}>
+            elements.push(
+              <div key={`coursemap-${elementKey++}`}>
                 <h3 className="text-lg font-bold text-primary mb-4">{text}</h3>
                 <CourseMap />
               </div>
             );
+            return;
           }
           
-          return (
-            <h3 key={index} className="text-lg font-bold text-primary mb-3 mt-6">
+          elements.push(
+            <h3 key={`header-${elementKey++}`} className="text-lg font-bold text-primary mb-3 mt-6">
               {text}
             </h3>
           );
+          return;
         }
         
         // Handle links
@@ -146,8 +156,8 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           const linkMatch = trimmedLine.match(/\[([^\]]+)\]\(([^)]+)\)/);
           if (linkMatch) {
             const [, linkText, linkUrl] = linkMatch;
-            return (
-              <div key={index} className="mb-3">
+            elements.push(
+              <div key={`link-${elementKey++}`} className="mb-3">
                 <a 
                   href={linkUrl} 
                   target="_blank" 
@@ -159,130 +169,57 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
                 </a>
               </div>
             );
+            return;
           }
         }
 
-        // Handle bullet points FIRST (with bold text and LaTeX support)
+        // Handle bullet points (NO LaTeX here - those are handled above)
         if (trimmedLine.startsWith('•') || trimmedLine.startsWith('- ')) {
           const text = trimmedLine.slice(2);
-          
-          // Check if the bullet point contains LaTeX
-          if (text.includes('$')) {
-            const inlineMathMatches = text.match(/\$([^$]+)\$/g);
-            if (inlineMathMatches) {
-              const parts = text.split(/(\$[^$]+\$)/);
-              return (
-                <div key={index} className="flex items-start gap-2 mb-2">
-                  <span className="text-primary mt-1">•</span>
-                  <span className="text-foreground">
-                    {parts.map((part, partIndex) => {
-                      if (part.startsWith('$') && part.endsWith('$') && part.length > 2) {
-                        const latexContent = part.slice(1, -1);
-                        return <LaTeX key={partIndex}>{latexContent}</LaTeX>;
-                      }
-                      // Process the text part but remove redundant variable names that are already in LaTeX
-                      const cleanedPart = part
-                        .replace(/\bPstart\w*\b\s*/gi, '') // Remove "Pstart", "Pstarter", etc.
-                        .replace(/\bPslutt\w*\b\s*/gi, '') // Remove "Pslutt", "Pslutter", etc.
-                        .replace(/\bDD?\w*\b\s*/g, '') // Remove "D", "DD", etc.
-                        .replace(/\s+/g, ' ') // Clean up extra spaces
-                        .trim();
-                      return cleanedPart ? processBoldText(cleanedPart) : '';
-                    })}
-                  </span>
-                </div>
-              );
-            }
-          }
-          
-          return (
-            <div key={index} className="flex items-start gap-2 mb-2">
+          elements.push(
+            <div key={`bullet-${elementKey++}`} className="flex items-start gap-2 mb-2">
               <span className="text-primary mt-1">•</span>
               <span className="text-foreground">{processBoldText(text)}</span>
             </div>
           );
+          return;
         }
         
-        // Handle LaTeX math expressions EARLY - before any other processing
-        if (trimmedLine.includes('$')) {
-          console.log(`Processing LaTeX line ${index}: "${trimmedLine}"`);
-          
-          // Check for display math ($$...$$)
-          if (trimmedLine.includes('$$')) {
-            const displayMathMatch = trimmedLine.match(/\$\$(.*?)\$\$/g);
-            if (displayMathMatch) {
-              console.log(`Found display math: ${displayMathMatch}`);
-              return displayMathMatch.map((match, mathIndex) => {
-                const latexContent = match.slice(2, -2); // Remove $$ from both ends
-                return (
-                  <div key={`${index}-${mathIndex}`} className="my-4">
-                    <LaTeX displayMode={true}>{latexContent}</LaTeX>
-                  </div>
-                );
-              });
-            }
-            // If line contains $$ but no complete match (like $$\begin{aligned}), skip it entirely
-            console.log(`Line contains $$ but incomplete LaTeX, skipping: "${trimmedLine}"`);
-            return null;
-          }
-          
-          // Check for inline math ($...$)
-          const inlineMathMatches = trimmedLine.match(/\$([^$]+)\$/g);
-          if (inlineMathMatches) {
-            console.log(`Found inline math: ${inlineMathMatches}`);
-            const parts = trimmedLine.split(/(\$[^$]+\$)/);
-            return (
-              <p key={index} className="text-foreground leading-relaxed mb-3">
-                {parts.map((part, partIndex) => {
-                  if (part.startsWith('$') && part.endsWith('$') && part.length > 2) {
-                    const latexContent = part.slice(1, -1); // Remove $ from both ends
-                    return <LaTeX key={partIndex}>{latexContent}</LaTeX>;
-                  }
-                  return processBoldText(part);
-                })}
-              </p>
-            );
-          }
-          
-          // If line contains $ but no matches, still return early to prevent double processing
-          console.log(`Line contains $ but no LaTeX matches found, skipping: "${trimmedLine}"`);
-          return null;
-        }
-        
-        // Handle bond pricing formula specifically
+        // Handle bond pricing formula
         if (trimmedLine.includes('Pris = (Kupong/(1+r)') || 
             trimmedLine.includes('Pris = (Kupong/(1+r)¹') ||
             (trimmedLine.includes('Pris =') && trimmedLine.includes('Kupong') && trimmedLine.includes('Pålydende'))) {
-          return <BondPricingFormula key={index} />;
+          elements.push(<BondPricingFormula key={`bond-${elementKey++}`} />);
+          return;
         }
 
         // Handle iframe embeds
         if (trimmedLine.includes('<iframe')) {
-          return (
+          elements.push(
             <div 
-              key={index} 
+              key={`iframe-${elementKey++}`} 
               className="my-6 flex justify-center"
               dangerouslySetInnerHTML={{ __html: trimmedLine }}
             />
           );
+          return;
         }
 
-        // Handle formulas and code (but NOT LaTeX which has $ symbols - already handled above)
-        if (trimmedLine.includes('=') && (trimmedLine.includes('(') || trimmedLine.includes('^')) && !trimmedLine.includes('$')) {
-          return (
-            <div key={index} className="bg-muted p-3 rounded-lg my-3 border">
-              <code className="text-sm font-mono">{trimmedLine}</code>
-            </div>
-          );
-        }
-        
-        // Regular paragraphs (with bold text support)
-        return (
-          <p key={index} className="text-foreground leading-relaxed mb-3">
+        // Regular paragraphs
+        elements.push(
+          <p key={`text-${elementKey++}`} className="text-foreground leading-relaxed mb-3">
             {processBoldText(trimmedLine)}
           </p>
         );
-      })}
+      });
+    });
+
+    return elements;
+  };
+  
+  return (
+    <div className="space-y-4">
+      {processContent(content)}
     </div>
   );
 };
