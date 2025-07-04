@@ -1,6 +1,7 @@
 import React from "react";
 import { BondPricingFormula } from "./BondPricingFormula";
 import { CourseMap } from "./CourseMap";
+import { LaTeX } from "./LaTeX";
 
 interface ContentRendererProps {
   content: string;
@@ -88,6 +89,41 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
               <span className="text-foreground">{processBoldText(text)}</span>
             </div>
           );
+        }
+        
+        // Handle LaTeX math expressions
+        if (trimmedLine.includes('$')) {
+          // Check for display math ($$...$$)
+          if (trimmedLine.includes('$$')) {
+            const displayMathMatch = trimmedLine.match(/\$\$(.*?)\$\$/g);
+            if (displayMathMatch) {
+              return displayMathMatch.map((match, mathIndex) => {
+                const latexContent = match.slice(2, -2); // Remove $$ from both ends
+                return (
+                  <div key={`${index}-${mathIndex}`} className="my-4">
+                    <LaTeX displayMode={true}>{latexContent}</LaTeX>
+                  </div>
+                );
+              });
+            }
+          }
+          
+          // Check for inline math ($...$)
+          const inlineMathMatches = trimmedLine.match(/\$([^$]+)\$/g);
+          if (inlineMathMatches) {
+            const parts = trimmedLine.split(/(\$[^$]+\$)/);
+            return (
+              <p key={index} className="text-foreground leading-relaxed mb-3">
+                {parts.map((part, partIndex) => {
+                  if (part.startsWith('$') && part.endsWith('$') && part.length > 2) {
+                    const latexContent = part.slice(1, -1); // Remove $ from both ends
+                    return <LaTeX key={partIndex}>{latexContent}</LaTeX>;
+                  }
+                  return processBoldText(part);
+                })}
+              </p>
+            );
+          }
         }
         
         // Handle bond pricing formula specifically
