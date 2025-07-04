@@ -213,8 +213,8 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
             </div>
           )}
 
-          {/* Avkastning og Risiko Module - Show for module 6 sections with avkastning og risiko */}
-          {section.title.toLowerCase().includes('avkastning og risiko') && moduleIndex === 6 && (
+          {/* Avkastning og Risiko Module - Show for all sections in module 6 */}
+          {moduleIndex === 6 && (
             <div className="mt-6 p-6 bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-xl">
               <h4 className="text-lg font-semibold mb-3 text-purple-800">🎮 Interaktiv Avkastning & Risiko Modul</h4>
               <p className="text-purple-700 mb-4">
