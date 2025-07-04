@@ -144,6 +144,24 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           );
         }
 
+        // Handle "Refleksjonsspørsmål" text blocks with same styling
+        if (trimmedLine.includes('**Refleksjonsspørsmål:**') || trimmedLine.startsWith('Refleksjonsspørsmål:')) {
+          const questionText = trimmedLine.replace(/\*\*Refleksjonsspørsmål:\*\*\s*/, '').replace(/^Refleksjonsspørsmål:\s*/, '');
+          return (
+            <div key={index} className="my-6 p-4 bg-primary/5 border-l-4 border-primary rounded-r-lg">
+              <div className="flex items-start gap-3">
+                <span className="text-primary text-xl font-bold">💭</span>
+                <div>
+                  <h4 className="font-semibold text-primary mb-2 text-sm uppercase tracking-wide">
+                    Spørsmål til ettertanke
+                  </h4>
+                  <p className="text-foreground leading-relaxed">{questionText}</p>
+                </div>
+              </div>
+            </div>
+          );
+        }
+
         // Handle think boxes
         if (trimmedLine.startsWith('!think ')) {
           const content = trimmedLine.slice(7);
