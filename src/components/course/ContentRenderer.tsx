@@ -31,26 +31,43 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
     });
   };
   
-  // Pre-process multi-line LaTeX blocks before splitting by lines
-  const processMultiLineLatex = (text: string) => {
-    // Handle multi-line display math blocks ($$\begin{aligned}...\end{aligned}$$)
-    const multiLinePattern = /\$\$\\begin\{aligned\}[\s\S]*?\\end\{aligned\}\$\$/g;
-    let processedText = text;
-    const latexBlocks: { placeholder: string; content: string }[] = [];
-    let blockIndex = 0;
+  // Pre-process ALL LaTeX content before any line processing
+  const preprocessLatex = (text: string) => {
+    const elements: { type: 'latex' | 'text'; content: string; key: string }[] = [];
+    let remainingText = text;
+    let elementIndex = 0;
 
-    // Replace multi-line LaTeX with placeholders
-    processedText = processedText.replace(multiLinePattern, (match) => {
-      const placeholder = `__MULTILINE_LATEX_${blockIndex}__`;
-      latexBlocks.push({ placeholder, content: match });
-      blockIndex++;
-      return placeholder;
+    // First, handle multi-line LaTeX blocks
+    const multiLinePattern = /\$\$\\begin\{aligned\}[\s\S]*?\\end\{aligned\}\$\$/g;
+    remainingText = remainingText.replace(multiLinePattern, (match) => {
+      const key = `__ELEMENT_${elementIndex++}__`;
+      elements.push({ type: 'latex', content: match, key });
+      return key;
     });
 
-    return { processedText, latexBlocks };
+    // Then handle single-line display math
+    const displayMathPattern = /\$\$[^$]+\$\$/g;
+    remainingText = remainingText.replace(displayMathPattern, (match) => {
+      const key = `__ELEMENT_${elementIndex++}__`;
+      elements.push({ type: 'latex', content: match, key });
+      return key;
+    });
+
+    // Handle lines with inline math - process the whole line as one unit
+    const lines = remainingText.split('\n');
+    const processedLines = lines.map(line => {
+      if (line.includes('$') && !line.includes('__ELEMENT_')) {
+        const key = `__ELEMENT_${elementIndex++}__`;
+        elements.push({ type: 'latex', content: line, key });
+        return key;
+      }
+      return line;
+    });
+
+    return { processedText: processedLines.join('\n'), elements };
   };
 
-  const { processedText, latexBlocks } = processMultiLineLatex(content);
+  const { processedText, elements } = preprocessLatex(content);
   
   return (
     <div className="space-y-4">
@@ -60,16 +77,47 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
         
         if (!trimmedLine) return <div key={index} className="h-2" />;
         
-        // Handle multi-line LaTeX placeholders
-        const latexBlock = latexBlocks.find(block => trimmedLine === block.placeholder);
-        if (latexBlock) {
-          const latexContent = latexBlock.content.slice(2, -2); // Remove $$ from both ends
-          console.log(`Found multi-line LaTeX block: ${latexContent}`);
-          return (
-            <div key={index} className="my-4">
-              <LaTeX displayMode={true}>{latexContent}</LaTeX>
-            </div>
-          );
+        // Handle LaTeX element placeholders
+        const latexElement = elements.find(el => trimmedLine === el.key);
+        if (latexElement) {
+          console.log(`Rendering LaTeX element: ${latexElement.content}`);
+          
+          // Multi-line LaTeX
+          if (latexElement.content.includes('\\begin{aligned}')) {
+            const latexContent = latexElement.content.slice(2, -2); // Remove $$
+            return (
+              <div key={index} className="my-4">
+                <LaTeX displayMode={true}>{latexContent}</LaTeX>
+              </div>
+            );
+          }
+          
+          // Single-line display math
+          if (latexElement.content.startsWith('$$') && latexElement.content.endsWith('$$')) {
+            const latexContent = latexElement.content.slice(2, -2); // Remove $$
+            return (
+              <div key={index} className="my-4">
+                <LaTeX displayMode={true}>{latexContent}</LaTeX>
+              </div>
+            );
+          }
+          
+          // Inline math in text
+          const inlineMathMatches = latexElement.content.match(/\$([^$]+)\$/g);
+          if (inlineMathMatches) {
+            const parts = latexElement.content.split(/(\$[^$]+\$)/);
+            return (
+              <p key={index} className="text-foreground leading-relaxed mb-3">
+                {parts.map((part, partIndex) => {
+                  if (part.startsWith('$') && part.endsWith('$') && part.length > 2) {
+                    const latexContent = part.slice(1, -1);
+                    return <LaTeX key={partIndex}>{latexContent}</LaTeX>;
+                  }
+                  return processBoldText(part);
+                })}
+              </p>
+            );
+          }
         }
         
         // Handle bold headers with ** 
