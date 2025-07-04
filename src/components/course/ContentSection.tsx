@@ -9,7 +9,7 @@ import { BondExercises } from "./BondExercises";
 import StockPricingQuiz from "./StockPricingQuiz";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import GordonGrowthWithOverlay from "../GordonGrowthWithOverlay";
-import { AvkastningRisikoModul } from "../AvkastningRisikoModul";
+import AvkastningRisikoModul from "../AvkastningRisikoModul";
 
 interface ContentSectionData {
   title: string;

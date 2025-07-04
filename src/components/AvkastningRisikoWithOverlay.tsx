@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Calculator } from "lucide-react";
-import { AvkastningRisikoModul } from "./AvkastningRisikoModul";
+import AvkastningRisikoModul from "./AvkastningRisikoModul";
 
 const AvkastningRisikoWithOverlay: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
