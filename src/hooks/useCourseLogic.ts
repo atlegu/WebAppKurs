@@ -173,6 +173,38 @@ Etter å ha fullført alle ti moduler skal du kunne:
             return processedModule;
           }
           
+          // Create sub-modules for Accounting module (Module 2)
+          if (module.order_index === 2 && (module.title === "Regnskap" || module.title.includes("regnskap"))) {
+            console.log('Dashboard: Found accounting module! Creating sub-modules...');
+            const sections = (module.content as any)?.sections || [];
+            console.log('Dashboard: Sections found:', sections.length);
+            
+            // Map the existing sections from the database to sub-modules
+            const subModules = sections.map((section: any, index: number) => ({
+              id: `${module.id}-sub-${index + 1}`,
+              title: section.title || `Seksjon ${index + 1}`,
+              content: section
+            }));
+            
+            // Add "Oppgaver" section at the end
+            subModules.push({
+              id: `${module.id}-sub-oppgaver`,
+              title: "Oppgaver",
+              content: { 
+                title: "Oppgaver", 
+                type: "exercise", 
+                content: "Her finner du praktiske oppgaver relatert til regnskapsmodulen." 
+              }
+            });
+            
+            const processedModule = {
+              ...module,
+              subModules: subModules
+            };
+            console.log('Dashboard: Processed accounting module with sub-modules:', processedModule.subModules?.length);
+            return processedModule;
+          }
+          
           if (module.order_index === 4 && module.title === "Obligasjoner") {
             console.log('Dashboard: Found bonds module! Creating sub-modules...');
             const sections = (module.content as any)?.sections || [];
@@ -432,7 +464,7 @@ Etter å ha fullført alle ti moduler skal du kunne:
 
       await loadCourseData();
       setIsLoading(false);
-    };
+};
 
     initializeUser();
 

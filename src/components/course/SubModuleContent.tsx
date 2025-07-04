@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ContentSection } from "./ContentSection";
+import BalanceGameWithOverlay from "@/components/BalanceGameWithOverlay";
 
 interface SubModule {
   id: string;
@@ -45,6 +46,10 @@ export const SubModuleContent: React.FC<SubModuleContentProps> = ({
       onSubModuleSelect(module.subModules[currentIndex + 1]);
     }
   };
+
+  // Check if this is the "Oppgaver" section in the accounting module
+  const isAccountingTasks = module.title === "Regnskap" && subModule.title === "Oppgaver";
+  
   return (
     <div className="w-full max-w-none overflow-hidden">
       {/* Sub-module Header */}
@@ -67,6 +72,23 @@ export const SubModuleContent: React.FC<SubModuleContentProps> = ({
               section={subModule.content} 
               index={0} 
             />
+          </div>
+        )}
+        
+        {/* Special content for accounting tasks */}
+        {isAccountingTasks && (
+          <div className="w-full">
+            <Card>
+              <CardHeader>
+                <CardTitle>🎮 Balanseregneskap Spill</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground mb-4">
+                  Test forståelsen din av balanseregnskapet med vårt interaktive spill.
+                </p>
+                <BalanceGameWithOverlay />
+              </CardContent>
+            </Card>
           </div>
         )}
       </div>

@@ -7,7 +7,7 @@ import { ModuleSidebar } from "@/components/course/ModuleSidebar";
 import { ModuleContent } from "@/components/course/ModuleContent";
 import { LegacySectionRenderer } from "@/components/course/LegacySectionRenderer";
 import { useCourseLogic } from "@/hooks/useCourseLogic";
-import BalanceGameWithOverlay from "@/components/BalanceGameWithOverlay";
+
 
 interface ContentSection {
   title: string;
@@ -90,11 +90,6 @@ const Dashboard = () => {
                       </p>
                     </CardContent>
                   </Card>
-                  
-                  <div>
-                    <h3 className="text-lg font-medium mb-4">Balanseregneskap Spill</h3>
-                    <BalanceGameWithOverlay />
-                  </div>
                 </div>
               )}
             </div>
