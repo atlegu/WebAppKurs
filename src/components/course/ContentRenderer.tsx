@@ -35,6 +35,7 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
     <div className="space-y-4">
       {content.split('\n').map((line, index) => {
         const trimmedLine = line.trim();
+        console.log(`Line ${index}: "${trimmedLine}"`);
         
         if (!trimmedLine) return <div key={index} className="h-2" />;
         
@@ -116,10 +117,13 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
         
         // Handle LaTeX math expressions (but skip if already handled as bullet point)
         if (trimmedLine.includes('$') && !trimmedLine.startsWith('•') && !trimmedLine.startsWith('- ')) {
+          console.log(`Processing LaTeX line ${index}: "${trimmedLine}"`);
+          
           // Check for display math ($$...$$)
           if (trimmedLine.includes('$$')) {
             const displayMathMatch = trimmedLine.match(/\$\$(.*?)\$\$/g);
             if (displayMathMatch) {
+              console.log(`Found display math: ${displayMathMatch}`);
               return displayMathMatch.map((match, mathIndex) => {
                 const latexContent = match.slice(2, -2); // Remove $$ from both ends
                 return (
@@ -134,6 +138,7 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           // Check for inline math ($...$)
           const inlineMathMatches = trimmedLine.match(/\$([^$]+)\$/g);
           if (inlineMathMatches) {
+            console.log(`Found inline math: ${inlineMathMatches}`);
             const parts = trimmedLine.split(/(\$[^$]+\$)/);
             return (
               <p key={index} className="text-foreground leading-relaxed mb-3">
@@ -147,6 +152,10 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
               </p>
             );
           }
+          
+          // If line contains $ but no matches, skip further processing
+          console.log(`Line contains $ but no LaTeX matches, skipping: "${trimmedLine}"`);
+          return null;
         }
         
         // Handle bond pricing formula specifically
