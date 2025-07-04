@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Calculator } from 'lucide-react';
 
 interface CashflowRow {
@@ -13,14 +14,27 @@ interface CashflowRow {
   weightedTime: number;
 }
 
+interface FormData {
+  years: number;
+  couponRate: number;
+  effectiveRate: number;
+  faceValue: number;
+}
+
 export const DurationCalculator: React.FC = () => {
-  const [years, setYears] = useState(5);
-  const [couponRate, setCouponRate] = useState(9);
-  const [effectiveRate, setEffectiveRate] = useState(10);
-  const [faceValue, setFaceValue] = useState(1000);
   const [results, setResults] = useState<CashflowRow[]>([]);
   const [bondPrice, setBondPrice] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isCalculating, setIsCalculating] = useState(false);
+
+  const form = useForm<FormData>({
+    defaultValues: {
+      years: 5,
+      couponRate: 9,
+      effectiveRate: 10,
+      faceValue: 1000,
+    },
+  });
 
   const formatNumber = (n: number) => {
     return n.toLocaleString('no-NO', {
@@ -29,11 +43,12 @@ export const DurationCalculator: React.FC = () => {
     });
   };
 
-  const calculateDuration = () => {
-    const N = years;
+  const calculateDuration = (data: FormData) => {
+    setIsCalculating(true);
+    
+    const { years: N, couponRate, effectiveRate, faceValue: F } = data;
     const cRate = couponRate / 100;
     const y = effectiveRate / 100;
-    const F = faceValue;
 
     const cashflows: CashflowRow[] = [];
     let P0 = 0; // Bond price
@@ -64,7 +79,18 @@ export const DurationCalculator: React.FC = () => {
     setResults(cashflows);
     setBondPrice(P0);
     setDuration(totalDuration);
+    setIsCalculating(false);
   };
+
+  // Auto-calculate when form values change
+  useEffect(() => {
+    const subscription = form.watch((value) => {
+      if (value.years && value.couponRate && value.effectiveRate && value.faceValue) {
+        calculateDuration(value as FormData);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [form]);
 
   return (
     <Card className="max-w-4xl mx-auto">
@@ -75,52 +101,143 @@ export const DurationCalculator: React.FC = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Input fields */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="years">Antall år (N)</Label>
-            <Input
-              id="years"
-              type="number"
-              min="1"
-              value={years}
-              onChange={(e) => setYears(parseInt(e.target.value) || 5)}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="coupon">Kupongrate (%)</Label>
-            <Input
-              id="coupon"
-              type="number"
-              step="0.01"
-              value={couponRate}
-              onChange={(e) => setCouponRate(parseFloat(e.target.value) || 9)}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="yield">Effektiv rente (%)</Label>
-            <Input
-              id="yield"
-              type="number"
-              step="0.01"
-              value={effectiveRate}
-              onChange={(e) => setEffectiveRate(parseFloat(e.target.value) || 10)}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="face">Pålydende</Label>
-            <Input
-              id="face"
-              type="number"
-              value={faceValue}
-              onChange={(e) => setFaceValue(parseFloat(e.target.value) || 1000)}
-            />
-          </div>
-        </div>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(calculateDuration)} className="space-y-6">
+            {/* Input fields */}
+            <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="years"
+                rules={{ 
+                  required: "Antall år er påkrevd",
+                  min: { value: 1, message: "Må være minst 1 år" },
+                  max: { value: 50, message: "Maksimalt 50 år" }
+                }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Antall år (N)</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="text"
+                        inputMode="numeric"
+                        placeholder="5"
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (value === '' || /^\d+$/.test(value)) {
+                            field.onChange(value === '' ? 0 : parseInt(value));
+                          }
+                        }}
+                        value={field.value || ''}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="couponRate"
+                rules={{ 
+                  required: "Kupongrate er påkrevd",
+                  min: { value: 0, message: "Må være minst 0%" },
+                  max: { value: 100, message: "Maksimalt 100%" }
+                }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Kupongrate (%)</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="text"
+                        inputMode="decimal"
+                        placeholder="9"
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (value === '' || /^\d*\.?\d*$/.test(value)) {
+                            field.onChange(value === '' ? 0 : parseFloat(value));
+                          }
+                        }}
+                        value={field.value || ''}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="effectiveRate"
+                rules={{ 
+                  required: "Effektiv rente er påkrevd",
+                  min: { value: 0, message: "Må være minst 0%" },
+                  max: { value: 100, message: "Maksimalt 100%" }
+                }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Effektiv rente (%)</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="text"
+                        inputMode="decimal"
+                        placeholder="10"
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (value === '' || /^\d*\.?\d*$/.test(value)) {
+                            field.onChange(value === '' ? 0 : parseFloat(value));
+                          }
+                        }}
+                        value={field.value || ''}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="faceValue"
+                rules={{ 
+                  required: "Pålydende er påkrevd",
+                  min: { value: 1, message: "Må være minst 1" }
+                }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Pålydende</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="text"
+                        inputMode="numeric"
+                        placeholder="1000"
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (value === '' || /^\d+$/.test(value)) {
+                            field.onChange(value === '' ? 0 : parseInt(value));
+                          }
+                        }}
+                        value={field.value || ''}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-        <Button onClick={calculateDuration} className="w-full">
-          Beregn durasjon
-        </Button>
+            <Button 
+              type="submit" 
+              className="w-full" 
+              disabled={isCalculating}
+            >
+              {isCalculating ? 'Beregner...' : 'Beregn durasjon'}
+            </Button>
+          </form>
+        </Form>
 
         {/* Results table */}
         {results.length > 0 && (
