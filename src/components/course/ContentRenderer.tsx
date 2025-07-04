@@ -173,6 +173,9 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
                 );
               });
             }
+            // If line contains $$ but no complete match (like $$\begin{aligned}), skip it entirely
+            console.log(`Line contains $$ but incomplete LaTeX, skipping: "${trimmedLine}"`);
+            return null;
           }
           
           // Check for inline math ($...$)
@@ -194,12 +197,8 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           }
           
           // If line contains $ but no matches, still return early to prevent double processing
-          console.log(`Line contains $ but no LaTeX matches found: "${trimmedLine}"`);
-          return (
-            <p key={index} className="text-foreground leading-relaxed mb-3">
-              {processBoldText(trimmedLine)}
-            </p>
-          );
+          console.log(`Line contains $ but no LaTeX matches found, skipping: "${trimmedLine}"`);
+          return null;
         }
         
         // Handle bond pricing formula specifically
