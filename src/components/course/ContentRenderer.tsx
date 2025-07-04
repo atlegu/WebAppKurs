@@ -82,6 +82,29 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           );
         }
         
+        // Handle images
+        if (trimmedLine.startsWith('![') && trimmedLine.includes('](') && trimmedLine.endsWith(')')) {
+          const imageMatch = trimmedLine.match(/!\[([^\]]*)\]\(([^)]+)\)/);
+          if (imageMatch) {
+            const [, altText, imageUrl] = imageMatch;
+            // Convert Supabase storage URLs to public URLs
+            const publicUrl = imageUrl.startsWith('course-images/') 
+              ? `https://tqpryezzddufpovfbpld.supabase.co/storage/v1/object/public/course-images/${imageUrl.replace('course-images/', '')}`
+              : imageUrl;
+            
+            return (
+              <div key={index} className="my-6 flex justify-center">
+                <img 
+                  src={publicUrl}
+                  alt={altText}
+                  className="max-w-full h-auto rounded-lg shadow-sm"
+                  loading="lazy"
+                />
+              </div>
+            );
+          }
+        }
+
         // Handle links
         if (trimmedLine.startsWith('[') && trimmedLine.includes('](') && trimmedLine.endsWith(')')) {
           const linkMatch = trimmedLine.match(/\[([^\]]+)\]\(([^)]+)\)/);
