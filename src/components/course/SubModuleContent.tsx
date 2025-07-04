@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ContentSection } from "./ContentSection";
+import { ContentRenderer } from "./ContentRenderer";
 import BalanceGameWithOverlay from "@/components/BalanceGameWithOverlay";
 
 interface SubModule {
@@ -69,12 +70,12 @@ export const SubModuleContent: React.FC<SubModuleContentProps> = ({
         {subModule.content && subModule.content.sections && subModule.content.sections.length > 0 ? (
           <div className="w-full space-y-6">
             {subModule.content.sections.map((section: any, index: number) => (
-              <div key={index} className="bg-card rounded-lg p-6 border">
-                {section.title && <h3 className="text-xl font-semibold mb-4">{section.title}</h3>}
-                <div className="prose max-w-none text-card-foreground whitespace-pre-wrap">
-                  {section.content || 'Innhold ikke tilgjengelig'}
-                </div>
-              </div>
+              <ContentSection 
+                key={index}
+                section={section}
+                index={index}
+                moduleIndex={moduleIndex}
+              />
             ))}
           </div>
         ) : (
