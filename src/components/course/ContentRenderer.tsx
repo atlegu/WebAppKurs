@@ -132,7 +132,13 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
                         const latexContent = part.slice(1, -1);
                         return <LaTeX key={partIndex}>{latexContent}</LaTeX>;
                       }
-                      return processBoldText(part);
+                      // Process the text part but remove redundant variable names that are already in LaTeX
+                      const cleanedPart = part
+                        .replace(/Pstart\s*/g, '') // Remove standalone "Pstart"
+                        .replace(/Pslutt\s*/g, '') // Remove standalone "Pslutt"
+                        .replace(/DD\s*/g, '') // Remove standalone "DD"
+                        .trim();
+                      return cleanedPart ? processBoldText(cleanedPart) : '';
                     })}
                   </span>
                 </div>
