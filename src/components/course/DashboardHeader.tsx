@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { LogOut } from "lucide-react";
+import { LogOut, Home } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface Profile {
@@ -47,6 +47,10 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           </p>
         </div>
         <div className="flex items-center gap-4">
+          <Button variant="ghost" onClick={() => navigate("/")}>
+            <Home className="w-4 h-4 mr-2" />
+            Hjem
+          </Button>
           {isDevMode && (
             <Badge variant="outline" className="text-orange-600 border-orange-600">
               🚀 Dev Mode
