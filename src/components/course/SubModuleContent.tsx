@@ -66,16 +66,20 @@ export const SubModuleContent: React.FC<SubModuleContentProps> = ({
 
       {/* Sub-module Content */}
       <div className="w-full space-y-6 overflow-hidden">
-        {subModule.content && subModule.content.sections && (
-          <div className="w-full">
+        {subModule.content && subModule.content.sections && subModule.content.sections.length > 0 ? (
+          <div className="w-full space-y-6">
             {subModule.content.sections.map((section: any, index: number) => (
-              <div key={index} className="space-y-4">
-                <h3 className="text-xl font-semibold">{section.title}</h3>
-                <div className="prose max-w-none">
-                  {section.content}
+              <div key={index} className="bg-card rounded-lg p-6 border">
+                {section.title && <h3 className="text-xl font-semibold mb-4">{section.title}</h3>}
+                <div className="prose max-w-none text-card-foreground whitespace-pre-wrap">
+                  {section.content || 'Innhold ikke tilgjengelig'}
                 </div>
               </div>
             ))}
+          </div>
+        ) : (
+          <div className="bg-card rounded-lg p-6 border">
+            <p className="text-card-foreground">Innhold lastes... ({JSON.stringify(subModule.content)})</p>
           </div>
         )}
         
