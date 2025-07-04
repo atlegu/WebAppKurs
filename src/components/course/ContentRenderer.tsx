@@ -134,9 +134,10 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
                       }
                       // Process the text part but remove redundant variable names that are already in LaTeX
                       const cleanedPart = part
-                        .replace(/Pstart\s*/g, '') // Remove standalone "Pstart"
-                        .replace(/Pslutt\s*/g, '') // Remove standalone "Pslutt"
-                        .replace(/DD\s*/g, '') // Remove standalone "DD"
+                        .replace(/\bPstart\w*\b\s*/gi, '') // Remove "Pstart", "Pstarter", etc.
+                        .replace(/\bPslutt\w*\b\s*/gi, '') // Remove "Pslutt", "Pslutter", etc.
+                        .replace(/\bDD?\w*\b\s*/g, '') // Remove "D", "DD", etc.
+                        .replace(/\s+/g, ' ') // Clean up extra spaces
                         .trim();
                       return cleanedPart ? processBoldText(cleanedPart) : '';
                     })}
