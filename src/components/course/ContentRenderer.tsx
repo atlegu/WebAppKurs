@@ -5,6 +5,7 @@ import { LaTeX } from "./LaTeX";
 import { PortfolioRiskCalculator } from "./PortfolioRiskCalculator";
 import { RiskMeasurementCalculator } from "./RiskMeasurementCalculator";
 import { ReturnCalculator } from "./ReturnCalculator";
+import { RiskReturnVisualization } from "./RiskReturnVisualization";
 
 interface ContentRendererProps {
   content: string;
@@ -299,6 +300,10 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
         
         if (trimmedLine.includes('!component:return-calculator')) {
           return <ReturnCalculator key={index} />;
+        }
+        
+        if (trimmedLine.includes('!component:risk-return-viz')) {
+          return <RiskReturnVisualization key={index} />;
         }
 
         // Handle bond pricing formula
