@@ -48,14 +48,14 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
           </div>
 
           {/* Duration Calculator - Show only for the duration section (4.8) */}
-          {section.title.toLowerCase().includes('durasjon') && (
+          {section.title && section.title.toLowerCase().includes('durasjon') && (
             <div className="my-6">
               <DurationCalculator />
             </div>
           )}
 
           {/* Gordon Model Deep Dive - Show for DDM and FCFE section in module 5 */}
-          {section.title.toLowerCase().includes('ddm') && moduleIndex === 5 && (
+          {section.title && section.title.toLowerCase().includes('ddm') && moduleIndex === 5 && (
             <div className="border-l-4 border-primary bg-muted/30 p-6 rounded-lg mb-6">
               <h3 className="text-xl font-bold text-primary mb-4">Gordon-modellen (konstant vekst-DDM)</h3>
               <p className="text-muted-foreground mb-4">
@@ -225,7 +225,7 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
           )}
 
           {/* Gordon Growth Calculator - Show for DDM and FCFE section in module 5 */}
-          {section.title.toLowerCase().includes('ddm') && moduleIndex === 5 && (
+          {section.title && section.title.toLowerCase().includes('ddm') && moduleIndex === 5 && (
             <div className="mt-6 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl">
               <h4 className="text-lg font-semibold mb-3 text-blue-800">🎮 Interaktiv Gordon Growth kalkulator</h4>
               <p className="text-blue-700 mb-4">
@@ -292,7 +292,7 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
           )}
 
           {/* Quiz Buttons - Show only for "Oppgaver" sections */}
-          {section.title.toLowerCase().includes('oppgaver') && moduleIndex === 4 && (
+          {section.title && section.title.toLowerCase().includes('oppgaver') && moduleIndex === 4 && (
             <div className="space-y-4">
               <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-3">
@@ -323,7 +323,7 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
           )}
 
           {/* Stock Quiz Button - Show only for "Oppgaver" sections in module 5 */}
-          {section.title.toLowerCase().includes('oppgaver') && moduleIndex === 5 && (
+          {section.title && section.title.toLowerCase().includes('oppgaver') && moduleIndex === 5 && (
             <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
               <div className="flex items-center gap-2 mb-3">
                 <Brain className="w-5 h-5 text-blue-600" />
