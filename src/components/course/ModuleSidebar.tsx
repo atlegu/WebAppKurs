@@ -118,7 +118,7 @@ export const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
                       <div className="flex items-start gap-2 min-w-0 w-full">
                         <span className="text-muted-foreground text-xs flex-shrink-0 mt-0.5">{index + 1}.{subIndex + 1}</span>
                         <span className="leading-tight whitespace-normal break-words text-xs">
-                          {subModule.title}
+                          {subModule.title.replace(/^\d+\.\d+\s+/, '')}
                         </span>
                       </div>
                     </Button>
