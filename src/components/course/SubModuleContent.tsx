@@ -66,13 +66,16 @@ export const SubModuleContent: React.FC<SubModuleContentProps> = ({
 
       {/* Sub-module Content */}
       <div className="w-full space-y-6 overflow-hidden">
-        {subModule.content && (
+        {subModule.content && subModule.content.sections && (
           <div className="w-full">
-            <ContentSection 
-              section={subModule.content} 
-              index={0} 
-              moduleIndex={moduleIndex}
-            />
+            {subModule.content.sections.map((section: any, index: number) => (
+              <ContentSection 
+                key={index}
+                section={section} 
+                index={index} 
+                moduleIndex={moduleIndex}
+              />
+            ))}
           </div>
         )}
         
