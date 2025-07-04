@@ -80,7 +80,7 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           }
         }
 
-        // Handle bullet points (with bold text and LaTeX support)
+        // Handle bullet points FIRST (with bold text and LaTeX support)
         if (trimmedLine.startsWith('•') || trimmedLine.startsWith('- ')) {
           const text = trimmedLine.slice(2);
           
@@ -114,8 +114,8 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           );
         }
         
-        // Handle LaTeX math expressions
-        if (trimmedLine.includes('$')) {
+        // Handle LaTeX math expressions (but skip if already handled as bullet point)
+        if (trimmedLine.includes('$') && !trimmedLine.startsWith('•') && !trimmedLine.startsWith('- ')) {
           // Check for display math ($$...$$)
           if (trimmedLine.includes('$$')) {
             const displayMathMatch = trimmedLine.match(/\$\$(.*?)\$\$/g);
