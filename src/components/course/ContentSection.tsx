@@ -9,7 +9,7 @@ import { BondExercises } from "./BondExercises";
 import StockPricingQuiz from "./StockPricingQuiz";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import GordonGrowthWithOverlay from "../GordonGrowthWithOverlay";
-import AvkastningRisikoWithOverlay from "../AvkastningRisikoWithOverlay";
+import { AvkastningRisikoModul } from "../AvkastningRisikoModul";
 
 interface ContentSectionData {
   title: string;
@@ -220,9 +220,7 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
               <p className="text-purple-700 mb-4">
                 Utforsk sammenhengen mellom avkastning og risiko gjennom interaktive øvelser og beregninger.
               </p>
-              <div className="flex justify-center">
-                <AvkastningRisikoWithOverlay />
-              </div>
+              <AvkastningRisikoModul />
             </div>
           )}
 
