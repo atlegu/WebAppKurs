@@ -115,8 +115,8 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           );
         }
         
-        // Handle LaTeX math expressions (but skip if already handled as bullet point)
-        if (trimmedLine.includes('$') && !trimmedLine.startsWith('•') && !trimmedLine.startsWith('- ')) {
+        // Handle LaTeX math expressions EARLY - before any other processing
+        if (trimmedLine.includes('$')) {
           console.log(`Processing LaTeX line ${index}: "${trimmedLine}"`);
           
           // Check for display math ($$...$$)
@@ -153,9 +153,13 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
             );
           }
           
-          // If line contains $ but no matches, skip further processing
-          console.log(`Line contains $ but no LaTeX matches, skipping: "${trimmedLine}"`);
-          return null;
+          // If line contains $ but no matches, still return early to prevent double processing
+          console.log(`Line contains $ but no LaTeX matches found: "${trimmedLine}"`);
+          return (
+            <p key={index} className="text-foreground leading-relaxed mb-3">
+              {processBoldText(trimmedLine)}
+            </p>
+          );
         }
         
         // Handle bond pricing formula specifically
@@ -165,7 +169,6 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           return <BondPricingFormula key={index} />;
         }
 
-        
         // Handle iframe embeds
         if (trimmedLine.includes('<iframe')) {
           return (
@@ -177,7 +180,7 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           );
         }
 
-        // Handle formulas and code (but NOT LaTeX which has $ symbols)
+        // Handle formulas and code (but NOT LaTeX which has $ symbols - already handled above)
         if (trimmedLine.includes('=') && (trimmedLine.includes('(') || trimmedLine.includes('^')) && !trimmedLine.includes('$')) {
           return (
             <div key={index} className="bg-muted p-3 rounded-lg my-3 border">
