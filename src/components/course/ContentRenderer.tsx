@@ -2,6 +2,7 @@ import React from "react";
 import { BondPricingFormula } from "./BondPricingFormula";
 import { CourseMap } from "./CourseMap";
 import { LaTeX } from "./LaTeX";
+import { PortfolioRiskCalculator } from "./PortfolioRiskCalculator";
 
 interface ContentRendererProps {
   content: string;
@@ -82,6 +83,99 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           );
         }
         
+        // Handle videos (YouTube, Vimeo, etc.)
+        if (trimmedLine.startsWith('!video[') && trimmedLine.includes('](') && trimmedLine.endsWith(')')) {
+          const videoMatch = trimmedLine.match(/!video\[([^\]]*)\]\(([^)]+)\)/);
+          if (videoMatch) {
+            const [, title, videoUrl] = videoMatch;
+            // Convert various video URLs to embed format
+            let embedUrl = videoUrl;
+            
+            if (videoUrl.includes('youtube.com/watch?v=')) {
+              const videoId = videoUrl.split('v=')[1]?.split('&')[0];
+              embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            } else if (videoUrl.includes('youtu.be/')) {
+              const videoId = videoUrl.split('youtu.be/')[1]?.split('?')[0];
+              embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            } else if (videoUrl.includes('vimeo.com/')) {
+              const videoId = videoUrl.split('vimeo.com/')[1];
+              embedUrl = `https://player.vimeo.com/video/${videoId}`;
+            }
+            
+            return (
+              <div key={index} className="my-8">
+                <div className="aspect-video w-full rounded-lg overflow-hidden shadow-lg">
+                  <iframe
+                    src={embedUrl}
+                    title={title}
+                    className="w-full h-full"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+                {title && (
+                  <p className="text-center text-sm text-muted-foreground mt-2">{title}</p>
+                )}
+              </div>
+            );
+          }
+        }
+
+        // Handle reflection questions
+        if (trimmedLine.startsWith('?? ')) {
+          const question = trimmedLine.slice(3);
+          return (
+            <div key={index} className="my-6 p-4 bg-primary/5 border-l-4 border-primary rounded-r-lg">
+              <div className="flex items-start gap-3">
+                <span className="text-primary text-xl font-bold">💭</span>
+                <div>
+                  <h4 className="font-semibold text-primary mb-2 text-sm uppercase tracking-wide">
+                    Spørsmål til ettertanke
+                  </h4>
+                  <p className="text-foreground leading-relaxed">{question}</p>
+                </div>
+              </div>
+            </div>
+          );
+        }
+
+        // Handle think boxes
+        if (trimmedLine.startsWith('!think ')) {
+          const content = trimmedLine.slice(7);
+          return (
+            <div key={index} className="my-6 p-5 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 border border-blue-200 dark:border-blue-800 rounded-lg">
+              <div className="flex items-start gap-3">
+                <span className="text-blue-600 dark:text-blue-400 text-xl">🤔</span>
+                <div>
+                  <h4 className="font-semibold text-blue-800 dark:text-blue-300 mb-2 text-sm uppercase tracking-wide">
+                    Tenk over dette
+                  </h4>
+                  <p className="text-foreground leading-relaxed">{content}</p>
+                </div>
+              </div>
+            </div>
+          );
+        }
+
+        // Handle insight boxes
+        if (trimmedLine.startsWith('!insight ')) {
+          const content = trimmedLine.slice(9);
+          return (
+            <div key={index} className="my-6 p-5 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-950/30 dark:to-orange-950/30 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+              <div className="flex items-start gap-3">
+                <span className="text-yellow-600 dark:text-yellow-400 text-xl">💡</span>
+                <div>
+                  <h4 className="font-semibold text-yellow-800 dark:text-yellow-300 mb-2 text-sm uppercase tracking-wide">
+                    Viktig innsikt
+                  </h4>
+                  <p className="text-foreground leading-relaxed">{content}</p>
+                </div>
+              </div>
+            </div>
+          );
+        }
+
         // Handle images
         if (trimmedLine.startsWith('![') && trimmedLine.includes('](') && trimmedLine.endsWith(')')) {
           const imageMatch = trimmedLine.match(/!\[([^\]]*)\]\(([^)]+)\)/);
@@ -192,6 +286,11 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           }
         }
         
+        // Handle interactive components
+        if (trimmedLine.includes('!component:portfolio-calculator')) {
+          return <PortfolioRiskCalculator key={index} />;
+        }
+
         // Handle bond pricing formula
         if (trimmedLine.includes('Pris = (Kupong/(1+r)') || 
             trimmedLine.includes('Pris = (Kupong/(1+r)¹') ||
