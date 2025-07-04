@@ -4,6 +4,7 @@ import { CourseMap } from "./CourseMap";
 import { LaTeX } from "./LaTeX";
 import { PortfolioRiskCalculator } from "./PortfolioRiskCalculator";
 import { RiskMeasurementCalculator } from "./RiskMeasurementCalculator";
+import { ReturnCalculator } from "./ReturnCalculator";
 
 interface ContentRendererProps {
   content: string;
@@ -294,6 +295,10 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
         
         if (trimmedLine.includes('!component:risk-calculator')) {
           return <RiskMeasurementCalculator key={index} />;
+        }
+        
+        if (trimmedLine.includes('!component:return-calculator')) {
+          return <ReturnCalculator key={index} />;
         }
 
         // Handle bond pricing formula
