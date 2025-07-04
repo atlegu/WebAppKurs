@@ -69,11 +69,18 @@ export const useCourseLogic = () => {
         .eq("course_id", courseData.id)
         .order("order_index");
 
+      // Fetch sub-modules for all modules
+      const { data: subModulesData, error: subModulesError } = await supabase
+        .from("sub_modules")
+        .select("*")
+        .order("order_index");
+
       if (modulesError) {
         console.error("Error fetching modules:", modulesError);
       } else {
         // Process modules and add sub-modules for bonds module
         console.log('Dashboard: Processing modules:', modulesData);
+        console.log('Dashboard: Sub-modules data:', subModulesData);
         const processedModules = modulesData?.map(module => {
           console.log('Dashboard: Checking module:', module.title, 'order_index:', module.order_index);
           
@@ -345,6 +352,27 @@ Etter å ha fullført alle ti moduler skal du kunne:
             console.log('Dashboard: Processed stocks module with sub-modules:', processedModule.subModules?.length);
             return processedModule;
           }
+          
+          // Add sub-modules from database for module 6 (Avkastning og risiko)
+          if (module.order_index === 6) {
+            console.log('Dashboard: Found module 6! Adding sub-modules from database...');
+            const moduleSubModules = subModulesData?.filter(sub => sub.module_id === module.id) || [];
+            console.log('Dashboard: Module 6 sub-modules found:', moduleSubModules.length);
+            
+            const processedModule = {
+              ...module,
+              subModules: moduleSubModules.map(sub => ({
+                id: sub.id,
+                title: sub.title,
+                content: sub.content,
+                order_index: sub.order_index,
+                module_id: sub.module_id
+              }))
+            };
+            console.log('Dashboard: Processed module 6 with sub-modules:', processedModule.subModules?.length);
+            return processedModule;
+          }
+          
           return module;
         }) || [];
         

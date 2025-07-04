@@ -71,10 +71,18 @@ export const useCourseData = (courseId: string | undefined) => {
         .eq("course_id", courseId)
         .order("order_index");
 
+      // Fetch sub-modules for all modules
+      const { data: subModulesData, error: subModulesError } = await supabase
+        .from("sub_modules")
+        .select("*")
+        .order("order_index");
+
       if (modulesError) {
         console.error("Error fetching modules:", modulesError);
       } else {
         console.log('Processing modules:', modulesData);
+        console.log('Sub-modules data:', subModulesData);
+        
         const processedModules = modulesData?.map(module => {
           console.log('Checking module:', module.title, 'order_index:', module.order_index);
           
@@ -239,6 +247,27 @@ Etter å ha fullført alle ti moduler skal du kunne:
             console.log('Processed bonds module with sub-modules:', processedModule.subModules?.length);
             return processedModule;
           }
+          
+          // Add sub-modules from database for module 6 (Avkastning og risiko)
+          if (module.order_index === 6) {
+            console.log('Found module 6! Adding sub-modules from database...');
+            const moduleSubModules = subModulesData?.filter(sub => sub.module_id === module.id) || [];
+            console.log('Module 6 sub-modules found:', moduleSubModules.length);
+            
+            const processedModule = {
+              ...module,
+              subModules: moduleSubModules.map(sub => ({
+                id: sub.id,
+                title: sub.title,
+                content: sub.content,
+                order_index: sub.order_index,
+                module_id: sub.module_id
+              }))
+            };
+            console.log('Processed module 6 with sub-modules:', processedModule.subModules?.length);
+            return processedModule;
+          }
+          
           return module;
         }) || [];
         
