@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Target, BookOpen } from "lucide-react";
 import { ContentSection } from "./ContentSection";
-import { StockPricingModule } from "./StockPricingModule";
 import { SubModuleContent } from "./SubModuleContent";
 
 interface SubModule {
@@ -109,15 +108,9 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({
 
       {/* Module Sections - only show if no sub-modules */}
       {(!selectedModule.subModules || selectedModule.subModules.length === 0) && (
-        <>
-          {selectedModule.order_index === 5 ? (
-            <StockPricingModule />
-          ) : (
-            selectedModule.content?.sections?.map((section: ContentSectionData, index: number) => 
-              <ContentSection key={index} section={section} index={index} />
-            )
-          )}
-        </>
+        selectedModule.content?.sections?.map((section: ContentSectionData, index: number) => 
+          <ContentSection key={index} section={section} index={index} moduleIndex={selectedModule.order_index} />
+        )
       )}
 
       {/* Module Navigation */}

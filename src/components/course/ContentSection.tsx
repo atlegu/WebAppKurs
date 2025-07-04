@@ -6,6 +6,8 @@ import { ContentRenderer } from "./ContentRenderer";
 import { BondQuiz } from "./BondQuiz";
 import { DurationCalculator } from "./DurationCalculator";
 import { BondExercises } from "./BondExercises";
+import StockPricingQuiz from "./StockPricingQuiz";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface ContentSectionData {
   title: string;
@@ -21,11 +23,13 @@ interface ContentSectionData {
 interface ContentSectionProps {
   section: ContentSectionData;
   index: number;
+  moduleIndex?: number;
 }
 
-export const ContentSection: React.FC<ContentSectionProps> = ({ section, index }) => {
+export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, moduleIndex }) => {
   const [showBondQuiz, setShowBondQuiz] = useState(false);
   const [showBondExercises, setShowBondExercises] = useState(false);
+  const [showStockQuiz, setShowStockQuiz] = useState(false);
 
   return (
     <>
@@ -102,8 +106,8 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index }
             </Button>
           )}
 
-          {/* Bond Quiz Button - Show only for "Oppgaver" sections */}
-          {section.title.toLowerCase().includes('oppgaver') && (
+          {/* Quiz Buttons - Show only for "Oppgaver" sections */}
+          {section.title.toLowerCase().includes('oppgaver') && moduleIndex === 4 && (
             <div className="space-y-4">
               <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-3">
@@ -132,6 +136,22 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index }
               </div>
             </div>
           )}
+
+          {/* Stock Quiz Button - Show only for "Oppgaver" sections in module 5 */}
+          {section.title.toLowerCase().includes('oppgaver') && moduleIndex === 5 && (
+            <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+              <div className="flex items-center gap-2 mb-3">
+                <Brain className="w-5 h-5 text-blue-600" />
+                <span className="font-semibold text-foreground">Selvtest</span>
+              </div>
+              <p className="text-sm text-muted-foreground mb-3">
+                Test kunnskapen din med 15 tilfeldige spørsmål om aksjeanalyse og verdsettelse
+              </p>
+              <Button onClick={() => setShowStockQuiz(true)} className="w-full">
+                Start selvtest
+              </Button>
+            </div>
+          )}
         </CardContent>
       </Card>
       
@@ -144,6 +164,16 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index }
         isOpen={showBondExercises} 
         onOpenChange={setShowBondExercises} 
       />
+      
+      {/* Stock Quiz Dialog */}
+      <Dialog open={showStockQuiz} onOpenChange={setShowStockQuiz}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Selvtest: Aksjeanalyse og verdsettelse</DialogTitle>
+          </DialogHeader>
+          <StockPricingQuiz />
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
