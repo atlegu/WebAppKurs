@@ -31,13 +31,46 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
     });
   };
   
+  // Pre-process multi-line LaTeX blocks before splitting by lines
+  const processMultiLineLatex = (text: string) => {
+    // Handle multi-line display math blocks ($$\begin{aligned}...\end{aligned}$$)
+    const multiLinePattern = /\$\$\\begin\{aligned\}[\s\S]*?\\end\{aligned\}\$\$/g;
+    let processedText = text;
+    const latexBlocks: { placeholder: string; content: string }[] = [];
+    let blockIndex = 0;
+
+    // Replace multi-line LaTeX with placeholders
+    processedText = processedText.replace(multiLinePattern, (match) => {
+      const placeholder = `__MULTILINE_LATEX_${blockIndex}__`;
+      latexBlocks.push({ placeholder, content: match });
+      blockIndex++;
+      return placeholder;
+    });
+
+    return { processedText, latexBlocks };
+  };
+
+  const { processedText, latexBlocks } = processMultiLineLatex(content);
+  
   return (
     <div className="space-y-4">
-      {content.split('\n').map((line, index) => {
+      {processedText.split('\n').map((line, index) => {
         const trimmedLine = line.trim();
         console.log(`Line ${index}: "${trimmedLine}"`);
         
         if (!trimmedLine) return <div key={index} className="h-2" />;
+        
+        // Handle multi-line LaTeX placeholders
+        const latexBlock = latexBlocks.find(block => trimmedLine === block.placeholder);
+        if (latexBlock) {
+          const latexContent = latexBlock.content.slice(2, -2); // Remove $$ from both ends
+          console.log(`Found multi-line LaTeX block: ${latexContent}`);
+          return (
+            <div key={index} className="my-4">
+              <LaTeX displayMode={true}>{latexContent}</LaTeX>
+            </div>
+          );
+        }
         
         // Handle bold headers with ** 
         if (trimmedLine.startsWith('**') && trimmedLine.endsWith('**') && trimmedLine.split('**').length === 3) {
