@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BalanceSheetGame = () => {
+const BalanceGameWithOverlay = () => {
   return (
     <div style={{ padding: '20px', backgroundColor: 'lightblue', textAlign: 'center' }}>
       <h1>BALANSE SPILL FUNGERER!</h1>
@@ -9,4 +9,4 @@ const BalanceSheetGame = () => {
   );
 };
 
-export default BalanceSheetGame;
+export default BalanceGameWithOverlay;
