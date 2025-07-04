@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { PlayCircle, Target, CheckCircle, FileText, TrendingUp, Calculator, Brain } from 'lucide-react';
 import AksjesparingKalkulator from './AksjesparingKalkulator';
 import StockPricingQuiz from './StockPricingQuiz';
+import GordonGrowthWithOverlay from '../GordonGrowthWithOverlay';
 
 export const StockPricingModule: React.FC = () => {
   const [showStockQuiz, setShowStockQuiz] = useState(false);
@@ -390,6 +391,17 @@ export const StockPricingModule: React.FC = () => {
                 (FCFE, multipler). Vær særlig oppmerksom på <em>realistiske vekstanslag</em> og konsekvensene av bærekraftige 
                 investeringsbeslutninger.
               </p>
+            </div>
+
+            {/* Interactive Gordon Growth Calculator */}
+            <div className="mt-6 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl">
+              <h4 className="text-lg font-semibold mb-3 text-blue-800">🎮 Interaktiv Gordon Growth kalkulator</h4>
+              <p className="text-blue-700 mb-4">
+                Eksperimenter med Gordon-modellen i praksis! Juster parametrene og se umiddelbare effekter på aksjepris.
+              </p>
+              <div className="flex justify-center">
+                <GordonGrowthWithOverlay />
+              </div>
             </div>
           </div>
 
