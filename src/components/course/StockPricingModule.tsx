@@ -3,11 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { PlayCircle, Target, CheckCircle, FileText, TrendingUp, Calculator } from 'lucide-react';
+import { PlayCircle, Target, CheckCircle, FileText, TrendingUp, Calculator, Brain } from 'lucide-react';
 import AksjesparingKalkulator from './AksjesparingKalkulator';
 import StockPricingQuiz from './StockPricingQuiz';
 
 export const StockPricingModule: React.FC = () => {
+  const [showStockQuiz, setShowStockQuiz] = useState(false);
+
   return (
     <div className="space-y-6">
       {/* Module Header */}
@@ -604,7 +606,35 @@ export const StockPricingModule: React.FC = () => {
       </Card>
 
       {/* Self-test Section */}
-      <StockPricingQuiz />
+      <Card>
+        <CardHeader>
+          <CardTitle>8️⃣ Oppgaver</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+            <div className="flex items-center gap-2 mb-3">
+              <Brain className="w-5 h-5 text-blue-600" />
+              <span className="font-semibold text-foreground">Selvtest</span>
+            </div>
+            <p className="text-sm text-muted-foreground mb-3">
+              Test kunnskapen din med 15 tilfeldige spørsmål om aksjeanalyse og verdsettelse
+            </p>
+            <Button onClick={() => setShowStockQuiz(true)} className="w-full">
+              Start selvtest
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Quiz Dialog */}
+      <Dialog open={showStockQuiz} onOpenChange={setShowStockQuiz}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Selvtest: Aksjeanalyse og verdsettelse</DialogTitle>
+          </DialogHeader>
+          <StockPricingQuiz />
+        </DialogContent>
+      </Dialog>
 
       {/* Section 10 - Calculator */}
       <Card>
