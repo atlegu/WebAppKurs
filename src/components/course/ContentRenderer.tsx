@@ -80,9 +80,32 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           }
         }
 
-        // Handle bullet points (with bold text support)
+        // Handle bullet points (with bold text and LaTeX support)
         if (trimmedLine.startsWith('•') || trimmedLine.startsWith('- ')) {
           const text = trimmedLine.slice(2);
+          
+          // Check if the bullet point contains LaTeX
+          if (text.includes('$')) {
+            const inlineMathMatches = text.match(/\$([^$]+)\$/g);
+            if (inlineMathMatches) {
+              const parts = text.split(/(\$[^$]+\$)/);
+              return (
+                <div key={index} className="flex items-start gap-2 mb-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-foreground">
+                    {parts.map((part, partIndex) => {
+                      if (part.startsWith('$') && part.endsWith('$') && part.length > 2) {
+                        const latexContent = part.slice(1, -1);
+                        return <LaTeX key={partIndex}>{latexContent}</LaTeX>;
+                      }
+                      return processBoldText(part);
+                    })}
+                  </span>
+                </div>
+              );
+            }
+          }
+          
           return (
             <div key={index} className="flex items-start gap-2 mb-2">
               <span className="text-primary mt-1">•</span>
