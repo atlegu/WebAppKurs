@@ -71,6 +71,7 @@ export const SubModuleContent: React.FC<SubModuleContentProps> = ({
             <ContentSection 
               section={subModule.content} 
               index={0} 
+              moduleIndex={moduleIndex}
             />
           </div>
         )}
