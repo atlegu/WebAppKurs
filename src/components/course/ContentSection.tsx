@@ -8,6 +8,7 @@ import { DurationCalculator } from "./DurationCalculator";
 import { BondExercises } from "./BondExercises";
 import StockPricingQuiz from "./StockPricingQuiz";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import GordonGrowthWithOverlay from "../GordonGrowthWithOverlay";
 
 interface ContentSectionData {
   title: string;
@@ -49,6 +50,19 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
           {section.title.toLowerCase().includes('durasjon') && (
             <div className="my-6">
               <DurationCalculator />
+            </div>
+          )}
+
+          {/* Gordon Growth Calculator - Show for DDM and FCFE section in module 5 */}
+          {section.title.toLowerCase().includes('ddm') && moduleIndex === 5 && (
+            <div className="mt-6 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl">
+              <h4 className="text-lg font-semibold mb-3 text-blue-800">🎮 Interaktiv Gordon Growth kalkulator</h4>
+              <p className="text-blue-700 mb-4">
+                Eksperimenter med Gordon-modellen i praksis! Juster parametrene og se umiddelbare effekter på aksjepris.
+              </p>
+              <div className="flex justify-center">
+                <GordonGrowthWithOverlay />
+              </div>
             </div>
           )}
 
