@@ -460,7 +460,7 @@ const GordonGrowthOverlay = ({ isOpen, onClose }) => {
                     <h5 className="font-semibold text-green-700 mb-2">⚖️ Trade-offs:</h5>
                     <ul className="text-green-600 space-y-1">
                       <li>• Mer utbytte nå = mindre vekst senere</li>
-                      <li>• g må være < r for at modellen fungerer</li>
+                      <li>• g må være &lt; r for at modellen fungerer</li>
                       <li>• Optimal utbytte balanserer begge</li>
                     </ul>
                   </div>
