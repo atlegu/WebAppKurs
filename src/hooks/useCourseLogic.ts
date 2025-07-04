@@ -242,6 +242,77 @@ Etter å ha fullført alle ti moduler skal du kunne:
             console.log('Dashboard: Processed bonds module with sub-modules:', processedModule.subModules?.length);
             return processedModule;
           }
+          
+          // Create sub-modules for Stocks module (Module 5)
+          if (module.order_index === 5 && (module.title === "Aksjer og aksjeprising" || module.title.includes("Aksjer"))) {
+            console.log('Dashboard: Found stocks module! Creating sub-modules...');
+            const sections = (module.content as any)?.sections || [];
+            console.log('Dashboard: Sections found:', sections.length);
+            
+            // Match content to correct sub-modules by title
+            const findSectionByTitle = (searchTitle: string) => {
+              console.log('Dashboard: Looking for section with title containing:', searchTitle);
+              console.log('Dashboard: Available sections:', sections.map(s => s.title));
+              const found = sections.find(section => 
+                section.title && section.title.toLowerCase().includes(searchTitle.toLowerCase())
+              ) || {};
+              console.log('Dashboard: Found section:', found.title || 'NO MATCH');
+              return found;
+            };
+            
+            const processedModule = {
+              ...module,
+              subModules: [
+                {
+                  id: `${module.id}-sub-1`,
+                  title: "Hva er en aksje – og hvordan fungerer aksjemarkedet?",
+                  content: findSectionByTitle("Hva er en aksje")
+                },
+                {
+                  id: `${module.id}-sub-2`, 
+                  title: "Hva er aksjeprising og hvorfor er det viktig?",
+                  content: findSectionByTitle("aksjeprising og hvorfor")
+                },
+                {
+                  id: `${module.id}-sub-3`,
+                  title: "Fundamental analyse: datainnhenting og regnskapsanalyse", 
+                  content: findSectionByTitle("Fundamental analyse")
+                },
+                {
+                  id: `${module.id}-sub-4`,
+                  title: "Verdsettelsesmodeller: DDM og FCFE",
+                  content: findSectionByTitle("DDM og FCFE")
+                },
+                {
+                  id: `${module.id}-sub-5`,
+                  title: "Verdsettelse med multippelanalyse (P/E, EV/EBITDA, etc.)",
+                  content: findSectionByTitle("multippelanalyse")
+                },
+                {
+                  id: `${module.id}-sub-6`,
+                  title: "Praktisk case: sammenligning av ulike verdsettelsesmetoder",
+                  content: findSectionByTitle("Praktisk case")
+                },
+                {
+                  id: `${module.id}-sub-7`,
+                  title: "Markedseffisiens og prisdannelse",
+                  content: findSectionByTitle("Markedseffisiens")
+                },
+                {
+                  id: `${module.id}-sub-8`,
+                  title: "ESG og bærekraft i aksjeanalyse",
+                  content: findSectionByTitle("ESG og bærekraft")
+                },
+                {
+                  id: `${module.id}-sub-9`,
+                  title: "Oppgaver",
+                  content: findSectionByTitle("Oppgaver")
+                }
+              ]
+            };
+            console.log('Dashboard: Processed stocks module with sub-modules:', processedModule.subModules?.length);
+            return processedModule;
+          }
           return module;
         }) || [];
         
