@@ -168,8 +168,8 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           );
         }
 
-        // Handle formulas and code
-        if (trimmedLine.includes('=') && (trimmedLine.includes('(') || trimmedLine.includes('^'))) {
+        // Handle formulas and code (but NOT LaTeX which has $ symbols)
+        if (trimmedLine.includes('=') && (trimmedLine.includes('(') || trimmedLine.includes('^')) && !trimmedLine.includes('$')) {
           return (
             <div key={index} className="bg-muted p-3 rounded-lg my-3 border">
               <code className="text-sm font-mono">{trimmedLine}</code>
