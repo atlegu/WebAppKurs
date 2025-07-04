@@ -75,7 +75,7 @@ export const useCourseData = (courseId: string | undefined) => {
       const { data: subModulesData, error: subModulesError } = await supabase
         .from("sub_modules")
         .select("*")
-        .order("order_index");
+        .order("module_id, order_index");
 
       if (modulesError) {
         console.error("Error fetching modules:", modulesError);
@@ -86,7 +86,27 @@ export const useCourseData = (courseId: string | undefined) => {
         const processedModules = modulesData?.map(module => {
           console.log('Checking module:', module.title, 'order_index:', module.order_index);
           
-          // Create sub-modules for Introduction module (Module 1)
+          // First, check if this module has sub-modules in the database
+          const moduleSubModules = subModulesData?.filter(sub => sub.module_id === module.id) || [];
+          console.log('Found', moduleSubModules.length, 'sub-modules in database for module:', module.title);
+          
+          if (moduleSubModules.length > 0) {
+            // Use sub-modules from database
+            const processedModule = {
+              ...module,
+              subModules: moduleSubModules.map(sub => ({
+                id: sub.id,
+                title: sub.title,
+                content: sub.content,
+                order_index: sub.order_index,
+                module_id: sub.module_id
+              }))
+            };
+            console.log('Using sub-modules from database for module:', module.title);
+            return processedModule;
+          }
+          
+          // Fallback: Create sub-modules for Introduction module (Module 1) if no sub-modules in database
           if (module.order_index === 1 && (module.title.includes("Introduksjon") || module.title.includes("introduksjon"))) {
             console.log('Found introduction module! Creating sub-modules...');
             const sections = (module.content as any)?.sections || [];
@@ -179,92 +199,6 @@ Etter å ha fullført alle ti moduler skal du kunne:
               ]
             };
             console.log('Processed introduction module with sub-modules:', processedModule.subModules?.length);
-            return processedModule;
-          }
-          
-          if (module.order_index === 4 && module.title === "Obligasjoner") {
-            console.log('Found bonds module! Creating sub-modules...');
-            const sections = (module.content as any)?.sections || [];
-            console.log('Sections found:', sections.length);
-            
-            // Match content to correct sub-modules by title
-            const findSectionByTitle = (searchTitle: string) => {
-              return sections.find(section => 
-                section.title && section.title.toLowerCase().includes(searchTitle.toLowerCase())
-              ) || {};
-            };
-            
-            const processedModule = {
-              ...module,
-              subModules: [
-                {
-                  id: `${module.id}-sub-1`,
-                  title: "Hva er en obligasjon?",
-                  content: findSectionByTitle("Hva er en obligasjon")
-                },
-                {
-                  id: `${module.id}-sub-2`, 
-                  title: "Obligasjonsstruktur og nøkkeltall",
-                  content: findSectionByTitle("Obligasjonsstruktur og nøkkeltall")
-                },
-                {
-                  id: `${module.id}-sub-3`,
-                  title: "Pris og avkastning på obligasjoner", 
-                  content: findSectionByTitle("Pris og avkastning")
-                },
-                {
-                  id: `${module.id}-sub-4`,
-                  title: "Effektiv rente (Yield to Maturity - YTM)",
-                  content: findSectionByTitle("Effektiv rente")
-                },
-                {
-                  id: `${module.id}-sub-5`,
-                  title: "Risikofaktorer ved obligasjoner",
-                  content: findSectionByTitle("Risikofaktorer")
-                },
-                {
-                  id: `${module.id}-sub-6`,
-                  title: "Kredittrating og markedsaktører",
-                  content: findSectionByTitle("Kredittrating")
-                },
-                {
-                  id: `${module.id}-sub-7`,
-                  title: "Grønne obligasjoner og bærekraftige lån",
-                  content: findSectionByTitle("Grønne obligasjoner")
-                },
-                {
-                  id: `${module.id}-sub-8`,
-                  title: "Durasjon - obligasjonens følsomhet for renteendringer",
-                  content: findSectionByTitle("Durasjon")
-                },
-                {
-                  id: `${module.id}-sub-9`,
-                  title: "Oppgaver",
-                  content: { title: "Oppgaver", type: "exercise", content: "Praktiske oppgaver for obligasjonsmodulen kommer her." }
-                }
-              ]
-            };
-            console.log('Processed bonds module with sub-modules:', processedModule.subModules?.length);
-            return processedModule;
-          }
-          
-          // Add sub-modules from database for module 6 (Avkastning og risiko)
-          if (module.order_index === 6) {
-            console.log('Found module 6! Adding sub-modules from database...');
-            const moduleSubModules = subModulesData?.filter(sub => sub.module_id === module.id) || [];
-            console.log('Module 6 sub-modules found:', moduleSubModules.length);
-            
-            const processedModule = {
-              ...module,
-              subModules: moduleSubModules.map(sub => ({
-                id: sub.id,
-                title: sub.title,
-                content: sub.content,
-                order_index: sub.order_index,
-                module_id: sub.module_id
-              }))
-            };
-            console.log('Processed module 6 with sub-modules:', processedModule.subModules?.length);
             return processedModule;
           }
           

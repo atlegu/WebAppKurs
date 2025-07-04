@@ -73,18 +73,38 @@ export const useCourseLogic = () => {
       const { data: subModulesData, error: subModulesError } = await supabase
         .from("sub_modules")
         .select("*")
-        .order("order_index");
+        .order("module_id, order_index");
 
       if (modulesError) {
         console.error("Error fetching modules:", modulesError);
       } else {
-        // Process modules and add sub-modules for bonds module
+        // Process modules and add sub-modules from database
         console.log('Dashboard: Processing modules:', modulesData);
         console.log('Dashboard: Sub-modules data:', subModulesData);
         const processedModules = modulesData?.map(module => {
           console.log('Dashboard: Checking module:', module.title, 'order_index:', module.order_index);
           
-          // Create sub-modules for Introduction module (Module 1)
+          // First, check if this module has sub-modules in the database
+          const moduleSubModules = subModulesData?.filter(sub => sub.module_id === module.id) || [];
+          console.log('Dashboard: Found', moduleSubModules.length, 'sub-modules in database for module:', module.title);
+          
+          if (moduleSubModules.length > 0) {
+            // Use sub-modules from database
+            const processedModule = {
+              ...module,
+              subModules: moduleSubModules.map(sub => ({
+                id: sub.id,
+                title: sub.title,
+                content: sub.content,
+                order_index: sub.order_index,
+                module_id: sub.module_id
+              }))
+            };
+            console.log('Dashboard: Using sub-modules from database for module:', module.title);
+            return processedModule;
+          }
+          
+          // Fallback: Create sub-modules for Introduction module (Module 1) if no sub-modules in database
           if (module.order_index === 1 && (module.title.includes("Introduksjon") || module.title.includes("introduksjon"))) {
             console.log('Dashboard: Found introduction module! Creating sub-modules...');
             const sections = (module.content as any)?.sections || [];
@@ -177,199 +197,6 @@ Etter å ha fullført alle ti moduler skal du kunne:
               ]
             };
             console.log('Dashboard: Processed introduction module with sub-modules:', processedModule.subModules?.length);
-            return processedModule;
-          }
-          
-          // Create sub-modules for Accounting module (Module 2)
-          if (module.order_index === 2 && (module.title === "Regnskap" || module.title.includes("regnskap"))) {
-            console.log('Dashboard: Found accounting module! Creating sub-modules...');
-            const sections = (module.content as any)?.sections || [];
-            console.log('Dashboard: Sections found:', sections.length);
-            
-            // Map the existing sections from the database to sub-modules
-            const subModules = sections.map((section: any, index: number) => ({
-              id: `${module.id}-sub-${index + 1}`,
-              title: section.title || `Seksjon ${index + 1}`,
-              content: section
-            }));
-            
-            // Add "Oppgaver" section at the end
-            subModules.push({
-              id: `${module.id}-sub-oppgaver`,
-              title: "Oppgaver",
-              content: { 
-                title: "Oppgaver", 
-                type: "exercise", 
-                content: "Her finner du praktiske oppgaver relatert til regnskapsmodulen." 
-              }
-            });
-            
-            const processedModule = {
-              ...module,
-              subModules: subModules
-            };
-            console.log('Dashboard: Processed accounting module with sub-modules:', processedModule.subModules?.length);
-            return processedModule;
-          }
-          
-          if (module.order_index === 4 && module.title === "Obligasjoner") {
-            console.log('Dashboard: Found bonds module! Creating sub-modules...');
-            const sections = (module.content as any)?.sections || [];
-            console.log('Dashboard: Sections found:', sections.length);
-            
-            // Match content to correct sub-modules by title
-            const findSectionByTitle = (searchTitle: string) => {
-              console.log('Dashboard: Looking for section with title containing:', searchTitle);
-              console.log('Dashboard: Available sections:', sections.map(s => s.title));
-              const found = sections.find(section => 
-                section.title && section.title.toLowerCase().includes(searchTitle.toLowerCase())
-              ) || {};
-              console.log('Dashboard: Found section:', found.title || 'NO MATCH');
-              return found;
-            };
-            
-            const processedModule = {
-              ...module,
-              subModules: [
-                {
-                  id: `${module.id}-sub-1`,
-                  title: "Hva er en obligasjon?",
-                  content: findSectionByTitle("Hva er en obligasjon")
-                },
-                {
-                  id: `${module.id}-sub-2`, 
-                  title: "Obligasjonsstruktur og nøkkeltall",
-                  content: findSectionByTitle("Obligasjonsstruktur og nøkkeltall")
-                },
-                {
-                  id: `${module.id}-sub-3`,
-                  title: "Pris og avkastning på obligasjoner", 
-                  content: findSectionByTitle("Pris og avkastning")
-                },
-                {
-                  id: `${module.id}-sub-4`,
-                  title: "Effektiv rente (Yield to Maturity - YTM)",
-                  content: findSectionByTitle("Effektiv rente")
-                },
-                {
-                  id: `${module.id}-sub-5`,
-                  title: "Risikofaktorer ved obligasjoner",
-                  content: findSectionByTitle("Risikofaktorer")
-                },
-                {
-                  id: `${module.id}-sub-6`,
-                  title: "Kredittrating og markedsaktører",
-                  content: findSectionByTitle("Kredittrating")
-                },
-                {
-                  id: `${module.id}-sub-7`,
-                  title: "Grønne obligasjoner og bærekraftige lån",
-                  content: findSectionByTitle("Grønne obligasjoner")
-                },
-                {
-                  id: `${module.id}-sub-8`,
-                  title: "Durasjon - obligasjonens følsomhet for renteendringer",
-                  content: findSectionByTitle("Durasjon")
-                },
-                {
-                  id: `${module.id}-sub-9`,
-                  title: "Oppgaver",
-                  content: { title: "Oppgaver", type: "exercise", content: "Praktiske oppgaver for obligasjonsmodulen kommer her." }
-                }
-              ]
-            };
-            console.log('Dashboard: Processed bonds module with sub-modules:', processedModule.subModules?.length);
-            return processedModule;
-          }
-          
-          // Create sub-modules for Stocks module (Module 5)
-          if (module.order_index === 5 && (module.title === "Aksjer og aksjeprising" || module.title.includes("Aksjer"))) {
-            console.log('Dashboard: Found stocks module! Creating sub-modules...');
-            const sections = (module.content as any)?.sections || [];
-            console.log('Dashboard: Sections found:', sections.length);
-            
-            // Match content to correct sub-modules by title
-            const findSectionByTitle = (searchTitle: string) => {
-              console.log('Dashboard: Looking for section with title containing:', searchTitle);
-              console.log('Dashboard: Available sections:', sections.map(s => s.title));
-              const found = sections.find(section => 
-                section.title && section.title.toLowerCase().includes(searchTitle.toLowerCase())
-              ) || {};
-              console.log('Dashboard: Found section:', found.title || 'NO MATCH');
-              return found;
-            };
-            
-            const processedModule = {
-              ...module,
-              subModules: [
-                {
-                  id: `${module.id}-sub-1`,
-                  title: "Hva er en aksje – og hvordan fungerer aksjemarkedet?",
-                  content: findSectionByTitle("Hva er en aksje")
-                },
-                {
-                  id: `${module.id}-sub-2`, 
-                  title: "Hva er aksjeprising og hvorfor er det viktig?",
-                  content: findSectionByTitle("aksjeprising og hvorfor")
-                },
-                {
-                  id: `${module.id}-sub-3`,
-                  title: "Fundamental analyse: datainnhenting og regnskapsanalyse", 
-                  content: findSectionByTitle("Fundamental analyse")
-                },
-                {
-                  id: `${module.id}-sub-4`,
-                  title: "Verdsettelsesmodeller: DDM og FCFE",
-                  content: findSectionByTitle("DDM og FCFE")
-                },
-                {
-                  id: `${module.id}-sub-5`,
-                  title: "Verdsettelse med multippelanalyse (P/E, EV/EBITDA, etc.)",
-                  content: findSectionByTitle("multippelanalyse")
-                },
-                {
-                  id: `${module.id}-sub-6`,
-                  title: "Praktisk case: sammenligning av ulike verdsettelsesmetoder",
-                  content: findSectionByTitle("Praktisk case")
-                },
-                {
-                  id: `${module.id}-sub-7`,
-                  title: "Markedseffisiens og prisdannelse",
-                  content: findSectionByTitle("Markedseffisiens")
-                },
-                {
-                  id: `${module.id}-sub-8`,
-                  title: "ESG og bærekraft i aksjeanalyse",
-                  content: findSectionByTitle("ESG og bærekraft")
-                },
-                {
-                  id: `${module.id}-sub-9`,
-                  title: "Oppgaver",
-                  content: findSectionByTitle("Oppgaver")
-                }
-              ]
-            };
-            console.log('Dashboard: Processed stocks module with sub-modules:', processedModule.subModules?.length);
-            return processedModule;
-          }
-          
-          // Add sub-modules from database for module 6 (Avkastning og risiko)
-          if (module.order_index === 6) {
-            console.log('Dashboard: Found module 6! Adding sub-modules from database...');
-            const moduleSubModules = subModulesData?.filter(sub => sub.module_id === module.id) || [];
-            console.log('Dashboard: Module 6 sub-modules found:', moduleSubModules.length);
-            
-            const processedModule = {
-              ...module,
-              subModules: moduleSubModules.map(sub => ({
-                id: sub.id,
-                title: sub.title,
-                content: sub.content,
-                order_index: sub.order_index,
-                module_id: sub.module_id
-              }))
-            };
-            console.log('Dashboard: Processed module 6 with sub-modules:', processedModule.subModules?.length);
             return processedModule;
           }
           
