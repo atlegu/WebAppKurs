@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Users, BarChart3 } from "lucide-react";
+import GordonGrowthWithOverlay from "@/components/GordonGrowthWithOverlay";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -106,6 +107,12 @@ const Index = () => {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Test Area */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-8">Test Gordon Growth Model</h2>
+          <GordonGrowthWithOverlay />
         </div>
 
         {/* Call to Action */}
