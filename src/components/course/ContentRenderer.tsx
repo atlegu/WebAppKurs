@@ -13,7 +13,7 @@ import { BaselineQuiz } from "./BaselineQuiz";
 import { LearningPlanCreator } from "./LearningPlanCreator";
 import { ModuleConnectionsChart } from "./ModuleConnectionsChart";
 import { RandomWalkSimulator } from "./RandomWalkSimulator";
-import { Portfoljeped } from "../Portfoljeped";
+import Portfoljeped from "../Portfoljeped";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface ContentRendererProps {

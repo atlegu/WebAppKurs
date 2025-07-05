@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Scatter } from 'recharts';
 
-const PortfolioAnalyzer = () => {
+const Portfoljeped = () => {
   const [stockWeight, setStockWeight] = useState(50);
   const [correlation, setCorrelation] = useState(0.2);
   const [showEfficient, setShowEfficient] = useState(true);
@@ -73,7 +73,7 @@ const PortfolioAnalyzer = () => {
     return data;
   }, [correlation]);
 
-  const CustomTooltip = ({ active, payload, label }) => {
+  const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
@@ -397,4 +397,4 @@ const PortfolioAnalyzer = () => {
   );
 };
 
-export default PortfolioAnalyzer;
+export default Portfoljeped;
