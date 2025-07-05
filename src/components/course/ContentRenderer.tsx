@@ -9,6 +9,8 @@ import { ReturnCalculator } from "./ReturnCalculator";
 import { RiskReturnVisualization } from "./RiskReturnVisualization";
 import { CFORolesInfographic } from "./CFORolesInfographic";
 import { LiquiditySimulator } from "./LiquiditySimulator";
+import { BaselineQuiz } from "./BaselineQuiz";
+import { LearningPlanCreator } from "./LearningPlanCreator";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface ContentRendererProps {

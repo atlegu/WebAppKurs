@@ -11,6 +11,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import GordonGrowthWithOverlay from "../GordonGrowthWithOverlay";
 import AvkastningRisikoWithOverlay from "../AvkastningRisikoWithOverlay";
 import { FinanceCategorizeExercise } from "./FinanceCategorizeExercise";
+import { BaselineQuiz } from "./BaselineQuiz";
+import { LearningPlanCreator } from "./LearningPlanCreator";
 
 interface ContentSectionData {
   title: string;
@@ -242,6 +244,20 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
           {moduleIndex === 1 && section.title && section.title.toLowerCase().includes('interaktiv øvelse') && (
             <div className="my-6">
               <FinanceCategorizeExercise />
+            </div>
+          )}
+
+          {/* Baseline Quiz - Show for Module 1.5 interactive section */}
+          {moduleIndex === 1 && section.title && section.title.toLowerCase().includes('baseline-quiz') && (
+            <div className="my-6">
+              <BaselineQuiz />
+            </div>
+          )}
+
+          {/* Learning Plan Creator - Show for Module 1.5 exercise section */}
+          {moduleIndex === 1 && section.title && section.title.toLowerCase().includes('personlige læringsplan') && (
+            <div className="my-6">
+              <LearningPlanCreator />
             </div>
           )}
 
