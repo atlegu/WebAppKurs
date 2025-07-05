@@ -89,7 +89,9 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
 
   const { processedText, latexBlocks } = preprocessLatex(content);
   
-  const lines = processedText.split('\n');
+  // Handle escaped newlines from database
+  const normalizedContent = processedText.replace(/\\n/g, '\n');
+  const lines = normalizedContent.split('\n');
   const elements: React.ReactNode[] = [];
   let i = 0;
   
@@ -452,6 +454,18 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
     }
     
     // Handle interactive components
+    if (trimmedLine.includes('!component:baseline-quiz')) {
+      elements.push(<BaselineQuiz key={i} />);
+      i++;
+      continue;
+    }
+    
+    if (trimmedLine.includes('!component:learning-plan')) {
+      elements.push(<LearningPlanCreator key={i} />);
+      i++;
+      continue;
+    }
+    
     if (trimmedLine.includes('!component:portfolio-calculator')) {
       elements.push(<PortfolioRiskCalculator key={i} />);
       i++;
