@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, PlayCircle, FileText, CheckCircle, Target, Brain } from "lucide-react";
+import { BookOpen, PlayCircle, FileText, CheckCircle, Target, Brain, Lightbulb } from "lucide-react";
 import { ContentRenderer } from "./ContentRenderer";
 import { BondQuiz } from "./BondQuiz";
 import { DurationCalculator } from "./DurationCalculator";
@@ -35,6 +35,25 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
   const [showBondQuiz, setShowBondQuiz] = useState(false);
   const [showBondExercises, setShowBondExercises] = useState(false);
   const [showStockQuiz, setShowStockQuiz] = useState(false);
+
+  // Special handling for insight boxes
+  if (section.type === "insight") {
+    return (
+      <div className="mb-6 p-6 bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-200 rounded-xl">
+        <div className="flex items-start gap-3">
+          <Lightbulb className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
+          <div className="flex-1">
+            <h4 className="text-lg font-semibold text-amber-800 mb-3">
+              {section.title.replace(/^!insight\s*/i, '')}
+            </h4>
+            <div className="text-amber-900 leading-relaxed">
+              <ContentRenderer content={section.content} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
