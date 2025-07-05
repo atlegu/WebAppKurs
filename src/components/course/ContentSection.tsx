@@ -305,13 +305,15 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
           )}
 
           {section.reflection && (
-            <div className="bg-accent/10 border border-accent/30 p-4 rounded-lg">
-              <div className="flex items-center gap-2 mb-3">
-                <Target className="w-5 h-5 text-accent-foreground" />
-                <span className="font-semibold text-foreground">Refleksjonsspørsmål</span>
-              </div>
-              <div className="text-sm text-muted-foreground leading-relaxed">
-                {section.reflection}
+            <div className="mb-6 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl">
+              <div className="flex items-start gap-3">
+                <Target className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                <div className="flex-1">
+                  <h4 className="text-lg font-semibold text-blue-800 mb-3">Refleksjonsspørsmål</h4>
+                  <div className="text-blue-900 leading-relaxed">
+                    <ContentRenderer content={section.reflection} />
+                  </div>
+                </div>
               </div>
             </div>
           )}
