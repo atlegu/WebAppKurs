@@ -8,7 +8,7 @@ SET content = jsonb_build_object(
             'content', '> «Vil du ha 100 kr i dag eller 105 kr om ett år?»  
 > Det enkle spørsmålet skjuler hele poenget med renteregning: penger skifter verdi når de flyttes i tid.
 
-## 1    Hvorfor 100 kr i dag er mer verdt enn 100 kr i morgen
+**## 1    Hvorfor 100 kr i dag er mer verdt enn 100 kr i morgen**
 
 1. **Inflasjon** – prisnivået stiger typisk over tid, og én fremtidig krone kjøper derfor færre varer enn en krone i dag.
 2. **Usikkerhet (kredittrisiko)** – det finnes alltid en sjanse for forsinket eller uteblitt tilbakebetaling.
@@ -16,7 +16,7 @@ SET content = jsonb_build_object(
 
 Summen av disse komponentene danner den *nominelle renten* – prisen for å flytte kapital frem eller tilbake i tid.
 
-## 2    Hva er renter?
+**## 2    Hva er renter?**
 
 Renter er prisen på å disponere kapital over tid.
 
@@ -25,7 +25,7 @@ Renter er prisen på å disponere kapital over tid.
 
 Bankens fortjeneste ligger i differansen mellom renten de tar når de låner ut og den de gir på innskudd.
 
-## 3    Enkle versus sammensatte renter
+**## 3    Enkle versus sammensatte renter**
 
 Enkel rente beregnes kun på hovedstolen hver periode.
 
@@ -33,7 +33,7 @@ Sammensatt rente beregnes på hovedstol *pluss* tidligere opptjente renter; sald
 
 Renters-rente-effekten gjør *tid* til den viktigste faktoren i både sparing og gjeld.
 
-## 4    Nominell, effektiv og reell rente
+**## 4    Nominell, effektiv og reell rente**
 
 - **Nominell rente** – den annonserte satsen.
 - **Effektiv rente** – nominell rente justert for gebyrer og hvor ofte renten kapitaliseres.
@@ -41,13 +41,13 @@ Renters-rente-effekten gjør *tid* til den viktigste faktoren i både sparing og
 
 Å skille disse begrepene er nødvendig for å sammenligne lån og spareprodukter korrekt.
 
-## 5    Rentens rolle i finansielle markeder
+**## 5    Rentens rolle i finansielle markeder**
 
 Finansmarkedet flytter ressurser fra overskuddsaktører til dem som trenger midler nå.
 
 Renten er prislappen som balanserer denne utvekslingen og påvirker alt fra boliglånskostnader til verdsettelsen av selskaper og statsobligasjoner.
 
-## 6    Tidslinjen – ditt viktigste verktøy
+**## 6    Tidslinjen – ditt viktigste verktøy**
 
 I renteregning tegnes først en tidslinje med alle kontantstrømmer.
 
@@ -59,7 +59,7 @@ der $r$ er perioderenten og $n$ antall perioder.
 
 Alt beslutningsgrunnlag reduseres til sammenlignbare kroner «her og nå».
 
-## 7    Hvorfor du må mestre tidsverdien av penger
+**## 7    Hvorfor du må mestre tidsverdien av penger**
 
 - Tidlig forståelse av *renters rente* kan forvandle små månedlige sparebidrag til store fremtidige beløp.
 - Korrekt *nåverdiberegning* er grunnsteinen i investeringsanalyser, fra boliglån til bærekraftige prosjekter.
