@@ -14,6 +14,7 @@ import { LearningPlanCreator } from "./LearningPlanCreator";
 import { ModuleConnectionsChart } from "./ModuleConnectionsChart";
 import { RandomWalkSimulator } from "./RandomWalkSimulator";
 import Portfoljeped from "../Portfoljeped";
+import PortfolioRiskQuiz from "./PortfolioRiskQuiz";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface ContentRendererProps {
@@ -520,6 +521,12 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
 
     if (trimmedLine.includes('!component:random-walk-simulator')) {
       elements.push(<RandomWalkSimulator key={i} />);
+      i++;
+      continue;
+    }
+
+    if (trimmedLine.includes('!component:portfolio-risk-quiz')) {
+      elements.push(<PortfolioRiskQuiz key={i} />);
       i++;
       continue;
     }
