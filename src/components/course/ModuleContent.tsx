@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -51,12 +51,16 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({
   modules = [],
   totalModules 
 }) => {
+  // Scroll to top when module changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [selectedModule?.id]);
+
   const handlePreviousModule = () => {
     if (selectedModule && selectedModule.order_index > 1 && onModuleSelect) {
       const previousModule = modules.find(m => m.order_index === selectedModule.order_index - 1);
       if (previousModule) {
         onModuleSelect(previousModule);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
   };
@@ -66,7 +70,6 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({
       const nextModule = modules.find(m => m.order_index === selectedModule.order_index + 1);
       if (nextModule) {
         onModuleSelect(nextModule);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
   };
