@@ -68,7 +68,7 @@ export const ModuleConnectionsChart: React.FC = () => {
               
               <div className="flex items-center gap-2 ml-4 flex-wrap">
                 {pathway.path.map((step, stepIndex) => (
-                  <React.Fragment key={stepIndex}>
+                  <React.Fragment key={`${pathway.theme}-${stepIndex}`}>
                     <div className="flex items-center gap-2 bg-background border rounded-md p-2 min-w-fit">
                       <span className="text-sm font-medium text-muted-foreground">
                         Modul {step.module}

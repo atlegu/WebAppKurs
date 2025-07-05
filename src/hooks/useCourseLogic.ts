@@ -88,6 +88,16 @@ export const useCourseLogic = () => {
           const moduleSubModules = subModulesData?.filter(sub => sub.module_id === module.id) || [];
           console.log('Dashboard: Found', moduleSubModules.length, 'sub-modules in database for module:', module.title);
           
+          // Debug specific module (Regnskap)
+          if (module.title.includes('Regnskap') || module.title.includes('regnskap')) {
+            console.log('Dashboard: REGNSKAP MODULE DEBUG:', {
+              module: module.title,
+              moduleId: module.id,
+              subModulesFound: moduleSubModules.length,
+              subModules: moduleSubModules.map(sub => ({ id: sub.id, title: sub.title }))
+            });
+          }
+          
           if (moduleSubModules.length > 0) {
             // Use sub-modules from database
             const processedModule = {
