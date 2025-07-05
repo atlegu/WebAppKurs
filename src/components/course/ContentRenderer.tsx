@@ -7,6 +7,7 @@ import { PortfolioRiskCalculator } from "./PortfolioRiskCalculator";
 import { RiskMeasurementCalculator } from "./RiskMeasurementCalculator";
 import { ReturnCalculator } from "./ReturnCalculator";
 import { RiskReturnVisualization } from "./RiskReturnVisualization";
+import { CFORolesInfographic } from "./CFORolesInfographic";
 
 interface ContentRendererProps {
   content: string;
@@ -327,6 +328,10 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
 
         if (trimmedLine.includes('!component:market-efficiency-table')) {
           return <MarketEfficiencyTable key={index} />;
+        }
+
+        if (trimmedLine.includes('!component:cfo-roles-infographic')) {
+          return <CFORolesInfographic key={index} />;
         }
 
         // Handle bond pricing formula
