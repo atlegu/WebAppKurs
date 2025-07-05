@@ -11,6 +11,7 @@ import { CFORolesInfographic } from "./CFORolesInfographic";
 import { LiquiditySimulator } from "./LiquiditySimulator";
 import { BaselineQuiz } from "./BaselineQuiz";
 import { LearningPlanCreator } from "./LearningPlanCreator";
+import { ModuleConnectionsChart } from "./ModuleConnectionsChart";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface ContentRendererProps {
@@ -462,6 +463,12 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
     
     if (trimmedLine.includes('!component:learning-plan')) {
       elements.push(<LearningPlanCreator key={i} />);
+      i++;
+      continue;
+    }
+    
+    if (trimmedLine.includes('!component:module-connections')) {
+      elements.push(<ModuleConnectionsChart key={i} />);
       i++;
       continue;
     }
