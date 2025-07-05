@@ -8,6 +8,7 @@ import { RiskMeasurementCalculator } from "./RiskMeasurementCalculator";
 import { ReturnCalculator } from "./ReturnCalculator";
 import { RiskReturnVisualization } from "./RiskReturnVisualization";
 import { CFORolesInfographic } from "./CFORolesInfographic";
+import { LiquiditySimulator } from "./LiquiditySimulator";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface ContentRendererProps {
@@ -158,6 +159,40 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           <div key={i}>
             <h3 className="text-lg font-bold text-primary mb-4">{text}</h3>
             <CourseMap />
+          </div>
+        );
+        i++;
+        continue;
+      }
+      
+      // Check if this is a special styled section
+      let sectionType = 'default';
+      let icon = '';
+      let colorClasses = '';
+      
+      if (text.includes('Case:') || text.includes('Fintech-revolusjon') || text.includes('Vipps')) {
+        sectionType = 'case';
+        icon = '💼';
+        colorClasses = 'bg-blue-50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800';
+      } else if (text.includes('Test forståelsen') || text.includes('Sant eller usant') || text.includes('Selvtest')) {
+        sectionType = 'quiz';
+        icon = '❓';
+        colorClasses = 'bg-green-50 border-green-200 dark:bg-green-950/30 dark:border-green-800';
+      } else if (text.includes('🎯 Det viktigste') || text.includes('Oppsummering')) {
+        sectionType = 'summary';
+        icon = '🎯';
+        colorClasses = 'bg-purple-50 border-purple-200 dark:bg-purple-950/30 dark:border-purple-800';
+      }
+      
+      if (sectionType !== 'default') {
+        elements.push(
+          <div key={i} className={`my-6 p-5 ${colorClasses} border rounded-lg`}>
+            <div className="flex items-start gap-3">
+              <span className="text-xl">{icon}</span>
+              <div className="flex-1">
+                <h4 className="font-semibold text-lg mb-3">{text}</h4>
+              </div>
+            </div>
           </div>
         );
       } else {
@@ -447,6 +482,12 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
 
     if (trimmedLine.includes('!component:cfo-roles-infographic')) {
       elements.push(<CFORolesInfographic key={i} />);
+      i++;
+      continue;
+    }
+
+    if (trimmedLine.includes('!component:liquidity-simulator')) {
+      elements.push(<LiquiditySimulator key={i} />);
       i++;
       continue;
     }
