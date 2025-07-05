@@ -58,40 +58,43 @@ const Dashboard = () => {
         {course ? (
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 min-h-0">
             <div className="lg:col-span-1 max-w-full">
-              <ModuleSidebar
-                modules={modules}
-                selectedModule={selectedModule}
-                selectedSubModule={selectedSubModule}
-                onModuleSelect={setSelectedModule}
-                onSubModuleSelect={setSelectedSubModule}
-                userProgress={userProgress}
-              />
+              <div className="sticky top-4 h-[calc(100vh-8rem)] overflow-y-auto">
+                <ModuleSidebar
+                  modules={modules}
+                  selectedModule={selectedModule}
+                  selectedSubModule={selectedSubModule}
+                  onModuleSelect={setSelectedModule}
+                  onSubModuleSelect={setSelectedSubModule}
+                  userProgress={userProgress}
+                />
+              </div>
             </div>
 
             <div className="lg:col-span-3 min-w-0 max-w-full overflow-hidden">
-              {selectedModule ? (
-                <div>
-                  <ModuleContent
-                    selectedModule={selectedModule}
-                    selectedSubModule={selectedSubModule}
-                    onSubModuleSelect={setSelectedSubModule}
-                    totalModules={modules.length}
-                  />
-
-                </div>
-              ) : (
-                <div className="space-y-8">
-                  <Card>
-                    <CardContent className="p-8 text-center">
-                      <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                      <h3 className="text-lg font-medium mb-2">Velkommen til kurset</h3>
-                      <p className="text-muted-foreground">
-                        Velg en modul fra sidemenyen for å starte læringen.
-                      </p>
-                    </CardContent>
-                  </Card>
-                </div>
-              )}
+              <div className="h-[calc(100vh-8rem)] overflow-y-auto pr-2">
+                {selectedModule ? (
+                  <div>
+                    <ModuleContent
+                      selectedModule={selectedModule}
+                      selectedSubModule={selectedSubModule}
+                      onSubModuleSelect={setSelectedSubModule}
+                      totalModules={modules.length}
+                    />
+                  </div>
+                ) : (
+                  <div className="space-y-8">
+                    <Card>
+                      <CardContent className="p-8 text-center">
+                        <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                        <h3 className="text-lg font-medium mb-2">Velkommen til kurset</h3>
+                        <p className="text-muted-foreground">
+                          Velg en modul fra sidemenyen for å starte læringen.
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         ) : (
