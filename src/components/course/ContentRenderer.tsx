@@ -526,7 +526,11 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
     }
 
     if (trimmedLine.includes('!component:portfolio-risk-quiz')) {
-      elements.push(<PortfolioRiskQuiz key={i} />);
+      elements.push(
+        <div key={i} className="my-8">
+          <PortfolioRiskQuiz />
+        </div>
+      );
       i++;
       continue;
     }
