@@ -10,6 +10,7 @@ import StockPricingQuiz from "./StockPricingQuiz";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import GordonGrowthWithOverlay from "../GordonGrowthWithOverlay";
 import AvkastningRisikoWithOverlay from "../AvkastningRisikoWithOverlay";
+import { FinanceCategorizeExercise } from "./FinanceCategorizeExercise";
 
 interface ContentSectionData {
   title: string;
@@ -234,6 +235,13 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
               <div className="flex justify-center">
                 <GordonGrowthWithOverlay />
               </div>
+            </div>
+          )}
+
+          {/* Finance Categorization Exercise - Show for Module 1.1 interactive exercise */}
+          {moduleIndex === 1 && section.title && section.title.toLowerCase().includes('interaktiv øvelse') && (
+            <div className="my-6">
+              <FinanceCategorizeExercise />
             </div>
           )}
 
