@@ -53,7 +53,14 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({
 }) => {
   // Scroll to top when module changes
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Find the scrollable content area and scroll it to top
+    const contentArea = document.querySelector('.lg\\:col-span-3 > div[class*="overflow-y-auto"]');
+    if (contentArea) {
+      contentArea.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // Fallback to window scroll if content area not found
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }, [selectedModule?.id]);
 
   const handlePreviousModule = () => {
