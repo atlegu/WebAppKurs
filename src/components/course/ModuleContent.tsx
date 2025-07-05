@@ -38,6 +38,8 @@ interface ModuleContentProps {
   selectedModule: Module | null;
   selectedSubModule?: SubModule | null;
   onSubModuleSelect?: (subModule: SubModule) => void;
+  onModuleSelect?: (module: Module) => void;
+  modules?: Module[];
   totalModules: number;
 }
 
@@ -45,8 +47,29 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({
   selectedModule, 
   selectedSubModule, 
   onSubModuleSelect,
+  onModuleSelect,
+  modules = [],
   totalModules 
 }) => {
+  const handlePreviousModule = () => {
+    if (selectedModule && selectedModule.order_index > 1 && onModuleSelect) {
+      const previousModule = modules.find(m => m.order_index === selectedModule.order_index - 1);
+      if (previousModule) {
+        onModuleSelect(previousModule);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+  };
+
+  const handleNextModule = () => {
+    if (selectedModule && selectedModule.order_index < totalModules && onModuleSelect) {
+      const nextModule = modules.find(m => m.order_index === selectedModule.order_index + 1);
+      if (nextModule) {
+        onModuleSelect(nextModule);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+  };
   if (!selectedModule) {
     return (
       <Card>
@@ -115,10 +138,17 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({
 
       {/* Module Navigation */}
       <div className="flex justify-between mt-8 pt-6 border-t">
-        <Button variant="outline" disabled={selectedModule.order_index <= 1}>
+        <Button 
+          variant="outline" 
+          disabled={selectedModule.order_index <= 1}
+          onClick={handlePreviousModule}
+        >
           Forrige modul
         </Button>
-        <Button disabled={selectedModule.order_index >= totalModules}>
+        <Button 
+          disabled={selectedModule.order_index >= totalModules}
+          onClick={handleNextModule}
+        >
           Neste modul
         </Button>
       </div>

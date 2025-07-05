@@ -78,6 +78,8 @@ const Dashboard = () => {
                       selectedModule={selectedModule}
                       selectedSubModule={selectedSubModule}
                       onSubModuleSelect={setSelectedSubModule}
+                      onModuleSelect={setSelectedModule}
+                      modules={modules}
                       totalModules={modules.length}
                     />
                   </div>
