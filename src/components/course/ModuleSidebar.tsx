@@ -74,6 +74,7 @@ export const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
                   } else {
                     onModuleSelect(module);
                     onSubModuleSelect(null as any); // Clear selected sub-module
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                   }
                 }}
               >

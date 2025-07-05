@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -35,6 +35,11 @@ export const SubModuleContent: React.FC<SubModuleContentProps> = ({
 }) => {
   const totalSubModules = module.subModules?.length || 0;
   const currentIndex = subModuleIndex - 1; // Convert to 0-based index
+  
+  // Scroll to top when sub-module changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [subModule.id]);
   
   const handlePrevious = () => {
     if (currentIndex > 0 && module.subModules) {
