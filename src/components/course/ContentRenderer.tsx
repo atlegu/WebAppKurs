@@ -28,15 +28,32 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
 
   // Helper function to process bold text within any string
   const processBoldText = (text: string) => {
-    if (!text.includes('**')) return text;
+    if (!text.includes('**') && !text.includes('*')) return text;
     
-    const parts = text.split('**');
-    return parts.map((part, partIndex) => {
-      if (partIndex % 2 === 1) {
-        return <strong key={partIndex} className="font-bold">{part}</strong>;
-      }
-      return part;
-    });
+    // First handle double asterisks
+    let processedText = text;
+    if (text.includes('**')) {
+      const parts = text.split('**');
+      processedText = parts.map((part, partIndex) => {
+        if (partIndex % 2 === 1) {
+          return <strong key={`bold-${partIndex}`} className="font-bold">{part}</strong>;
+        }
+        return part;
+      });
+    }
+    
+    // Then handle single asterisks
+    if (text.includes('*')) {
+      const parts = text.split('*');
+      processedText = parts.map((part, partIndex) => {
+        if (partIndex % 2 === 1) {
+          return <strong key={`bold-single-${partIndex}`} className="font-bold">{part}</strong>;
+        }
+        return part;
+      });
+    }
+    
+    return processedText;
   };
 
   // Helper function to parse markdown tables
@@ -205,11 +222,23 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
         );
       } else {
         elements.push(
-          <h3 key={i} className="text-lg font-bold text-primary mb-3 mt-6">
+          <h3 key={i} className="text-lg font-bold text-primary mb-3 mt-6 bg-yellow-100 dark:bg-yellow-900/30 p-3 rounded-lg border-l-4 border-yellow-400">
             {text}
           </h3>
         );
       }
+      i++;
+      continue;
+    }
+    
+    // Handle ## format - bold headers
+    if (trimmedLine.startsWith('## ')) {
+      const text = trimmedLine.slice(3); // Remove '## ' from the beginning
+      elements.push(
+        <h3 key={i} className="text-lg font-bold text-primary mb-3 mt-6">
+          {text}
+        </h3>
+      );
       i++;
       continue;
     }
