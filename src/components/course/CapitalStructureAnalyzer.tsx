@@ -345,6 +345,7 @@ const CapitalStructureAnalyzer = () => {
 
           <div className="flex gap-3">
             <Button
+              type="button"
               size="sm"
               variant={showMMWithTax ? "default" : "outline"}
               onClick={() => setShowMMWithTax(!showMMWithTax)}
@@ -353,6 +354,7 @@ const CapitalStructureAnalyzer = () => {
               M&M med skatt
             </Button>
             <Button
+              type="button"
               size="sm"
               variant={showFinancialDistress ? "default" : "outline"}
               onClick={() => setShowFinancialDistress(!showFinancialDistress)}
@@ -371,11 +373,35 @@ const CapitalStructureAnalyzer = () => {
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="leverage" className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="leverage">Finansiell giring</TabsTrigger>
-              <TabsTrigger value="value">Selskapsverdi</TabsTrigger>
-              <TabsTrigger value="eps">EPS-EBIT</TabsTrigger>
-              <TabsTrigger value="pie">Kakediagram</TabsTrigger>
+            <TabsList className="flex flex-wrap gap-2 w-full h-auto p-2 bg-muted/50">
+              <TabsTrigger 
+                value="leverage" 
+                className="flex-1 min-w-[120px] data-[state=active]:bg-background"
+                onClick={(e) => e.stopPropagation()}
+              >
+                Finansiell giring
+              </TabsTrigger>
+              <TabsTrigger 
+                value="value" 
+                className="flex-1 min-w-[120px] data-[state=active]:bg-background"
+                onClick={(e) => e.stopPropagation()}
+              >
+                Selskapsverdi
+              </TabsTrigger>
+              <TabsTrigger 
+                value="eps" 
+                className="flex-1 min-w-[120px] data-[state=active]:bg-background"
+                onClick={(e) => e.stopPropagation()}
+              >
+                EPS-EBIT
+              </TabsTrigger>
+              <TabsTrigger 
+                value="pie" 
+                className="flex-1 min-w-[120px] data-[state=active]:bg-background"
+                onClick={(e) => e.stopPropagation()}
+              >
+                Kakediagram
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="leverage" className="space-y-4">
