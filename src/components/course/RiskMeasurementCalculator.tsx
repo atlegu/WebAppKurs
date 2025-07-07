@@ -69,10 +69,10 @@ export const RiskMeasurementCalculator = () => {
       geometricMean: (geometricMean * 100).toFixed(2),
       variance: variance.toFixed(2),
       standardDeviation: standardDeviation.toFixed(2),
-      coefficientOfVariation: coefficientOfVariation.toFixed(3),
-      minReturn: minReturn.toFixed(1),
-      maxReturn: maxReturn.toFixed(1),
-      range: range.toFixed(1)
+      coefficientOfVariation: coefficientOfVariation.toFixed(2),
+      minReturn: minReturn.toFixed(2),
+      maxReturn: maxReturn.toFixed(2),
+      range: range.toFixed(2)
     };
   }, [returns]);
 

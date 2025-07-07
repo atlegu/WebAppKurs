@@ -22,7 +22,7 @@ const AksjesparingKalkulator = () => {
   });
 
   const formatNumber = (num: number) => {
-    return new Intl.NumberFormat('no-NO').format(Math.round(num));
+    return new Intl.NumberFormat('no-NO', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
   };
 
   const updateInput = (field: string, value: string) => {

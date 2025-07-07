@@ -20,7 +20,8 @@ const GordonGrowthOverlay = ({ isOpen, onClose }) => {
     return new Intl.NumberFormat('no-NO', {
       style: 'currency',
       currency: 'NOK',
-      minimumFractionDigits: 2
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
     }).format(num);
   };
 
@@ -130,19 +131,19 @@ const GordonGrowthOverlay = ({ isOpen, onClose }) => {
     const { retentionRatio, growthRate } = results;
     
     if (!results.isValid) {
-      return `⚠️ KRITISK: Vekstraten (${(growthRate * 100).toFixed(1)}%) er høyere enn avkastningskravet (${inputs.requiredReturn}%)! Dette skaper en "eksplosjonsmodell" som ikke er realistisk. Reduser ROE, øk utbytteandelen, eller øk avkastningskravet.`;
+      return `⚠️ KRITISK: Vekstraten (${(growthRate * 100).toFixed(2)}%) er høyere enn avkastningskravet (${inputs.requiredReturn}%)! Dette skaper en "eksplosjonsmodell" som ikke er realistisk. Reduser ROE, øk utbytteandelen, eller øk avkastningskravet.`;
     }
     
     if (payoutRatio > 80) {
-      return `🔥 EKSTREM utbyttepolitikk! ${payoutRatio}% utbetales, kun ${(retentionRatio * 100).toFixed(0)}% reinvesteres. Dette gir minimal vekst på ${(growthRate * 100).toFixed(1)}%, men høye kontantutbetalinger nå.`;
+      return `🔥 EKSTREM utbyttepolitikk! ${payoutRatio}% utbetales, kun ${(retentionRatio * 100).toFixed(2)}% reinvesteres. Dette gir minimal vekst på ${(growthRate * 100).toFixed(2)}%, men høye kontantutbetalinger nå.`;
     } else if (payoutRatio > 60) {
-      return `💰 HØY utbytteandel (${payoutRatio}%) prioriterer kontanter til aksjonærene. Med ROE på ${roe}% gir de resterende ${(retentionRatio * 100).toFixed(0)}% kun ${(growthRate * 100).toFixed(1)}% vekst.`;
+      return `💰 HØY utbytteandel (${payoutRatio}%) prioriterer kontanter til aksjonærene. Med ROE på ${roe}% gir de resterende ${(retentionRatio * 100).toFixed(2)}% kun ${(growthRate * 100).toFixed(2)}% vekst.`;
     } else if (payoutRatio > 30) {
-      return `⚖️ BALANSERT tilnærming: ${payoutRatio}% utbytte gir kontanter nå, mens ${(retentionRatio * 100).toFixed(0)}% reinvestering skaper ${(growthRate * 100).toFixed(1)}% vekst. Med ROE på ${roe}% får du "beste av begge verdener".`;
+      return `⚖️ BALANSERT tilnærming: ${payoutRatio}% utbytte gir kontanter nå, mens ${(retentionRatio * 100).toFixed(2)}% reinvestering skaper ${(growthRate * 100).toFixed(2)}% vekst. Med ROE på ${roe}% får du "beste av begge verdener".`;
     } else if (payoutRatio > 5) {
-      return `🚀 VEKST-fokusert: Kun ${payoutRatio}% utbetales som utbytte. Med ${(retentionRatio * 100).toFixed(0)}% reinvestering og ROE på ${roe}% oppnås ${(growthRate * 100).toFixed(1)}% vekst - perfekt for langsiktige investorer!`;
+      return `🚀 VEKST-fokusert: Kun ${payoutRatio}% utbetales som utbytte. Med ${(retentionRatio * 100).toFixed(2)}% reinvestering og ROE på ${roe}% oppnås ${(growthRate * 100).toFixed(2)}% vekst - perfekt for langsiktige investorer!`;
     } else {
-      return `⚡ SUPER-VEKST: Nesten alt (${(retentionRatio * 100).toFixed(0)}%) reinvesteres! Med ROE på ${roe}% gir dette eksplosiv vekst på ${(growthRate * 100).toFixed(1)}%. Perfekt for høyvekstselskaper i tidlig fase.`;
+      return `⚡ SUPER-VEKST: Nesten alt (${(retentionRatio * 100).toFixed(2)}%) reinvesteres! Med ROE på ${roe}% gir dette eksplosiv vekst på ${(growthRate * 100).toFixed(2)}%. Perfekt for høyvekstselskaper i tidlig fase.`;
     }
   };
 
@@ -286,11 +287,11 @@ const GordonGrowthOverlay = ({ isOpen, onClose }) => {
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span>Retention Ratio:</span>
-                    <span className="font-mono font-bold">{(results.retentionRatio * 100).toFixed(1)}%</span>
+                    <span className="font-mono font-bold">{(results.retentionRatio * 100).toFixed(2)}%</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Vekstrate (g):</span>
-                    <span className="font-mono font-bold text-green-600">{(results.growthRate * 100).toFixed(1)}%</span>
+                    <span className="font-mono font-bold text-green-600">{(results.growthRate * 100).toFixed(2)}%</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Dividende (D₁):</span>
@@ -299,7 +300,7 @@ const GordonGrowthOverlay = ({ isOpen, onClose }) => {
                   <div className="flex justify-between">
                     <span>r - g:</span>
                     <span className={`font-mono font-bold ${results.isValid ? 'text-blue-600' : 'text-red-600'}`}>
-                      {((inputs.requiredReturn / 100) - results.growthRate).toFixed(3)}
+                      {((inputs.requiredReturn / 100) - results.growthRate).toFixed(2)}
                     </span>
                   </div>
                 </div>
@@ -318,7 +319,7 @@ const GordonGrowthOverlay = ({ isOpen, onClose }) => {
                   <h3 className="text-lg mb-3 opacity-90">Gordon Growth Model</h3>
                   <div className="text-2xl font-bold font-mono mb-2">P = D₁ / (r - g)</div>
                   <div className="text-sm opacity-90">
-                    P = {formatCurrency(results.dividendPerShare)} / ({inputs.requiredReturn}% - {(results.growthRate * 100).toFixed(1)}%)
+                    P = {formatCurrency(results.dividendPerShare)} / ({inputs.requiredReturn}% - {(results.growthRate * 100).toFixed(2)}%)
                   </div>
                 </div>
 
@@ -360,7 +361,7 @@ const GordonGrowthOverlay = ({ isOpen, onClose }) => {
                   <div>
                     <div className="flex justify-between text-sm mb-2">
                       <span className="font-medium">🔄 Reinvestering</span>
-                      <span className="font-bold">{(results.retentionRatio * 100).toFixed(1)}% = {formatCurrency(inputs.eps * results.retentionRatio)}</span>
+                      <span className="font-bold">{(results.retentionRatio * 100).toFixed(2)}% = {formatCurrency(inputs.eps * results.retentionRatio)}</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-4">
                       <div 
@@ -373,7 +374,7 @@ const GordonGrowthOverlay = ({ isOpen, onClose }) => {
                   <div>
                     <div className="flex justify-between text-sm mb-2">
                       <span className="font-medium">🚀 Resulterende vekstrate</span>
-                      <span className="font-bold">{(results.growthRate * 100).toFixed(1)}% (av max {inputs.roe}%)</span>
+                      <span className="font-bold">{(results.growthRate * 100).toFixed(2)}% (av max {inputs.roe}%)</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-4">
                       <div 

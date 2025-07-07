@@ -263,10 +263,10 @@ export const DurationCalculator: React.FC = () => {
                       {formatNumber(row.presentValue)}
                     </td>
                     <td className="border border-border px-3 py-1 text-right">
-                      {row.weight.toFixed(3)}
+                      {row.weight.toFixed(2)}
                     </td>
                     <td className="border border-border px-3 py-1 text-right">
-                      {row.weightedTime.toFixed(3)}
+                      {row.weightedTime.toFixed(2)}
                     </td>
                   </tr>
                 ))}
@@ -278,9 +278,9 @@ export const DurationCalculator: React.FC = () => {
                   <td className="border border-border px-3 py-1 text-right">
                     {formatNumber(bondPrice)}
                   </td>
-                  <td className="border border-border px-3 py-1 text-right">1.000</td>
+                  <td className="border border-border px-3 py-1 text-right">1.00</td>
                   <td className="border border-border px-3 py-1 text-right">
-                    {duration.toFixed(3)}
+                    {duration.toFixed(2)}
                   </td>
                 </tr>
               </tfoot>
@@ -292,7 +292,7 @@ export const DurationCalculator: React.FC = () => {
                 <strong>Obligasjonens pris:</strong> {formatNumber(bondPrice)} kr
               </p>
               <p className="text-sm text-muted-foreground">
-                <strong>Macaulay-durasjon:</strong> {duration.toFixed(3)} år
+                <strong>Macaulay-durasjon:</strong> {duration.toFixed(2)} år
               </p>
               <p className="text-sm text-muted-foreground mt-2">
                 Durasjonen viser gjennomsnittlig tid til mottak av kontantstrømmer, 

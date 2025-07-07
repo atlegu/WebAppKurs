@@ -18,6 +18,21 @@ import PortfolioRiskQuiz from "./PortfolioRiskQuiz";
 import TimeMachine from "./TimeMachine";
 import TimeValueTimeline from "./TimeValueTimeline";
 import CompoundInterestVisualization from "./CompoundInterestVisualization";
+import MultipleCashFlows from "./MultipleCashFlows";
+import PerpetuityVisualization from "./PerpetuityVisualization";
+import ManhattanDeal from "./ManhattanDeal";
+import AnnuityVisualization from "./AnnuityVisualization";
+import EffectiveRateCalculator from "./EffectiveRateCalculator";
+import InflationRealRateCalculator from "./InflationRealRateCalculator";
+import LoanComparisonCalculator from "./LoanComparisonCalculator";
+import TimeValueQuiz from "./TimeValueQuiz";
+import InvestmentIntroduction from "./InvestmentIntroduction";
+import CashFlowIdentifier from "./CashFlowIdentifier";
+import NPVCalculator from "./NPVCalculator";
+import InvestmentMetricsComparison from "./InvestmentMetricsComparison";
+import SensitivityAnalysis from "./SensitivityAnalysis";
+import CapitalRationing from "./CapitalRationing";
+import CapitalStructureAnalyzer from "./CapitalStructureAnalyzer";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface ContentRendererProps {
@@ -595,6 +610,166 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
       );
       i++;
       continue;
+    }
+
+    if (trimmedLine.includes('!component:multiple-cash-flows')) {
+      elements.push(
+        <div key={i} className="my-8">
+          <MultipleCashFlows />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    if (trimmedLine.includes('!component:perpetuity')) {
+      elements.push(
+        <div key={i} className="my-8">
+          <PerpetuityVisualization />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    if (trimmedLine.includes('!component:manhattan-deal')) {
+      elements.push(
+        <div key={i} className="my-8">
+          <ManhattanDeal />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    if (trimmedLine.includes('!component:annuity')) {
+      elements.push(
+        <div key={i} className="my-8">
+          <AnnuityVisualization />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    if (trimmedLine.includes('!component:effective-rate')) {
+      elements.push(
+        <div key={i} className="my-8">
+          <EffectiveRateCalculator />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    if (trimmedLine.includes('!component:inflation-real-rate')) {
+      elements.push(
+        <div key={i} className="my-8">
+          <InflationRealRateCalculator />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    if (trimmedLine.includes('!component:loan-comparison')) {
+      elements.push(
+        <div key={i} className="my-8">
+          <LoanComparisonCalculator />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    if (trimmedLine.includes('!component:time-value-quiz')) {
+      elements.push(
+        <div key={i} className="my-8">
+          <TimeValueQuiz />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    if (trimmedLine.includes('!component:investment-introduction')) {
+      elements.push(
+        <div key={i} className="my-8">
+          <InvestmentIntroduction />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    if (trimmedLine.includes('!component:cash-flow-identifier')) {
+      elements.push(
+        <div key={i} className="my-8">
+          <CashFlowIdentifier />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    if (trimmedLine.includes('!component:npv-calculator')) {
+      elements.push(
+        <div key={i} className="my-8">
+          <NPVCalculator />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    if (trimmedLine.includes('!component:investment-metrics-comparison')) {
+      elements.push(
+        <div key={i} className="my-8">
+          <InvestmentMetricsComparison />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    if (trimmedLine.includes('!component:sensitivity-analysis')) {
+      elements.push(
+        <div key={i} className="my-8">
+          <SensitivityAnalysis />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    if (trimmedLine.includes('!component:capital-rationing')) {
+      elements.push(
+        <div key={i} className="my-8">
+          <CapitalRationing />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    // Handle interactive components with new syntax
+    if (trimmedLine.startsWith('!interactive[') && trimmedLine.endsWith(']')) {
+      const componentMatch = trimmedLine.match(/!interactive\[([^\]]+)\]/);
+      if (componentMatch) {
+        const componentName = componentMatch[1];
+        switch (componentName) {
+          case 'CapitalStructureAnalyzer':
+            elements.push(
+              <div key={i} className="my-8">
+                <CapitalStructureAnalyzer />
+              </div>
+            );
+            break;
+          // Add more cases as needed for other interactive components
+        }
+        i++;
+        continue;
+      }
     }
 
     // Handle bond pricing formula
