@@ -43,7 +43,7 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
         <div className="flex items-start gap-3">
           <Lightbulb className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
           <div className="flex-1">
-            <h4 className="text-lg font-semibold text-amber-800 mb-3">
+            <h4 className="text-base font-semibold text-amber-800 mb-3">
               {section.title.replace(/^!insight\s*/i, '')}
             </h4>
             <div className="text-amber-900 leading-relaxed">

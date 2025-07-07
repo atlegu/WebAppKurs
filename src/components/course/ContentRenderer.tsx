@@ -15,6 +15,9 @@ import { ModuleConnectionsChart } from "./ModuleConnectionsChart";
 import { RandomWalkSimulator } from "./RandomWalkSimulator";
 import Portfoljeped from "../Portfoljeped";
 import PortfolioRiskQuiz from "./PortfolioRiskQuiz";
+import TimeMachine from "./TimeMachine";
+import TimeValueTimeline from "./TimeValueTimeline";
+import CompoundInterestVisualization from "./CompoundInterestVisualization";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface ContentRendererProps {
@@ -215,14 +218,14 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
             <div className="flex items-start gap-3">
               <span className="text-xl">{icon}</span>
               <div className="flex-1">
-                <h4 className="font-semibold text-lg mb-3">{text}</h4>
+                <h4 className="font-semibold text-base mb-3">{text}</h4>
               </div>
             </div>
           </div>
         );
       } else {
         elements.push(
-          <h3 key={i} className="text-lg font-bold text-primary mb-3 mt-6 bg-yellow-100 dark:bg-yellow-900/30 p-3 rounded-lg border-l-4 border-yellow-400">
+          <h3 key={i} className="text-base font-bold text-primary mb-3 mt-6 bg-yellow-100 dark:bg-yellow-900/30 p-3 rounded-lg border-l-4 border-yellow-400">
             {text}
           </h3>
         );
@@ -235,7 +238,7 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
     if (trimmedLine.startsWith('## ')) {
       const text = trimmedLine.slice(3); // Remove '## ' from the beginning
       elements.push(
-        <h3 key={i} className="text-lg font-bold text-primary mb-3 mt-6">
+        <h3 key={i} className="text-base font-bold text-primary mb-3 mt-6">
           {text}
         </h3>
       );
@@ -292,7 +295,7 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           <div className="flex items-start gap-3">
             <span className="text-primary text-xl font-bold">💭</span>
             <div>
-              <h4 className="font-semibold text-primary mb-2 text-sm uppercase tracking-wide">
+              <h4 className="font-semibold text-primary mb-2 text-xs uppercase tracking-wide">
                 Spørsmål til ettertanke
               </h4>
               <p className="text-foreground leading-relaxed">{question}</p>
@@ -312,7 +315,7 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           <div className="flex items-start gap-3">
             <span className="text-primary text-xl font-bold">💭</span>
             <div>
-              <h4 className="font-semibold text-primary mb-2 text-sm uppercase tracking-wide">
+              <h4 className="font-semibold text-primary mb-2 text-xs uppercase tracking-wide">
                 Spørsmål til ettertanke
               </h4>
               <p className="text-foreground leading-relaxed">{questionText}</p>
@@ -332,7 +335,7 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           <div className="flex items-start gap-3">
             <span className="text-blue-600 dark:text-blue-400 text-xl">🤔</span>
             <div>
-              <h4 className="font-semibold text-blue-800 dark:text-blue-300 mb-2 text-sm uppercase tracking-wide">
+              <h4 className="font-semibold text-blue-800 dark:text-blue-300 mb-2 text-xs uppercase tracking-wide">
                 Tenk over dette
               </h4>
               <p className="text-foreground leading-relaxed">{content}</p>
@@ -352,7 +355,7 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           <div className="flex items-start gap-3">
             <span className="text-yellow-600 dark:text-yellow-400 text-xl">💡</span>
             <div>
-              <h4 className="font-semibold text-yellow-800 dark:text-yellow-300 mb-2 text-sm uppercase tracking-wide">
+              <h4 className="font-semibold text-yellow-800 dark:text-yellow-300 mb-2 text-xs uppercase tracking-wide">
                 Viktig innsikt
               </h4>
               <p className="text-foreground leading-relaxed">{contentValue}</p>
@@ -558,6 +561,36 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
       elements.push(
         <div key={i} className="my-8">
           <PortfolioRiskQuiz />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    if (trimmedLine.includes('!component:time-machine')) {
+      elements.push(
+        <div key={i} className="my-8">
+          <TimeMachine />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    if (trimmedLine.includes('!component:time-value-timeline')) {
+      elements.push(
+        <div key={i} className="my-8">
+          <TimeValueTimeline />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    if (trimmedLine.includes('!component:compound-interest')) {
+      elements.push(
+        <div key={i} className="my-8">
+          <CompoundInterestVisualization />
         </div>
       );
       i++;

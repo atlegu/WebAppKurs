@@ -71,8 +71,8 @@ export const SubModuleContent: React.FC<SubModuleContentProps> = ({
           <Badge>Modul {moduleIndex}</Badge>
           <Badge variant="outline">{moduleIndex}.{subModuleIndex}</Badge>
         </div>
-        <h2 className="text-3xl font-bold mb-4 break-words">{subModule.title}</h2>
-        <p className="text-lg text-muted-foreground mb-2">
+        <h2 className="text-2xl font-bold mb-4 break-words">{subModule.title}</h2>
+        <p className="text-sm text-muted-foreground mb-2">
           Del av {module.title}
         </p>
       </div>
