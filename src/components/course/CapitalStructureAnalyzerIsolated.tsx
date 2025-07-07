@@ -60,18 +60,8 @@ const CapitalStructureAnalyzerIsolated = () => {
   const [showFinancialDistress, setShowFinancialDistress] = useState(false);
   const [activeTab, setActiveTab] = useState<'leverage' | 'value' | 'eps' | 'pie'>('leverage');
 
-  // Prevent all navigation when component is mounted
+  // Prevent only navigation-related events
   useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      // Check if click is within our component
-      if (target.closest('.capital-structure-analyzer')) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-      }
-    };
-
     const handleHashChange = (e: HashChangeEvent) => {
       // Prevent hash navigation while component is active
       const container = document.querySelector('.capital-structure-analyzer');
@@ -81,12 +71,9 @@ const CapitalStructureAnalyzerIsolated = () => {
       }
     };
 
-    // Add event listeners with capture phase
-    document.addEventListener('click', handleClick, true);
     window.addEventListener('hashchange', handleHashChange);
 
     return () => {
-      document.removeEventListener('click', handleClick, true);
       window.removeEventListener('hashchange', handleHashChange);
     };
   }, []);
@@ -298,21 +285,13 @@ const CapitalStructureAnalyzerIsolated = () => {
     return `${value.toFixed(1)}%`;
   };
 
-  const handleTabClick = (tab: 'leverage' | 'value' | 'eps' | 'pie') => (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
+  const handleTabClick = (tab: 'leverage' | 'value' | 'eps' | 'pie') => {
     setActiveTab(tab);
-    return false;
   };
 
   return (
     <div 
       className="capital-structure-analyzer w-full max-w-6xl mx-auto p-4 space-y-6"
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-      }}
     >
       {/* Header */}
       <div className="text-center space-y-2">
@@ -431,8 +410,8 @@ const CapitalStructureAnalyzerIsolated = () => {
               <div
                 role="button"
                 tabIndex={0}
-                onClick={handleTabClick('leverage')}
-                onKeyDown={(e) => e.key === 'Enter' && handleTabClick('leverage')(e as any)}
+                onClick={() => handleTabClick('leverage')}
+                onKeyDown={(e) => e.key === 'Enter' && handleTabClick('leverage')}
                 className={`flex-1 min-w-[120px] px-3 py-2 text-sm font-medium rounded transition-colors cursor-pointer select-none ${
                   activeTab === 'leverage' 
                     ? 'bg-background text-foreground shadow-sm' 
@@ -444,8 +423,8 @@ const CapitalStructureAnalyzerIsolated = () => {
               <div
                 role="button"
                 tabIndex={0}
-                onClick={handleTabClick('value')}
-                onKeyDown={(e) => e.key === 'Enter' && handleTabClick('value')(e as any)}
+                onClick={() => handleTabClick('value')}
+                onKeyDown={(e) => e.key === 'Enter' && handleTabClick('value')}
                 className={`flex-1 min-w-[120px] px-3 py-2 text-sm font-medium rounded transition-colors cursor-pointer select-none ${
                   activeTab === 'value' 
                     ? 'bg-background text-foreground shadow-sm' 
@@ -457,8 +436,8 @@ const CapitalStructureAnalyzerIsolated = () => {
               <div
                 role="button"
                 tabIndex={0}
-                onClick={handleTabClick('eps')}
-                onKeyDown={(e) => e.key === 'Enter' && handleTabClick('eps')(e as any)}
+                onClick={() => handleTabClick('eps')}
+                onKeyDown={(e) => e.key === 'Enter' && handleTabClick('eps')}
                 className={`flex-1 min-w-[120px] px-3 py-2 text-sm font-medium rounded transition-colors cursor-pointer select-none ${
                   activeTab === 'eps' 
                     ? 'bg-background text-foreground shadow-sm' 
@@ -470,8 +449,8 @@ const CapitalStructureAnalyzerIsolated = () => {
               <div
                 role="button"
                 tabIndex={0}
-                onClick={handleTabClick('pie')}
-                onKeyDown={(e) => e.key === 'Enter' && handleTabClick('pie')(e as any)}
+                onClick={() => handleTabClick('pie')}
+                onKeyDown={(e) => e.key === 'Enter' && handleTabClick('pie')}
                 className={`flex-1 min-w-[120px] px-3 py-2 text-sm font-medium rounded transition-colors cursor-pointer select-none ${
                   activeTab === 'pie' 
                     ? 'bg-background text-foreground shadow-sm' 
