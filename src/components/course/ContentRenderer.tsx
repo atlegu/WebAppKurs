@@ -34,6 +34,7 @@ import SensitivityAnalysis from "./SensitivityAnalysis";
 import CapitalRationing from "./CapitalRationing";
 import CapitalStructureAnalyzer from "./CapitalStructureAnalyzer";
 import CapitalStructureAnalyzerFixed from "./CapitalStructureAnalyzerFixed";
+import CapitalStructureAnalyzerIsolated from "./CapitalStructureAnalyzerIsolated";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface ContentRendererProps {
@@ -761,8 +762,15 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
         switch (componentName) {
           case 'CapitalStructureAnalyzer':
             elements.push(
-              <div key={i} className="my-8">
-                <CapitalStructureAnalyzerFixed />
+              <div 
+                key={i} 
+                className="my-8"
+                onClick={(e) => {
+                  // Prevent any parent navigation handlers
+                  e.stopPropagation();
+                }}
+              >
+                <CapitalStructureAnalyzerIsolated />
               </div>
             );
             break;

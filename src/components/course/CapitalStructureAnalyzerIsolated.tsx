@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
@@ -44,7 +44,7 @@ interface FirmData {
   debtEquityRatio: number;
 }
 
-const CapitalStructureAnalyzerFixed = () => {
+const CapitalStructureAnalyzerIsolated = () => {
   const [firmData, setFirmData] = useState<FirmData>({
     equity: 8000000,
     debt: 0,
@@ -59,6 +59,37 @@ const CapitalStructureAnalyzerFixed = () => {
   const [showMMWithTax, setShowMMWithTax] = useState(false);
   const [showFinancialDistress, setShowFinancialDistress] = useState(false);
   const [activeTab, setActiveTab] = useState<'leverage' | 'value' | 'eps' | 'pie'>('leverage');
+
+  // Prevent all navigation when component is mounted
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      // Check if click is within our component
+      if (target.closest('.capital-structure-analyzer')) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+      }
+    };
+
+    const handleHashChange = (e: HashChangeEvent) => {
+      // Prevent hash navigation while component is active
+      const container = document.querySelector('.capital-structure-analyzer');
+      if (container) {
+        e.preventDefault();
+        window.history.pushState(null, '', window.location.pathname);
+      }
+    };
+
+    // Add event listeners with capture phase
+    document.addEventListener('click', handleClick, true);
+    window.addEventListener('hashchange', handleHashChange);
+
+    return () => {
+      document.removeEventListener('click', handleClick, true);
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
   
   // Calculate key metrics
   const calculateMetrics = (debt: number, equity: number) => {
@@ -267,11 +298,19 @@ const CapitalStructureAnalyzerFixed = () => {
     return `${value.toFixed(1)}%`;
   };
 
+  const handleTabClick = (tab: 'leverage' | 'value' | 'eps' | 'pie') => (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    setActiveTab(tab);
+    return false;
+  };
+
   return (
     <div 
-      className="w-full max-w-6xl mx-auto p-4 space-y-6"
+      className="capital-structure-analyzer w-full max-w-6xl mx-auto p-4 space-y-6"
       onClick={(e) => {
-        // Prevent any parent click handlers from firing
+        e.preventDefault();
         e.stopPropagation();
       }}
     >
@@ -388,73 +427,59 @@ const CapitalStructureAnalyzerFixed = () => {
         <CardContent>
           {/* Custom Tab Navigation */}
           <div className="mb-6">
-            <div 
-              className="flex flex-wrap gap-2 p-1 bg-muted rounded-lg"
-              onMouseDown={(e) => {
-                // Prevent text selection and drag behaviors
-                e.preventDefault();
-              }}
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setActiveTab('leverage');
-                }}
-                className={`flex-1 min-w-[120px] px-3 py-2 text-sm font-medium rounded transition-colors ${
+            <div className="flex flex-wrap gap-2 p-1 bg-muted rounded-lg">
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={handleTabClick('leverage')}
+                onKeyDown={(e) => e.key === 'Enter' && handleTabClick('leverage')(e as any)}
+                className={`flex-1 min-w-[120px] px-3 py-2 text-sm font-medium rounded transition-colors cursor-pointer select-none ${
                   activeTab === 'leverage' 
                     ? 'bg-background text-foreground shadow-sm' 
                     : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 Finansiell giring
-              </button>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setActiveTab('value');
-                }}
-                className={`flex-1 min-w-[120px] px-3 py-2 text-sm font-medium rounded transition-colors ${
+              </div>
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={handleTabClick('value')}
+                onKeyDown={(e) => e.key === 'Enter' && handleTabClick('value')(e as any)}
+                className={`flex-1 min-w-[120px] px-3 py-2 text-sm font-medium rounded transition-colors cursor-pointer select-none ${
                   activeTab === 'value' 
                     ? 'bg-background text-foreground shadow-sm' 
                     : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 Selskapsverdi
-              </button>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setActiveTab('eps');
-                }}
-                className={`flex-1 min-w-[120px] px-3 py-2 text-sm font-medium rounded transition-colors ${
+              </div>
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={handleTabClick('eps')}
+                onKeyDown={(e) => e.key === 'Enter' && handleTabClick('eps')(e as any)}
+                className={`flex-1 min-w-[120px] px-3 py-2 text-sm font-medium rounded transition-colors cursor-pointer select-none ${
                   activeTab === 'eps' 
                     ? 'bg-background text-foreground shadow-sm' 
                     : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 EPS-EBIT
-              </button>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setActiveTab('pie');
-                }}
-                className={`flex-1 min-w-[120px] px-3 py-2 text-sm font-medium rounded transition-colors ${
+              </div>
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={handleTabClick('pie')}
+                onKeyDown={(e) => e.key === 'Enter' && handleTabClick('pie')(e as any)}
+                className={`flex-1 min-w-[120px] px-3 py-2 text-sm font-medium rounded transition-colors cursor-pointer select-none ${
                   activeTab === 'pie' 
                     ? 'bg-background text-foreground shadow-sm' 
                     : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 Kakediagram
-              </button>
+              </div>
             </div>
           </div>
 
@@ -851,4 +876,4 @@ const CapitalStructureAnalyzerFixed = () => {
   );
 };
 
-export default CapitalStructureAnalyzerFixed;
+export default CapitalStructureAnalyzerIsolated;
