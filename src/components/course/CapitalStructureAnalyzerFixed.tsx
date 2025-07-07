@@ -33,7 +33,6 @@ import {
   Pie,
   Cell
 } from 'recharts';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface FirmData {
   equity: number;
@@ -45,7 +44,7 @@ interface FirmData {
   debtEquityRatio: number;
 }
 
-const CapitalStructureAnalyzer = () => {
+const CapitalStructureAnalyzerFixed = () => {
   const [firmData, setFirmData] = useState<FirmData>({
     equity: 8000000,
     debt: 0,
@@ -59,6 +58,7 @@ const CapitalStructureAnalyzer = () => {
   const [targetDebt, setTargetDebt] = useState(0);
   const [showMMWithTax, setShowMMWithTax] = useState(false);
   const [showFinancialDistress, setShowFinancialDistress] = useState(false);
+  const [activeTab, setActiveTab] = useState<'leverage' | 'value' | 'eps' | 'pie'>('leverage');
   
   // Calculate key metrics
   const calculateMetrics = (debt: number, equity: number) => {
@@ -366,29 +366,65 @@ const CapitalStructureAnalyzer = () => {
         </CardContent>
       </Card>
 
-      {/* Analysis Tabs */}
+      {/* Analysis Tabs - Custom Implementation */}
       <Card>
         <CardHeader>
           <CardTitle className="text-base">Analyse av kapitalstruktur</CardTitle>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="leverage" className="w-full">
-            <TabsList className="inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground w-full">
-              <TabsTrigger value="leverage" className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">
+          {/* Custom Tab Navigation */}
+          <div className="mb-6">
+            <div className="flex flex-wrap gap-2 p-1 bg-muted rounded-lg">
+              <button
+                type="button"
+                onClick={() => setActiveTab('leverage')}
+                className={`flex-1 min-w-[120px] px-3 py-2 text-sm font-medium rounded transition-colors ${
+                  activeTab === 'leverage' 
+                    ? 'bg-background text-foreground shadow-sm' 
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
                 Finansiell giring
-              </TabsTrigger>
-              <TabsTrigger value="value" className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('value')}
+                className={`flex-1 min-w-[120px] px-3 py-2 text-sm font-medium rounded transition-colors ${
+                  activeTab === 'value' 
+                    ? 'bg-background text-foreground shadow-sm' 
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
                 Selskapsverdi
-              </TabsTrigger>
-              <TabsTrigger value="eps" className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('eps')}
+                className={`flex-1 min-w-[120px] px-3 py-2 text-sm font-medium rounded transition-colors ${
+                  activeTab === 'eps' 
+                    ? 'bg-background text-foreground shadow-sm' 
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
                 EPS-EBIT
-              </TabsTrigger>
-              <TabsTrigger value="pie" className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('pie')}
+                className={`flex-1 min-w-[120px] px-3 py-2 text-sm font-medium rounded transition-colors ${
+                  activeTab === 'pie' 
+                    ? 'bg-background text-foreground shadow-sm' 
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
                 Kakediagram
-              </TabsTrigger>
-            </TabsList>
+              </button>
+            </div>
+          </div>
 
-            <TabsContent value="leverage" className="space-y-4">
+          {/* Tab Content */}
+          {activeTab === 'leverage' && (
+            <div className="space-y-4">
               <div className="grid md:grid-cols-2 gap-4">
                 <Card>
                   <CardHeader>
@@ -490,9 +526,11 @@ const CapitalStructureAnalyzer = () => {
                   </div>
                 </CardContent>
               </Card>
-            </TabsContent>
+            </div>
+          )}
 
-            <TabsContent value="value" className="space-y-4">
+          {activeTab === 'value' && (
+            <div className="space-y-4">
               <div className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
                   <ComposedChart data={valueCurveData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
@@ -591,9 +629,11 @@ const CapitalStructureAnalyzer = () => {
                   </CardContent>
                 </Card>
               </div>
-            </TabsContent>
+            </div>
+          )}
 
-            <TabsContent value="eps" className="space-y-4">
+          {activeTab === 'eps' && (
+            <div className="space-y-4">
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={epsEbitData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
@@ -661,9 +701,11 @@ const CapitalStructureAnalyzer = () => {
                   </ul>
                 </CardContent>
               </Card>
-            </TabsContent>
+            </div>
+          )}
 
-            <TabsContent value="pie" className="space-y-4">
+          {activeTab === 'pie' && (
+            <div className="space-y-4">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <h4 className="text-sm font-semibold text-center mb-4">Uten gjeld</h4>
@@ -749,8 +791,8 @@ const CapitalStructureAnalyzer = () => {
                   )}
                 </CardContent>
               </Card>
-            </TabsContent>
-          </Tabs>
+            </div>
+          )}
         </CardContent>
       </Card>
 
@@ -773,4 +815,4 @@ const CapitalStructureAnalyzer = () => {
   );
 };
 
-export default CapitalStructureAnalyzer;
+export default CapitalStructureAnalyzerFixed;

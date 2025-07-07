@@ -33,6 +33,7 @@ import InvestmentMetricsComparison from "./InvestmentMetricsComparison";
 import SensitivityAnalysis from "./SensitivityAnalysis";
 import CapitalRationing from "./CapitalRationing";
 import CapitalStructureAnalyzer from "./CapitalStructureAnalyzer";
+import CapitalStructureAnalyzerFixed from "./CapitalStructureAnalyzerFixed";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface ContentRendererProps {
@@ -761,7 +762,7 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           case 'CapitalStructureAnalyzer':
             elements.push(
               <div key={i} className="my-8">
-                <CapitalStructureAnalyzer />
+                <CapitalStructureAnalyzerFixed />
               </div>
             );
             break;
