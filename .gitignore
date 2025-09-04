@@ -39,3 +39,4 @@ config/secrets/
 # Archive folder with old scripts containing exposed keys
 archive/
 .vercel
+# Deploy trigger tor.  4 sep. 2025 19.14.44 EDT
