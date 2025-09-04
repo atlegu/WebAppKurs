@@ -40,3 +40,4 @@ config/secrets/
 archive/
 .vercel
 # Deploy trigger tor.  4 sep. 2025 19.14.44 EDT
+.env
