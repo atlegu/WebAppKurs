@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ChevronDown, ChevronRight } from "lucide-react";
+import { useProgressContext } from "@/contexts/ProgressContext";
 
 interface SubModule {
   id: string;
@@ -36,6 +37,7 @@ export const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
   onSubModuleSelect,
   userProgress
 }) => {
+  const { isModuleCompleted } = useProgressContext();
   const [expandedModules, setExpandedModules] = useState<Record<string, boolean>>(() => {
     // Auto-expand the bonds module if it has sub-modules
     const initialExpanded: Record<string, boolean> = {};
@@ -66,16 +68,19 @@ export const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
                 variant={selectedModule?.id === module.id && !selectedSubModule ? "default" : "ghost"}
                 className="w-full justify-start text-left h-auto p-3"
                 onClick={() => {
+                  // Always select the module to show overview
+                  onModuleSelect(module);
+                  onSubModuleSelect(null as any); // Clear selected sub-module
+                  
+                  // Also toggle expand/collapse if it has sub-modules
                   if (hasSubModules) {
                     setExpandedModules(prev => ({
                       ...prev,
                       [module.id]: !prev[module.id]
                     }));
-                  } else {
-                    onModuleSelect(module);
-                    onSubModuleSelect(null as any); // Clear selected sub-module
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
                   }
+                  
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
               >
                 <div className="flex items-start justify-between w-full min-w-0">
@@ -97,7 +102,7 @@ export const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
                       </div>
                     </div>
                   </div>
-                  {isCompleted && (
+                  {isModuleCompleted(module.id) && (
                     <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-1" />
                   )}
                 </div>

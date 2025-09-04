@@ -1,14 +1,23 @@
 import * as React from "react"
 import * as TabsPrimitive from "@radix-ui/react-tabs"
-
 import { cn } from "@/lib/utils"
 
-const Tabs = TabsPrimitive.Root
+const SafeTabs = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.Root
+    ref={ref}
+    className={className}
+    {...props}
+  />
+))
+SafeTabs.displayName = "SafeTabs"
 
-const TabsList = React.forwardRef<
+const SafeTabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
->(({ className, onClick, ...props }, ref) => (
+>(({ className, ...props }, ref) => (
   <TabsPrimitive.List
     ref={ref}
     className={cn(
@@ -16,20 +25,18 @@ const TabsList = React.forwardRef<
       className
     )}
     onClick={(e) => {
+      // Prevent any parent navigation handlers
       e.stopPropagation();
-      if (onClick) {
-        onClick(e);
-      }
     }}
     {...props}
   />
 ))
-TabsList.displayName = TabsPrimitive.List.displayName
+SafeTabsList.displayName = "SafeTabsList"
 
-const TabsTrigger = React.forwardRef<
+const SafeTabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
->(({ className, onClick, ...props }, ref) => (
+>(({ className, ...props }, ref) => (
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
@@ -37,17 +44,19 @@ const TabsTrigger = React.forwardRef<
       className
     )}
     onClick={(e) => {
+      // Prevent any parent navigation handlers
       e.stopPropagation();
-      if (onClick) {
-        onClick(e);
+      // Call the original onClick if provided
+      if (props.onClick) {
+        props.onClick(e);
       }
     }}
     {...props}
   />
 ))
-TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
+SafeTabsTrigger.displayName = "SafeTabsTrigger"
 
-const TabsContent = React.forwardRef<
+const SafeTabsContent = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
 >(({ className, ...props }, ref) => (
@@ -60,6 +69,6 @@ const TabsContent = React.forwardRef<
     {...props}
   />
 ))
-TabsContent.displayName = TabsPrimitive.Content.displayName
+SafeTabsContent.displayName = "SafeTabsContent"
 
-export { Tabs, TabsList, TabsTrigger, TabsContent }
+export { SafeTabs, SafeTabsList, SafeTabsTrigger, SafeTabsContent }

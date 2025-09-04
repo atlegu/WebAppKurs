@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useProgressContext } from "@/contexts/ProgressContext";
 
 interface Course {
   id: string;
@@ -18,6 +19,7 @@ interface CourseHeaderProps {
 
 export const CourseHeader: React.FC<CourseHeaderProps> = ({ course, moduleCount }) => {
   const navigate = useNavigate();
+  const { getProgressPercentage, getCompletedCount, totalModules } = useProgressContext();
 
   return (
     <header className="border-b bg-white sticky top-0 z-50">
@@ -38,12 +40,15 @@ export const CourseHeader: React.FC<CourseHeaderProps> = ({ course, moduleCount 
           </Badge>
           <div className="text-sm">
             <span className="text-muted-foreground">Fremgang: </span>
-            <span className="font-medium">0%</span>
+            <span className="font-medium">{getProgressPercentage()}%</span>
+            <span className="text-muted-foreground ml-2">
+              ({getCompletedCount()} av {totalModules} moduler)
+            </span>
           </div>
         </div>
       </div>
       <div className="container mx-auto px-4">
-        <Progress value={0} className="w-full h-2" />
+        <Progress value={getProgressPercentage()} className="w-full h-2" />
       </div>
     </header>
   );

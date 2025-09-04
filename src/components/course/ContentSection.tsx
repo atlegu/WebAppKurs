@@ -6,7 +6,11 @@ import { ContentRenderer } from "./ContentRenderer";
 import { BondQuiz } from "./BondQuiz";
 import { DurationCalculator } from "./DurationCalculator";
 import { BondExercises } from "./BondExercises";
+import InterestExercises from "./InterestExercises";
+import TimeValueQuiz from "./TimeValueQuiz";
 import StockPricingQuiz from "./StockPricingQuiz";
+import StockExercises from "./StockExercises";
+import RiskReturnExercises from "./RiskReturnExercises";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import GordonGrowthWithOverlay from "../GordonGrowthWithOverlay";
 import AvkastningRisikoWithOverlay from "../AvkastningRisikoWithOverlay";
@@ -35,6 +39,10 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
   const [showBondQuiz, setShowBondQuiz] = useState(false);
   const [showBondExercises, setShowBondExercises] = useState(false);
   const [showStockQuiz, setShowStockQuiz] = useState(false);
+  const [showInterestExercises, setShowInterestExercises] = useState(false);
+  const [showTimeValueQuiz, setShowTimeValueQuiz] = useState(false);
+  const [showStockExercises, setShowStockExercises] = useState(false);
+  const [showRiskReturnExercises, setShowRiskReturnExercises] = useState(false);
 
   // Special handling for insight boxes
   if (section.type === "insight") {
@@ -367,18 +375,79 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
             </div>
           )}
 
-          {/* Stock Quiz Button - Show only for "Oppgaver" sections in module 5 */}
+          {/* Interest Exercises - Show only for "Oppgaver" sections in module 3 */}
+          {section.title && section.title.toLowerCase().includes('oppgaver') && moduleIndex === 3 && (
+            <div className="space-y-4">
+              <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+                <div className="flex items-center gap-2 mb-3">
+                  <Brain className="w-5 h-5 text-blue-600" />
+                  <span className="font-semibold text-foreground">Flervalgsoppgaver</span>
+                </div>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Test kunnskapen din med 20 spørsmål om tidsverdien av penger
+                </p>
+                <Button onClick={() => setShowTimeValueQuiz(true)} className="w-full">
+                  Start flervalgsoppgaver
+                </Button>
+              </div>
+              
+              <div className="bg-green-50 border border-green-200 p-4 rounded-lg">
+                <div className="flex items-center gap-2 mb-3">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <span className="font-semibold text-foreground">Regneoppgaver</span>
+                </div>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Øv på renteberegninger med 26 praktiske oppgaver
+                </p>
+                <Button onClick={() => setShowInterestExercises(true)} className="w-full" variant="outline">
+                  Start regneoppgaver
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* Stock Quiz and Exercises - Show only for "Oppgaver" sections in module 5 */}
           {section.title && section.title.toLowerCase().includes('oppgaver') && moduleIndex === 5 && (
-            <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+            <div className="space-y-4">
+              <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+                <div className="flex items-center gap-2 mb-3">
+                  <Brain className="w-5 h-5 text-blue-600" />
+                  <span className="font-semibold text-foreground">Flervalgsoppgaver</span>
+                </div>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Test kunnskapen din med 15 tilfeldige spørsmål om aksjeanalyse og verdsettelse
+                </p>
+                <Button onClick={() => setShowStockQuiz(true)} className="w-full">
+                  Start flervalgsoppgaver
+                </Button>
+              </div>
+              
+              <div className="bg-green-50 border border-green-200 p-4 rounded-lg">
+                <div className="flex items-center gap-2 mb-3">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <span className="font-semibold text-foreground">Regneoppgaver</span>
+                </div>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Øv på aksjevurdering med 9 praktiske oppgaver
+                </p>
+                <Button onClick={() => setShowStockExercises(true)} className="w-full" variant="outline">
+                  Start regneoppgaver
+                </Button>
+              </div>
+            </div>
+          )}
+          {/* Risk Return Exercises - Show only for "Oppgaver" sections in module 6 */}
+          {section.title && section.title.toLowerCase().includes('oppgaver') && moduleIndex === 6 && (
+            <div className="bg-green-50 border border-green-200 p-4 rounded-lg">
               <div className="flex items-center gap-2 mb-3">
-                <Brain className="w-5 h-5 text-blue-600" />
-                <span className="font-semibold text-foreground">Selvtest</span>
+                <CheckCircle className="w-5 h-5 text-green-600" />
+                <span className="font-semibold text-foreground">Regneoppgaver</span>
               </div>
               <p className="text-sm text-muted-foreground mb-3">
-                Test kunnskapen din med 15 tilfeldige spørsmål om aksjeanalyse og verdsettelse
+                Øv på risiko og avkastning med 18 praktiske oppgaver
               </p>
-              <Button onClick={() => setShowStockQuiz(true)} className="w-full">
-                Start selvtest
+              <Button onClick={() => setShowRiskReturnExercises(true)} className="w-full" variant="outline">
+                Start regneoppgaver
               </Button>
             </div>
           )}
@@ -395,6 +464,21 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
         onOpenChange={setShowBondExercises} 
       />
       
+      <InterestExercises 
+        isOpen={showInterestExercises} 
+        onOpenChange={setShowInterestExercises} 
+      />
+      
+      {/* Time Value Quiz Dialog */}
+      <Dialog open={showTimeValueQuiz} onOpenChange={setShowTimeValueQuiz}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Tidsverdien av penger - Quiz</DialogTitle>
+          </DialogHeader>
+          <TimeValueQuiz />
+        </DialogContent>
+      </Dialog>
+      
       {/* Stock Quiz Dialog */}
       <Dialog open={showStockQuiz} onOpenChange={setShowStockQuiz}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
@@ -404,6 +488,16 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
           <StockPricingQuiz />
         </DialogContent>
       </Dialog>
+      
+      <StockExercises 
+        isOpen={showStockExercises} 
+        onOpenChange={setShowStockExercises} 
+      />
+      
+      <RiskReturnExercises 
+        isOpen={showRiskReturnExercises} 
+        onOpenChange={setShowRiskReturnExercises} 
+      />
     </>
   );
 };

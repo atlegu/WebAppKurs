@@ -47,14 +47,6 @@ const Index = () => {
             >
               Logg inn
             </Button>
-            <Button 
-              variant="secondary" 
-              size="lg"
-              onClick={() => navigate("/dashboard?dev=true")}
-              className="text-lg px-8 py-6 bg-primary text-primary-foreground"
-            >
-              🚀 KLIKK HER - Se obligasjonsmodulen med undersider
-            </Button>
           </div>
         </div>
 

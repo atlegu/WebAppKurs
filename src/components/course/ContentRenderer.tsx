@@ -9,6 +9,10 @@ import { ReturnCalculator } from "./ReturnCalculator";
 import { RiskReturnVisualization } from "./RiskReturnVisualization";
 import { CFORolesInfographic } from "./CFORolesInfographic";
 import { LiquiditySimulator } from "./LiquiditySimulator";
+import { BalancePuzzleSolution } from "./BalancePuzzleSolution";
+import { CashFlowResultSolution } from "./CashFlowResultSolution";
+import { KeyRatiosDetectiveSolution } from "./KeyRatiosDetectiveSolution";
+import { EconModelsLink } from "./EconModelsLink";
 import { BaselineQuiz } from "./BaselineQuiz";
 import { LearningPlanCreator } from "./LearningPlanCreator";
 import { ModuleConnectionsChart } from "./ModuleConnectionsChart";
@@ -35,7 +39,21 @@ import CapitalRationing from "./CapitalRationing";
 import CapitalStructureAnalyzer from "./CapitalStructureAnalyzer";
 import CapitalStructureAnalyzerFixed from "./CapitalStructureAnalyzerFixed";
 import CapitalStructureAnalyzerIsolated from "./CapitalStructureAnalyzerIsolated";
+import CapitalStructureAnalyzerSimple from "./CapitalStructureAnalyzerSimple";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { DividendTimeline, ExDividendPriceDrop, DividendAnnouncementReactions } from "./DividendIllustrations";
+import { HomemadeDividendIllustration, MMAssumptionsChecker, DividendIrrelevanceProof } from "./HomemadeDividendIllustration";
+import CapitalStructureDividendQuiz from "./CapitalStructureDividendQuiz";
+import CapitalStructureExercises from "./CapitalStructureExercises";
+import InvestmentExercises from "./InvestmentExercises";
+import { InvestmentQuizWrapper } from "./InvestmentQuiz";
+import { AccountingQuizWrapper } from "./AccountingQuiz";
+import { WACCExercisesWrapper } from "./WACCExercises";
+import { WACCQuizWrapper } from "./WACCQuiz";
+import WACCCalculator from "./WACCCalculator";
+import BetaAdjustmentTool from "./BetaAdjustmentTool";
+import CapitalStructureOptimizer from "./CapitalStructureOptimizer";
+import WACCSensitivityAnalysis from "./WACCSensitivityAnalysis";
 
 interface ContentRendererProps {
   content: string;
@@ -204,6 +222,18 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
           <div key={i}>
             <h3 className="text-lg font-bold text-primary mb-4">{text}</h3>
             <CourseMap />
+          </div>
+        );
+        i++;
+        continue;
+      }
+
+      // If this is the balance puzzle exercise
+      if (text.includes('Balanse-puslespill') && text.includes('Oppgave 1')) {
+        elements.push(
+          <div key={i}>
+            <h3 className="text-lg font-bold text-primary mb-4">{text}</h3>
+            <BalancePuzzleSolution />
           </div>
         );
         i++;
@@ -390,8 +420,9 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
       if (imageMatch) {
         const [, altText, imageUrl] = imageMatch;
         // Convert Supabase storage URLs to public URLs
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
         const publicUrl = imageUrl.startsWith('course-images/') 
-          ? `https://tqpryezzddufpovfbpld.supabase.co/storage/v1/object/public/course-images/${imageUrl.replace('course-images/', '')}`
+          ? `${supabaseUrl}/storage/v1/object/public/course-images/${imageUrl.replace('course-images/', '')}`
           : imageUrl;
         
         elements.push(
@@ -774,6 +805,125 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
               </div>
             );
             break;
+          case 'DividendTimeline':
+            elements.push(
+              <div key={i} className="my-8">
+                <DividendTimeline />
+              </div>
+            );
+            break;
+          case 'ExDividendPriceDrop':
+            elements.push(
+              <div key={i} className="my-8">
+                <ExDividendPriceDrop />
+              </div>
+            );
+            break;
+          case 'DividendAnnouncementReactions':
+            elements.push(
+              <div key={i} className="my-8">
+                <DividendAnnouncementReactions />
+              </div>
+            );
+            break;
+          case 'HomemadeDividend':
+            elements.push(
+              <div key={i} className="my-8">
+                <HomemadeDividendIllustration />
+              </div>
+            );
+            break;
+          case 'MMAssumptions':
+            elements.push(
+              <div key={i} className="my-8">
+                <MMAssumptionsChecker />
+              </div>
+            );
+            break;
+          case 'DividendProof':
+            elements.push(
+              <div key={i} className="my-8">
+                <DividendIrrelevanceProof />
+              </div>
+            );
+            break;
+          case 'CapitalStructureDividendQuiz':
+            elements.push(
+              <div key={i} className="my-8">
+                <CapitalStructureDividendQuiz />
+              </div>
+            );
+            break;
+          case 'CapitalStructureExercises':
+            elements.push(
+              <div key={i} className="my-8">
+                <CapitalStructureExercises />
+              </div>
+            );
+            break;
+          case 'InvestmentExercises':
+            elements.push(
+              <div key={i} className="my-8">
+                <InvestmentExercises />
+              </div>
+            );
+            break;
+          case 'InvestmentQuiz':
+            elements.push(
+              <div key={i} className="my-8">
+                <InvestmentQuizWrapper />
+              </div>
+            );
+            break;
+          case 'AccountingQuiz':
+            elements.push(
+              <div key={i} className="my-8">
+                <AccountingQuizWrapper />
+              </div>
+            );
+            break;
+          case 'WACCExercises':
+            elements.push(
+              <div key={i} className="my-8">
+                <WACCExercisesWrapper />
+              </div>
+            );
+            break;
+          case 'WACCQuiz':
+            elements.push(
+              <div key={i} className="my-8">
+                <WACCQuizWrapper />
+              </div>
+            );
+            break;
+          case 'WACCCalculator':
+            elements.push(
+              <div key={i} className="my-8">
+                <WACCCalculator />
+              </div>
+            );
+            break;
+          case 'BetaAdjustmentTool':
+            elements.push(
+              <div key={i} className="my-8">
+                <BetaAdjustmentTool />
+              </div>
+            );
+            break;
+          case 'CapitalStructureOptimizer':
+            elements.push(
+              <div key={i} className="my-8">
+                <CapitalStructureOptimizer />
+              </div>
+            );
+            break;
+          case 'WACCSensitivityAnalysis':
+            elements.push(
+              <div key={i} className="my-8">
+                <WACCSensitivityAnalysis />
+              </div>
+            );
+            break;
           // Add more cases as needed for other interactive components
         }
         i++;
@@ -801,6 +951,61 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({ content }) => 
       );
       i++;
       continue;
+    }
+
+    // Check for balance puzzle in regular text
+    if (trimmedLine.includes('Oppgave 1: Balanse-puslespill')) {
+      elements.push(
+        <div key={i}>
+          <h3 className="text-lg font-bold text-primary mb-4">{trimmedLine}</h3>
+          <BalancePuzzleSolution />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    // Check for cash flow vs result exercise
+    if (trimmedLine.includes('Oppgave 2: Resultat vs. kontantstrøm')) {
+      elements.push(
+        <div key={i}>
+          <h3 className="text-lg font-bold text-primary mb-4">{trimmedLine}</h3>
+          <CashFlowResultSolution />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    // Check for key ratios detective exercise
+    if (trimmedLine.includes('Oppgave 3: Nøkkeltall-detektiv')) {
+      elements.push(
+        <div key={i}>
+          <h3 className="text-lg font-bold text-primary mb-4">{trimmedLine}</h3>
+          <KeyRatiosDetectiveSolution />
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    // Check for EconModels links
+    if (trimmedLine.includes('[ECONMODELS:')) {
+      const modelMatch = trimmedLine.match(/\[ECONMODELS:(\w+(?:-\w+)*)(?::(\w+))?\]/);
+      if (modelMatch) {
+        const model = modelMatch[1] as 'bond-pricing' | 'capm-sml' | 'portfolio-risk';
+        const variant = (modelMatch[2] as 'default' | 'compact' | 'featured') || 'default';
+        
+        elements.push(
+          <EconModelsLink 
+            key={i} 
+            model={model} 
+            variant={variant}
+          />
+        );
+        i++;
+        continue;
+      }
     }
 
     // Regular paragraphs

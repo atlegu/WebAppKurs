@@ -17,243 +17,229 @@ interface Question {
 const questions: Question[] = [
   {
     id: 1,
-    question: "Hva beskriver best begrepet 'tidsverdi av penger'?",
+    question: "Hva er hovedideen bak begrepet tidsverdi av penger?",
     options: [
-      "Penger har samme kjøpekraft til alle tider",
-      "Penger i dag har høyere verdi enn det samme beløpet i fremtiden",
-      "Penger i fremtiden har høyere verdi enn penger i dag",
-      "Tidsverdi brukes bare når vi sammenligner valutaer"
+      "Inflasjon gjør penger mer verdt over tid",
+      "Renter gjør fremtidige beløp usikre",
+      "En krone i dag er mer verdt enn en krone i morgen",
+      "Pengens verdi øker automatisk med tiden"
     ],
-    correctAnswer: 1,
-    explanation: "Tidsverdien av penger betyr at penger i dag er mer verdt enn samme beløp i fremtiden, fordi de kan investeres og gi avkastning."
+    correctAnswer: 2
   },
   {
     id: 2,
-    question: "Hvilken av følgende forklaringer inngår typisk i den nominelle renten?",
+    question: "Hva er formelen for fremtidsverdi (FV) med rentes rente?",
     options: [
-      "Bare inflasjon",
-      "Bare alternativkostnad",
-      "Inflasjon + kredittrisiko + alternativkostnad",
-      "Ingen av dem"
+      "FV = PV × (1 + r × t)",
+      "FV = PV × (1 + r)^t",
+      "FV = PV ÷ (1 + r)^t",
+      "FV = PV − r × t"
     ],
-    correctAnswer: 2,
-    explanation: "Nominell rente inkluderer kompensasjon for inflasjon, kredittrisiko og alternativkostnad (tidspreferanse)."
+    correctAnswer: 1
   },
   {
     id: 3,
-    question: "Enkel rente beregnes som …",
+    question: "Du investerer 10 000 kr til 5 % rente i 3 år. Hva er fremtidsverdien?",
     options: [
-      "rente på rente hver periode",
-      "rabatt på hovedstol",
-      "rente bare på hovedstolen",
-      "effektiv rente minus nominell rente"
+      "11 576 kr",
+      "11 500 kr",
+      "10 150 kr",
+      "12 000 kr"
     ],
-    correctAnswer: 2,
-    explanation: "Enkel rente beregnes kun på den opprinnelige hovedstolen, ikke på opptjente renter."
+    correctAnswer: 0,
+    explanation: "FV = 10 000 × (1 + 0.05)^3 = 11 576"
   },
   {
     id: 4,
-    question: "Sammensatt (compound) rente fører til at saldoen vokser …",
+    question: "Hva måler nåverdi (NPV)?",
     options: [
-      "lineært med tiden",
-      "eksponentielt med tiden",
-      "fallende over tid",
-      "kun hvis nominell rente > effektiv rente"
+      "Netto utbytte av en aksje",
+      "Verdien av fremtidige kontantstrømmer i dag",
+      "Rentes rente over tid",
+      "Inflasjonsjustert avkastning"
     ],
-    correctAnswer: 1,
-    explanation: "Med sammensatt rente får du rente på rente, som gir eksponentiell vekst over tid."
+    correctAnswer: 1
   },
   {
     id: 5,
-    question: "Effektiv rente vil alltid være høyere enn nominell rente når …",
+    question: "Hva er effektiv rente?",
     options: [
-      "renten kapitaliseres årlig",
-      "det ikke påløper gebyrer",
-      "renten kapitaliseres flere ganger per år",
-      "nominell rente er uttrykt som APR"
+      "Rente som oppgis i låneavtalen",
+      "Rente inkludert alle gebyrer og kapitaliseringshyppighet",
+      "Rente etter skatt",
+      "Den laveste renten i markedet"
     ],
-    correctAnswer: 2,
-    explanation: "Når renten kapitaliseres flere ganger per år, blir effektiv rente høyere enn nominell på grunn av rentes rente-effekten."
+    correctAnswer: 1
   },
   {
     id: 6,
-    question: "Reell rente oppnås ved å justere nominell rente for …",
+    question: "En investering gir deg 5 000 kr om ett år. Nåverdien ved 10 % rente er:",
     options: [
-      "gebyrer",
-      "inflasjon",
-      "risiko",
-      "skattesats"
+      "4 500 kr",
+      "4 545 kr",
+      "5 500 kr",
+      "5 050 kr"
     ],
     correctAnswer: 1,
-    explanation: "Reell rente = Nominell rente - Inflasjon (tilnærmet). Den viser endring i kjøpekraft."
+    explanation: "PV = 5000 ÷ (1 + 0.10) = 4 545"
   },
   {
     id: 7,
-    question: "En investor mottar 10 000 kr om fem år. Diskonteringsrenten er 6%. Nåverdien er nærmest:",
+    question: "Hva er en perpetuitet?",
     options: [
-      "6 000 kr",
-      "7 472 kr",
-      "8 199 kr",
-      "9 470 kr"
+      "Et lån med avdrag",
+      "En endelig annuitet",
+      "En evigvarende betalingsstrøm",
+      "En kontantstrøm uten rente"
     ],
-    correctAnswer: 1,
-    explanation: "PV = 10 000 / (1,06)^5 = 10 000 / 1,338 = 7 472 kr"
+    correctAnswer: 2
   },
   {
     id: 8,
-    question: "Fremtidsverdien (FV) av 5 000 kr om tre år ved 4% sammensatt årlig rente er:",
+    question: "Hva er formelen for nåverdi av en evigvarende kontantstrøm C?",
     options: [
-      "5 600 kr",
-      "5 624 kr",
-      "5 800 kr",
-      "6 240 kr"
+      "PV = C × (1 + r)^t",
+      "PV = C ÷ r",
+      "PV = C × t",
+      "PV = C ÷ (1 + r)^t"
     ],
-    correctAnswer: 1,
-    explanation: "FV = 5 000 × (1,04)^3 = 5 000 × 1,125 = 5 624 kr"
+    correctAnswer: 1
   },
   {
     id: 9,
-    question: "I en tidslinje flyttes kontantstrømmer slik at …",
+    question: "En annuitet gir deg 2 000 kr årlig i 5 år. Rente = 6 %. Hva er nåverdien?",
     options: [
-      "alle plasseres til år 1",
-      "alle plasseres til samme tidspunkt før de summeres",
-      "de deles i like store deler",
-      "bare de positive flyttes"
+      "8 436 kr",
+      "9 500 kr",
+      "10 000 kr",
+      "12 000 kr"
     ],
-    correctAnswer: 1,
-    explanation: "For å kunne summere kontantstrømmer må de først flyttes til samme tidspunkt ved diskontering eller oppskrivning."
+    correctAnswer: 0,
+    explanation: "PV = 2 000 × [1 − (1 + 0.06)^−5] ÷ 0.06 = 8 436"
   },
   {
     id: 10,
-    question: "Present value-formelen kan skrives som:",
+    question: "Hva menes med diskonteringsrente?",
     options: [
-      "PV = FV × (1+r)^n",
-      "PV = FV - rn",
-      "PV = FV / (1+r)^n",
-      "PV = FV(1-r)^n"
+      "Rente før skatt",
+      "Rente brukt til å finne fremtidsverdi",
+      "Rente brukt til å beregne nåverdi",
+      "Rente som tilbys i banken"
     ],
-    correctAnswer: 2,
-    explanation: "Nåverdi beregnes ved å diskontere fremtidig verdi: PV = FV / (1+r)^n"
+    correctAnswer: 2
   },
   {
     id: 11,
-    question: "En vanlig annuitet innebærer …",
+    question: "Hva skjer med nåverdien når renten øker?",
     options: [
-      "uendelig rekke jevne betalinger forskuddsvis",
-      "endelig rekke jevne betalinger etterskuddsvis",
-      "variable betalinger etterskuddsvis",
-      "kuponer uten hovedstol"
+      "Den øker",
+      "Den forblir konstant",
+      "Den reduseres",
+      "Den dobles"
     ],
-    correctAnswer: 1,
-    explanation: "En vanlig (ordinær) annuitet består av like store betalinger som skjer på slutten av hver periode over en begrenset tid."
+    correctAnswer: 2
   },
   {
     id: 12,
-    question: "Perpetuitetens nåverdi med årlig betaling 1 000 kr og rente 5% er:",
+    question: "Hvilken rentetype innebærer at renter legges til beløpet årlig?",
     options: [
-      "10 000 kr",
-      "20 000 kr",
-      "50 000 kr",
-      "Uendelig"
+      "Enkel rente",
+      "Rentes rente",
+      "Nominell rente",
+      "Diskontert rente"
     ],
-    correctAnswer: 1,
-    explanation: "PV(perpetuitet) = C/r = 1 000 / 0,05 = 20 000 kr"
+    correctAnswer: 1
   },
   {
     id: 13,
-    question: "Ved økning i diskonteringsrenten vil nåverdien av et gitt beløp …",
+    question: "Hva betyr det at en rente er \"nominell\"?",
     options: [
-      "øke lineært",
-      "forbli uendret",
-      "avta",
-      "øke eksponentielt"
+      "Den inkluderer gebyrer",
+      "Den er høyere enn effektiv rente",
+      "Den er oppgitt før kapitalisering",
+      "Den er inflasjonsjustert"
     ],
-    correctAnswer: 2,
-    explanation: "Høyere diskonteringsrente gir lavere nåverdi, siden fremtidige beløp diskonteres hardere."
+    correctAnswer: 2
   },
   {
     id: 14,
-    question: "Hvis effektiv rente stiger over kupongrenten på en obligasjon, vil obligasjonskursen normalt …",
+    question: "Hvis du dobler renten, hva skjer med nåverdien av en fremtidig sum?",
     options: [
-      "stige over pari",
-      "falle under pari",
-      "forbli på pari",
-      "dobles"
+      "Den dobles",
+      "Den halveres",
+      "Den reduseres",
+      "Den øker"
     ],
-    correctAnswer: 1,
-    explanation: "Når markedsrenten stiger over kupongrenten, blir obligasjonen mindre attraktiv og kursen faller under pålydende (pari)."
+    correctAnswer: 2
   },
   {
     id: 15,
-    question: "Hva er hovedforskjellen mellom et serielån og et annuitetslån?",
+    question: "Hva skjer med fremtidsverdien når du øker antall år, alt annet likt?",
     options: [
-      "Rentesatsen er fast i serielån",
-      "Avdragene er like store i serielån, mens terminbeløpene er like store i annuitetslån",
-      "Serielån har kortere løpetid",
-      "Annuitetslån betaler renter forskuddsvis"
+      "Den reduseres",
+      "Den dobles",
+      "Den øker",
+      "Den blir null"
     ],
-    correctAnswer: 1,
-    explanation: "I serielån er avdragene konstante mens totalbetalingen synker. I annuitetslån er totalbetalingen konstant."
+    correctAnswer: 2
   },
   {
     id: 16,
-    question: "Årlig effektiv rente tilsvarer nominell 8% med kvartalsvis kapitalisering. Den effektive renten er nærmest:",
+    question: "Et lån har 8 % rente kompondert kvartalsvis. Hva er effektiv årlig rente?",
     options: [
-      "8,00%",
-      "8,24%",
-      "8,30%",
-      "8,45%"
+      "8,00 %",
+      "8,16 %",
+      "8,24 %",
+      "8,50 %"
     ],
-    correctAnswer: 1,
-    explanation: "EAR = (1 + 0,08/4)^4 - 1 = (1,02)^4 - 1 = 1,0824 - 1 = 8,24%"
+    correctAnswer: 2,
+    explanation: "Eff. rente = (1 + 0.08/4)^4 − 1 = 8.24 %"
   },
   {
     id: 17,
-    question: "Hvilken formel konverterer en nominell rente r_nom med m kapitaliseringer per år til effektiv rente r_eff?",
+    question: "Du skal motta 100 000 kr om 10 år. Hva er nåverdien ved 7 % rente?",
     options: [
-      "r_eff = (1 + r_nom/m)^m - 1",
-      "r_eff = r_nom - m",
-      "r_eff = r_nom/m",
-      "r_eff = m/r_nom - 1"
+      "51 000 kr",
+      "71 300 kr",
+      "65 000 kr",
+      "82 000 kr"
     ],
-    correctAnswer: 0,
-    explanation: "Effektiv rente beregnes med formelen: r_eff = (1 + r_nom/m)^m - 1"
+    correctAnswer: 1,
+    explanation: "PV = 100 000 ÷ (1 + 0.07)^10 = 71 300"
   },
   {
     id: 18,
-    question: "En spareavtale settes opp med månedlig innskudd 1 000 kr, årlig rente 6% (månedlig kapitalisering), 10 år. Hvilken funksjon i regneark gir sluttverdien?",
+    question: "Hva er et annuitetslån?",
     options: [
-      "NPV",
-      "FV",
-      "PV",
-      "PMT"
+      "Lån med stigende avdrag",
+      "Lån med like store terminbeløp",
+      "Lån med avdragsfri periode",
+      "Lån der renter ikke betales"
     ],
-    correctAnswer: 1,
-    explanation: "FV (Future Value) brukes for å beregne fremtidig verdi av periodiske innbetalinger."
+    correctAnswer: 1
   },
   {
     id: 19,
-    question: "Reell avkastning er negativ når …",
+    question: "Hva menes med inflasjonsjustert rente?",
     options: [
-      "nominell rente = inflasjon",
-      "nominell rente > inflasjon",
-      "nominell rente < inflasjon",
-      "effektiv rente = nominell rente"
+      "Rente fratrukket inflasjon",
+      "Effektiv rente",
+      "Nominell rente",
+      "Skattejustert rente"
     ],
-    correctAnswer: 2,
-    explanation: "Når inflasjonen er høyere enn nominell rente, blir reell avkastning negativ - du taper kjøpekraft."
+    correctAnswer: 0
   },
   {
     id: 20,
-    question: "Hva er den kritiske beslutningsregelen for en prosjektanalyse basert på nåverdi (NPV)?",
+    question: "Du har 50 000 kr og ønsker å doble pengene. Rente = 6 %. Hvor lang tid tar det?",
     options: [
-      "Godta hvis NPV < 0",
-      "Godta hvis IRR < rente",
-      "Godta hvis NPV > 0",
-      "Godta hvis tilbakebetalingstid er lengst"
+      "6 år",
+      "10 år",
+      "12 år",
+      "14 år"
     ],
     correctAnswer: 2,
-    explanation: "Et prosjekt bør godtas hvis NPV > 0, da det betyr at prosjektet skaper verdi utover avkastningskravet."
+    explanation: "Regel: 72 ÷ rente = 72 ÷ 6 = 12 år"
   }
 ];
 

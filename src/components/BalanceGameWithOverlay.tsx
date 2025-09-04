@@ -267,6 +267,7 @@ const BalanceGameOverlay = ({ isOpen, onClose }) => {
             </div>
           </div>
         )}
+
       </div>
     </div>
   );

@@ -3,9 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Target, BookOpen } from "lucide-react";
+import { Target, BookOpen, CheckCircle } from "lucide-react";
 import { ContentSection } from "./ContentSection";
 import { SubModuleContent } from "./SubModuleContent";
+import { useProgressContext } from "@/contexts/ProgressContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface SubModule {
   id: string;
@@ -51,6 +53,8 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({
   modules = [],
   totalModules 
 }) => {
+  const { markModuleComplete, isModuleCompleted } = useProgressContext();
+  const { user } = useAuth();
   // Scroll to top when module changes
   useEffect(() => {
     // Find the scrollable content area and scroll it to top
@@ -73,10 +77,17 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({
   };
 
   const handleNextModule = () => {
-    if (selectedModule && selectedModule.order_index < totalModules && onModuleSelect) {
-      const nextModule = modules.find(m => m.order_index === selectedModule.order_index + 1);
-      if (nextModule) {
-        onModuleSelect(nextModule);
+    if (selectedModule) {
+      // If current module has sub-modules and we're on the overview, go to first sub-module
+      if (selectedModule.subModules && selectedModule.subModules.length > 0 && onSubModuleSelect) {
+        onSubModuleSelect(selectedModule.subModules[0]);
+      } 
+      // Otherwise, go to next module if available
+      else if (selectedModule.order_index < totalModules && onModuleSelect) {
+        const nextModule = modules.find(m => m.order_index === selectedModule.order_index + 1);
+        if (nextModule) {
+          onModuleSelect(nextModule);
+        }
       }
     }
   };
@@ -147,7 +158,30 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({
       )}
 
       {/* Module Navigation */}
-      <div className="flex justify-between mt-8 pt-6 border-t">
+      {/* Module completion button */}
+      {user && (
+        <div className="mt-8 pt-6 border-t">
+          <div className="flex items-center justify-center mb-6">
+            {isModuleCompleted(selectedModule.id) ? (
+              <div className="flex items-center gap-2 text-green-600">
+                <CheckCircle className="w-5 h-5" />
+                <span className="font-medium">Modul fullført!</span>
+              </div>
+            ) : (
+              <Button 
+                onClick={() => markModuleComplete(selectedModule.id)}
+                className="flex items-center gap-2"
+                variant="default"
+              >
+                <CheckCircle className="w-4 h-4" />
+                Marker modul som fullført
+              </Button>
+            )}
+          </div>
+        </div>
+      )}
+
+      <div className="flex justify-between mt-4 pt-6 border-t">
         <Button 
           variant="outline" 
           disabled={selectedModule.order_index <= 1}
@@ -156,10 +190,10 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({
           Forrige modul
         </Button>
         <Button 
-          disabled={selectedModule.order_index >= totalModules}
+          disabled={selectedModule.order_index >= totalModules && (!selectedModule.subModules || selectedModule.subModules.length === 0)}
           onClick={handleNextModule}
         >
-          Neste modul
+          {selectedModule.subModules && selectedModule.subModules.length > 0 ? 'Neste del' : 'Neste modul'}
         </Button>
       </div>
     </div>
