@@ -289,24 +289,24 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
           )}
 
           {section.video && (
-            <div className="bg-muted/50 border border-border p-4 rounded-lg">
+            <div className="bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-200 p-4 rounded-xl">
               <div className="flex items-center gap-2 mb-3">
-                <PlayCircle className="w-5 h-5 text-destructive" />
-                <span className="font-semibold text-foreground">Video</span>
+                <PlayCircle className="w-5 h-5 text-red-600" />
+                <span className="font-semibold text-red-800">Video</span>
               </div>
-              <div className="text-sm text-muted-foreground leading-relaxed">
+              <div className="text-sm text-red-900 leading-relaxed">
                 {section.video}
               </div>
             </div>
           )}
 
           {section.exercise && (
-            <div className="bg-muted/30 border border-border p-4 rounded-lg">
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 p-4 rounded-xl">
               <div className="flex items-center gap-2 mb-3">
-                <CheckCircle className="w-5 h-5 text-primary" />
-                <span className="font-semibold text-foreground">Oppgave</span>
+                <CheckCircle className="w-5 h-5 text-green-600" />
+                <span className="font-semibold text-green-800">Oppgave</span>
               </div>
-              <div className="text-sm text-muted-foreground leading-relaxed">
+              <div className="text-sm text-green-900 leading-relaxed">
                 {section.exercise}
               </div>
             </div>
@@ -327,12 +327,12 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
           )}
 
           {section.download && (
-            <div className="bg-secondary/50 border border-secondary p-4 rounded-lg">
+            <div className="bg-gradient-to-r from-slate-50 to-gray-50 border-2 border-slate-200 p-4 rounded-xl">
               <div className="flex items-center gap-2 mb-3">
-                <FileText className="w-5 h-5 text-secondary-foreground" />
-                <span className="font-semibold text-foreground">Nedlasting</span>
+                <FileText className="w-5 h-5 text-slate-600" />
+                <span className="font-semibold text-slate-800">Nedlasting</span>
               </div>
-              <div className="text-sm text-muted-foreground leading-relaxed">
+              <div className="text-sm text-slate-900 leading-relaxed">
                 <ContentRenderer content={section.download} />
               </div>
             </div>
@@ -347,28 +347,28 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
           {/* Quiz Buttons - Show only for "Oppgaver" sections */}
           {section.title && section.title.toLowerCase().includes('oppgaver') && moduleIndex === 4 && (
             <div className="space-y-4">
-              <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 p-4 rounded-xl">
                 <div className="flex items-center gap-2 mb-3">
                   <Brain className="w-5 h-5 text-blue-600" />
-                  <span className="font-semibold text-foreground">Flervalgsoppgaver</span>
+                  <span className="font-semibold text-blue-800">Flervalgsoppgaver</span>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-blue-700 mb-3">
                   Test kunnskapen din med 15 tilfeldige spørsmål om obligasjoner
                 </p>
-                <Button onClick={() => setShowBondQuiz(true)} className="w-full">
+                <Button onClick={() => setShowBondQuiz(true)} className="w-full bg-blue-600 hover:bg-blue-700">
                   Start flervalgsoppgaver
                 </Button>
               </div>
-              
-              <div className="bg-green-50 border border-green-200 p-4 rounded-lg">
+
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 p-4 rounded-xl">
                 <div className="flex items-center gap-2 mb-3">
                   <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span className="font-semibold text-foreground">Regneoppgaver</span>
+                  <span className="font-semibold text-green-800">Regneoppgaver</span>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-green-700 mb-3">
                   Øv på obligasjonsberegninger med 11 praktiske oppgaver
                 </p>
-                <Button onClick={() => setShowBondExercises(true)} className="w-full" variant="outline">
+                <Button onClick={() => setShowBondExercises(true)} className="w-full bg-green-600 hover:bg-green-700">
                   Start regneoppgaver
                 </Button>
               </div>
@@ -378,28 +378,28 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
           {/* Interest Exercises - Show only for "Oppgaver" sections in module 3 */}
           {section.title && section.title.toLowerCase().includes('oppgaver') && moduleIndex === 3 && (
             <div className="space-y-4">
-              <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+              <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-200 p-4 rounded-xl">
                 <div className="flex items-center gap-2 mb-3">
-                  <Brain className="w-5 h-5 text-blue-600" />
-                  <span className="font-semibold text-foreground">Flervalgsoppgaver</span>
+                  <Brain className="w-5 h-5 text-amber-600" />
+                  <span className="font-semibold text-amber-800">Flervalgsoppgaver</span>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-amber-700 mb-3">
                   Test kunnskapen din med 20 spørsmål om tidsverdien av penger
                 </p>
-                <Button onClick={() => setShowTimeValueQuiz(true)} className="w-full">
+                <Button onClick={() => setShowTimeValueQuiz(true)} className="w-full bg-amber-600 hover:bg-amber-700">
                   Start flervalgsoppgaver
                 </Button>
               </div>
-              
-              <div className="bg-green-50 border border-green-200 p-4 rounded-lg">
+
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 p-4 rounded-xl">
                 <div className="flex items-center gap-2 mb-3">
                   <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span className="font-semibold text-foreground">Regneoppgaver</span>
+                  <span className="font-semibold text-green-800">Regneoppgaver</span>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-green-700 mb-3">
                   Øv på renteberegninger med 26 praktiske oppgaver
                 </p>
-                <Button onClick={() => setShowInterestExercises(true)} className="w-full" variant="outline">
+                <Button onClick={() => setShowInterestExercises(true)} className="w-full bg-green-600 hover:bg-green-700">
                   Start regneoppgaver
                 </Button>
               </div>
@@ -409,28 +409,28 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
           {/* Stock Quiz and Exercises - Show only for "Oppgaver" sections in module 5 */}
           {section.title && section.title.toLowerCase().includes('oppgaver') && moduleIndex === 5 && (
             <div className="space-y-4">
-              <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+              <div className="bg-gradient-to-r from-rose-50 to-pink-50 border-2 border-rose-200 p-4 rounded-xl">
                 <div className="flex items-center gap-2 mb-3">
-                  <Brain className="w-5 h-5 text-blue-600" />
-                  <span className="font-semibold text-foreground">Flervalgsoppgaver</span>
+                  <Brain className="w-5 h-5 text-rose-600" />
+                  <span className="font-semibold text-rose-800">Flervalgsoppgaver</span>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-rose-700 mb-3">
                   Test kunnskapen din med 15 tilfeldige spørsmål om aksjeanalyse og verdsettelse
                 </p>
-                <Button onClick={() => setShowStockQuiz(true)} className="w-full">
+                <Button onClick={() => setShowStockQuiz(true)} className="w-full bg-rose-600 hover:bg-rose-700">
                   Start flervalgsoppgaver
                 </Button>
               </div>
-              
-              <div className="bg-green-50 border border-green-200 p-4 rounded-lg">
+
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 p-4 rounded-xl">
                 <div className="flex items-center gap-2 mb-3">
                   <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span className="font-semibold text-foreground">Regneoppgaver</span>
+                  <span className="font-semibold text-green-800">Regneoppgaver</span>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-green-700 mb-3">
                   Øv på aksjevurdering med 9 praktiske oppgaver
                 </p>
-                <Button onClick={() => setShowStockExercises(true)} className="w-full" variant="outline">
+                <Button onClick={() => setShowStockExercises(true)} className="w-full bg-green-600 hover:bg-green-700">
                   Start regneoppgaver
                 </Button>
               </div>
@@ -438,15 +438,15 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
           )}
           {/* Risk Return Exercises - Show only for "Oppgaver" sections in module 6 */}
           {section.title && section.title.toLowerCase().includes('oppgaver') && moduleIndex === 6 && (
-            <div className="bg-green-50 border border-green-200 p-4 rounded-lg">
+            <div className="bg-gradient-to-r from-cyan-50 to-teal-50 border-2 border-cyan-200 p-4 rounded-xl">
               <div className="flex items-center gap-2 mb-3">
-                <CheckCircle className="w-5 h-5 text-green-600" />
-                <span className="font-semibold text-foreground">Regneoppgaver</span>
+                <CheckCircle className="w-5 h-5 text-cyan-600" />
+                <span className="font-semibold text-cyan-800">Regneoppgaver</span>
               </div>
-              <p className="text-sm text-muted-foreground mb-3">
+              <p className="text-sm text-cyan-700 mb-3">
                 Øv på risiko og avkastning med 18 praktiske oppgaver
               </p>
-              <Button onClick={() => setShowRiskReturnExercises(true)} className="w-full" variant="outline">
+              <Button onClick={() => setShowRiskReturnExercises(true)} className="w-full bg-cyan-600 hover:bg-cyan-700">
                 Start regneoppgaver
               </Button>
             </div>
