@@ -7,12 +7,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
+  const [resetEmail, setResetEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isResetLoading, setIsResetLoading] = useState(false);
+  const [showResetDialog, setShowResetDialog] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -32,23 +36,40 @@ const Auth = () => {
     setIsLoading(true);
 
     try {
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/dashboard`,
           data: {
             full_name: fullName,
           }
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        if (error.message.includes("User already registered")) {
+          toast({
+            title: "E-post allerede i bruk",
+            description: "En bruker med denne e-posten eksisterer allerede. Prøv å logge inn i stedet.",
+            variant: "destructive",
+          });
+          return;
+        }
+        throw error;
+      }
 
-      toast({
-        title: "Registrering vellykket!",
-        description: "Sjekk e-posten din for bekreftelseslenke.",
-      });
+      if (data.user && !data.session) {
+        toast({
+          title: "Registrering vellykket!",
+          description: "Sjekk e-posten din for bekreftelseslenke, eller prøv å logge inn direkte.",
+        });
+      } else if (data.session) {
+        toast({
+          title: "Registrering vellykket!",
+          description: "Du er nå logget inn!",
+        });
+        navigate("/dashboard");
+      }
     } catch (error: any) {
       toast({
         title: "Feil ved registrering",
@@ -81,6 +102,34 @@ const Auth = () => {
       });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsResetLoading(true);
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
+        redirectTo: `${window.location.origin}/auth/confirm`,
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Reset-lenke sendt!",
+        description: "Sjekk e-posten din for lenke til å tilbakestille passordet.",
+      });
+      setShowResetDialog(false);
+      setResetEmail("");
+    } catch (error: any) {
+      toast({
+        title: "Feil ved tilbakestilling",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsResetLoading(false);
     }
   };
 
@@ -123,6 +172,38 @@ const Auth = () => {
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? "Logger inn..." : "Logg inn"}
                 </Button>
+                <div className="text-center">
+                  <Dialog open={showResetDialog} onOpenChange={setShowResetDialog}>
+                    <DialogTrigger asChild>
+                      <Button variant="link" className="text-sm">
+                        Glemt passord?
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Tilbakestill passord</DialogTitle>
+                        <DialogDescription>
+                          Skriv inn e-postadressen din, så sender vi deg en lenke for å tilbakestille passordet.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <form onSubmit={handleResetPassword} className="space-y-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="resetEmail">E-post</Label>
+                          <Input
+                            id="resetEmail"
+                            type="email"
+                            value={resetEmail}
+                            onChange={(e) => setResetEmail(e.target.value)}
+                            required
+                          />
+                        </div>
+                        <Button type="submit" className="w-full" disabled={isResetLoading}>
+                          {isResetLoading ? "Sender..." : "Send reset-lenke"}
+                        </Button>
+                      </form>
+                    </DialogContent>
+                  </Dialog>
+                </div>
               </form>
             </TabsContent>
             
