@@ -44,6 +44,25 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
   const [showStockExercises, setShowStockExercises] = useState(false);
   const [showRiskReturnExercises, setShowRiskReturnExercises] = useState(false);
 
+  // Color scheme for different modules
+  const getModuleTheme = (index: number) => {
+    const themes = [
+      { primary: "blue", gradient: "from-blue-50 to-indigo-100", badge: "bg-blue-100 text-blue-800", accent: "text-blue-600", cardBorder: "border-blue-200" }, // Module 1
+      { primary: "emerald", gradient: "from-emerald-50 to-green-100", badge: "bg-emerald-100 text-emerald-800", accent: "text-emerald-600", cardBorder: "border-emerald-200" }, // Module 2
+      { primary: "amber", gradient: "from-amber-50 to-yellow-100", badge: "bg-amber-100 text-amber-800", accent: "text-amber-600", cardBorder: "border-amber-200" }, // Module 3
+      { primary: "purple", gradient: "from-purple-50 to-violet-100", badge: "bg-purple-100 text-purple-800", accent: "text-purple-600", cardBorder: "border-purple-200" }, // Module 4
+      { primary: "rose", gradient: "from-rose-50 to-pink-100", badge: "bg-rose-100 text-rose-800", accent: "text-rose-600", cardBorder: "border-rose-200" }, // Module 5
+      { primary: "cyan", gradient: "from-cyan-50 to-teal-100", badge: "bg-cyan-100 text-cyan-800", accent: "text-cyan-600", cardBorder: "border-cyan-200" }, // Module 6
+      { primary: "orange", gradient: "from-orange-50 to-red-100", badge: "bg-orange-100 text-orange-800", accent: "text-orange-600", cardBorder: "border-orange-200" }, // Module 7
+      { primary: "slate", gradient: "from-slate-50 to-gray-100", badge: "bg-slate-100 text-slate-800", accent: "text-slate-600", cardBorder: "border-slate-200" }, // Module 8
+      { primary: "indigo", gradient: "from-indigo-50 to-blue-100", badge: "bg-indigo-100 text-indigo-800", accent: "text-indigo-600", cardBorder: "border-indigo-200" }, // Module 9
+      { primary: "lime", gradient: "from-lime-50 to-green-100", badge: "bg-lime-100 text-lime-800", accent: "text-lime-600", cardBorder: "border-lime-200" }, // Module 10
+    ];
+    return themes[index % themes.length];
+  };
+
+  const moduleTheme = moduleIndex ? getModuleTheme(moduleIndex - 1) : null;
+
   // Special handling for insight boxes
   if (section.type === "insight") {
     return (
@@ -65,10 +84,10 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
 
   return (
     <>
-      <Card key={index} className="mb-6">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-primary" />
+      <Card key={index} className={`mb-6 border-2 ${moduleTheme?.cardBorder || 'border-border'} transition-all duration-200 hover:shadow-md`}>
+        <CardHeader className={`bg-gradient-to-r ${moduleTheme?.gradient || 'from-gray-50 to-gray-100'} rounded-t-lg`}>
+          <CardTitle className={`flex items-center gap-2 ${moduleTheme?.accent || 'text-foreground'}`}>
+            <BookOpen className={`w-5 h-5 ${moduleTheme?.accent || 'text-primary'}`} />
             {section.title}
           </CardTitle>
         </CardHeader>
