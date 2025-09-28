@@ -36,19 +36,19 @@ export const SubModuleContent: React.FC<SubModuleContentProps> = ({
   const totalSubModules = module.subModules?.length || 0;
   const currentIndex = subModuleIndex - 1; // Convert to 0-based index
 
-  // Color scheme for different modules
+  // Professional financial education color themes for modules
   const getModuleTheme = (index: number) => {
     const themes = [
-      { primary: "blue", gradient: "from-blue-50 to-indigo-100", badge: "bg-blue-100 text-blue-800", accent: "text-blue-600" }, // Module 1
-      { primary: "emerald", gradient: "from-emerald-50 to-green-100", badge: "bg-emerald-100 text-emerald-800", accent: "text-emerald-600" }, // Module 2
-      { primary: "amber", gradient: "from-amber-50 to-yellow-100", badge: "bg-amber-100 text-amber-800", accent: "text-amber-600" }, // Module 3
-      { primary: "purple", gradient: "from-purple-50 to-violet-100", badge: "bg-purple-100 text-purple-800", accent: "text-purple-600" }, // Module 4
-      { primary: "rose", gradient: "from-rose-50 to-pink-100", badge: "bg-rose-100 text-rose-800", accent: "text-rose-600" }, // Module 5
-      { primary: "cyan", gradient: "from-cyan-50 to-teal-100", badge: "bg-cyan-100 text-cyan-800", accent: "text-cyan-600" }, // Module 6
-      { primary: "orange", gradient: "from-orange-50 to-red-100", badge: "bg-orange-100 text-orange-800", accent: "text-orange-600" }, // Module 7
-      { primary: "slate", gradient: "from-slate-50 to-gray-100", badge: "bg-slate-100 text-slate-800", accent: "text-slate-600" }, // Module 8
-      { primary: "indigo", gradient: "from-indigo-50 to-blue-100", badge: "bg-indigo-100 text-indigo-800", accent: "text-indigo-600" }, // Module 9
-      { primary: "lime", gradient: "from-lime-50 to-green-100", badge: "bg-lime-100 text-lime-800", accent: "text-lime-600" }, // Module 10
+      { gradient: "bg-gradient-to-br from-module-1-50 to-module-1-100", badge: "bg-module-1-100 text-module-1-700 border-module-1-200", accent: "text-module-1-700", border: "border-module-1-200" }, // Module 1: Financial Blue
+      { gradient: "bg-gradient-to-br from-module-2-50 to-module-2-100", badge: "bg-module-2-100 text-module-2-700 border-module-2-200", accent: "text-module-2-700", border: "border-module-2-200" }, // Module 2: Growth Green
+      { gradient: "bg-gradient-to-br from-module-3-50 to-module-3-100", badge: "bg-module-3-100 text-module-3-700 border-module-3-200", accent: "text-module-3-700", border: "border-module-3-200" }, // Module 3: Professional Amber
+      { gradient: "bg-gradient-to-br from-module-4-50 to-module-4-100", badge: "bg-module-4-100 text-module-4-700 border-module-4-200", accent: "text-module-4-700", border: "border-module-4-200" }, // Module 4: Deep Purple
+      { gradient: "bg-gradient-to-br from-module-5-50 to-module-5-100", badge: "bg-module-5-100 text-module-5-700 border-module-5-200", accent: "text-module-5-700", border: "border-module-5-200" }, // Module 5: Rose
+      { gradient: "bg-gradient-to-br from-module-6-50 to-module-6-100", badge: "bg-module-6-100 text-module-6-700 border-module-6-200", accent: "text-module-6-700", border: "border-module-6-200" }, // Module 6: Sustainable Teal
+      { gradient: "bg-gradient-to-br from-esg-environmental/10 to-success/10", badge: "bg-esg-environmental/15 text-esg-environmental border-esg-environmental/30", accent: "text-esg-environmental", border: "border-esg-environmental/30" }, // Module 7: ESG Environmental
+      { gradient: "bg-gradient-to-br from-esg-social/10 to-esg-social/20", badge: "bg-esg-social/15 text-esg-social border-esg-social/30", accent: "text-esg-social", border: "border-esg-social/30" }, // Module 8: ESG Social
+      { gradient: "bg-gradient-to-br from-esg-governance/10 to-esg-governance/20", badge: "bg-esg-governance/15 text-esg-governance border-esg-governance/30", accent: "text-esg-governance", border: "border-esg-governance/30" }, // Module 9: ESG Governance
+      { gradient: "bg-gradient-to-br from-financial-teal/10 to-accent/10", badge: "bg-accent/15 text-accent border-accent/30", accent: "text-accent", border: "border-accent/30" }, // Module 10: Sustainable Finance
     ];
     return themes[index % themes.length];
   };
@@ -87,14 +87,14 @@ export const SubModuleContent: React.FC<SubModuleContentProps> = ({
       {/* Sub-module Header */}
       <div className="mb-8">
         <div
-          className={`p-6 rounded-xl bg-gradient-to-r ${moduleTheme?.gradient || 'from-gray-50 to-gray-100'} border-2 ${moduleTheme ? `border-${moduleTheme.primary}-200` : 'border-gray-200'} mb-6`}
+          className={`p-6 rounded-xl ${moduleTheme?.gradient || 'bg-gradient-to-br from-muted/20 to-muted/40'} border-2 ${moduleTheme?.border || 'border-border'} mb-6 shadow-sm backdrop-blur-sm`}
         >
           <div className="flex items-center gap-2 mb-3">
-            <Badge className={moduleTheme?.badge || 'bg-gray-100 text-gray-800'}>
+            <Badge className={`${moduleTheme?.badge || 'bg-primary/10 text-primary border-primary/20'} border backdrop-blur-sm`}>
               {moduleIndex}.{subModuleIndex}
             </Badge>
           </div>
-          <h2 className={`text-2xl font-bold break-words ${moduleTheme?.accent || 'text-gray-900'}`}>
+          <h2 className={`text-2xl font-bold break-words ${moduleTheme?.accent || 'text-foreground'} drop-shadow-sm`}>
             {subModule.title.replace(/^\d+\.\d+\s+/, '')}
           </h2>
         </div>
@@ -104,14 +104,24 @@ export const SubModuleContent: React.FC<SubModuleContentProps> = ({
       <div className="w-full space-y-6 overflow-hidden">
         {subModule.content && subModule.content.sections && subModule.content.sections.length > 0 ? (
           <div className="w-full space-y-6">
-            {subModule.content.sections.map((section: any, index: number) => (
-              <ContentSection 
-                key={index}
-                section={section}
-                index={index}
-                moduleIndex={moduleIndex}
-              />
-            ))}
+            {subModule.content.sections.map((section: any, index: number) => {
+              // Skip showing section title if it's the same as submodule title and it's the first section
+              const cleanSubModuleTitle = subModule.title.replace(/^\d+\.\d+\s+/, '').trim().toLowerCase();
+              const cleanSectionTitle = section.title.trim().toLowerCase();
+              const shouldHideTitle = index === 0 && cleanSectionTitle === cleanSubModuleTitle;
+
+              return (
+                <ContentSection
+                  key={index}
+                  section={{
+                    ...section,
+                    title: shouldHideTitle ? '' : section.title
+                  }}
+                  index={index}
+                  moduleIndex={moduleIndex}
+                />
+              );
+            })}
           </div>
         ) : (
           <div className="bg-card rounded-lg p-6 border">

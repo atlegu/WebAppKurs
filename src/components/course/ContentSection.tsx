@@ -44,19 +44,19 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
   const [showStockExercises, setShowStockExercises] = useState(false);
   const [showRiskReturnExercises, setShowRiskReturnExercises] = useState(false);
 
-  // Color scheme for different modules
+  // Professional financial education color themes for modules
   const getModuleTheme = (index: number) => {
     const themes = [
-      { primary: "blue", gradient: "from-blue-50 to-indigo-100", badge: "bg-blue-100 text-blue-800", accent: "text-blue-600", cardBorder: "border-blue-200" }, // Module 1
-      { primary: "emerald", gradient: "from-emerald-50 to-green-100", badge: "bg-emerald-100 text-emerald-800", accent: "text-emerald-600", cardBorder: "border-emerald-200" }, // Module 2
-      { primary: "amber", gradient: "from-amber-50 to-yellow-100", badge: "bg-amber-100 text-amber-800", accent: "text-amber-600", cardBorder: "border-amber-200" }, // Module 3
-      { primary: "purple", gradient: "from-purple-50 to-violet-100", badge: "bg-purple-100 text-purple-800", accent: "text-purple-600", cardBorder: "border-purple-200" }, // Module 4
-      { primary: "rose", gradient: "from-rose-50 to-pink-100", badge: "bg-rose-100 text-rose-800", accent: "text-rose-600", cardBorder: "border-rose-200" }, // Module 5
-      { primary: "cyan", gradient: "from-cyan-50 to-teal-100", badge: "bg-cyan-100 text-cyan-800", accent: "text-cyan-600", cardBorder: "border-cyan-200" }, // Module 6
-      { primary: "orange", gradient: "from-orange-50 to-red-100", badge: "bg-orange-100 text-orange-800", accent: "text-orange-600", cardBorder: "border-orange-200" }, // Module 7
-      { primary: "slate", gradient: "from-slate-50 to-gray-100", badge: "bg-slate-100 text-slate-800", accent: "text-slate-600", cardBorder: "border-slate-200" }, // Module 8
-      { primary: "indigo", gradient: "from-indigo-50 to-blue-100", badge: "bg-indigo-100 text-indigo-800", accent: "text-indigo-600", cardBorder: "border-indigo-200" }, // Module 9
-      { primary: "lime", gradient: "from-lime-50 to-green-100", badge: "bg-lime-100 text-lime-800", accent: "text-lime-600", cardBorder: "border-lime-200" }, // Module 10
+      { gradient: "bg-gradient-to-br from-module-1-50 to-module-1-100", badge: "bg-module-1-100 text-module-1-700 border-module-1-200", accent: "text-module-1-700", cardBorder: "border-module-1-200" }, // Module 1: Financial Blue
+      { gradient: "bg-gradient-to-br from-module-2-50 to-module-2-100", badge: "bg-module-2-100 text-module-2-700 border-module-2-200", accent: "text-module-2-700", cardBorder: "border-module-2-200" }, // Module 2: Growth Green
+      { gradient: "bg-gradient-to-br from-module-3-50 to-module-3-100", badge: "bg-module-3-100 text-module-3-700 border-module-3-200", accent: "text-module-3-700", cardBorder: "border-module-3-200" }, // Module 3: Professional Amber
+      { gradient: "bg-gradient-to-br from-module-4-50 to-module-4-100", badge: "bg-module-4-100 text-module-4-700 border-module-4-200", accent: "text-module-4-700", cardBorder: "border-module-4-200" }, // Module 4: Deep Purple
+      { gradient: "bg-gradient-to-br from-module-5-50 to-module-5-100", badge: "bg-module-5-100 text-module-5-700 border-module-5-200", accent: "text-module-5-700", cardBorder: "border-module-5-200" }, // Module 5: Rose
+      { gradient: "bg-gradient-to-br from-module-6-50 to-module-6-100", badge: "bg-module-6-100 text-module-6-700 border-module-6-200", accent: "text-module-6-700", cardBorder: "border-module-6-200" }, // Module 6: Sustainable Teal
+      { gradient: "bg-gradient-to-br from-esg-environmental/10 to-success/10", badge: "bg-esg-environmental/15 text-esg-environmental border-esg-environmental/30", accent: "text-esg-environmental", cardBorder: "border-esg-environmental/30" }, // Module 7: ESG Environmental
+      { gradient: "bg-gradient-to-br from-esg-social/10 to-esg-social/20", badge: "bg-esg-social/15 text-esg-social border-esg-social/30", accent: "text-esg-social", cardBorder: "border-esg-social/30" }, // Module 8: ESG Social
+      { gradient: "bg-gradient-to-br from-esg-governance/10 to-esg-governance/20", badge: "bg-esg-governance/15 text-esg-governance border-esg-governance/30", accent: "text-esg-governance", cardBorder: "border-esg-governance/30" }, // Module 9: ESG Governance
+      { gradient: "bg-gradient-to-br from-financial-teal/10 to-accent/10", badge: "bg-accent/15 text-accent border-accent/30", accent: "text-accent", cardBorder: "border-accent/30" }, // Module 10: Sustainable Finance
     ];
     return themes[index % themes.length];
   };
@@ -66,14 +66,14 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
   // Special handling for insight boxes
   if (section.type === "insight") {
     return (
-      <div className="mb-6 p-6 bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-200 rounded-xl">
+      <div className="mb-6 p-6 bg-gradient-to-br from-warning/10 to-warning/20 border-2 border-warning/30 rounded-xl shadow-sm backdrop-blur-sm">
         <div className="flex items-start gap-3">
-          <Lightbulb className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
+          <Lightbulb className="w-6 h-6 text-warning flex-shrink-0 mt-1" />
           <div className="flex-1">
-            <h4 className="text-base font-semibold text-amber-800 mb-3">
+            <h4 className="text-base font-semibold text-warning mb-3">
               {section.title.replace(/^!insight\s*/i, '')}
             </h4>
-            <div className="text-amber-900 leading-relaxed">
+            <div className="text-warning/90 leading-relaxed">
               <ContentRenderer content={section.content} />
             </div>
           </div>
@@ -85,13 +85,15 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
   return (
     <>
       <Card key={index} className={`mb-6 border-2 ${moduleTheme?.cardBorder || 'border-border'} transition-all duration-200 hover:shadow-md`}>
-        <CardHeader className={`bg-gradient-to-r ${moduleTheme?.gradient || 'from-gray-50 to-gray-100'} rounded-t-lg`}>
-          <CardTitle className={`flex items-center gap-2 ${moduleTheme?.accent || 'text-foreground'}`}>
-            <BookOpen className={`w-5 h-5 ${moduleTheme?.accent || 'text-primary'}`} />
-            {section.title}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
+        {section.title && section.title.trim() && (
+          <CardHeader className={`${moduleTheme?.gradient || 'bg-gradient-to-br from-muted/20 to-muted/40'} rounded-t-lg backdrop-blur-sm`}>
+            <CardTitle className={`flex items-center gap-2 ${moduleTheme?.accent || 'text-foreground'}`}>
+              <BookOpen className={`w-5 h-5 ${moduleTheme?.accent || 'text-primary'}`} />
+              {section.title}
+            </CardTitle>
+          </CardHeader>
+        )}
+        <CardContent className={`space-y-4 ${section.title && section.title.trim() ? '' : 'rounded-t-lg'}`}>
           <div className="prose max-w-none">
             <ContentRenderer content={section.content} />
           </div>
@@ -308,36 +310,36 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
           )}
 
           {section.video && (
-            <div className="bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-200 p-4 rounded-xl">
+            <div className="bg-gradient-to-br from-destructive/8 to-destructive/15 border-2 border-destructive/25 p-4 rounded-xl shadow-sm backdrop-blur-sm">
               <div className="flex items-center gap-2 mb-3">
-                <PlayCircle className="w-5 h-5 text-red-600" />
-                <span className="font-semibold text-red-800">Video</span>
+                <PlayCircle className="w-5 h-5 text-destructive" />
+                <span className="font-semibold text-destructive">Video</span>
               </div>
-              <div className="text-sm text-red-900 leading-relaxed">
+              <div className="text-sm text-destructive/90 leading-relaxed">
                 {section.video}
               </div>
             </div>
           )}
 
           {section.exercise && (
-            <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 p-4 rounded-xl">
+            <div className="bg-gradient-to-br from-success/8 to-success/15 border-2 border-success/25 p-4 rounded-xl shadow-sm backdrop-blur-sm">
               <div className="flex items-center gap-2 mb-3">
-                <CheckCircle className="w-5 h-5 text-green-600" />
-                <span className="font-semibold text-green-800">Oppgave</span>
+                <CheckCircle className="w-5 h-5 text-success" />
+                <span className="font-semibold text-success">Oppgave</span>
               </div>
-              <div className="text-sm text-green-900 leading-relaxed">
+              <div className="text-sm text-success/90 leading-relaxed">
                 {section.exercise}
               </div>
             </div>
           )}
 
           {section.reflection && (
-            <div className="mb-6 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl">
+            <div className="mb-6 p-6 bg-gradient-to-br from-primary/8 to-primary/15 border-2 border-primary/25 rounded-xl shadow-sm backdrop-blur-sm">
               <div className="flex items-start gap-3">
-                <Target className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                <Target className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                 <div className="flex-1">
-                  <h4 className="text-lg font-semibold text-blue-800 mb-3">Refleksjonsspørsmål</h4>
-                  <div className="text-blue-900 leading-relaxed">
+                  <h4 className="text-lg font-semibold text-primary mb-3">Refleksjonsspørsmål</h4>
+                  <div className="text-primary/90 leading-relaxed">
                     <ContentRenderer content={section.reflection} />
                   </div>
                 </div>
@@ -346,12 +348,12 @@ export const ContentSection: React.FC<ContentSectionProps> = ({ section, index, 
           )}
 
           {section.download && (
-            <div className="bg-gradient-to-r from-slate-50 to-gray-50 border-2 border-slate-200 p-4 rounded-xl">
+            <div className="bg-gradient-to-br from-muted/40 to-muted/60 border-2 border-muted/50 p-4 rounded-xl shadow-sm backdrop-blur-sm">
               <div className="flex items-center gap-2 mb-3">
-                <FileText className="w-5 h-5 text-slate-600" />
-                <span className="font-semibold text-slate-800">Nedlasting</span>
+                <FileText className="w-5 h-5 text-muted-foreground" />
+                <span className="font-semibold text-foreground">Nedlasting</span>
               </div>
-              <div className="text-sm text-slate-900 leading-relaxed">
+              <div className="text-sm text-foreground/90 leading-relaxed">
                 <ContentRenderer content={section.download} />
               </div>
             </div>
