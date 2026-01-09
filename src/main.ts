@@ -1,4 +1,3 @@
-console.log('🚀 App starting...');
 import './style.css';
 import { Course, Module, Section, QuizContent, DragGameContent, CalculatorContent, InteractiveModelContent, ExerciseSet } from './types/course';
 import { Navigation } from './components/Navigation';
@@ -131,9 +130,36 @@ class SustainableFinanceApp {
   }
 
   private setupAppStructure(): void {
+    const authService = AuthService.getInstance();
+    const user = authService.getState().user;
+    const isAdmin = user?.role === 'admin';
+
     this.app.innerHTML = `
       <div class="navigation-container"></div>
       <main class="main-content">
+        <div class="user-header">
+          <div class="user-header-left">
+            <span class="user-greeting">Hei, ${user?.full_name || 'Student'}!</span>
+          </div>
+          <div class="user-header-right">
+            ${isAdmin ? `
+              <a href="#admin" class="user-header-btn admin-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                Admin
+              </a>
+            ` : ''}
+            <button class="user-header-btn logout-btn" id="course-logout-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+              Logg ut
+            </button>
+          </div>
+        </div>
         <div class="homepage-container"></div>
         <div class="course-content" style="display: none;">
           <div class="progress-container">
@@ -161,6 +187,16 @@ class SustainableFinanceApp {
 
     // Attach navigation button listeners
     this.attachNavigationButtons();
+    this.attachLogoutButton();
+  }
+
+  private attachLogoutButton(): void {
+    const logoutBtn = document.querySelector('#course-logout-btn');
+    logoutBtn?.addEventListener('click', async () => {
+      const authService = AuthService.getInstance();
+      await authService.signOut();
+      window.location.reload();
+    });
   }
 
   private attachNavigationButtons(): void {
@@ -580,7 +616,6 @@ class AppRouter {
 
     // Subscribe to auth changes
     this.authService.subscribe((state) => {
-      console.log('🔐 Auth state changed:', { isLoading: state.isLoading, isAuthenticated: state.isAuthenticated, user: state.user?.email });
       if (state.isLoading) {
         this.showLoading();
         return;
@@ -614,7 +649,6 @@ class AppRouter {
   }
 
   private showLoading(): void {
-    console.log('📺 showLoading called, currentView:', this.currentView);
     // Only skip if we've already rendered loading (not on first call)
     if (this.currentView === 'loading' && this.app.innerHTML.includes('loading-state')) return;
     this.currentView = 'loading';
@@ -688,6 +722,4 @@ class AppRouter {
 }
 
 // Initialize the router
-console.log('🔧 Creating AppRouter...');
 new AppRouter();
-console.log('✅ AppRouter created');

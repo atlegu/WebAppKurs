@@ -24,6 +24,12 @@ export class AdminDashboard {
             <span class="admin-subtitle">Bærekraftig Foretaksfinans</span>
           </div>
           <div class="admin-header-right">
+            <a href="#" class="admin-back-btn" id="back-to-course">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+              </svg>
+              Tilbake til kurset
+            </a>
             <span class="admin-user">${this.authService.getState().user?.full_name || 'Admin'}</span>
             <button class="admin-logout-btn" id="logout-btn">Logg ut</button>
           </div>
@@ -60,6 +66,14 @@ export class AdminDashboard {
   }
 
   private attachEventListeners(): void {
+    // Back to course button
+    const backBtn = this.container.querySelector('#back-to-course');
+    backBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.hash = '';
+      window.location.reload();
+    });
+
     // Logout button
     const logoutBtn = this.container.querySelector('#logout-btn');
     logoutBtn?.addEventListener('click', async () => {
@@ -212,26 +226,52 @@ export class AdminDashboard {
       return;
     }
 
-    // For now, just update status - we'll add email invitation via Edge Function later
-    const { error } = await supabase
-      .from('applications')
-      .update({
-        status: 'approved',
-        reviewed_at: new Date().toISOString(),
-      })
-      .eq('id', id);
-
-    if (error) {
-      console.error('Error approving:', error);
-      alert('Kunne ikke godkjenne søknaden. Prøv igjen.');
-      return;
+    // Show loading state on the card
+    const card = this.container.querySelector(`[data-id="${id}"]`);
+    const actionsEl = card?.querySelector('.app-actions');
+    if (actionsEl) {
+      actionsEl.innerHTML = '<span class="loading-text">Sender invitasjon...</span>';
     }
 
-    // Create user via Supabase Auth Admin API (requires Edge Function)
-    // For now, show a message that manual invitation is needed
-    alert(`Søknad godkjent!\n\nNOTE: For å sende invitasjons-e-post må du:\n1. Gå til Supabase Dashboard > Authentication > Users\n2. Klikk "Invite user"\n3. Skriv inn: ${app.email}`);
+    try {
+      // Get the current session token
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        alert('Du må være logget inn for å godkjenne søknader.');
+        await this.loadApplications();
+        return;
+      }
 
-    await this.loadApplications();
+      // Call the Edge Function
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/invite-user`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          applicationId: id,
+          action: 'approve',
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        console.error('Error approving:', result);
+        alert(`Kunne ikke godkjenne søknaden: ${result.error || 'Ukjent feil'}`);
+        await this.loadApplications();
+        return;
+      }
+
+      alert(`Søknad godkjent!\n\nEn invitasjons-e-post er sendt til ${app.email}.`);
+      await this.loadApplications();
+
+    } catch (error) {
+      console.error('Error approving:', error);
+      alert('Kunne ikke godkjenne søknaden. Prøv igjen.');
+      await this.loadApplications();
+    }
   }
 
   private async rejectApplication(id: string): Promise<void> {
@@ -242,21 +282,47 @@ export class AdminDashboard {
       return;
     }
 
-    const { error } = await supabase
-      .from('applications')
-      .update({
-        status: 'rejected',
-        reviewed_at: new Date().toISOString(),
-      })
-      .eq('id', id);
-
-    if (error) {
-      console.error('Error rejecting:', error);
-      alert('Kunne ikke avvise søknaden. Prøv igjen.');
-      return;
+    // Show loading state
+    const card = this.container.querySelector(`[data-id="${id}"]`);
+    const actionsEl = card?.querySelector('.app-actions');
+    if (actionsEl) {
+      actionsEl.innerHTML = '<span class="loading-text">Avviser...</span>';
     }
 
-    await this.loadApplications();
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        alert('Du må være logget inn.');
+        await this.loadApplications();
+        return;
+      }
+
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/invite-user`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          applicationId: id,
+          action: 'reject',
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        console.error('Error rejecting:', result);
+        alert(`Kunne ikke avvise søknaden: ${result.error || 'Ukjent feil'}`);
+      }
+
+      await this.loadApplications();
+
+    } catch (error) {
+      console.error('Error rejecting:', error);
+      alert('Kunne ikke avvise søknaden. Prøv igjen.');
+      await this.loadApplications();
+    }
   }
 
   private showError(message: string): void {

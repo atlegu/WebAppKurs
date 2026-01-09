@@ -5330,3 +5330,103 @@ a:hover {
 .loading-state .spinner {
   color: var(--primary);
 }
+
+/* User Header */
+.user-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-6);
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.user-header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.user-greeting {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.user-header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.user-header-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.user-header-btn.admin-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+}
+
+.user-header-btn.admin-btn:hover {
+  background: var(--primary-dark);
+}
+
+.user-header-btn.logout-btn {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.user-header-btn.logout-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .user-header {
+    padding: var(--space-2) var(--space-4);
+  }
+  
+  .user-greeting {
+    display: none;
+  }
+}
+
+/* Admin back button */
+.admin-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.admin-back-btn:hover {
+  background: var(--primary);
+  color: white;
+}
+
+.loading-text {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-style: italic;
+}
