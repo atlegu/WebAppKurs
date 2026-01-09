@@ -165,7 +165,7 @@ export const modul7InvesteringsanalyseModule: Module = {
           id: '7-2-intro',
           type: 'text',
           order: 1,
-          text: 'Nåverdimetoden (NPV) er det viktigste verktøyet i investeringsanalyse. Den tar hensyn til pengenes tidsverdi og gir et klart svar: Skaper prosjektet verdi eller ikke?',
+          text: '**I 2020 vurderte Hydro å investere 4 milliarder kroner i et nytt resirkureringsanlegg for aluminium.** Prosjektet ville generere inntekter i 20 år fremover. Men hvordan sammenligner du 4 milliarder ut av lommen i dag med usikre inntekter tiår inn i fremtiden? Nåverdimetoden (NPV) gir svaret – og er grunnen til at Hydro faktisk bygde anlegget.',
           emphasis: 'important'
         },
         {

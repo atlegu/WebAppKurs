@@ -167,7 +167,7 @@ export const modul2RegnskapModule: Module = {
           id: '2-2-intro',
           type: 'text',
           order: 1,
-          text: 'Resultatregnskapet er som en film av selskapets aktivitet over en periode. Det viser alle inntekter og kostnader, og ender med bunnlinjen: tjente selskapet penger eller ikke?',
+          text: '**I 2019 rapporterte Norwegian et underskudd på 1,6 milliarder kroner – til tross for rekordhøye passasjertall.** Hvordan kan et flyselskap som frakter millioner av mennesker tape så mye penger? Svaret finner du i resultatregnskapet – dokumentet som avslører om et selskap virkelig tjener penger, eller bare later som.',
           emphasis: 'important'
         },
         {
@@ -334,7 +334,7 @@ export const modul2RegnskapModule: Module = {
           id: '2-3-intro',
           type: 'text',
           order: 1,
-          text: 'Hvis resultatregnskapet er en film, er balansen et fotografi. Den viser et øyeblikksbilde av hva selskapet eier (eiendeler), hva det skylder (gjeld), og hva som tilhører eierne (egenkapital) – på et bestemt tidspunkt.',
+          text: '**Da Norwegian søkte om konkursbeskyttelse i 2020, hadde selskapet 60 milliarder i gjeld og bare 6 milliarder i egenkapital.** For hver krone eierne hadde skutt inn, skyldte selskapet 10 kroner til andre. Balansen avslørte det resultatregnskapet skjulte: Norwegian var teknisk insolvent. Å lese en balanse kan bokstavelig talt redde investeringen din.',
           emphasis: 'important'
         },
         {

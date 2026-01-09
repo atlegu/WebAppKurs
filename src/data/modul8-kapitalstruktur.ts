@@ -22,7 +22,8 @@ export const modul8KapitalstrukturModule: Module = {
           id: 'kapitalstruktur-8-1-intro',
           type: 'text',
           order: 1,
-          text: 'Kapitalstruktur handler om hvordan en bedrift finansierer sin virksomhet – altså blandingen av egenkapital (aksjer) og gjeld (lån og obligasjoner). Dette er en av de viktigste beslutningene i foretaksfinans fordi den påvirker både avkastning og risiko for eierne.'
+          text: '**I 2019 hadde Norwegian en gjeldsgrad på 10 – ti kroner gjeld for hver krone egenkapital. Equinor hadde 0,4.** Da pandemien slo til, kollapset Norwegian og måtte reddes. Equinor betalte rekordhøyt utbytte. Samme krise, helt forskjellige utfall. Hemmeligheten? Kapitalstruktur – valget mellom gjeld og egenkapital som kan avgjøre om et selskap overlever eller går under.',
+          emphasis: 'important'
         },
         {
           id: 'kapitalstruktur-8-1-heading-hva',
