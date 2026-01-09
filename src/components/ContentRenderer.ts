@@ -7,6 +7,7 @@ import {
   FormulaContent,
   ExampleContent,
   VideoContent,
+  AudioContent,
   ImageContent,
   QuizContent,
   ExerciseContent,
@@ -15,14 +16,25 @@ import {
   DefinitionContent,
   DragGameContent,
   CalculatorContent,
-  InteractiveModelContent
+  InteractiveModelContent,
+  ExerciseSetContent,
+  ExerciseSet
 } from '../types/course';
+import { ExerciseSetHandler } from './ExerciseSetHandler';
 
 export class ContentRenderer {
   private container: HTMLElement;
+  private exerciseSets: Map<string, ExerciseSet> = new Map();
 
   constructor(container: HTMLElement) {
     this.container = container;
+  }
+
+  setExerciseSets(exerciseSets: ExerciseSet[]): void {
+    this.exerciseSets.clear();
+    exerciseSets.forEach(set => {
+      this.exerciseSets.set(set.id, set);
+    });
   }
 
   renderContent(content: Content[]): void {
@@ -52,6 +64,8 @@ export class ContentRenderer {
         return this.renderExample(content as ExampleContent);
       case 'video':
         return this.renderVideo(content as VideoContent);
+      case 'audio':
+        return this.renderAudio(content as AudioContent);
       case 'image':
         return this.renderImage(content as ImageContent);
       case 'quiz':
@@ -70,6 +84,8 @@ export class ContentRenderer {
         return this.renderCalculator(content as CalculatorContent);
       case 'interactive-model':
         return this.renderInteractiveModel(content as InteractiveModelContent);
+      case 'exerciseset':
+        return this.renderExerciseSet(content as ExerciseSetContent);
       default:
         return '';
     }
@@ -151,6 +167,31 @@ export class ContentRenderer {
             <span class="video-placeholder-text">${content.placeholder || 'Video kommer snart'}</span>
           </div>`
         }
+      </div>
+    `;
+  }
+
+  private renderAudio(content: AudioContent): string {
+    return `
+      <div class="content-audio">
+        <div class="audio-header">
+          <span class="audio-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18V5l12-2v13"></path>
+              <circle cx="6" cy="18" r="3"></circle>
+              <circle cx="18" cy="16" r="3"></circle>
+            </svg>
+          </span>
+          <div class="audio-info">
+            <span class="audio-title">${content.title}</span>
+            <span class="audio-duration">${content.duration}</span>
+          </div>
+        </div>
+        ${content.description ? `<div class="audio-description">${this.formatText(content.description)}</div>` : ''}
+        <audio class="audio-player" controls preload="metadata">
+          <source src="${content.url}" type="audio/mp4">
+          Nettleseren din støtter ikke lydavspilling.
+        </audio>
       </div>
     `;
   }
@@ -467,5 +508,14 @@ export class ContentRenderer {
     formatted = formatted.replace(/`(.*?)`/g, '<code>$1</code>');
 
     return formatted;
+  }
+
+  private renderExerciseSet(content: ExerciseSetContent): string {
+    const exerciseSet = this.exerciseSets.get(content.exerciseSetId);
+    if (!exerciseSet) {
+      console.warn(`ExerciseSet not found: ${content.exerciseSetId}`);
+      return '';
+    }
+    return ExerciseSetHandler.renderExerciseSetSection(exerciseSet);
   }
 }

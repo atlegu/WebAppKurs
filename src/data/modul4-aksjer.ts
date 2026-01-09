@@ -1257,6 +1257,25 @@ export const modul4AksjerModule: Module = {
           question: 'Er det investorenes ansvar å "redde verden" gjennom ESG, eller bør det overlates til politikere og regulering? Hva er din mening?'
         }
       ]
+    },
+    {
+      id: 'seksjon-4-6-oppgaver',
+      title: 'Regneoppgaver',
+      order: 6,
+      content: [
+        {
+          id: '4-6-intro',
+          type: 'text',
+          order: 1,
+          text: 'Test dine ferdigheter med disse regneoppgavene om aksjeprising. Oppgavene dekker dividendemodellen, P/E-multipler, ROE, PVGO og andre sentrale konsepter fra modulen. Klikk på en oppgave for å se oppgaveteksten, og bruk "Vis fasit"-knappen når du vil sjekke svaret ditt.'
+        },
+        {
+          id: '4-6-exerciseset',
+          type: 'exerciseset',
+          order: 2,
+          exerciseSetId: 'oppgavesett-aksjer'
+        }
+      ]
     }
   ],
   moduleQuiz: {

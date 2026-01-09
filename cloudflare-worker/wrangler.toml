@@ -1,0 +1,6 @@
+name = "finansbot-api"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# API key stored as secret (not in code)
+# Run: npx wrangler secret put OPENAI_API_KEY

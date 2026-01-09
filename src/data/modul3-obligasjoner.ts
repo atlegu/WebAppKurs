@@ -30,9 +30,18 @@ export const modul3ObligasjonerModule: Module = {
           emphasis: 'important'
         },
         {
+          id: '3-1-podcast',
+          type: 'audio',
+          order: 2,
+          title: 'Podcast: Introduksjon til obligasjoner',
+          duration: '17 min',
+          url: '/obligasjon.m4a',
+          description: 'Vi anbefaler at du lytter til denne podcasten før du leser videre. Her får du en grundig og lettfattelig introduksjon til obligasjoner, renter og prising – fortalt på en engasjerende måte som gir deg et solid fundament for resten av modulen.'
+        },
+        {
           id: '3-1-intro',
           type: 'text',
-          order: 2,
+          order: 3,
           text: 'Obligasjoner er selve grunnmuren i finansmarkedene. Faktisk er obligasjonsmarkedet globalt *større* enn aksjemarkedet! I Norge alene er det utestående obligasjoner for over 3 000 milliarder kroner. Likevel er det mange som ikke forstår hva en obligasjon egentlig er.'
         },
         {
@@ -1963,6 +1972,25 @@ export const modul3ObligasjonerModule: Module = {
           type: 'reflection',
           order: 13,
           question: 'Hvordan ville du fordelt en portefølje på 1 million kroner mellom statsobligasjoner, IG-foretaksobligasjoner, og high yield? Hvorfor?'
+        }
+      ]
+    },
+    {
+      id: 'seksjon-3-11-oppgaver',
+      title: 'Regneoppgaver',
+      order: 11,
+      content: [
+        {
+          id: '3-11-intro',
+          type: 'text',
+          order: 1,
+          text: 'Test dine ferdigheter med disse regneoppgavene om obligasjoner. Oppgavene dekker obligasjonsprising, yield to maturity, durasjon og andre sentrale konsepter fra modulen. Klikk på en oppgave for å se oppgaveteksten, og bruk "Vis fasit"-knappen når du vil sjekke svaret ditt.'
+        },
+        {
+          id: '3-11-exerciseset',
+          type: 'exerciseset',
+          order: 2,
+          exerciseSetId: 'oppgavesett-obligasjoner'
         }
       ]
     }

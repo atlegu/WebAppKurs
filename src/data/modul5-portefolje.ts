@@ -1206,6 +1206,25 @@ export const modul5PortefoljeModule: Module = {
           question: 'Har du noen gang rebalansert porteføljen din? Hvis ikke – sjekk fordelingen din nå. Er den der du ønsker at den skal være?'
         }
       ]
+    },
+    {
+      id: 'seksjon-5-6-oppgaver',
+      title: 'Regneoppgaver',
+      order: 6,
+      content: [
+        {
+          id: '5-6-intro',
+          type: 'text',
+          order: 1,
+          text: 'Test dine ferdigheter med disse regneoppgavene om porteføljeteori og CAPM. Oppgavene dekker avkastningsberegning, varians, kovarians, porteføljerisiko, beta og kapitalverdimodellen. Klikk på en oppgave for å se oppgaveteksten, og bruk "Vis fasit"-knappen når du vil sjekke svaret ditt.'
+        },
+        {
+          id: '5-6-exerciseset',
+          type: 'exerciseset',
+          order: 2,
+          exerciseSetId: 'oppgavesett-portefolje-capm'
+        }
+      ]
     }
   ],
   moduleQuiz: {

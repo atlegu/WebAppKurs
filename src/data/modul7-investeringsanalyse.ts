@@ -936,6 +936,25 @@ export const modul7InvesteringsanalyseModule: Module = {
           question: 'Tenk på en investeringsbeslutning med høy usikkerhet (f.eks. å starte en bedrift, ta en ny utdanning). Hvordan ville du brukt tankegangen om realopsjoner – å starte smått og beholde muligheten til å justere kursen?'
         }
       ]
+    },
+    {
+      id: 'seksjon-7-6-oppgaver',
+      title: 'Regneoppgaver',
+      order: 6,
+      content: [
+        {
+          id: '7-6-intro',
+          type: 'text',
+          order: 1,
+          text: 'Test dine ferdigheter med disse regneoppgavene om investeringsanalyse. Oppgavene dekker NPV, IRR, ekvivalente annuiteter, prosjektvalg og andre sentrale konsepter fra modulen. Klikk på en oppgave for å se oppgaveteksten, og bruk "Vis fasit"-knappen når du vil sjekke svaret ditt.'
+        },
+        {
+          id: '7-6-exerciseset',
+          type: 'exerciseset',
+          order: 2,
+          exerciseSetId: 'oppgavesett-investeringsanalyse'
+        }
+      ]
     }
   ],
   moduleQuiz: {

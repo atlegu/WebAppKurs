@@ -29,9 +29,17 @@ export const modul2TidverdiModule: Module = {
           emphasis: 'important'
         },
         {
+          id: '2-1-video',
+          type: 'video',
+          order: 2,
+          title: 'Video: Introduksjon til renteregning',
+          duration: '15 min',
+          url: 'https://www.youtube.com/embed/733mgqrzNKs?start=23'
+        },
+        {
           id: '2-1-intro-2',
           type: 'text',
-          order: 2,
+          order: 3,
           text: 'Hvis du valgte pengene i dag – gratulerer, du tenker som en finansekspert! Men *hvorfor* er dette det riktige valget? Svaret ligger i et av finansens mest fundamentale prinsipper: **pengenes tidsverdi**.'
         },
         {

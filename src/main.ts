@@ -1,5 +1,5 @@
 import './style.css';
-import { Course, Module, Section, QuizContent, DragGameContent, CalculatorContent, InteractiveModelContent } from './types/course';
+import { Course, Module, Section, QuizContent, DragGameContent, CalculatorContent, InteractiveModelContent, ExerciseSet } from './types/course';
 import { Navigation } from './components/Navigation';
 import { ContentRenderer } from './components/ContentRenderer';
 import { QuizHandler } from './components/QuizHandler';
@@ -7,8 +7,14 @@ import { GameHandler } from './components/GameHandler';
 import { CalculatorHandler } from './components/CalculatorHandler';
 import { InteractiveModelHandler } from './components/InteractiveModelHandler';
 import { ModuleQuizHandler } from './components/ModuleQuizHandler';
+import { ExerciseSetHandler } from './components/ExerciseSetHandler';
+import { ChatWidget } from './components/ChatWidget';
 import { HomePage } from './components/HomePage';
 import { ProgressTracker } from './services/ProgressTracker';
+import { AuthService } from './services/auth/AuthService';
+import { LoginPage } from './components/auth/LoginPage';
+import { ApplicationForm } from './components/auth/ApplicationForm';
+import { AdminDashboard } from './components/admin/AdminDashboard';
 import { modul1VelkommenModule } from './data/modul1-velkommen';
 import { modul2RegnskapModule } from './data/modul2-regnskap';
 import { modul2TidverdiModule } from './data/modul2-tidverdi';
@@ -20,6 +26,13 @@ import { modul8KapitalstrukturModule } from './data/modul8-kapitalstruktur';
 import { modul6BaerekraftModule } from './data/modul6-baerekraft';
 import { modul7FremtidModule } from './data/modul7-fremtid';
 
+// Import exercise sets
+import { obligasjonerExerciseSet } from './data/exercises/oppgavesett-obligasjoner';
+import { aksjerExerciseSet } from './data/exercises/oppgavesett-aksjer';
+import { portefoljeCAPMExerciseSet } from './data/exercises/oppgavesett-portefolje-capm';
+import { investeringsanalyseExerciseSet } from './data/exercises/oppgavesett-investeringsanalyse';
+import { oppgavesettKapitalstruktur } from './data/exercises/oppgavesett-kapitalstruktur';
+
 class SustainableFinanceApp {
   private app: HTMLElement;
   private navigation: Navigation;
@@ -28,10 +41,13 @@ class SustainableFinanceApp {
   private gameHandler: GameHandler;
   private calculatorHandler: CalculatorHandler;
   private interactiveModelHandler: InteractiveModelHandler;
+  private exerciseSetHandler: ExerciseSetHandler;
+  private chatWidget: ChatWidget;
   private moduleQuizHandler: ModuleQuizHandler | null = null;
   private homePage: HomePage | null = null;
   private progressTracker: ProgressTracker;
   private course: Course;
+  private exerciseSets: ExerciseSet[];
   private currentModule?: Module;
   private currentSection?: Section;
 
@@ -57,6 +73,15 @@ class SustainableFinanceApp {
       ]
     };
 
+    // Initialize exercise sets
+    this.exerciseSets = [
+      obligasjonerExerciseSet,
+      aksjerExerciseSet,
+      portefoljeCAPMExerciseSet,
+      investeringsanalyseExerciseSet,
+      oppgavesettKapitalstruktur
+    ];
+
     // Initialize components
     this.progressTracker = new ProgressTracker();
     this.quizHandler = new QuizHandler((quizId, score) => {
@@ -69,6 +94,18 @@ class SustainableFinanceApp {
     });
     this.calculatorHandler = new CalculatorHandler();
     this.interactiveModelHandler = new InteractiveModelHandler();
+    this.exerciseSetHandler = new ExerciseSetHandler();
+    this.chatWidget = new ChatWidget();
+
+    // Connect exercise handler to chat widget for AI help
+    this.exerciseSetHandler.setAIHelpCallback((exerciseText, exerciseSolution) => {
+      this.chatWidget.openWithExercise(exerciseText, exerciseSolution);
+    });
+
+    // Reset chat context when exercise modal is closed
+    this.exerciseSetHandler.setModalCloseCallback(() => {
+      this.chatWidget.clearContext();
+    });
 
     // Set up the app structure
     this.setupAppStructure();
@@ -86,6 +123,7 @@ class SustainableFinanceApp {
     // Initialize content renderer
     const contentContainer = document.querySelector('.content-container')!;
     this.contentRenderer = new ContentRenderer(contentContainer as HTMLElement);
+    this.contentRenderer.setExerciseSets(this.exerciseSets);
 
     // Initial render
     this.render();
@@ -354,11 +392,18 @@ class SustainableFinanceApp {
       }
     });
 
+    // Register exercise sets for this module
+    this.exerciseSetHandler.reset();
+    this.exerciseSets
+      .filter(set => set.moduleId === moduleId)
+      .forEach(set => this.exerciseSetHandler.registerExerciseSet(set));
+
     const contentContainer = document.querySelector('.content-container')!;
     this.quizHandler.attachEventListeners(contentContainer as HTMLElement);
     this.gameHandler.attachEventListeners(contentContainer as HTMLElement);
     this.calculatorHandler.attachEventListeners(contentContainer as HTMLElement);
     this.interactiveModelHandler.attachEventListeners(contentContainer as HTMLElement);
+    this.exerciseSetHandler.attachEventListeners(contentContainer as HTMLElement);
 
     // Update navigation active state
     this.navigation.render(this.course.modules, moduleId, sectionId, () => this.showHomePage());
@@ -509,5 +554,134 @@ class SustainableFinanceApp {
   }
 }
 
-// Initialize the app
-new SustainableFinanceApp();
+// =============================================
+// APP ROUTER - Handles Auth and Routing
+// =============================================
+
+class AppRouter {
+  private app: HTMLElement;
+  private authService: AuthService;
+  private courseApp: SustainableFinanceApp | null = null;
+  private loginPage: LoginPage | null = null;
+  private applicationForm: ApplicationForm | null = null;
+  private adminDashboard: AdminDashboard | null = null;
+  private currentView: 'loading' | 'login' | 'apply' | 'course' | 'admin' = 'loading';
+
+  constructor() {
+    this.app = document.querySelector<HTMLDivElement>('#app')!;
+    this.authService = AuthService.getInstance();
+    this.init();
+  }
+
+  private init(): void {
+    // Show loading state
+    this.showLoading();
+
+    // Subscribe to auth changes
+    this.authService.subscribe((state) => {
+      if (state.isLoading) {
+        this.showLoading();
+        return;
+      }
+
+      // Check URL for admin route
+      const isAdminRoute = window.location.hash === '#admin';
+
+      if (state.isAuthenticated && state.user) {
+        if (isAdminRoute && state.user.role === 'admin') {
+          this.showAdmin();
+        } else {
+          this.showCourse();
+        }
+      } else {
+        this.showLogin();
+      }
+    });
+
+    // Listen for hash changes (for admin route)
+    window.addEventListener('hashchange', () => {
+      const state = this.authService.getState();
+      if (state.isAuthenticated && state.user) {
+        if (window.location.hash === '#admin' && state.user.role === 'admin') {
+          this.showAdmin();
+        } else if (window.location.hash === '' || window.location.hash === '#') {
+          this.showCourse();
+        }
+      }
+    });
+  }
+
+  private showLoading(): void {
+    if (this.currentView === 'loading') return;
+    this.currentView = 'loading';
+
+    this.app.innerHTML = `
+      <div class="auth-page">
+        <div class="loading-state">
+          <svg class="spinner" width="40" height="40" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="32" stroke-linecap="round"/>
+          </svg>
+          <p>Laster...</p>
+        </div>
+      </div>
+    `;
+  }
+
+  private showLogin(): void {
+    if (this.currentView === 'login') return;
+    this.currentView = 'login';
+    window.location.hash = '';
+
+    this.loginPage = new LoginPage(
+      this.app,
+      () => {
+        // Success - will be handled by auth state change
+      },
+      () => {
+        this.showApplicationForm();
+      }
+    );
+    this.loginPage.render();
+  }
+
+  private showApplicationForm(): void {
+    if (this.currentView === 'apply') return;
+    this.currentView = 'apply';
+
+    this.applicationForm = new ApplicationForm(
+      this.app,
+      () => {
+        this.showLogin();
+      }
+    );
+    this.applicationForm.render();
+  }
+
+  private showCourse(): void {
+    if (this.currentView === 'course' && this.courseApp) return;
+    this.currentView = 'course';
+    window.location.hash = '';
+
+    // Clear the app container for fresh init
+    this.app.innerHTML = '';
+
+    // Initialize the course app
+    this.courseApp = new SustainableFinanceApp();
+  }
+
+  private showAdmin(): void {
+    if (this.currentView === 'admin') return;
+    this.currentView = 'admin';
+
+    this.adminDashboard = new AdminDashboard(
+      this.app,
+      () => {
+        this.showLogin();
+      }
+    );
+    this.adminDashboard.render();
+  }
+}
+
+// Initialize the router
+new AppRouter();

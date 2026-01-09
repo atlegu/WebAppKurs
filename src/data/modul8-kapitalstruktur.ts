@@ -761,6 +761,25 @@ export const modul8KapitalstrukturModule: Module = {
           explanation: 'Ved dividende mottar alle aksjonærer kontanter og må skatte av det. Ved tilbakekjøp kan aksjonærer velge om de vil selge (og skatte) eller beholde aksjene og utsette skatten. Denne valgfriheten er en viktig fordel.'
         }
       ]
+    },
+    {
+      id: 'kapitalstruktur-8-6-oppgaver',
+      title: 'Regneoppgaver',
+      order: 6,
+      content: [
+        {
+          id: '8-6-intro',
+          type: 'text',
+          order: 1,
+          text: 'Test dine ferdigheter med disse regneoppgavene om kapitalstruktur. Oppgavene dekker WACC, egenkapitalkostnad, Modigliani-Miller-teoremet, skatteskjold og effekten av gjeldsfinansiering. Klikk på en oppgave for å se oppgaveteksten, og bruk "Vis fasit"-knappen når du vil sjekke svaret ditt.'
+        },
+        {
+          id: '8-6-exerciseset',
+          type: 'exerciseset',
+          order: 2,
+          exerciseSetId: 'oppgavesett-kapitalstruktur'
+        }
+      ]
     }
   ],
   moduleQuiz: {

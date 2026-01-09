@@ -47,6 +47,7 @@ export type ContentType =
   | 'formula'
   | 'example'
   | 'video'
+  | 'audio'
   | 'image'
   | 'quiz'
   | 'exercise'
@@ -55,7 +56,8 @@ export type ContentType =
   | 'definition'
   | 'draggame'
   | 'calculator'
-  | 'interactive-model';
+  | 'interactive-model'
+  | 'exerciseset';
 
 export interface BaseContent {
   id: string;
@@ -106,6 +108,14 @@ export interface VideoContent extends BaseContent {
   duration: string;
   url?: string;
   placeholder?: string;
+}
+
+export interface AudioContent extends BaseContent {
+  type: 'audio';
+  title: string;
+  duration: string;
+  url: string;
+  description?: string;
 }
 
 export interface ImageContent extends BaseContent {
@@ -201,6 +211,11 @@ export interface CalculatorContent extends BaseContent {
   explanation?: string;
 }
 
+export interface ExerciseSetContent extends BaseContent {
+  type: 'exerciseset';
+  exerciseSetId: string;  // Reference to the ExerciseSet by ID
+}
+
 export type Content =
   | TextContent
   | HeadingContent
@@ -209,6 +224,7 @@ export type Content =
   | FormulaContent
   | ExampleContent
   | VideoContent
+  | AudioContent
   | ImageContent
   | QuizContent
   | ExerciseContent
@@ -217,7 +233,8 @@ export type Content =
   | DefinitionContent
   | DragGameContent
   | CalculatorContent
-  | InteractiveModelContent;
+  | InteractiveModelContent
+  | ExerciseSetContent;
 
 export interface UserProgress {
   moduleId: string;
@@ -276,4 +293,37 @@ export interface InteractiveModelContent extends BaseContent {
   outputs: ModelOutput[];
   charts: ChartConfig[];
   explanation?: string;
+}
+
+// =============================================
+// Exercise Set Types (Regneoppgaver med fasit)
+// =============================================
+
+export interface ExerciseSubPart {
+  label: string;           // "a", "b", "c" etc.
+  text: string;            // Deloppgave-tekst
+  solution: string;        // Fasit for denne delen (støtter LaTeX)
+}
+
+export interface Exercise {
+  id: string;
+  number: number;
+  title?: string;
+  problemText: string;           // Oppgavetekst (støtter markdown og LaTeX)
+  subParts?: ExerciseSubPart[];  // For a), b), c) deloppgaver
+  solution: string;              // Hovedfasit (støtter LaTeX)
+  difficulty?: 'easy' | 'medium' | 'hard';
+  hints?: string[];
+  tables?: {                     // For tabelldata i oppgaver
+    headers: string[];
+    rows: string[][];
+  }[];
+}
+
+export interface ExerciseSet {
+  id: string;
+  moduleId: string;
+  title: string;
+  description?: string;
+  exercises: Exercise[];
 }
