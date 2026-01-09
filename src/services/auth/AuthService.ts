@@ -26,9 +26,9 @@ export class AuthService {
     console.log('🔑 initializeAuth starting...');
 
     // Global timeout - ensure we never hang forever
-    setTimeout(() => {
+    const globalTimeout = setTimeout(() => {
       if (this.authState.isLoading) {
-        console.warn('🔑 Auth initialization timed out after 8s, showing login');
+        console.warn('🔑 Auth initialization timed out after 5s, showing login');
         this.updateState({
           isAuthenticated: false,
           isLoading: false,
@@ -36,51 +36,57 @@ export class AuthService {
           error: null,
         });
       }
-    }, 8000);
+    }, 5000);
 
-    // Listen to auth state changes
-    supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('Auth state changed:', event, 'session:', !!session);
-
-      if (session?.user) {
-        console.log('🔑 User found, fetching profile...');
-        const profile = await this.fetchProfile(session.user.id);
-        console.log('🔑 Profile fetched:', profile);
-        this.updateState({
-          isAuthenticated: true,
-          isLoading: false,
-          user: profile,
-          error: null,
-        });
-      } else {
-        console.log('🔑 No session, setting unauthenticated');
-        this.updateState({
-          isAuthenticated: false,
-          isLoading: false,
-          user: null,
-          error: null,
-        });
-      }
-    });
-
-    // Check existing session with timeout
-    console.log('🔑 Checking existing session...');
     try {
-      const sessionPromise = supabase.auth.getSession();
-      const timeoutPromise = new Promise<{ data: { session: null } }>((resolve) => {
-        setTimeout(() => {
-          console.warn('🔑 getSession timed out');
-          resolve({ data: { session: null } });
-        }, 5000);
+      // Listen to auth state changes
+      supabase.auth.onAuthStateChange(async (event, session) => {
+        console.log('Auth state changed:', event, 'session:', !!session);
+
+        try {
+          if (session?.user) {
+            console.log('🔑 User found, fetching profile...');
+            const profile = await this.fetchProfile(session.user.id);
+            console.log('🔑 Profile fetched:', profile);
+            clearTimeout(globalTimeout);
+            this.updateState({
+              isAuthenticated: true,
+              isLoading: false,
+              user: profile,
+              error: null,
+            });
+          } else {
+            console.log('🔑 No session, setting unauthenticated');
+            clearTimeout(globalTimeout);
+            this.updateState({
+              isAuthenticated: false,
+              isLoading: false,
+              user: null,
+              error: null,
+            });
+          }
+        } catch (e) {
+          console.error('🔑 Error in onAuthStateChange:', e);
+          clearTimeout(globalTimeout);
+          this.updateState({
+            isAuthenticated: false,
+            isLoading: false,
+            user: null,
+            error: null,
+          });
+        }
       });
 
-      const { data: { session } } = await Promise.race([sessionPromise, timeoutPromise]);
+      // Check existing session
+      console.log('🔑 Checking existing session...');
+      const { data: { session } } = await supabase.auth.getSession();
       console.log('🔑 Existing session:', !!session);
 
       if (session?.user) {
         console.log('🔑 Existing user found, fetching profile...');
         const profile = await this.fetchProfile(session.user.id);
         console.log('🔑 Profile fetched:', profile);
+        clearTimeout(globalTimeout);
         this.updateState({
           isAuthenticated: true,
           isLoading: false,
@@ -89,11 +95,19 @@ export class AuthService {
         });
       } else {
         console.log('🔑 No existing session');
+        clearTimeout(globalTimeout);
         this.updateState({ ...this.authState, isLoading: false });
       }
-    } catch (e) {
-      console.error('🔑 Error checking session:', e);
-      this.updateState({ ...this.authState, isLoading: false });
+    } catch (e: any) {
+      console.error('🔑 Error in initializeAuth:', e?.message || e);
+      clearTimeout(globalTimeout);
+      // Show login page on any error
+      this.updateState({
+        isAuthenticated: false,
+        isLoading: false,
+        user: null,
+        error: null,
+      });
     }
   }
 
