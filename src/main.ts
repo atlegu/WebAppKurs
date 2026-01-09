@@ -580,6 +580,7 @@ class AppRouter {
 
     // Subscribe to auth changes
     this.authService.subscribe((state) => {
+      console.log('🔐 Auth state changed:', { isLoading: state.isLoading, isAuthenticated: state.isAuthenticated, user: state.user?.email });
       if (state.isLoading) {
         this.showLoading();
         return;
@@ -613,7 +614,9 @@ class AppRouter {
   }
 
   private showLoading(): void {
-    if (this.currentView === 'loading') return;
+    console.log('📺 showLoading called, currentView:', this.currentView);
+    // Only skip if we've already rendered loading (not on first call)
+    if (this.currentView === 'loading' && this.app.innerHTML.includes('loading-state')) return;
     this.currentView = 'loading';
 
     this.app.innerHTML = `
