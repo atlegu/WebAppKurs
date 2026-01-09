@@ -1,3 +1,4 @@
+console.log('🚀 App starting...');
 import './style.css';
 import { Course, Module, Section, QuizContent, DragGameContent, CalculatorContent, InteractiveModelContent, ExerciseSet } from './types/course';
 import { Navigation } from './components/Navigation';
@@ -684,4 +685,6 @@ class AppRouter {
 }
 
 // Initialize the router
+console.log('🔧 Creating AppRouter...');
 new AppRouter();
+console.log('✅ AppRouter created');

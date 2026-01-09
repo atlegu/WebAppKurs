@@ -1,4 +1,6 @@
 import { UserProgress } from '../types/course';
+import { supabase } from './auth/supabaseClient';
+import { AuthService } from './auth/AuthService';
 
 interface ModuleQuizResult {
   quizId: string;
@@ -13,10 +15,218 @@ export class ProgressTracker {
   private readonly QUIZ_STORAGE_KEY = 'baerekraftig-finans-module-quizzes';
   private progress: Map<string, UserProgress> = new Map();
   private moduleQuizResults: Map<string, ModuleQuizResult> = new Map();
+  private userId: string | null = null;
+  private authService: AuthService;
+  private isSyncing: boolean = false;
 
   constructor() {
+    this.authService = AuthService.getInstance();
     this.loadProgress();
     this.loadModuleQuizResults();
+    this.subscribeToAuth();
+  }
+
+  private subscribeToAuth(): void {
+    this.authService.subscribe(async (state) => {
+      if (state.isAuthenticated && state.user?.id) {
+        if (this.userId !== state.user.id) {
+          this.userId = state.user.id;
+          await this.syncWithCloud();
+        }
+      } else {
+        this.userId = null;
+      }
+    });
+  }
+
+  private async syncWithCloud(): Promise<void> {
+    if (!this.userId || this.isSyncing) return;
+
+    this.isSyncing = true;
+    try {
+      // Load cloud progress
+      const cloudProgress = await this.loadCloudProgress();
+      const cloudQuizResults = await this.loadCloudQuizResults();
+
+      // Merge local and cloud progress (cloud wins for conflicts, but combine completed sections)
+      await this.mergeProgress(cloudProgress, cloudQuizResults);
+
+      // Save merged progress back to cloud
+      await this.saveAllToCloud();
+    } catch (error) {
+      console.error('Failed to sync with cloud:', error);
+    } finally {
+      this.isSyncing = false;
+    }
+  }
+
+  private async loadCloudProgress(): Promise<Map<string, UserProgress>> {
+    const cloudProgress = new Map<string, UserProgress>();
+
+    if (!this.userId) return cloudProgress;
+
+    const { data, error } = await supabase
+      .from('user_progress')
+      .select('*')
+      .eq('user_id', this.userId);
+
+    if (error) {
+      console.error('Error loading cloud progress:', error);
+      return cloudProgress;
+    }
+
+    data?.forEach((row) => {
+      cloudProgress.set(row.module_id, {
+        moduleId: row.module_id,
+        sectionId: row.section_id,
+        completedSections: row.completed_sections || [],
+        quizScores: row.quiz_scores || {},
+        lastAccessed: new Date(row.last_accessed)
+      });
+    });
+
+    return cloudProgress;
+  }
+
+  private async loadCloudQuizResults(): Promise<Map<string, ModuleQuizResult>> {
+    const cloudQuizResults = new Map<string, ModuleQuizResult>();
+
+    if (!this.userId) return cloudQuizResults;
+
+    const { data, error } = await supabase
+      .from('module_quiz_results')
+      .select('*')
+      .eq('user_id', this.userId);
+
+    if (error) {
+      console.error('Error loading cloud quiz results:', error);
+      return cloudQuizResults;
+    }
+
+    data?.forEach((row) => {
+      const key = `${row.module_id}:${row.quiz_id}`;
+      cloudQuizResults.set(key, {
+        quizId: row.quiz_id,
+        score: row.score,
+        passed: row.passed,
+        attempts: row.attempts,
+        lastAttempt: new Date(row.last_attempt)
+      });
+    });
+
+    return cloudQuizResults;
+  }
+
+  private async mergeProgress(
+    cloudProgress: Map<string, UserProgress>,
+    cloudQuizResults: Map<string, ModuleQuizResult>
+  ): Promise<void> {
+    // Merge module progress
+    cloudProgress.forEach((cloudP, moduleId) => {
+      const localP = this.progress.get(moduleId);
+
+      if (!localP) {
+        // Cloud-only progress
+        this.progress.set(moduleId, cloudP);
+      } else {
+        // Merge: combine completed sections, use latest timestamp
+        const mergedSections = [...new Set([...localP.completedSections, ...cloudP.completedSections])];
+        const localTime = new Date(localP.lastAccessed).getTime();
+        const cloudTime = new Date(cloudP.lastAccessed).getTime();
+
+        this.progress.set(moduleId, {
+          moduleId,
+          sectionId: cloudTime > localTime ? cloudP.sectionId : localP.sectionId,
+          completedSections: mergedSections,
+          quizScores: { ...localP.quizScores, ...cloudP.quizScores },
+          lastAccessed: cloudTime > localTime ? cloudP.lastAccessed : localP.lastAccessed
+        });
+      }
+    });
+
+    // Merge quiz results
+    cloudQuizResults.forEach((cloudResult, key) => {
+      const localResult = this.moduleQuizResults.get(key);
+
+      if (!localResult) {
+        // Cloud-only result
+        this.moduleQuizResults.set(key, cloudResult);
+      } else {
+        // Merge: keep best score and highest attempts count
+        this.moduleQuizResults.set(key, {
+          quizId: cloudResult.quizId,
+          score: Math.max(localResult.score, cloudResult.score),
+          passed: localResult.passed || cloudResult.passed,
+          attempts: Math.max(localResult.attempts, cloudResult.attempts),
+          lastAttempt: new Date(Math.max(
+            new Date(localResult.lastAttempt).getTime(),
+            new Date(cloudResult.lastAttempt).getTime()
+          ))
+        });
+      }
+    });
+
+    // Save merged progress to localStorage
+    this.saveProgress();
+    this.saveModuleQuizResults();
+  }
+
+  private async saveAllToCloud(): Promise<void> {
+    if (!this.userId) return;
+
+    // Save all module progress to cloud
+    for (const [moduleId, progress] of this.progress) {
+      await this.saveProgressToCloud(moduleId, progress);
+    }
+
+    // Save all quiz results to cloud
+    for (const [key, result] of this.moduleQuizResults) {
+      const [moduleId, quizId] = key.split(':');
+      await this.saveQuizResultToCloud(moduleId, quizId, result);
+    }
+  }
+
+  private async saveProgressToCloud(moduleId: string, progress: UserProgress): Promise<void> {
+    if (!this.userId) return;
+
+    const { error } = await supabase
+      .from('user_progress')
+      .upsert({
+        user_id: this.userId,
+        module_id: moduleId,
+        section_id: progress.sectionId,
+        completed_sections: progress.completedSections,
+        quiz_scores: progress.quizScores,
+        last_accessed: progress.lastAccessed
+      }, {
+        onConflict: 'user_id,module_id'
+      });
+
+    if (error) {
+      console.error('Error saving progress to cloud:', error);
+    }
+  }
+
+  private async saveQuizResultToCloud(moduleId: string, quizId: string, result: ModuleQuizResult): Promise<void> {
+    if (!this.userId) return;
+
+    const { error } = await supabase
+      .from('module_quiz_results')
+      .upsert({
+        user_id: this.userId,
+        module_id: moduleId,
+        quiz_id: quizId,
+        score: result.score,
+        passed: result.passed,
+        attempts: result.attempts,
+        last_attempt: result.lastAttempt
+      }, {
+        onConflict: 'user_id,module_id,quiz_id'
+      });
+
+    if (error) {
+      console.error('Error saving quiz result to cloud:', error);
+    }
   }
 
   private loadProgress(): void {
@@ -72,27 +282,42 @@ export class ProgressTracker {
 
     this.progress.set(key, existing);
     this.saveProgress();
+
+    // Sync to cloud if logged in
+    if (this.userId) {
+      this.saveProgressToCloud(moduleId, existing);
+    }
   }
 
   markSectionComplete(moduleId: string, sectionId: string): void {
     const key = moduleId;
     const existing = this.progress.get(key);
-    
+
     if (existing && !existing.completedSections.includes(sectionId)) {
       existing.completedSections.push(sectionId);
       this.progress.set(key, existing);
       this.saveProgress();
+
+      // Sync to cloud if logged in
+      if (this.userId) {
+        this.saveProgressToCloud(moduleId, existing);
+      }
     }
   }
 
   updateQuizScore(moduleId: string, quizId: string, score: number): void {
     const key = moduleId;
     const existing = this.progress.get(key);
-    
+
     if (existing) {
       existing.quizScores[quizId] = score;
       this.progress.set(key, existing);
       this.saveProgress();
+
+      // Sync to cloud if logged in
+      if (this.userId) {
+        this.saveProgressToCloud(moduleId, existing);
+      }
     }
   }
 
@@ -103,14 +328,14 @@ export class ProgressTracker {
   getCompletionPercentage(moduleId: string, totalSections: number): number {
     const progress = this.progress.get(moduleId);
     if (!progress || totalSections === 0) return 0;
-    
+
     return Math.round((progress.completedSections.length / totalSections) * 100);
   }
 
   getLastAccessedSection(): { moduleId: string; sectionId: string } | null {
     let latest: UserProgress | undefined;
     let latestTime = 0;
-    
+
     this.progress.forEach(progress => {
       const time = new Date(progress.lastAccessed).getTime();
       if (time > latestTime) {
@@ -165,6 +390,11 @@ export class ProgressTracker {
 
     this.moduleQuizResults.set(key, result);
     this.saveModuleQuizResults();
+
+    // Sync to cloud if logged in
+    if (this.userId) {
+      this.saveQuizResultToCloud(moduleId, quizId, result);
+    }
   }
 
   getModuleQuizResult(moduleId: string, quizId: string): ModuleQuizResult | undefined {
