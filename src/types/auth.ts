@@ -18,6 +18,7 @@ export interface UserProfile {
   institution?: string;
   role: 'student' | 'admin';
   application_id?: string;
+  has_completed_signup: boolean;
   created_at: string;
   updated_at: string;
 }

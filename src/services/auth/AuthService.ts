@@ -197,6 +197,46 @@ export class AuthService {
     return {};
   }
 
+  async completeSignup(password: string): Promise<{ error?: string }> {
+    // 1. Set the password
+    const { error: passwordError } = await supabase.auth.updateUser({ password });
+    if (passwordError) {
+      return { error: passwordError.message };
+    }
+
+    // 2. Update profile to mark signup as complete
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return { error: 'No authenticated user' };
+    }
+
+    const { error: profileError } = await supabase
+      .from('profiles')
+      .update({ has_completed_signup: true })
+      .eq('id', user.id);
+
+    if (profileError) {
+      return { error: profileError.message };
+    }
+
+    // 3. Refresh the auth state with updated profile
+    const profile = await this.fetchProfile(user.id);
+    this.updateState({
+      isAuthenticated: true,
+      isLoading: false,
+      user: profile,
+      error: null,
+    });
+
+    return {};
+  }
+
+  needsSignupCompletion(): boolean {
+    return this.authState.isAuthenticated &&
+           this.authState.user !== null &&
+           !this.authState.user.has_completed_signup;
+  }
+
   isAdmin(): boolean {
     return this.authState.user?.role === 'admin';
   }

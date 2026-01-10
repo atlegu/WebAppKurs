@@ -15,6 +15,7 @@ import { AuthService } from './services/auth/AuthService';
 import { LoginPage } from './components/auth/LoginPage';
 import { ApplicationForm } from './components/auth/ApplicationForm';
 import { AdminDashboard } from './components/admin/AdminDashboard';
+import { SignupCompletionPage } from './components/auth/SignupCompletionPage';
 import { modul1VelkommenModule } from './data/modul1-velkommen';
 import { modul2RegnskapModule } from './data/modul2-regnskap';
 import { modul2TidverdiModule } from './data/modul2-tidverdi';
@@ -602,7 +603,8 @@ class AppRouter {
   private loginPage: LoginPage | null = null;
   private applicationForm: ApplicationForm | null = null;
   private adminDashboard: AdminDashboard | null = null;
-  private currentView: 'loading' | 'login' | 'apply' | 'course' | 'admin' = 'loading';
+  private signupCompletionPage: SignupCompletionPage | null = null;
+  private currentView: 'loading' | 'login' | 'apply' | 'course' | 'admin' | 'complete-signup' = 'loading';
 
   constructor() {
     this.app = document.querySelector<HTMLDivElement>('#app')!;
@@ -625,7 +627,10 @@ class AppRouter {
       const isAdminRoute = window.location.hash === '#admin';
 
       if (state.isAuthenticated && state.user) {
-        if (isAdminRoute && state.user.role === 'admin') {
+        // Check if user needs to complete signup (set password)
+        if (this.authService.needsSignupCompletion()) {
+          this.showSignupCompletion();
+        } else if (isAdminRoute && state.user.role === 'admin') {
           this.showAdmin();
         } else {
           this.showCourse();
@@ -723,6 +728,21 @@ class AppRouter {
       }
     );
     this.adminDashboard.render();
+  }
+
+  private showSignupCompletion(): void {
+    if (this.currentView === 'complete-signup') return;
+    this.currentView = 'complete-signup';
+    this.app.classList.add('auth-active');
+    window.location.hash = '';
+
+    this.signupCompletionPage = new SignupCompletionPage(
+      this.app,
+      () => {
+        // Success - AuthService will update state, triggering re-render to course
+      }
+    );
+    this.signupCompletionPage.render();
   }
 }
 

@@ -141,6 +141,7 @@ serve(async (req) => {
           institution: application.institution,
           role: "student",
           application_id: application.id,
+          has_completed_signup: false,
         });
       }
 
