@@ -56,34 +56,8 @@ export class HomePage {
             </div>
           </div>
           <div class="hero-visual">
-            <div class="hero-chart">
-              <svg viewBox="0 0 200 120" class="hero-chart-svg">
-                <!-- Grid lines -->
-                <line x1="30" y1="10" x2="30" y2="100" stroke="currentColor" stroke-opacity="0.1"/>
-                <line x1="30" y1="100" x2="190" y2="100" stroke="currentColor" stroke-opacity="0.1"/>
-
-                <!-- Efficient frontier curve -->
-                <path d="M 40 90 Q 60 85, 80 70 T 120 45 T 170 25"
-                      fill="none"
-                      stroke="url(#heroGradient)"
-                      stroke-width="3"
-                      stroke-linecap="round"/>
-
-                <!-- Data points -->
-                <circle cx="50" cy="85" r="4" fill="#046530"/>
-                <circle cx="80" cy="70" r="4" fill="#046530"/>
-                <circle cx="110" cy="52" r="5" fill="#034d24" stroke="#fff" stroke-width="2"/>
-                <circle cx="145" cy="38" r="4" fill="#046530"/>
-                <circle cx="170" cy="25" r="4" fill="#046530"/>
-
-                <!-- Gradient definition -->
-                <defs>
-                  <linearGradient id="heroGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#046530"/>
-                    <stop offset="100%" stop-color="#034d24"/>
-                  </linearGradient>
-                </defs>
-              </svg>
+            <div class="hero-image">
+              <img src="/startbilde.jpg" alt="Bærekraftig investering - spire som vokser fra mynter" class="hero-image-img" />
             </div>
           </div>
         </section>
