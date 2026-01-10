@@ -10,6 +10,7 @@ export class AuthService {
     error: null,
   };
   private listeners: Set<(state: AuthState) => void> = new Set();
+  private initializedFromSession = false;
 
   private constructor() {
     this.initializeAuth();
@@ -25,80 +26,89 @@ export class AuthService {
   private async initializeAuth(): Promise<void> {
     console.log('AUTH: initializeAuth starting');
 
-    // Global timeout - ensure we never hang forever
-    const globalTimeout = setTimeout(() => {
-      console.log('AUTH: Global timeout fired - still loading, forcing login page');
-      if (this.authState.isLoading) {
+    // Listen to auth state changes (for sign out, token refresh)
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('AUTH: onAuthStateChange fired, event:', event, 'hasSession:', !!session);
+
+      // Skip if we already initialized OR still initializing
+      if ((event === 'INITIAL_SESSION' || event === 'SIGNED_IN') && this.initializedFromSession) {
+        console.log('AUTH: Skipping duplicate init event');
+        return;
+      }
+
+      // Handle sign out
+      if (event === 'SIGNED_OUT') {
+        console.log('AUTH: User signed out');
+        this.initializedFromSession = false;
         this.updateState({
           isAuthenticated: false,
           isLoading: false,
           user: null,
           error: null,
         });
+        return;
       }
-    }, 5000);
 
-    try {
-      // Listen to auth state changes
-      console.log('AUTH: Setting up onAuthStateChange listener');
-      supabase.auth.onAuthStateChange(async (event, session) => {
-        console.log('AUTH: onAuthStateChange fired, event:', event, 'hasSession:', !!session);
-        try {
-          if (session?.user) {
-            console.log('AUTH: Session found, fetching profile for:', session.user.id);
-            const profile = await this.fetchProfile(session.user.id);
-            console.log('AUTH: Profile fetched:', profile);
-            clearTimeout(globalTimeout);
-            this.updateState({
-              isAuthenticated: true,
-              isLoading: false,
-              user: profile,
-              error: null,
-            });
-            console.log('AUTH: State updated - authenticated');
-          } else {
-            console.log('AUTH: No session, setting unauthenticated');
-            clearTimeout(globalTimeout);
-            this.updateState({
-              isAuthenticated: false,
-              isLoading: false,
-              user: null,
-              error: null,
-            });
-          }
-        } catch (e) {
-          console.error('AUTH: Error in onAuthStateChange:', e);
-          clearTimeout(globalTimeout);
-          this.updateState({
-            isAuthenticated: false,
-            isLoading: false,
-            user: null,
-            error: null,
-          });
-        }
-      });
+      // Handle token refresh
+      if (event === 'TOKEN_REFRESHED') {
+        console.log('AUTH: Token refreshed');
+        return;
+      }
 
-      // Check existing session
-      console.log('AUTH: Checking existing session...');
-      const { data: { session } } = await supabase.auth.getSession();
-      console.log('AUTH: getSession result, hasSession:', !!session);
-
-      if (session?.user) {
+      // Handle new sign in (after initial load)
+      if (event === 'SIGNED_IN' && session?.user && !this.initializedFromSession) {
+        console.log('AUTH: New sign in detected');
+        this.initializedFromSession = true;
         const profile = await this.fetchProfile(session.user.id);
-        clearTimeout(globalTimeout);
         this.updateState({
           isAuthenticated: true,
           isLoading: false,
           user: profile,
           error: null,
         });
+      }
+    });
+
+    // Check existing session with timeout
+    try {
+      console.log('AUTH: Checking existing session...');
+
+      const sessionResult = await Promise.race([
+        supabase.auth.getSession(),
+        new Promise<{ data: { session: null }, error: null }>((resolve) =>
+          setTimeout(() => {
+            console.log('AUTH: getSession timeout after 8s');
+            resolve({ data: { session: null }, error: null });
+          }, 8000)
+        )
+      ]);
+
+      const session = sessionResult.data.session;
+      console.log('AUTH: getSession result, hasSession:', !!session);
+
+      if (session?.user) {
+        const profile = await this.fetchProfile(session.user.id);
+        this.initializedFromSession = true;
+        this.updateState({
+          isAuthenticated: true,
+          isLoading: false,
+          user: profile,
+          error: null,
+        });
+        console.log('AUTH: Initialized as authenticated');
       } else {
-        clearTimeout(globalTimeout);
-        this.updateState({ ...this.authState, isLoading: false });
+        this.initializedFromSession = true;
+        this.updateState({
+          isAuthenticated: false,
+          isLoading: false,
+          user: null,
+          error: null,
+        });
+        console.log('AUTH: Initialized as unauthenticated');
       }
     } catch (e) {
-      clearTimeout(globalTimeout);
-      // Show login page on any error
+      console.error('AUTH: initializeAuth error:', e);
+      this.initializedFromSession = true;
       this.updateState({
         isAuthenticated: false,
         isLoading: false,

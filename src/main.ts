@@ -652,6 +652,7 @@ class AppRouter {
     // Only skip if we've already rendered loading (not on first call)
     if (this.currentView === 'loading' && this.app.innerHTML.includes('loading-state')) return;
     this.currentView = 'loading';
+    this.app.classList.add('auth-active');
 
     this.app.innerHTML = `
       <div class="auth-page">
@@ -668,6 +669,7 @@ class AppRouter {
   private showLogin(): void {
     if (this.currentView === 'login') return;
     this.currentView = 'login';
+    this.app.classList.add('auth-active');
     window.location.hash = '';
 
     this.loginPage = new LoginPage(
@@ -685,6 +687,7 @@ class AppRouter {
   private showApplicationForm(): void {
     if (this.currentView === 'apply') return;
     this.currentView = 'apply';
+    this.app.classList.add('auth-active');
 
     this.applicationForm = new ApplicationForm(
       this.app,
@@ -698,6 +701,7 @@ class AppRouter {
   private showCourse(): void {
     if (this.currentView === 'course' && this.courseApp) return;
     this.currentView = 'course';
+    this.app.classList.remove('auth-active');
     window.location.hash = '';
 
     // Clear the app container for fresh init
@@ -710,6 +714,7 @@ class AppRouter {
   private showAdmin(): void {
     if (this.currentView === 'admin') return;
     this.currentView = 'admin';
+    this.app.classList.remove('auth-active');
 
     this.adminDashboard = new AdminDashboard(
       this.app,

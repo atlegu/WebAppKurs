@@ -195,11 +195,13 @@ a:hover {
   min-height: 100vh;
 }
 
-#app.homepage-active {
+#app.homepage-active,
+#app.auth-active {
   grid-template-columns: 1fr;
 }
 
-#app.homepage-active .navigation-container {
+#app.homepage-active .navigation-container,
+#app.auth-active .navigation-container {
   display: none;
 }
 
