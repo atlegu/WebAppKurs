@@ -69,7 +69,7 @@ export class ExerciseSetHandler {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
             </svg>
-            Spor AI
+            SPØR AI
           </button>
           <button class="exercise-modal-btn exercise-modal-btn-nav exercise-modal-btn-prev" disabled>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
