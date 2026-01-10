@@ -97,7 +97,7 @@ export class AuthService {
         });
         console.log('AUTH: Initialized as authenticated');
       } else {
-        this.initializedFromSession = true;
+        // Don't set initializedFromSession here - allow SIGNED_IN events to be processed
         this.updateState({
           isAuthenticated: false,
           isLoading: false,
