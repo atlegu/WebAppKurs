@@ -23,8 +23,11 @@ export class AuthService {
   }
 
   private async initializeAuth(): Promise<void> {
+    console.log('AUTH: initializeAuth starting');
+
     // Global timeout - ensure we never hang forever
     const globalTimeout = setTimeout(() => {
+      console.log('AUTH: Global timeout fired - still loading, forcing login page');
       if (this.authState.isLoading) {
         this.updateState({
           isAuthenticated: false,
@@ -37,10 +40,14 @@ export class AuthService {
 
     try {
       // Listen to auth state changes
+      console.log('AUTH: Setting up onAuthStateChange listener');
       supabase.auth.onAuthStateChange(async (event, session) => {
+        console.log('AUTH: onAuthStateChange fired, event:', event, 'hasSession:', !!session);
         try {
           if (session?.user) {
+            console.log('AUTH: Session found, fetching profile for:', session.user.id);
             const profile = await this.fetchProfile(session.user.id);
+            console.log('AUTH: Profile fetched:', profile);
             clearTimeout(globalTimeout);
             this.updateState({
               isAuthenticated: true,
@@ -48,7 +55,9 @@ export class AuthService {
               user: profile,
               error: null,
             });
+            console.log('AUTH: State updated - authenticated');
           } else {
+            console.log('AUTH: No session, setting unauthenticated');
             clearTimeout(globalTimeout);
             this.updateState({
               isAuthenticated: false,
@@ -58,6 +67,7 @@ export class AuthService {
             });
           }
         } catch (e) {
+          console.error('AUTH: Error in onAuthStateChange:', e);
           clearTimeout(globalTimeout);
           this.updateState({
             isAuthenticated: false,
@@ -69,7 +79,9 @@ export class AuthService {
       });
 
       // Check existing session
+      console.log('AUTH: Checking existing session...');
       const { data: { session } } = await supabase.auth.getSession();
+      console.log('AUTH: getSession result, hasSession:', !!session);
 
       if (session?.user) {
         const profile = await this.fetchProfile(session.user.id);
@@ -97,10 +109,14 @@ export class AuthService {
   }
 
   private async fetchProfile(userId: string): Promise<UserProfile | null> {
+    console.log('AUTH: fetchProfile called for:', userId);
     try {
       // Add timeout to prevent hanging
       const timeoutPromise = new Promise<null>((resolve) => {
-        setTimeout(() => resolve(null), 5000);
+        setTimeout(() => {
+          console.log('AUTH: fetchProfile TIMEOUT after 5s');
+          resolve(null);
+        }, 5000);
       });
 
       const fetchPromise = supabase
@@ -109,15 +125,19 @@ export class AuthService {
         .eq('id', userId)
         .single()
         .then(({ data, error }) => {
+          console.log('AUTH: fetchProfile response - data:', data, 'error:', error);
           if (error) {
+            console.error('AUTH: fetchProfile error:', error);
             return null;
           }
           return data;
         });
 
       const result = await Promise.race([fetchPromise, timeoutPromise]);
+      console.log('AUTH: fetchProfile result:', result);
       return result;
     } catch (e) {
+      console.error('AUTH: fetchProfile exception:', e);
       return null;
     }
   }
