@@ -29,42 +29,51 @@ export const modul5PortefoljeModule: Module = {
           emphasis: 'important'
         },
         {
+          id: '5-1-podcast',
+          type: 'audio',
+          order: 2,
+          title: 'Podcast: Risiko og avkastning',
+          duration: '20 min',
+          url: '/riskreturn.m4a',
+          description: 'Lytt til denne podcasten for en grundig innføring i sammenhengen mellom risiko og avkastning i porteføljeteori.'
+        },
+        {
           id: '5-1-intro',
           type: 'text',
-          order: 2,
+          order: 3,
           text: 'Diversifisering er ikke bare et fint ord – det er din viktigste beskyttelse mot katastrofe. Nobelprisvinner Harry Markowitz kalte det "den eneste gratis lunsjen i finans". I denne modulen lærer du hvorfor, og hvordan du bruker det.'
         },
         {
           id: '5-1-heading-prinsipp',
           type: 'heading',
-          order: 3,
+          order: 4,
           level: 2,
           text: 'Det grunnleggende prinsippet'
         },
         {
           id: '5-1-def-diversifisering',
           type: 'definition',
-          order: 4,
+          order: 5,
           term: 'Diversifisering',
           definition: 'Å spre investeringene på flere ulike verdipapirer, aktivaklasser, sektorer eller regioner for å redusere den totale risikoen i porteføljen.'
         },
         {
           id: '5-1-text-hvorfor',
           type: 'text',
-          order: 5,
+          order: 6,
           text: 'Hvorfor fungerer diversifisering? Fordi ikke alle investeringer beveger seg likt. Når én aksje faller, kan en annen stige. Negative og positive bevegelser *utjevner hverandre*, og resultatet er en jevnere avkastning.'
         },
         {
           id: '5-1-heading-risikotyper',
           type: 'heading',
-          order: 6,
+          order: 7,
           level: 2,
           text: 'To typer risiko – bare én kan elimineres'
         },
         {
           id: '5-1-table-risiko',
           type: 'table',
-          order: 7,
+          order: 8,
           headers: ['Risikotype', 'Beskrivelse', 'Kan diversifiseres?'],
           rows: [
             ['Usystematisk risiko', 'Selskapsspesifikk: dårlig ledelse, produktfeil, konkurranse', 'JA – forsvinner med 20-30 aksjer'],
@@ -74,28 +83,28 @@ export const modul5PortefoljeModule: Module = {
         {
           id: '5-1-def-usystematisk',
           type: 'definition',
-          order: 8,
+          order: 9,
           term: 'Usystematisk risiko (Diversifiserbar risiko)',
           definition: 'Risiko knyttet til enkeltselskaper eller sektorer. Eksempler: CEO slutter, produkt feiler, selskapet saksøkes. Kan elimineres ved å eie mange ulike aksjer.'
         },
         {
           id: '5-1-def-systematisk',
           type: 'definition',
-          order: 9,
+          order: 10,
           term: 'Systematisk risiko (Markedsrisiko)',
           definition: 'Risiko som påvirker hele markedet samtidig. Eksempler: renteendringer, finanskrise, pandemi. KAN IKKE diversifiseres bort, bare reduseres med andre aktivaklasser.'
         },
         {
           id: '5-1-heading-effekt',
           type: 'heading',
-          order: 10,
+          order: 11,
           level: 2,
           text: 'Diversifiseringens effekt'
         },
         {
           id: '5-1-table-effekt',
           type: 'table',
-          order: 11,
+          order: 12,
           headers: ['Antall aksjer', 'Risiko (standardavvik)', 'Reduksjon fra 1 aksje'],
           rows: [
             ['1 aksje', '50%', '–'],
@@ -110,14 +119,14 @@ export const modul5PortefoljeModule: Module = {
         {
           id: '5-1-text-diminishing',
           type: 'text',
-          order: 12,
+          order: 13,
           text: 'Legg merke til at mesteparten av risikofjerningen skjer med de første 10-20 aksjene. Etter 30 aksjer er det meste av den diversifiserbare risikoen borte – det som gjenstår er markedsrisiko.',
           emphasis: 'important'
         },
         {
           id: '5-1-example-enron',
           type: 'example',
-          order: 13,
+          order: 14,
           title: 'Case: Enron-konkursen 2001',
           content: 'Enron var USAs 7. største selskap. Ansatte ble oppfordret til å ha pensjonsmidlene i Enron-aksjer.',
           calculation: '**Desember 2000:** Enron-aksjen på $90\n**Desember 2001:** Enron erklærer konkurs, aksjen verdiløs\n\n**Ansatt A (100% i Enron):**\nPensjonsverdi: $500 000 → $0\nTapt: ALT\n\n**Ansatt B (5% i Enron, 95% diversifisert):**\nEnron-tap: $25 000 → $0\nRest av porteføljen: $475 000 × 0,95 = $451 250\n**Totalt tap: ca 10%**\n\nForskjellen mellom total ruin og en håndterbar nedgang.'
@@ -125,14 +134,14 @@ export const modul5PortefoljeModule: Module = {
         {
           id: '5-1-heading-typer',
           type: 'heading',
-          order: 14,
+          order: 15,
           level: 2,
           text: 'Ulike måter å diversifisere på'
         },
         {
           id: '5-1-list-typer',
           type: 'list',
-          order: 15,
+          order: 16,
           ordered: false,
           items: [
             '**Antall aksjer:** 20-30 aksjer fjerner det meste av selskapsspesifikk risiko',
@@ -145,7 +154,7 @@ export const modul5PortefoljeModule: Module = {
         {
           id: '5-1-example-sektor',
           type: 'example',
-          order: 16,
+          order: 17,
           title: 'Sektordiversifisering i praksis',
           content: 'Oslo Børs er tungt vektet mot energi og sjømat. Hva skjer ved oljeprisfall?',
           calculation: '**Portefølje A: Kun norske aksjer**\n• 40% energi (Equinor, Aker BP)\n• 20% sjømat (Mowi, Salmar)\n• 20% bank (DNB)\n• 20% telekom (Telenor)\n\n**Portefølje B: Global diversifisering**\n• 25% Norge\n• 50% USA/Europa\n• 25% fremvoksende markeder\n\n**Ved oljeprisfall på 30%:**\nPortefølje A: Kan falle 15-20%\nPortefølje B: Kan falle 5-8%\n\nGlobal diversifisering beskytter mot norsk sektorkonsentrasjon.'
@@ -153,7 +162,7 @@ export const modul5PortefoljeModule: Module = {
         {
           id: '5-1-quiz-1',
           type: 'quiz',
-          order: 17,
+          order: 18,
           question: 'Hvilken type risiko KAN elimineres gjennom diversifisering?',
           options: [
             'Systematisk risiko (markedsrisiko)',
@@ -167,7 +176,7 @@ export const modul5PortefoljeModule: Module = {
         {
           id: '5-1-quiz-2',
           type: 'quiz',
-          order: 18,
+          order: 19,
           question: 'Hvor mange aksjer trenger du omtrent for å fjerne det meste av usystematisk risiko?',
           options: [
             '3-5 aksjer',
@@ -181,7 +190,7 @@ export const modul5PortefoljeModule: Module = {
         {
           id: '5-1-exercise',
           type: 'exercise',
-          order: 19,
+          order: 20,
           title: 'Oppgave: Vurder diversifisering',
           description: 'En investor har følgende portefølje:\n• 50% Equinor\n• 25% Aker BP\n• 15% DNB\n• 10% Mowi\n\n1. Hvor mange aksjer har investoren?\n2. Er porteføljen godt diversifisert på antall?\n3. Hva er problemet med sektorfordelingen?\n4. Hva ville du anbefalt for bedre diversifisering?',
           hint: 'Se på både antall aksjer og konsentrasjon i energisektoren (Equinor + Aker BP).'
@@ -189,7 +198,7 @@ export const modul5PortefoljeModule: Module = {
         {
           id: '5-1-keypoint',
           type: 'keypoint',
-          order: 20,
+          order: 21,
           points: [
             'Diversifisering er "den eneste gratis lunsjen" i finans',
             'Usystematisk risiko kan elimineres med 20-30 aksjer',
@@ -201,7 +210,7 @@ export const modul5PortefoljeModule: Module = {
         {
           id: '5-1-reflection',
           type: 'reflection',
-          order: 21,
+          order: 22,
           question: 'Sjekk din egen sparekonto eller pensjonssparing. Hvor diversifisert er du egentlig? Har du for mye i én aksje, én sektor eller ett land?'
         }
       ]

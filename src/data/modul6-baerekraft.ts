@@ -27,45 +27,36 @@ export const modul6BaerekraftModule: Module = {
           emphasis: 'important'
         },
         {
-          id: '6-1-podcast',
-          type: 'audio',
-          order: 2,
-          title: 'Podcast: Risiko og avkastning',
-          duration: '20 min',
-          url: '/riskreturn.m4a',
-          description: 'Lytt til denne podcasten for en grundig innføring i sammenhengen mellom risiko og avkastning i bærekraftig finans.'
-        },
-        {
           id: '6-1-heading-1',
           type: 'heading',
-          order: 3,
+          order: 2,
           level: 2,
           text: 'Hva er bærekraftig finans?'
         },
         {
           id: '6-1-def-1',
           type: 'definition',
-          order: 4,
+          order: 3,
           term: 'Bærekraftig finans',
           definition: 'Finansielle beslutninger som integrerer miljømessige (E), sosiale (S) og styringsrelaterte (G) faktorer – ESG – for å oppnå både finansiell avkastning og positive samfunnseffekter.'
         },
         {
           id: '6-1-text-2',
           type: 'text',
-          order: 5,
+          order: 4,
           text: 'Bærekraftig finans handler ikke bare om å "gjøre godt" – det handler om å forstå at ESG-faktorer representerer reelle finansielle risikoer og muligheter som påvirker langsiktig verdiskaping.'
         },
         {
           id: '6-1-heading-2',
           type: 'heading',
-          order: 6,
+          order: 5,
           level: 2,
           text: 'Hvorfor skjer dette nå?'
         },
         {
           id: '6-1-list-1',
           type: 'list',
-          order: 7,
+          order: 6,
           ordered: true,
           items: [
             'Klimarisiko er finansiell risiko: Ekstremvær, regulatoriske endringer og teknologiskift truer tradisjonelle forretningsmodeller',
@@ -78,14 +69,14 @@ export const modul6BaerekraftModule: Module = {
         {
           id: '6-1-heading-3',
           type: 'heading',
-          order: 8,
+          order: 7,
           level: 2,
           text: 'De tre pilarene: E, S og G'
         },
         {
           id: '6-1-table-1',
           type: 'table',
-          order: 9,
+          order: 8,
           headers: ['Pilar', 'Fokusområder', 'Eksempler på risiko'],
           rows: [
             ['Environmental (E)', 'Klimagassutslipp, ressursbruk, biologisk mangfold, avfall', 'Karbonprising, stranded assets, naturkatastrofer'],
@@ -96,27 +87,27 @@ export const modul6BaerekraftModule: Module = {
         {
           id: '6-1-example-1',
           type: 'example',
-          order: 10,
+          order: 9,
           title: 'Case: Equinors klimastrategi',
           content: 'Equinor har satt mål om å redusere netto karbonintensitet med 50% innen 2050. Selskapet investerer tungt i offshore vind (Hywind, Dogger Bank) og har satt av 50 milliarder kroner til fornybar energi. Denne strategien er en direkte respons på investorpress og klimarisiko – oljeselskaper uten troverdig omstillingsplan risikerer lavere verdsettelse og høyere kapitalkostnader.'
         },
         {
           id: '6-1-heading-4',
           type: 'heading',
-          order: 11,
+          order: 10,
           level: 2,
           text: 'Veksten i bærekraftige investeringer'
         },
         {
           id: '6-1-text-3',
           type: 'text',
-          order: 12,
+          order: 11,
           text: 'Globalt forvaltes nå over 35 000 milliarder dollar etter ESG-prinsipper. I Norge har bærekraftige fond sett kraftig vekst, og Statens pensjonsfond utland (Oljefondet) har blitt en global leder innen ansvarlig forvaltning.'
         },
         {
           id: '6-1-keypoint-1',
           type: 'keypoint',
-          order: 13,
+          order: 12,
           points: [
             'Bærekraftig finans er ikke bare etikk – det er risikostyring',
             'ESG-faktorer representerer reelle finansielle risikoer',
@@ -126,20 +117,20 @@ export const modul6BaerekraftModule: Module = {
         {
           id: '6-1-heading-5',
           type: 'heading',
-          order: 14,
+          order: 13,
           level: 2,
           text: 'Oljefondet som ESG-leder'
         },
         {
           id: '6-1-text-4',
           type: 'text',
-          order: 15,
+          order: 14,
           text: 'Statens pensjonsfond utland (Oljefondet) forvalter over 17 000 milliarder kroner og eier i snitt 1,5% av alle børsnoterte selskaper globalt.'
         },
         {
           id: '6-1-list-2',
           type: 'list',
-          order: 16,
+          order: 15,
           ordered: false,
           items: [
             'Ekskludert selskaper som bryter etiske retningslinjer (våpen, tobakk, kullkraft)',
@@ -151,7 +142,7 @@ export const modul6BaerekraftModule: Module = {
         {
           id: '6-1-quiz-1',
           type: 'quiz',
-          order: 17,
+          order: 16,
           question: 'Hva står ESG for?',
           options: [
             'Earnings, Sales, Growth',
@@ -165,7 +156,7 @@ export const modul6BaerekraftModule: Module = {
         {
           id: '6-1-quiz-2',
           type: 'quiz',
-          order: 18,
+          order: 17,
           question: 'Hvorfor sluttet Den europeiske investeringsbanken å finansiere fossile brensler?',
           options: [
             'De ble pålagt av EU-kommisjonen',
@@ -179,7 +170,7 @@ export const modul6BaerekraftModule: Module = {
         {
           id: '6-1-exercise-1',
           type: 'exercise',
-          order: 19,
+          order: 18,
           title: 'Oppgave: ESG-pilarene',
           description: '1. Et selskap har høye CO2-utslipp, men god selskapsstyring og gode arbeidsforhold. Hvilken ESG-pilar scorer de svakt på? Forklar hvorfor dette kan være en finansiell risiko.\n\n2. Forklar med egne ord hva "stranded assets" betyr og gi et eksempel på hvordan dette kan påvirke et oljeselskaps verdsettelse.\n\n3. Oljefondet har ekskludert selskaper som produserer kull. Diskuter fordeler og ulemper med eksklusjon versus aktivt eierskap som ESG-strategi.',
           hint: 'Tenk på hvordan regulatoriske endringer kan påvirke verdien av fossile eiendeler.'
@@ -187,7 +178,7 @@ export const modul6BaerekraftModule: Module = {
         {
           id: '6-1-reflection-1',
           type: 'reflection',
-          order: 20,
+          order: 19,
           question: 'Tenk på et selskap du kjenner til eller handler hos. Hvilke ESG-risikoer tror du dette selskapet står overfor? Hvordan kan disse risikoene påvirke selskapets fremtidige lønnsomhet og aksjekurs?'
         }
       ]
