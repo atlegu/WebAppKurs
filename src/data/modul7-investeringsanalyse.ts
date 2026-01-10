@@ -960,8 +960,9 @@ export const modul7InvesteringsanalyseModule: Module = {
   moduleQuiz: {
     id: 'modul-7-investeringsanalyse-quiz',
     title: 'Modulquiz: Investeringsanalyse',
-    description: 'Test din forståelse av NPV, IRR og investeringsbeslutninger. Du trenger minst 90% riktig for å bestå.',
-    passingScore: 90,
+    description: 'Test din forståelse av NPV, IRR og investeringsbeslutninger. Du trenger minst 80% riktig for å bestå.',
+    passingScore: 80,
+    questionsToShow: 20,
     questions: [
       {
         id: 'q7-1',
@@ -1106,6 +1107,342 @@ export const modul7InvesteringsanalyseModule: Module = {
         ],
         correctAnswer: 1,
         explanation: 'NV av annuitet = 30 × [(1 - 1/1,10^5) / 0,10] ≈ 114 MNOK. NPV = 114 - 100 = 14 MNOK > 0, så prosjektet er lønnsomt.'
+      },
+      {
+        id: 'q7-13',
+        question: 'Hva er "diskontert tilbakebetalingstid"?',
+        options: [
+          'Det samme som vanlig tilbakebetalingstid',
+          'Tiden til diskonterte kontantstrømmer tilbakebetaler investeringen',
+          'Tilbakebetalingstid delt på avkastningskravet',
+          'Investeringens levetid minus tilbakebetalingstid'
+        ],
+        correctAnswer: 1,
+        explanation: 'Diskontert tilbakebetalingstid tar hensyn til pengenes tidsverdi ved å diskontere kontantstrømmene før akkumulering. Den løser ett av problemene med vanlig payback.'
+      },
+      {
+        id: 'q7-14',
+        question: 'Hva er "sunk cost" i investeringsanalyse?',
+        options: [
+          'Kostnader som vil påløpe i fremtiden',
+          'Kostnader som allerede er påløpt og ikke kan reverseres',
+          'Variable kostnader',
+          'Alternativkostnader'
+        ],
+        correctAnswer: 1,
+        explanation: 'Sunk costs er irreversible kostnader som allerede er påløpt. De skal IKKE påvirke fremtidige beslutninger fordi de ikke kan endres.'
+      },
+      {
+        id: 'q7-15',
+        question: 'Hva er alternativkostnad (opportunity cost)?',
+        options: [
+          'Kostnaden ved å utsette et prosjekt',
+          'Verdien av det beste alternativet man gir avkall på',
+          'Kostnader som varierer med volum',
+          'Finansieringskostnader'
+        ],
+        correctAnswer: 1,
+        explanation: 'Alternativkostnad er verdien av det beste alternativet du ikke velger. For eksempel: å bruke en tomt selv i stedet for å leie den ut.'
+      },
+      {
+        id: 'q7-16',
+        question: 'Hva er inkrementelle kontantstrømmer?',
+        options: [
+          'Alle kontantstrømmer fra prosjektet',
+          'Kun de ekstra kontantstrømmene som oppstår som følge av prosjektet',
+          'Kontantstrømmer som øker hvert år',
+          'Kontantstrømmer fra hovedprosjektet'
+        ],
+        correctAnswer: 1,
+        explanation: 'Inkrementelle kontantstrømmer er differansen med og uten prosjektet. Kun disse er relevante for beslutningen.'
+      },
+      {
+        id: 'q7-17',
+        question: 'Hva er profitabilitetsindeks (PI)?',
+        options: [
+          'NPV dividert med investeringskostnaden',
+          'Nåverdi av kontantstrømmer dividert med investeringskostnaden',
+          'IRR dividert med avkastningskravet',
+          'Årsresultat dividert med investering'
+        ],
+        correctAnswer: 1,
+        explanation: 'PI = NV av kontantstrømmer / Investering. PI > 1 betyr lønnsomt prosjekt. Nyttig for rangering når kapital er begrenset.'
+      },
+      {
+        id: 'q7-18',
+        question: 'Hvorfor må man være forsiktig med å sammenligne IRR på prosjekter med ulik størrelse?',
+        options: [
+          'Fordi IRR ikke tar hensyn til risiko',
+          'Fordi et lite prosjekt med høy IRR kan skape mindre total verdi enn et stort med lavere IRR',
+          'Fordi IRR ikke kan beregnes for store prosjekter',
+          'Fordi store prosjekter alltid har lavere IRR'
+        ],
+        correctAnswer: 1,
+        explanation: 'Et prosjekt på 1 MNOK med 50% IRR skaper mindre verdi enn et på 100 MNOK med 20% IRR. NPV måler absolutt verdiskaping, IRR måler relativ avkastning.'
+      },
+      {
+        id: 'q7-19',
+        question: 'Hva er scenarioanalyse?',
+        options: [
+          'Å analysere kun best case scenario',
+          'Å analysere flere kombinasjoner av variabler (base, optimistisk, pessimistisk)',
+          'En metode for å beregne IRR',
+          'En type Monte Carlo-simulering'
+        ],
+        correctAnswer: 1,
+        explanation: 'Scenarioanalyse vurderer NPV under ulike scenarioer (typisk base, best og worst case) ved å variere flere inputvariabler samtidig.'
+      },
+      {
+        id: 'q7-20',
+        question: 'Hva er Monte Carlo-simulering?',
+        options: [
+          'En metode for å beregne NPV én gang',
+          'En simulering som kjører tusenvis av scenarioer med tilfeldige inputverdier',
+          'Å besøke casino for å ta investeringsbeslutninger',
+          'En forenklet scenarioanalyse'
+        ],
+        correctAnswer: 1,
+        explanation: 'Monte Carlo-simulering kjører tusenvis av iterasjoner med tilfeldige verdier fra sannsynlighetsfordelinger, og gir en fordeling av mulige utfall.'
+      },
+      {
+        id: 'q7-21',
+        question: 'Hva er "break-even-analyse"?',
+        options: [
+          'Å finne når prosjektet har null risiko',
+          'Å finne verdien av en inputvariabel som gir NPV = 0',
+          'Å sammenligne to prosjekter',
+          'En metode for å beregne IRR'
+        ],
+        correctAnswer: 1,
+        explanation: 'Break-even-analyse finner verdien av en nøkkelvariabel (f.eks. salgsvolum eller pris) som gjør prosjektet akkurat lønnsomt (NPV = 0).'
+      },
+      {
+        id: 'q7-22',
+        question: 'Hva er en utsettelsesopsjon (option to defer)?',
+        options: [
+          'Muligheten til å avbryte prosjektet',
+          'Verdien av å kunne vente med investeringen til mer informasjon er tilgjengelig',
+          'Muligheten til å utvide kapasiteten',
+          'Muligheten til å selge prosjektet'
+        ],
+        correctAnswer: 1,
+        explanation: 'En utsettelsesopsjon gir rett, men ikke plikt, til å vente med investering. Verdifull når det er usikkerhet og informasjon kan avdekkes over tid.'
+      },
+      {
+        id: 'q7-23',
+        question: 'Hva er en avbruddsopsjon (abandonment option)?',
+        options: [
+          'Muligheten til å starte prosjektet på nytt',
+          'Muligheten til å stoppe eller selge prosjektet hvis det går dårlig',
+          'Muligheten til å utvide kapasiteten',
+          'Muligheten til å utsette investeringen'
+        ],
+        correctAnswer: 1,
+        explanation: 'En avbruddsopsjon gir mulighet til å stoppe et prosjekt og selge eiendelene hvis utviklingen blir dårlig. Det begrenser nedsiderisikoen.'
+      },
+      {
+        id: 'q7-24',
+        question: 'Hvorfor undervurderer tradisjonell NPV-analyse ofte verdien av fleksibilitet?',
+        options: [
+          'Fordi NPV alltid er for høy',
+          'Fordi statiske NPV-modeller ikke fanger verdien av å kunne endre beslutninger underveis',
+          'Fordi NPV ikke diskonterer korrekt',
+          'Fordi NPV ignorerer risiko'
+        ],
+        correctAnswer: 1,
+        explanation: 'Tradisjonell NPV antar én fast handlingsplan. Realopsjonsanalyse fanger tilleggsverdien av å kunne tilpasse seg ny informasjon underveis.'
+      },
+      {
+        id: 'q7-25',
+        question: 'Hva er "kannibalisering" i investeringsanalyse?',
+        options: [
+          'Når konkurrenter kopierer produktet',
+          'Når et nytt produkt tar salg fra eksisterende produkter i samme selskap',
+          'Når prosjektet går med tap',
+          'Når ansatte forlater selskapet'
+        ],
+        correctAnswer: 1,
+        explanation: 'Kannibalisering skjer når et nytt produkt spiser av salget til eksisterende produkter. Denne effekten må inkluderes i inkrementelle kontantstrømmer.'
+      },
+      {
+        id: 'q7-26',
+        question: 'Hva er arbeidskapitalbehov i et investeringsprosjekt?',
+        options: [
+          'Kun lønnskostnader',
+          'Nødvendig binding i varelager, kundefordringer minus leverandørgjeld',
+          'Totale driftskostnader',
+          'Investeringer i maskiner'
+        ],
+        correctAnswer: 1,
+        explanation: 'Arbeidskapitalbehov er netto binding i omløpsmidler for å drive virksomheten. Det er en kontantstrøm ved oppstart som frigjøres ved prosjektslutt.'
+      },
+      {
+        id: 'q7-27',
+        question: 'Hva er terminalverdi i en DCF-analyse?',
+        options: [
+          'Den første kontantstrømmen',
+          'Estimert verdi av kontantstrømmer etter eksplisitt prognoseperiode',
+          'Kostnad ved å avslutte prosjektet',
+          'Restverdi av maskiner'
+        ],
+        correctAnswer: 1,
+        explanation: 'Terminalverdi representerer alle kontantstrømmer etter den eksplisitte prognoseperioden. Den utgjør ofte en stor andel av total verdi.'
+      },
+      {
+        id: 'q7-28',
+        question: 'Hva er MIRR (Modified IRR)?',
+        options: [
+          'En feilkorreksjon av NPV',
+          'En IRR-variant som reinvesterer kontantstrømmer til et realistisk nivå',
+          'IRR multiplisert med risikofaktor',
+          'IRR minus inflasjon'
+        ],
+        correctAnswer: 1,
+        explanation: 'MIRR løser IRRs problem med urealistisk reinvesteringsantagelse ved å anta at mellomliggende kontantstrømmer reinvesteres til avkastningskravet.'
+      },
+      {
+        id: 'q7-29',
+        question: 'Når oppstår multiple IRR?',
+        options: [
+          'Når NPV er svært høy',
+          'Når kontantstrømmene skifter fortegn mer enn én gang',
+          'Når prosjektet varer i over 10 år',
+          'Når avkastningskravet endres'
+        ],
+        correctAnswer: 1,
+        explanation: 'Med ukonvensjonelle kontantstrømmer (f.eks. -, +, -, +) kan det være flere IRR-verdier. Dette gjør IRR vanskelig å tolke, og NPV bør brukes.'
+      },
+      {
+        id: 'q7-30',
+        question: 'Hva er "erosjonseffekt" i investeringsanalyse?',
+        options: [
+          'Slitasje på maskiner over tid',
+          'Negativ påvirkning på eksisterende produkter fra det nye prosjektet',
+          'Inflasjonens effekt på kontantstrømmer',
+          'Gradvis reduksjon i markedsandel'
+        ],
+        correctAnswer: 1,
+        explanation: 'Erosjon (som kannibalisering) er tap av salg på eksisterende produkter som følge av det nye prosjektet. Det er en negativ inkrementell effekt.'
+      },
+      {
+        id: 'q7-31',
+        question: 'Hvilke kostnader skal IKKE inkluderes i investeringsanalysen?',
+        options: [
+          'Variable kostnader',
+          'Sunk costs - allerede påløpte, irreversible kostnader',
+          'Faste kostnader',
+          'Alternativkostnader'
+        ],
+        correctAnswer: 1,
+        explanation: 'Sunk costs er irreversible og skal ikke påvirke fremtidige beslutninger. Man bør se fremover, ikke bakover, når man vurderer et prosjekt.'
+      },
+      {
+        id: 'q7-32',
+        question: 'Hva er effekten av høyere avkastningskrav på NPV?',
+        options: [
+          'NPV øker',
+          'NPV reduseres',
+          'NPV forblir uendret',
+          'Det avhenger av kontantstrømmene'
+        ],
+        correctAnswer: 1,
+        explanation: 'Høyere diskonteringsrate reduserer nåverdien av fremtidige kontantstrømmer, og dermed NPV. Prosjekter som var marginalt lønnsomme kan bli ulønnsomme.'
+      },
+      {
+        id: 'q7-33',
+        question: 'Hva er "kapitalrasjonering"?',
+        options: [
+          'Når selskapet har ubegrenset kapital',
+          'Når selskapet har begrenset kapital og må velge mellom lønnsomme prosjekter',
+          'En metode for å beregne avkastningskrav',
+          'Fordelingen av utbytte til aksjonærene'
+        ],
+        correctAnswer: 1,
+        explanation: 'Ved kapitalrasjonering er det ikke nok kapital til alle lønnsomme prosjekter. Man må rangere og velge de beste, typisk etter profitabilitetsindeks.'
+      },
+      {
+        id: 'q7-34',
+        question: 'Hva er "synergieffekter" i investeringsanalyse?',
+        options: [
+          'Kostnadsøkninger ved å kombinere prosjekter',
+          'Ekstra verdi som oppstår når prosjekter eller selskaper kombineres',
+          'Konflikter mellom avdelinger',
+          'Tap ved diversifisering'
+        ],
+        correctAnswer: 1,
+        explanation: 'Synergier er 1+1=3 effekter - ekstra verdi fra kostnadsbesparelser, økte inntekter eller strategiske fordeler ved å kombinere aktiviteter.'
+      },
+      {
+        id: 'q7-35',
+        question: 'Hva er "stand-alone-prinsippet"?',
+        options: [
+          'At hvert prosjekt skal finansieres separat',
+          'At hvert prosjekt skal vurderes uavhengig basert på egne kontantstrømmer',
+          'At selskapet kun skal ha ett prosjekt om gangen',
+          'At NPV alltid skal beregnes isolert'
+        ],
+        correctAnswer: 1,
+        explanation: 'Stand-alone-prinsippet sier at et prosjekt vurderes på egne meritter, men inkrementelle effekter på resten av selskapet må inkluderes.'
+      },
+      {
+        id: 'q7-36',
+        question: 'Hva er nominelle vs. reelle kontantstrømmer?',
+        options: [
+          'Begge er identiske',
+          'Nominelle inkluderer inflasjon, reelle er justert for inflasjon',
+          'Nominelle er før skatt, reelle er etter skatt',
+          'Nominelle er sikre, reelle er usikre'
+        ],
+        correctAnswer: 1,
+        explanation: 'Nominelle kontantstrømmer er i løpende priser (med inflasjon). Reelle er i faste priser (inflasjonsjustert). Match alltid: nominelle med nominell rente, reelle med realrente.'
+      },
+      {
+        id: 'q7-37',
+        question: 'Et prosjekt har IRR på 12% og avkastningskravet er 10%. Hva vet du om NPV?',
+        options: [
+          'NPV er negativ',
+          'NPV er positiv',
+          'NPV er null',
+          'Det kan ikke avgjøres'
+        ],
+        correctAnswer: 1,
+        explanation: 'Når IRR > avkastningskravet er NPV positiv. IRR er renten som gir NPV = 0, så lavere diskontering gir høyere (positiv) NPV.'
+      },
+      {
+        id: 'q7-38',
+        question: 'Hva er "forced investment"?',
+        options: [
+          'Investeringer påkrevd av myndighetene eller sikkerhetskrav',
+          'Frivillige ekspansjonsinvesteringer',
+          'Investeringer i markedsføring',
+          'Investeringer finansiert med gjeld'
+        ],
+        correctAnswer: 0,
+        explanation: 'Forced investments er påkrevde investeringer (miljøkrav, sikkerhet, regulering). De kan ha negativ NPV men må gjennomføres. Fokus blir å minimere kostnaden.'
+      },
+      {
+        id: 'q7-39',
+        question: 'Hva er "expansion investment"?',
+        options: [
+          'Investering for å opprettholde eksisterende kapasitet',
+          'Investering for å øke kapasitet eller entre nye markeder',
+          'Investering påkrevd av regulering',
+          'Investering i arbeidskapital'
+        ],
+        correctAnswer: 1,
+        explanation: 'Ekspansjonsinvesteringer sikter mot vekst - økt kapasitet, nye produkter, nye markeder. Disse vurderes etter NPV/IRR-kriterier.'
+      },
+      {
+        id: 'q7-40',
+        question: 'Hvorfor er kontantstrømmer bedre enn regnskapsmessig resultat i investeringsanalyse?',
+        options: [
+          'Kontantstrømmer er enklere å beregne',
+          'Regnskapsmessige tall påvirkes av periodiseringer og ikke-kontante poster',
+          'Kontantstrømmer er alltid høyere',
+          'Det er ingen forskjell i praksis'
+        ],
+        correctAnswer: 1,
+        explanation: 'Regnskap inneholder avskrivninger, periodiseringer og andre ikke-kontante poster. Kontantstrømmer viser faktisk pengeflyt som kan reinvesteres eller betales ut.'
       }
     ]
   }

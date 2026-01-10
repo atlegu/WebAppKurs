@@ -1290,8 +1290,9 @@ export const modul4AksjerModule: Module = {
   moduleQuiz: {
     id: 'modul-4-aksjer-quiz',
     title: 'Modulquiz: Aksjer og Eierskap',
-    description: 'Test din forståelse av aksjeverdsettelse, avkastning og ESG. Du trenger minst 90% riktig for å bestå.',
-    passingScore: 90,
+    description: 'Test din forståelse av aksjeverdsettelse, avkastning og ESG. Du trenger minst 80% riktig for å bestå.',
+    passingScore: 80,
+    questionsToShow: 20,
     questions: [
       {
         id: 'q5-1',
@@ -1436,6 +1437,342 @@ export const modul4AksjerModule: Module = {
         ],
         correctAnswer: 1,
         explanation: 'Grønnvasking er når selskaper eller fond fremstiller seg som mer miljøvennlige enn de faktisk er. Det er viktig å sjekke hva fond faktisk investerer i.'
+      },
+      {
+        id: 'q5-13',
+        question: 'Hva skjer med aksjonærene hvis et selskap går konkurs?',
+        options: [
+          'De får utbetalt pålydende verdi av aksjene',
+          'De står sist i køen etter kreditorer og mister ofte alt',
+          'De overtar selskapets gjeld',
+          'De får statlig kompensasjon'
+        ],
+        correctAnswer: 1,
+        explanation: 'Ved konkurs betales kreditorer (inkl. obligasjonseiere) først. Aksjonærer står sist og får bare det som eventuelt er igjen - ofte ingenting.'
+      },
+      {
+        id: 'q5-14',
+        question: 'Hva er fortrinnsrett ved emisjon?',
+        options: [
+          'Rett til høyere utbytte enn andre aksjonærer',
+          'Rett til å kjøpe nye aksjer før utenforstående',
+          'Rett til ekstra stemmer på generalforsamlingen',
+          'Rett til å selge aksjer før andre'
+        ],
+        correctAnswer: 1,
+        explanation: 'Fortrinnsrett betyr at eksisterende aksjonærer har førsterett til å kjøpe nye aksjer ved kapitalutvidelse, slik at de kan beholde sin eierandel.'
+      },
+      {
+        id: 'q5-15',
+        question: 'Hva er EV/EBITDA-multipelen?',
+        options: [
+          'Egenkapitalverdi dividert med resultat før skatt',
+          'Foretaksverdi dividert med driftsresultat før av- og nedskrivninger',
+          'Aksjekurs dividert med bokført verdi',
+          'Utbytte dividert med aksjekurs'
+        ],
+        correctAnswer: 1,
+        explanation: 'EV/EBITDA = Enterprise Value / EBITDA. Det viser hvor mange års driftsresultat (før av-/nedskrivninger) som kreves for å kjøpe hele selskapet inkludert gjeld.'
+      },
+      {
+        id: 'q5-16',
+        question: 'Hva er markedsverdi (market cap)?',
+        options: [
+          'Bokført verdi av selskapets eiendeler',
+          'Aksjekurs multiplisert med antall aksjer',
+          'Selskapets omsetning siste år',
+          'Verdien av selskapets gjeld'
+        ],
+        correctAnswer: 1,
+        explanation: 'Markedsverdi = Aksjekurs × Antall utestående aksjer. Det representerer markedets totale verdsettelse av selskapets egenkapital.'
+      },
+      {
+        id: 'q5-17',
+        question: 'Hva er en aksjesplitt?',
+        options: [
+          'Når selskapet kjøper tilbake egne aksjer',
+          'Når antall aksjer økes mens totalverdi holdes konstant',
+          'Når selskapet fusjonerer med et annet',
+          'Når aksjer deles mellom arvinger'
+        ],
+        correctAnswer: 1,
+        explanation: 'Ved aksjesplitt økes antall aksjer (f.eks. 2:1), men prisen per aksje reduseres tilsvarende. Totalverdien forblir uendret, men aksjen blir mer tilgjengelig.'
+      },
+      {
+        id: 'q5-18',
+        question: 'Hva kjennetegner en "verdiaksje" (value stock)?',
+        options: [
+          'Høy P/E og høy vekstforventning',
+          'Lav P/E og lav P/B, ofte modne selskaper',
+          'Aksjer i teknologisektoren',
+          'Aksjer med høyt utbytte uansett verdsettelse'
+        ],
+        correctAnswer: 1,
+        explanation: 'Verdiaksjer er relativt lavt priset i forhold til fundamentale verdier (lav P/E, P/B). Det er ofte etablerte selskaper i modne bransjer.'
+      },
+      {
+        id: 'q5-19',
+        question: 'Hva kjennetegner en "vekstaksje" (growth stock)?',
+        options: [
+          'Lav P/E og høyt utbytte',
+          'Høy P/E og reinvestering av overskudd i vekst',
+          'Aksjer i oljebransjen',
+          'Aksjer som har falt mye i verdi'
+        ],
+        correctAnswer: 1,
+        explanation: 'Vekstaksjer har høy P/E fordi investorer forventer sterk fremtidig vekst. De betaler ofte lite utbytte og reinvesterer i stedet.'
+      },
+      {
+        id: 'q5-20',
+        question: 'Hva er utbytteandel (payout ratio)?',
+        options: [
+          'Utbytte dividert med aksjekurs',
+          'Andelen av overskuddet som betales ut som utbytte',
+          'Antall aksjonærer som mottar utbytte',
+          'Utbytte per aksje i kroner'
+        ],
+        correctAnswer: 1,
+        explanation: 'Utbytteandel = Utbytte / Årsresultat. Viser hvor stor del av overskuddet selskapet deler ut til aksjonærene vs. beholder for reinvestering.'
+      },
+      {
+        id: 'q5-21',
+        question: 'I Gordon Growth Model, hva skjer med aksjeverdien hvis vekstraten (g) nærmer seg avkastningskravet (r)?',
+        options: [
+          'Verdien faller til null',
+          'Verdien går mot uendelig',
+          'Verdien forblir konstant',
+          'Modellen blir irrelevant'
+        ],
+        correctAnswer: 1,
+        explanation: 'P = D/(r-g). Når g nærmer seg r, går nevneren mot null og verdien mot uendelig. Derfor krever modellen at r > g.'
+      },
+      {
+        id: 'q5-22',
+        question: 'Hva er "svak form" av markedseffisiens?',
+        options: [
+          'Aksjekurser reflekterer all offentlig informasjon',
+          'Aksjekurser reflekterer all historisk kursinformasjon',
+          'Aksjekurser reflekterer all informasjon inkludert innsideinformasjon',
+          'Aksjekurser er tilfeldig satt'
+        ],
+        correctAnswer: 1,
+        explanation: 'Svak form betyr at all historisk pris- og volumdata er reflektert. Teknisk analyse er dermed ikke lønnsomt ifølge denne teorien.'
+      },
+      {
+        id: 'q5-23',
+        question: 'Hva er "sterk form" av markedseffisiens?',
+        options: [
+          'Kun at historiske kurser er reflektert',
+          'At offentlig informasjon er reflektert',
+          'At ALL informasjon, inkludert innsideinformasjon, er reflektert',
+          'At markedet er manipulert'
+        ],
+        correctAnswer: 2,
+        explanation: 'Sterk form hevder at selv innsideinformasjon er reflektert i prisene. Dette er kontroversielt og de fleste mener innsideinformasjon faktisk gir fordel.'
+      },
+      {
+        id: 'q5-24',
+        question: 'Hva er OBX-indeksen?',
+        options: [
+          'En skandinavisk obligasjonsindeks',
+          'De 25 mest omsatte aksjene på Oslo Børs',
+          'Alle selskaper notert på Oslo Børs',
+          'Norske selskaper notert i utlandet'
+        ],
+        correctAnswer: 1,
+        explanation: 'OBX består av de 25 mest likvide (mest omsatte) aksjene på Oslo Børs. Det er en viktig referanseindeks for norske aksjer.'
+      },
+      {
+        id: 'q5-25',
+        question: 'Hvorfor betaler mange vekstselskaper lite eller ingen utbytte?',
+        options: [
+          'Fordi de ikke har overskudd',
+          'Fordi de reinvesterer overskuddet for å oppnå høyere avkastning',
+          'Fordi det er ulovlig for vekstselskaper',
+          'Fordi aksjonærene ikke ønsker utbytte'
+        ],
+        correctAnswer: 1,
+        explanation: 'Vekstselskaper mener de kan reinvestere overskuddet til høyere avkastning enn aksjonærene selv kunne oppnå. Aksjonærer får avkastning gjennom kursoppgang i stedet.'
+      },
+      {
+        id: 'q5-26',
+        question: 'Hva er "G" i ESG?',
+        options: [
+          'Growth - vekstpotensial',
+          'Green - miljøpåvirkning',
+          'Governance - selskapsstyring',
+          'Global - internasjonal tilstedeværelse'
+        ],
+        correctAnswer: 2,
+        explanation: 'G står for Governance (selskapsstyring). Det omfatter styresammensetning, lederlønninger, antikorrupsjon, aksjonærrettigheter og lignende.'
+      },
+      {
+        id: 'q5-27',
+        question: 'Hva måler Sharpe-ratio?',
+        options: [
+          'Selskapets lønnsomhet',
+          'Risikojustert avkastning - meravkastning per enhet risiko',
+          'Aksjens volatilitet alene',
+          'Forventet utbyttevekst'
+        ],
+        correctAnswer: 1,
+        explanation: 'Sharpe = (Avkastning - Risikofri rente) / Standardavvik. Det måler hvor mye meravkastning du får per enhet risiko du tar.'
+      },
+      {
+        id: 'q5-28',
+        question: 'Hva er forskjellen mellom nominell og reell avkastning?',
+        options: [
+          'Nominell er før skatt, reell er etter skatt',
+          'Nominell er den observerte avkastningen, reell er justert for inflasjon',
+          'Nominell gjelder aksjer, reell gjelder obligasjoner',
+          'Det er ingen forskjell'
+        ],
+        correctAnswer: 1,
+        explanation: 'Nominell avkastning er det du ser i prosent. Reell avkastning er nominell minus inflasjon - altså økningen i faktisk kjøpekraft.'
+      },
+      {
+        id: 'q5-29',
+        question: 'Et selskap har P/B på 0,8. Hva kan dette indikere?',
+        options: [
+          'Aksjen er overpriset',
+          'Markedet verdsetter selskapet under bokført egenkapital',
+          'Selskapet har ingen gjeld',
+          'Selskapet har ekstremt høy vekst'
+        ],
+        correctAnswer: 1,
+        explanation: 'P/B under 1 betyr at markedsprisen er lavere enn bokført egenkapital. Det kan indikere undervurdert aksje, eller at markedet tviler på eiendelenes reelle verdi.'
+      },
+      {
+        id: 'q5-30',
+        question: 'Hva er en indeksfond-strategi?',
+        options: [
+          'Å velge enkeltaksjer som man tror vil slå markedet',
+          'Å følge en indeks passivt og eie de samme aksjene i samme vekt',
+          'Å investere kun i teknologiaksjer',
+          'Å kjøpe og selge ofte for å time markedet'
+        ],
+        correctAnswer: 1,
+        explanation: 'Indeksfond replikerer en indeks (f.eks. OBX) uten å prøve å slå markedet. Dette gir lav forvaltningskostnad og bred diversifisering.'
+      },
+      {
+        id: 'q5-31',
+        question: 'Hva er en børsnotering (IPO)?',
+        options: [
+          'Når et selskap kjøpes opp av et annet',
+          'Når aksjer i et privat selskap selges til publikum for første gang',
+          'Når et selskap utbetaler ekstra utbytte',
+          'Når et selskap går konkurs'
+        ],
+        correctAnswer: 1,
+        explanation: 'IPO (Initial Public Offering) er når et selskap for første gang tilbyr aksjer til offentligheten og blir børsnotert.'
+      },
+      {
+        id: 'q5-32',
+        question: 'Hva er et "bear market"?',
+        options: [
+          'Et marked med stigende kurser',
+          'Et marked med fallende kurser (vanligvis 20%+ fall)',
+          'Et marked med lav handelsvolum',
+          'Et marked dominert av store investorer'
+        ],
+        correctAnswer: 1,
+        explanation: 'Bear market er typisk definert som et fall på 20% eller mer fra toppen. Bull market er det motsatte - langvarig oppgang.'
+      },
+      {
+        id: 'q5-33',
+        question: 'Hva er en aksjes beta-verdi?',
+        options: [
+          'Aksjens absolutte risiko målt i kroner',
+          'Aksjens følsomhet for markedsbevegelser',
+          'Aksjens utbytteprosent',
+          'Aksjens P/E-forhold'
+        ],
+        correctAnswer: 1,
+        explanation: 'Beta måler systematisk risiko. Beta = 1 betyr lik følsomhet som markedet, beta > 1 betyr høyere følsomhet, beta < 1 betyr lavere følsomhet.'
+      },
+      {
+        id: 'q5-34',
+        question: 'Hva er positiv screening i ESG-investering?',
+        options: [
+          'Å utelukke selskaper som ikke oppfyller ESG-kriterier',
+          'Å aktivt velge selskaper som scorer høyt på ESG',
+          'Å investere kun i selskaper med positiv aksjekursutvikling',
+          'Å gjennomgå selskapets regnskap for feil'
+        ],
+        correctAnswer: 1,
+        explanation: 'Positiv screening betyr å aktivt inkludere selskaper som scorer høyt på ESG. Negativ screening er det motsatte - å ekskludere selskaper.'
+      },
+      {
+        id: 'q5-35',
+        question: 'Hva er "ex-utbytte"-dato?',
+        options: [
+          'Datoen utbyttet utbetales',
+          'Datoen selskapet vedtar utbytte',
+          'Første dag aksjen handles uten rett til utbytte',
+          'Fristen for å registrere seg som aksjonær'
+        ],
+        correctAnswer: 2,
+        explanation: 'Ex-utbytte-dato er første handelsdag uten rett til utbytte. Kjøper du på denne dagen eller senere, får du ikke utbyttet.'
+      },
+      {
+        id: 'q5-36',
+        question: 'Hva er forventet avkastning i CAPM-modellen beregnet ut fra?',
+        options: [
+          'Kun historisk avkastning',
+          'Risikofri rente + beta × markedets risikopremie',
+          'P/E-multipelen',
+          'Utbytteavkastning alene'
+        ],
+        correctAnswer: 1,
+        explanation: 'CAPM: E(r) = rf + β × (rm - rf). Forventet avkastning = Risikofri rente + Aksjens beta × Markedets risikopremie.'
+      },
+      {
+        id: 'q5-37',
+        question: 'Hva er Enterprise Value (EV)?',
+        options: [
+          'Kun markedsverdien av egenkapitalen',
+          'Markedsverdi av egenkapital + gjeld - kontanter',
+          'Bokført verdi av alle eiendeler',
+          'Årets driftsresultat'
+        ],
+        correctAnswer: 1,
+        explanation: 'EV = Markedsverdi + Netto gjeld. Det representerer verdien av hele virksomheten, uavhengig av finansieringsstruktur.'
+      },
+      {
+        id: 'q5-38',
+        question: 'Hvilken fordel har diversifisering i aksjeporteføljen?',
+        options: [
+          'Garantert høyere avkastning',
+          'Reduserer usystematisk (selskapsspesifikk) risiko',
+          'Eliminerer all risiko',
+          'Øker forventet avkastning uten ekstra risiko'
+        ],
+        correctAnswer: 1,
+        explanation: 'Diversifisering reduserer usystematisk risiko (selskapsspesifikk). Systematisk risiko (markedsrisiko) kan ikke diversifiseres bort.'
+      },
+      {
+        id: 'q5-39',
+        question: 'Hvorfor følger de fleste aktive fond ikke med indeksfond over tid?',
+        options: [
+          'Fordi indeksfond har høyere risiko',
+          'Fordi aktive fonds høyere kostnader og vanskeligheten med å slå markedet',
+          'Fordi indeksfond er ulovlig i Norge',
+          'Fordi aktive forvaltere ikke prøver'
+        ],
+        correctAnswer: 1,
+        explanation: 'Aktive fond har høyere forvaltningskostnader. I et effisient marked er det svært vanskelig å konsekvent slå indeksen etter kostnader.'
+      },
+      {
+        id: 'q5-40',
+        question: 'Hva er hovedformålet med en generalforsamling?',
+        options: [
+          'At ledelsen presenterer strategi til media',
+          'At aksjonærer stemmer over viktige beslutninger i selskapet',
+          'At analytikere får stille spørsmål til ledelsen',
+          'At nyansatte introduseres for selskapet'
+        ],
+        correctAnswer: 1,
+        explanation: 'Generalforsamlingen er aksjonærenes høyeste organ. Her stemmes det over utbytte, styrevalg, godkjenning av regnskap og andre viktige beslutninger.'
       }
     ]
   }

@@ -1230,8 +1230,9 @@ export const modul5PortefoljeModule: Module = {
   moduleQuiz: {
     id: 'modul-5-portefolje-quiz',
     title: 'Modulquiz: Porteføljeteori og Diversifisering',
-    description: 'Test din forståelse av diversifisering, korrelasjon og porteføljebygging. Du trenger minst 90% riktig for å bestå.',
-    passingScore: 90,
+    description: 'Test din forståelse av diversifisering, korrelasjon og porteføljebygging. Du trenger minst 80% riktig for å bestå.',
+    passingScore: 80,
+    questionsToShow: 20,
     questions: [
       {
         id: 'q6-1',
@@ -1376,6 +1377,342 @@ export const modul5PortefoljeModule: Module = {
         ],
         correctAnswer: 1,
         explanation: 'Med kortere tidshorisont har man mindre tid til å hente inn eventuelle tap. Derfor bør risikoen gradvis reduseres mot pensjonsalder.'
+      },
+      {
+        id: 'q6-13',
+        question: 'To aksjer har korrelasjon på +0,9. Hva betyr dette for diversifisering?',
+        options: [
+          'Utmerket diversifiseringseffekt',
+          'Svak diversifiseringseffekt fordi de beveger seg nesten likt',
+          'Aksjene kan ikke kombineres i samme portefølje',
+          'Risikoen elimineres helt'
+        ],
+        correctAnswer: 1,
+        explanation: 'Korrelasjon +0,9 betyr at aksjene beveger seg nesten identisk. Dette gir svak diversifiseringseffekt fordi begge faller samtidig i nedgang.'
+      },
+      {
+        id: 'q6-14',
+        question: 'Hva er kovarians?',
+        options: [
+          'Kun et annet ord for korrelasjon',
+          'Et mål på hvordan to aktivas avkastning varierer sammen, ikke standardisert',
+          'Forventet avkastning på porteføljen',
+          'Varians dividert med to'
+        ],
+        correctAnswer: 1,
+        explanation: 'Kovarians måler sam-variasjon mellom to aktiva. I motsetning til korrelasjon er den ikke standardisert (-1 til +1), så den er vanskeligere å tolke direkte.'
+      },
+      {
+        id: 'q6-15',
+        question: 'Hva er Harry Markowitz kjent for?',
+        options: [
+          'Å finne den risikofrie renten',
+          'Moderne porteføljeteori og den effektive fronten',
+          'Å oppdage inflasjonseffekten',
+          'Å grunnlegge Oslo Børs'
+        ],
+        correctAnswer: 1,
+        explanation: 'Markowitz utviklet moderne porteføljeteori i 1952, inkludert konseptet om den effektive fronten. Han fikk Nobelprisen i økonomi i 1990.'
+      },
+      {
+        id: 'q6-16',
+        question: 'Hva skjer med porteføljerisikoen når du legger til aktiva med lav korrelasjon?',
+        options: [
+          'Risikoen øker alltid',
+          'Risikoen kan reduseres selv om hvert aktiva er risikabelt',
+          'Risikoen forblir uendret',
+          'Avkastningen faller proporsjonalt'
+        ],
+        correctAnswer: 1,
+        explanation: 'Med lav eller negativ korrelasjon kan porteføljerisikoen bli lavere enn risikoen til hvert enkelt aktiva. Dette er essensen av diversifisering.'
+      },
+      {
+        id: 'q6-17',
+        question: 'Hva er kapitalmarkedslinjen (CML)?',
+        options: [
+          'Linjen som viser børsens åpningstider',
+          'Linjen fra risikofri rente gjennom markedsporteføljen på effektiv front',
+          'Grensen mellom aksjer og obligasjoner',
+          'Utviklingen i BNP over tid'
+        ],
+        correctAnswer: 1,
+        explanation: 'CML viser kombinasjoner av risikofri plassering og markedsporteføljen. Alle effisiente porteføljer ligger på denne linjen ifølge CAPM.'
+      },
+      {
+        id: 'q6-18',
+        question: 'Hva er markedsporteføljen i teorien?',
+        options: [
+          'De største aksjene på børsen',
+          'En portefølje som inneholder alle risikable aktiva vektet etter markedsverdi',
+          'Kun norske aksjer',
+          'En portefølje valgt av sentralbanken'
+        ],
+        correctAnswer: 1,
+        explanation: 'Markedsporteføljen er en teoretisk portefølje som inneholder alle risikable aktiva i verden, vektet etter markedsverdi. I praksis brukes indekser som tilnærming.'
+      },
+      {
+        id: 'q6-19',
+        question: 'Hva betyr det at risiko er "diversifiserbar"?',
+        options: [
+          'At risikoen øker med flere aktiva',
+          'At risikoen kan reduseres eller elimineres ved å spre investeringene',
+          'At risikoen kun gjelder internasjonale aksjer',
+          'At risikoen er konstant uansett porteføljesammensetning'
+        ],
+        correctAnswer: 1,
+        explanation: 'Diversifiserbar risiko (usystematisk risiko) er selskapsspesifikk risiko som forsvinner når du eier mange ulike aksjer i ulike bransjer.'
+      },
+      {
+        id: 'q6-20',
+        question: 'Hva er et "minimum varians-portefølje"?',
+        options: [
+          'Porteføljen med høyest avkastning',
+          'Porteføljen med lavest mulig risiko blant kombinasjoner av risikable aktiva',
+          'En portefølje med kun obligasjoner',
+          'En portefølje med korte posisjoner'
+        ],
+        correctAnswer: 1,
+        explanation: 'Minimum varians-porteføljen er punktet på effektiv front med lavest risiko. Det er den mest forsiktige kombinasjonen av risikable aktiva.'
+      },
+      {
+        id: 'q6-21',
+        question: 'Hvorfor er internasjonal diversifisering viktig?',
+        options: [
+          'Fordi utenlandske aksjer alltid stiger',
+          'Fordi ulike markeder ikke er perfekt korrelerte',
+          'Fordi det gir skattefordeler',
+          'Fordi det er lovpålagt for norske investorer'
+        ],
+        correctAnswer: 1,
+        explanation: 'Internasjonale markeder har ikke perfekt korrelasjon, så å spre investeringer geografisk gir ytterligere diversifiseringsgevinst.'
+      },
+      {
+        id: 'q6-22',
+        question: 'Hva er en passiv investeringsstrategi?',
+        options: [
+          'Å handle aksjer daglig basert på markedsanalyse',
+          'Å følge en indeks uten å prøve å slå markedet',
+          'Å kun investere i obligasjoner',
+          'Å aldri endre porteføljen uansett'
+        ],
+        correctAnswer: 1,
+        explanation: 'Passiv strategi innebærer å kjøpe og holde en bred indeks, uten å prøve å time markedet eller velge "vinnere". Gir lave kostnader og bred diversifisering.'
+      },
+      {
+        id: 'q6-23',
+        question: 'Hva er likevektet portefølje (equal-weight)?',
+        options: [
+          'En portefølje der alle investorer har like mye',
+          'En portefølje der hvert aktiva har samme andel',
+          'En portefølje med kun like aksjer',
+          'En portefølje uten risiko'
+        ],
+        correctAnswer: 1,
+        explanation: 'Likevektet portefølje gir hvert aktiva lik vekt (f.eks. 20 aksjer = 5% hver). Alternativet er verdivektet der større selskaper har større andel.'
+      },
+      {
+        id: 'q6-24',
+        question: 'Hva er "home bias"?',
+        options: [
+          'Å kun investere i eiendom',
+          'Tendens til å overinvestere i hjemlandets aksjer relativt til optimal diversifisering',
+          'Å foretrekke kortsiktige investeringer',
+          'Å investere kun i kjente merkenavn'
+        ],
+        correctAnswer: 1,
+        explanation: 'Home bias betyr at investorer har uforholdsmessig mye i eget lands aksjer. Dette reduserer diversifiseringsgevinsten man kunne fått internasjonalt.'
+      },
+      {
+        id: 'q6-25',
+        question: 'Hva er varians i porteføljesammenheng?',
+        options: [
+          'Standardavviket kvadrert - et mål på risiko',
+          'Gjennomsnittlig avkastning minus risikofri rente',
+          'Antall aktiva i porteføljen',
+          'Forskjellen mellom høyeste og laveste avkastning'
+        ],
+        correctAnswer: 0,
+        explanation: 'Varians er standardavvik². Det måler spredningen i avkastning rundt gjennomsnittet. Lavere varians = lavere risiko.'
+      },
+      {
+        id: 'q6-26',
+        question: 'I en portefølje med to aktiva, hva påvirker totalrisikoen?',
+        options: [
+          'Kun vektene til hvert aktiva',
+          'Vekter, individuelle varianser og korrelasjon mellom aktivaene',
+          'Kun korrelasjonen',
+          'Kun avkastningen til det største aktivet'
+        ],
+        correctAnswer: 1,
+        explanation: 'Porteføljevarians avhenger av vekter (w), varianser (σ²) OG korrelasjonen (ρ) mellom aktivaene. Alle tre faktorene spiller inn.'
+      },
+      {
+        id: 'q6-27',
+        question: 'Hva er en 60/40-portefølje?',
+        options: [
+          'En portefølje med 60 aksjer og 40 obligasjoner',
+          'En klassisk allokering med 60% aksjer og 40% obligasjoner',
+          'En portefølje med 60% norske og 40% utenlandske aktiva',
+          'En portefølje for personer mellom 40 og 60 år'
+        ],
+        correctAnswer: 1,
+        explanation: '60/40 er en klassisk balansert allokering med 60% aksjer for vekst og 40% obligasjoner for stabilitet. Den har vært populær i tiår.'
+      },
+      {
+        id: 'q6-28',
+        question: 'Hvorfor faller korrelasjon ofte under kriser?',
+        options: [
+          'Fordi alle aktiva stiger sammen',
+          'Fordi korrelasjon øker - aktiva faller sammen når panikk sprer seg',
+          'Fordi sentralbanker stabiliserer markedet',
+          'Fordi investorer diversifiserer bedre'
+        ],
+        correctAnswer: 1,
+        explanation: 'I kriser øker korrelasjonene typisk - alle risikable aktiva faller sammen. Dette kalles "korrelasjon mot 1 i nedgang" og svekker diversifiseringseffekten når den trengs mest.'
+      },
+      {
+        id: 'q6-29',
+        question: 'Hva er tracking error?',
+        options: [
+          'Feil i porteføljeberegningen',
+          'Standardavviket på differansen mellom porteføljens og referanseindeksens avkastning',
+          'Kostnaden ved å handle aksjer',
+          'Avviket mellom forventet og realisert risiko'
+        ],
+        correctAnswer: 1,
+        explanation: 'Tracking error måler hvor mye en portefølje avviker fra sin referanseindeks. Lavere tracking error betyr tettere replikering av indeksen.'
+      },
+      {
+        id: 'q6-30',
+        question: 'Hva er strategisk aktivaallokering?',
+        options: [
+          'Å endre fordelingen daglig basert på nyheter',
+          'En langsiktig fordeling basert på investors risikoprofil og mål',
+          'Å kun investere i strategiske bransjer',
+          'Å alltid ha 100% aksjer'
+        ],
+        correctAnswer: 1,
+        explanation: 'Strategisk allokering er den langsiktige fordelingen tilpasset investors risikotoleranse, tidshorisont og mål. Den endres sjelden.'
+      },
+      {
+        id: 'q6-31',
+        question: 'Hva er taktisk aktivaallokering?',
+        options: [
+          'Det samme som strategisk allokering',
+          'Kortsiktige avvik fra strategisk allokering for å utnytte markedsmuligheter',
+          'Å kun investere i militærbransjen',
+          'En allokering som aldri endres'
+        ],
+        correctAnswer: 1,
+        explanation: 'Taktisk allokering betyr kortsiktige justeringer for å utnytte oppfattede feilprisinger, innenfor rammer rundt den strategiske allokeringen.'
+      },
+      {
+        id: 'q6-32',
+        question: 'Hva er risikotoleranse?',
+        options: [
+          'Den maksimale avkastningen en investor aksepterer',
+          'Hvor mye risiko og potensielle tap en investor kan tåle',
+          'Antall aksjer i porteføljen',
+          'Minste tillatte investering'
+        ],
+        correctAnswer: 1,
+        explanation: 'Risikotoleranse er investorens evne og vilje til å tåle verdisvingninger og potensielle tap. Den bestemmer passende aktivaallokering.'
+      },
+      {
+        id: 'q6-33',
+        question: 'Hva betyr det at to aktiva har korrelasjon 0?',
+        options: [
+          'De beveger seg alltid motsatt',
+          'De beveger seg alltid likt',
+          'Det er ingen systematisk sammenheng mellom bevegelsene',
+          'De kan ikke kombineres i samme portefølje'
+        ],
+        correctAnswer: 2,
+        explanation: 'Korrelasjon 0 betyr ingen lineær sammenheng. Bevegelsene er uavhengige av hverandre, noe som gir god diversifiseringseffekt.'
+      },
+      {
+        id: 'q6-34',
+        question: 'Hva er en livsløpsfond (target date fund)?',
+        options: [
+          'Et fond som lukkes etter målperioden',
+          'Et fond som automatisk reduserer risiko mot en bestemt dato (ofte pensjon)',
+          'Et fond som kun investerer i livsforsikring',
+          'Et fond for kortsiktige investeringer'
+        ],
+        correctAnswer: 1,
+        explanation: 'Livsløpsfond reduserer automatisk aksjeandelen mot en måldato (typisk pensjonsalder). De gjør rebalansering enkel for langsiktige sparere.'
+      },
+      {
+        id: 'q6-35',
+        question: 'Hva er formelen for porteføljeavkastning med to aktiva?',
+        options: [
+          'Gjennomsnittet av avkastningene',
+          'Den vektede summen: w₁R₁ + w₂R₂',
+          'Produktet av avkastningene',
+          'Den høyeste av avkastningene'
+        ],
+        correctAnswer: 1,
+        explanation: 'Porteføljeavkastning = w₁R₁ + w₂R₂, der w er vektene (som summerer til 1) og R er avkastningene. Det er et vektet gjennomsnitt.'
+      },
+      {
+        id: 'q6-36',
+        question: 'Hva skjer med risikoen når du legger til risikofri plassering i porteføljen?',
+        options: [
+          'Risikoen øker alltid',
+          'Risikoen reduseres proporsjonal med andelen i risikofritt',
+          'Risikoen forblir uendret',
+          'Avkastningen dobles'
+        ],
+        correctAnswer: 1,
+        explanation: 'Risikofri plassering har null standardavvik og null korrelasjon med andre aktiva. Å legge til risikofritt reduserer total porteføljerisiko proporsjonalt.'
+      },
+      {
+        id: 'q6-37',
+        question: 'Hvorfor er det viktig å vurdere korrelasjon over tid?',
+        options: [
+          'Fordi korrelasjon alltid er konstant',
+          'Fordi korrelasjoner kan endre seg, spesielt i volatile perioder',
+          'Fordi korrelasjon kun måles årlig',
+          'Fordi det er lovpålagt'
+        ],
+        correctAnswer: 1,
+        explanation: 'Korrelasjoner er ikke statiske. De tenderer å øke i kriser, noe som svekker diversifiseringen akkurat når den trengs mest.'
+      },
+      {
+        id: 'q6-38',
+        question: 'Hva er risikokapasitet?',
+        options: [
+          'Det samme som risikotoleranse',
+          'Den objektive finansielle evnen til å tåle tap basert på formue og inntekt',
+          'Maksimalt antall aksjer man kan eie',
+          'Bankens kredittgrense'
+        ],
+        correctAnswer: 1,
+        explanation: 'Risikokapasitet er den objektive evnen til å bære tap (basert på formue, inntekt, forpliktelser). Risikotoleranse er den psykologiske viljen. Begge bør vurderes.'
+      },
+      {
+        id: 'q6-39',
+        question: 'Hva er et aktivt forvaltet fond?',
+        options: [
+          'Et fond som kun handles i markedets åpningstider',
+          'Et fond der forvalteren aktivt velger aksjer for å slå markedet',
+          'Et fond som automatisk rebalanserer',
+          'Et fond med høy minimumsinngang'
+        ],
+        correctAnswer: 1,
+        explanation: 'Aktiv forvaltning betyr at forvalteren prøver å velge aksjer som vil gjøre det bedre enn markedet. Dette gir høyere kostnader enn passiv forvaltning.'
+      },
+      {
+        id: 'q6-40',
+        question: 'Hva sier "den eneste gratis lunsjen i finans"-utsagnet om diversifisering?',
+        options: [
+          'At diversifisering er gratis og uten effekt',
+          'At diversifisering kan redusere risiko uten å redusere forventet avkastning',
+          'At alle investeringsstrategier koster like mye',
+          'At det ikke finnes risikofrie investeringer'
+        ],
+        correctAnswer: 1,
+        explanation: 'Utsagnet tilskrives Harry Markowitz. Diversifisering kan senke porteføljerisikoen uten å senke forventet avkastning - en "gratis" forbedring.'
       }
     ]
   }

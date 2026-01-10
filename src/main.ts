@@ -23,6 +23,7 @@ import { modul3ObligasjonerModule } from './data/modul3-obligasjoner';
 import { modul4AksjerModule } from './data/modul4-aksjer';
 import { modul5PortefoljeModule } from './data/modul5-portefolje';
 import { modul7InvesteringsanalyseModule } from './data/modul7-investeringsanalyse';
+import { modul8KapitalkostnadModule } from './data/modul8-kapitalkostnad';
 import { modul8KapitalstrukturModule } from './data/modul8-kapitalstruktur';
 import { modul6BaerekraftModule } from './data/modul6-baerekraft';
 import { modul7FremtidModule } from './data/modul7-fremtid';
@@ -68,6 +69,7 @@ class SustainableFinanceApp {
         modul4AksjerModule,
         modul5PortefoljeModule,
         modul7InvesteringsanalyseModule,
+        modul8KapitalkostnadModule,
         modul8KapitalstrukturModule,
         modul6BaerekraftModule,
         modul7FremtidModule

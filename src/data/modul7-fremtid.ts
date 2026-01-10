@@ -1,10 +1,10 @@
 import { Module } from '../types/course';
 
 export const modul7FremtidModule: Module = {
-  id: 'modul-7-fremtid',
+  id: 'modul-11-fremtid',
   title: 'Din Finansielle Fremtid',
   icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>',
-  order: 10,
+  order: 11,
   learningObjectives: [
     'Utvikle en personlig finansiell plan basert på dine mål og verdier',
     'Forstå hvordan kompetanse fra kurset kan anvendes i arbeidslivet',
@@ -915,5 +915,499 @@ export const modul7FremtidModule: Module = {
         }
       ]
     }
-  ]
+  ],
+  moduleQuiz: {
+    id: 'fremtid-quiz',
+    title: 'Modulquiz: Din Finansielle Fremtid',
+    description: 'Test din forståelse av atferdsøkonomi, personlig finansiell planlegging, karriereutvikling og handlingsplanlegging.',
+    passingScore: 80,
+    questionsToShow: 20,
+    questions: [
+      // Fra teori til praksis (q1-q8)
+      {
+        id: 'fr-q1',
+        question: 'Hva er "den røde tråden" gjennom hele kurset?',
+        options: [
+          'At aksjer gir høyest avkastning',
+          'At bærekraft er det viktigste',
+          'At alle finansielle beslutninger handler om å balansere risiko og avkastning',
+          'At obligasjoner er tryggere enn aksjer'
+        ],
+        correctAnswer: 2,
+        explanation: 'Gjennom hele kurset har vi sett at finansielle beslutninger handler om å balansere risiko og avkastning, tilpasset din situasjon og tidshorisont.'
+      },
+      {
+        id: 'fr-q2',
+        question: 'Hva menes med grunnleggende finansiell kompetanse?',
+        options: [
+          'Å kunne analysere enkeltaksjer og vurdere ESG',
+          'Budsjettering, sparing, unngå dyr gjeld, forstå renter og inflasjon',
+          'Å investere i fond og forstå porteføljeteori',
+          'Å kunne forhandle lønn og bygge nettverk'
+        ],
+        correctAnswer: 1,
+        explanation: 'Grunnleggende finansiell kompetanse handler om det mest fundamentale: budsjettering, sparing, unngå dyr gjeld, og forstå renter og inflasjon.'
+      },
+      {
+        id: 'fr-q3',
+        question: 'Hvorfor er grunnleggende kompetanse viktig selv for avanserte investorer?',
+        options: [
+          'Fordi det er påkrevd av myndighetene',
+          'Fordi det ser bra ut på CV',
+          'Fordi man ikke kan investere uten solid grunnmur og kontroll på egen økonomi',
+          'Fordi grunnleggende kunnskap gir høyest avkastning'
+        ],
+        correctAnswer: 2,
+        explanation: 'Selv den beste investeringsstrategi nytter ikke hvis du ikke har penger å investere eller bruker mer enn du tjener. Grunnleggende økonomistyring er fundamentet.'
+      },
+      {
+        id: 'fr-q4',
+        question: 'Hva er sammenhengen mellom pengenes tidsverdi og aksjevurdering?',
+        options: [
+          'De har ingen sammenheng',
+          'Begge handler om å unngå inflasjon',
+          'DCF-modellen bruker nåverdiberegning for å verdsette fremtidige kontantstrømmer',
+          'Aksjer har alltid høyere tidsverdi enn obligasjoner'
+        ],
+        correctAnswer: 2,
+        explanation: 'DCF-modellen (Discounted Cash Flow) bruker prinsippene fra pengenes tidsverdi til å beregne nåverdien av aksjeselskaps fremtidige kontantstrømmer.'
+      },
+      {
+        id: 'fr-q5',
+        question: 'Hva er videregående nivå av finansiell kompetanse?',
+        options: [
+          'Budsjettering og sparing',
+          'Investere i fond, forstå risiko, langsiktig planlegging, pensjon',
+          'Analysere enkeltaksjer og obligasjoner',
+          'Kun bærekraftige investeringer'
+        ],
+        correctAnswer: 1,
+        explanation: 'Videregående nivå inkluderer å investere i fond, forstå risiko, langsiktig planlegging og pensjon.'
+      },
+      {
+        id: 'fr-q6',
+        question: 'Hva kjennetegner avansert finansiell kompetanse?',
+        options: [
+          'Å ha mye penger',
+          'Å analysere enkeltaksjer, forstå obligasjoner, vurdere ESG, aktivt eierskap',
+          'Å unngå all risiko',
+          'Å kun investere i indeksfond'
+        ],
+        correctAnswer: 1,
+        explanation: 'Avansert nivå inkluderer å analysere enkeltaksjer, forstå obligasjoner, vurdere ESG og praktisere aktivt eierskap.'
+      },
+      {
+        id: 'fr-q7',
+        question: 'Hvordan kan forståelse av obligasjoner hjelpe ved boliglån?',
+        options: [
+          'Det har ingen relevans',
+          'Man kan bruke obligasjoner som sikkerhet',
+          'Forståelse av renteendringer og rentebinding hjelper å velge riktig lånetype',
+          'Obligasjoner kan erstatte boliglån'
+        ],
+        correctAnswer: 2,
+        explanation: 'Forståelse av hvordan renteendringer påvirker obligasjonspriser og lånekostnader hjelper deg å ta bedre beslutninger om rentebinding.'
+      },
+      {
+        id: 'fr-q8',
+        question: 'Hva innebærer trade-off i karrierevalg?',
+        options: [
+          'At man må ha høy lønn',
+          'Avveining mellom lønn, jobbsikkerhet, utviklingsmuligheter og verdier',
+          'At man bør bytte jobb ofte',
+          'At man må velge mellom karriere og familie'
+        ],
+        correctAnswer: 1,
+        explanation: 'Karrierevalg innebærer en trade-off mellom flere faktorer: lønn, jobbsikkerhet, utviklingsmuligheter og personlige verdier.'
+      },
+      // Atferdsøkonomi (q9-q18)
+      {
+        id: 'fr-q9',
+        question: 'Hva er en kognitiv skjevhet?',
+        options: [
+          'En bevisst strategi for bedre beslutninger',
+          'Systematiske feil i tenkning som skyldes hvordan hjernen behandler informasjon',
+          'En finansiell indikator',
+          'Et mål på intelligens'
+        ],
+        correctAnswer: 1,
+        explanation: 'Kognitive skjevheter er systematiske feil i tenkning og beslutningstaking som skyldes hvordan hjernen vår behandler informasjon.'
+      },
+      {
+        id: 'fr-q10',
+        question: 'Hva menes med tapsaversjon?',
+        options: [
+          'At investorer generelt er redde for å tape',
+          'At tap føles omtrent dobbelt så sterkt som tilsvarende gevinster',
+          'At man alltid bør unngå risiko',
+          'At man bør selge tapende aksjer umiddelbart'
+        ],
+        correctAnswer: 1,
+        explanation: 'Tapsaversjon betyr spesifikt at negative utfall (tap) føles omtrent dobbelt så sterkt som tilsvarende positive utfall (gevinster).'
+      },
+      {
+        id: 'fr-q11',
+        question: 'Hva er konsekvensen av tapsaversjon for investeringsbeslutninger?',
+        options: [
+          'Man kjøper flere aksjer',
+          'Man holder tapende aksjer for lenge og selger vinnere for tidlig',
+          'Man investerer kun i obligasjoner',
+          'Man diversifiserer bedre'
+        ],
+        correctAnswer: 1,
+        explanation: 'Tapsaversjon fører ofte til at vi holder tapende aksjer for lenge i håp om at de skal "komme tilbake", og selger vinnere for tidlig for å "sikre gevinsten".'
+      },
+      {
+        id: 'fr-q12',
+        question: 'Hva er overkonfidens i investeringssammenheng?',
+        options: [
+          'Å ha for mye penger investert',
+          'Å overvurdere egne evner til å forutse markedet',
+          'Å ha for mange aksjer i porteføljen',
+          'Å stole for mye på rådgivere'
+        ],
+        correctAnswer: 1,
+        explanation: 'Overkonfidens betyr at man overvurderer egne evner til å forutse markedsbevegelser, noe som ofte fører til dårligere resultater enn passive strategier.'
+      },
+      {
+        id: 'fr-q13',
+        question: 'Hva er bekreftelsesskjevhet?',
+        options: [
+          'Å bekrefte alle handler med banken',
+          'Å søke informasjon som bekrefter eksisterende oppfatninger',
+          'Å få bekreftelse på investeringsvalg fra rådgiver',
+          'Å dokumentere alle investeringsbeslutninger'
+        ],
+        correctAnswer: 1,
+        explanation: 'Bekreftelsesskjevhet betyr at vi tenderer til å søke og vektlegge informasjon som bekrefter våre eksisterende oppfatninger, og ignorere motstridende informasjon.'
+      },
+      {
+        id: 'fr-q14',
+        question: 'Hva er flokkmentalitet i finans?',
+        options: [
+          'Å investere i landbruksselskaper',
+          'Å følge mengden uten egen analyse',
+          'Å diversifisere som alle andre',
+          'Å ha samme portefølje som pensjonsfond'
+        ],
+        correctAnswer: 1,
+        explanation: 'Flokkmentalitet innebærer at man følger mengden uten egen analyse, noe som ofte fører til at man kjøper på topp og selger på bunn.'
+      },
+      {
+        id: 'fr-q15',
+        question: 'Hva er forankringsskjevhet?',
+        options: [
+          'Å investere i fast eiendom',
+          'Å feste seg til et tall eller pris uten god grunn',
+          'Å ha stabile investeringer',
+          'Å følge en fast investeringsstrategi'
+        ],
+        correctAnswer: 1,
+        explanation: 'Forankring betyr at man fester seg til et bestemt tall eller pris, for eksempel at man ikke vil selge før aksjen er tilbake til kjøpsprisen.'
+      },
+      {
+        id: 'fr-q16',
+        question: 'Hva er den beste strategien for å unngå at følelser styrer investeringsbeslutninger?',
+        options: [
+          'Følge med på markedet hele tiden',
+          'Automatisere investeringer og bestemme regler på forhånd',
+          'Kun investere i sikre obligasjoner',
+          'La en megler ta alle beslutninger'
+        ],
+        correctAnswer: 1,
+        explanation: 'Automatisering og forhåndsbestemte regler fjerner behovet for å ta beslutninger når følelsene er sterke.'
+      },
+      {
+        id: 'fr-q17',
+        question: 'Hva er nudging?',
+        options: [
+          'En type investering',
+          'Små endringer i valgarkitektur som påvirker atferd i positiv retning',
+          'En handelsalgoritme',
+          'En type pensjonssparing'
+        ],
+        correctAnswer: 1,
+        explanation: 'Nudging er små endringer i valgarkitektur som påvirker atferd i positiv retning uten å forby alternativer.'
+      },
+      {
+        id: 'fr-q18',
+        question: 'Hvordan kan du "nudge" deg selv til bedre sparevaner?',
+        options: [
+          'Ved å sjekke porteføljen daglig',
+          'Ved å sette opp automatisk overføring til sparekonto på lønningsdag',
+          'Ved å handle aksjer aktivt',
+          'Ved å lese finansnyheter konstant'
+        ],
+        correctAnswer: 1,
+        explanation: 'Automatisk overføring på lønningsdag gjør at sparing blir "default" – du trenger ikke ta en aktiv beslutning hver måned.'
+      },
+      // Personlig finansiell planlegging (q19-q28)
+      {
+        id: 'fr-q19',
+        question: 'Hva er det første steget i finansiell planlegging?',
+        options: [
+          'Investere i aksjer',
+          'Kartlegge nåsituasjonen med eiendeler, gjeld, inntekter og utgifter',
+          'Sette opp automatisk sparing',
+          'Velge pensjonsfond'
+        ],
+        correctAnswer: 1,
+        explanation: 'Første steg er å kartlegge nåsituasjonen: Hva eier du, hva skylder du, hva tjener og bruker du?'
+      },
+      {
+        id: 'fr-q20',
+        question: 'Hva menes med personlig balanse?',
+        options: [
+          'Balanse mellom jobb og fritid',
+          'Oversikt over eiendeler minus gjeld',
+          'Balanse mellom aksjer og obligasjoner',
+          'Psykisk velvære'
+        ],
+        correctAnswer: 1,
+        explanation: 'En personlig balanse er en oversikt over hva du eier (eiendeler) minus hva du skylder (gjeld), som viser din netto formue.'
+      },
+      {
+        id: 'fr-q21',
+        question: 'Hva står SMART for i SMART-mål?',
+        options: [
+          'Simple, Measurable, Achievable, Relevant, Timely',
+          'Spesifikt, Målbart, Attraktivt, Realistisk, Tidsbundet',
+          'Saving, Money, And, Retirement, Together',
+          'Systematic, Managed, Annual, Regular, Tracking'
+        ],
+        correctAnswer: 1,
+        explanation: 'SMART står for Spesifikt, Målbart, Attraktivt, Realistisk og Tidsbundet.'
+      },
+      {
+        id: 'fr-q22',
+        question: 'Hva bør typisk prioriteres først: bufferkonto, aksjesparing eller studielånsnedbetaling?',
+        options: [
+          'Aksjesparing for høyest avkastning',
+          'Studielån for å bli gjeldfri',
+          'Bufferkonto for trygghet ved uforutsette hendelser',
+          'Alt er like viktig'
+        ],
+        correctAnswer: 2,
+        explanation: 'Bufferkonto bør prioriteres først fordi den gir trygghet og forhindrer at du må ta opp dyr gjeld ved uforutsette utgifter.'
+      },
+      {
+        id: 'fr-q23',
+        question: 'Hvorfor bør dyr gjeld betales ned før man begynner å investere?',
+        options: [
+          'Fordi det er påbudt',
+          'Fordi renten på forbruksgjeld (15-20%) overstiger forventet aksjeavkastning (7-8%)',
+          'Fordi bankene krever det',
+          'Fordi aksjer er for risikable'
+        ],
+        correctAnswer: 1,
+        explanation: 'En krone spart på kredittkortgjeld med 15-20% rente er verdt mer enn samme krone investert i aksjer med 7-8% forventet avkastning.'
+      },
+      {
+        id: 'fr-q24',
+        question: 'Hva er typiske finansielle mål for en student?',
+        options: [
+          'Maksimere aksjeavkastning',
+          'Kjøpe bolig umiddelbart',
+          'Bygge bufferkonto, unngå kredittkortgjeld, bruke BSU',
+          'Betale ned studielån så raskt som mulig'
+        ],
+        correctAnswer: 2,
+        explanation: 'For studenter er det viktigst å bygge bufferkonto, unngå kredittkortgjeld og utnytte BSU-ordningen.'
+      },
+      {
+        id: 'fr-q25',
+        question: 'Hvor stor bør en bufferkonto typisk være?',
+        options: [
+          '1 månedslønn',
+          '3-6 måneders utgifter',
+          '1 års inntekt',
+          '10 000 kr'
+        ],
+        correctAnswer: 1,
+        explanation: 'En bufferkonto bør typisk dekke 3-6 måneders utgifter for å gi trygghet ved uforutsette hendelser.'
+      },
+      {
+        id: 'fr-q26',
+        question: 'Hva er forskjellen mellom et vagt mål og et SMART-mål?',
+        options: [
+          'Vage mål er mer ambisiøse',
+          'SMART-mål har klare kriterier for suksess og gjør det lettere å måle fremgang',
+          'Det er ingen forskjell i praksis',
+          'Vage mål er enklere å nå'
+        ],
+        correctAnswer: 1,
+        explanation: 'SMART-mål gir klare kriterier for suksess (spesifikt, målbart, tidsbundet) og gjør det lettere å måle fremgang og oppnå resultater.'
+      },
+      {
+        id: 'fr-q27',
+        question: 'Er det normalt å ha negativ nettoformue som nyutdannet?',
+        options: [
+          'Nei, det tyder på dårlig økonomistyring',
+          'Ja, på grunn av studielån, og målet er å øke formuen over tid',
+          'Bare hvis man har kjøpt bolig',
+          'Nei, man bør alltid ha positiv formue'
+        ],
+        correctAnswer: 1,
+        explanation: 'Negativ nettoformue som student eller nyutdannet er normalt på grunn av studielån. Målet er å øke eiendeler og redusere gjeld over tid.'
+      },
+      {
+        id: 'fr-q28',
+        question: 'Hva bør en årlig finansiell gjennomgang inkludere?',
+        options: [
+          'Kun sjekke bankkontoer',
+          'Oppdatere balanse, vurdere måloppnåelse, rebalansere portefølje, sjekke kostnader',
+          'Bare lese årsrapporten til fondene',
+          'Kun sjekke om man har tjent penger'
+        ],
+        correctAnswer: 1,
+        explanation: 'En årlig gjennomgang bør inkludere oppdatering av personlig balanse, vurdering av måloppnåelse, rebalansering av portefølje og sjekk av kostnader.'
+      },
+      // Karriere og humankapital (q29-q35)
+      {
+        id: 'fr-q29',
+        question: 'Hva er humankapital?',
+        options: [
+          'Kapital investert i mennesker',
+          'Nåverdien av alle fremtidige arbeidsinntekter',
+          'Antall ansatte i et selskap',
+          'HR-budsjettet i en bedrift'
+        ],
+        correctAnswer: 1,
+        explanation: 'Humankapital er nåverdien av alle fremtidige arbeidsinntekter – for en nyutdannet kan dette være 15-25 millioner kroner over yrkeslivet.'
+      },
+      {
+        id: 'fr-q30',
+        question: 'Hvorfor er humankapital ofte viktigere enn finanskapital for unge?',
+        options: [
+          'Fordi unge ikke har råd til å spare',
+          'Fordi nåverdien av fremtidige inntekter typisk er mye større enn finansformuen',
+          'Fordi humankapital er enklere å måle',
+          'Fordi arbeidsgivere betaler mer til unge'
+        ],
+        correctAnswer: 1,
+        explanation: 'For unge mennesker er nåverdien av alle fremtidige arbeidsinntekter typisk 15-25 millioner kroner, langt mer enn det meste av sparing.'
+      },
+      {
+        id: 'fr-q31',
+        question: 'Hvilken kompetansekombinasjon er særlig etterspurt i finansbransjen nå?',
+        options: [
+          'Programmering og kreativitet',
+          'Finans og bærekraft/ESG',
+          'Økonomi og jus',
+          'Ledelse og språk'
+        ],
+        correctAnswer: 1,
+        explanation: 'Kombinasjonen av tradisjonell finanskompetanse og forståelse av bærekraft/ESG er svært etterspurt på grunn av ny regulering og investorkrav.'
+      },
+      {
+        id: 'fr-q32',
+        question: 'Hva menes med den grønne kompetanserevolusjonen?',
+        options: [
+          'At alle bør studere biologi',
+          'Klimaomstillingen skaper enorm etterspørsel etter ny kompetanse',
+          'At grønn energi blir billigere',
+          'At banker fokuserer på grønne lån'
+        ],
+        correctAnswer: 1,
+        explanation: 'Klimaomstillingen skaper enorm etterspørsel etter ny kompetanse innen ESG-analyse, klimarisikomodellering, grønn finansiering og lignende.'
+      },
+      {
+        id: 'fr-q33',
+        question: 'Hva bør du tenke på ved lønnsforhandling?',
+        options: [
+          'Kun grunnlønn',
+          'Total kompensasjon: lønn, bonus, pensjon, aksjer, fordeler',
+          'Kun kortsiktig gevinst',
+          'Hva kollegene tjener'
+        ],
+        correctAnswer: 1,
+        explanation: 'Ved lønnsforhandling bør du tenke på total kompensasjon som inkluderer lønn, bonus, pensjon, aksjer og andre fordeler.'
+      },
+      {
+        id: 'fr-q34',
+        question: 'Hva er BATNA i forhandlingssammenheng?',
+        options: [
+          'En type bonus',
+          'Best Alternative To Negotiated Agreement – ditt beste alternativ',
+          'En forhandlingsteknikk',
+          'Et lønnsnivå'
+        ],
+        correctAnswer: 1,
+        explanation: 'BATNA (Best Alternative To Negotiated Agreement) er ditt beste alternativ hvis forhandlingen ikke fører frem – styrker forhandlingsposisjonen.'
+      },
+      {
+        id: 'fr-q35',
+        question: 'Hvorfor kan læringsmuligheter være viktigere enn høy lønn tidlig i karrieren?',
+        options: [
+          'Fordi man ikke trenger penger som ung',
+          'Fordi kompetanse øker humankapitalen og gir høyere livstidsinntekt',
+          'Fordi arbeidsgivere foretrekker lave lønnskrav',
+          'Fordi det ser bedre ut på CV'
+        ],
+        correctAnswer: 1,
+        explanation: 'Investeringer i kompetanse tidlig øker humankapitalen og gir ofte høyere avkastning over yrkeslivet enn marginalt høyere startlønn.'
+      },
+      // Handlingsplan (q36-q40)
+      {
+        id: 'fr-q36',
+        question: 'Hva bør være det første steget i 30-dagers starterplanen?',
+        options: [
+          'Investere i aksjer',
+          'Kartlegge egen økonomi med balanse og budsjett',
+          'Bytte til billigere fond',
+          'Nedbetale all gjeld'
+        ],
+        correctAnswer: 1,
+        explanation: 'Du kan ikke forbedre det du ikke måler. Kartlegging av nåsituasjonen er nødvendig for å kunne ta informerte beslutninger.'
+      },
+      {
+        id: 'fr-q37',
+        question: 'Hvorfor anbefales automatisk sparing?',
+        options: [
+          'Fordi det gir høyere rente',
+          'Fordi det fjerner avhengigheten av viljestyrke og følelsesmessige beslutninger',
+          'Fordi bankene krever det',
+          'Fordi det er skattefritt'
+        ],
+        correctAnswer: 1,
+        explanation: 'Automatisering fjerner viljestyrkeavhengighet – du slipper å ta en aktiv beslutning hver måned når følelsene kan påvirke valget.'
+      },
+      {
+        id: 'fr-q38',
+        question: 'Hvorfor anbefales en årlig finansiell gjennomgang?',
+        options: [
+          'Fordi det er lovpålagt',
+          'Fordi finansmarkedene endrer seg så raskt',
+          'Fordi livssituasjonen og målene endrer seg over tid',
+          'Fordi det tar et år å spare nok til å investere'
+        ],
+        correctAnswer: 2,
+        explanation: 'Årlig gjennomgang er viktig fordi livet endrer seg – ny jobb, ny familie, nye mål, nye prioriteringer. Finansplanen må tilpasses virkeligheten.'
+      },
+      {
+        id: 'fr-q39',
+        question: 'Hva menes med at "penger er et middel, ikke et mål"?',
+        options: [
+          'At penger ikke er viktige',
+          'At finansiell kompetanse handler om frihet til å leve på egne premisser, ikke rikdom',
+          'At man ikke bør spare',
+          'At kun bærekraftige investeringer teller'
+        ],
+        correctAnswer: 1,
+        explanation: 'Finansiell kompetanse handler ikke om å bli rik, men om å ha frihet til å leve livet på dine egne premisser og ta valg basert på verdier.'
+      },
+      {
+        id: 'fr-q40',
+        question: 'Hva kjennetegner en god finansiell plan?',
+        options: [
+          'Den fokuserer kun på maksimal avkastning',
+          'Den er en kontinuerlig prosess med regelmessige justeringer',
+          'Den lages én gang og følges slavisk',
+          'Den krever profesjonell rådgiver'
+        ],
+        correctAnswer: 1,
+        explanation: 'Finansiell planlegging er ikke en engangshendelse – det er en kontinuerlig prosess. Små, regelmessige justeringer gir bedre resultater enn store, sjeldne omveltninger.'
+      }
+    ]
+  }
 };

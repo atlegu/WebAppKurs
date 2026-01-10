@@ -11,6 +11,7 @@ interface QuizState {
 export class ModuleQuizHandler {
   private container: HTMLElement;
   private quiz: ModuleQuiz | null = null;
+  private selectedQuestions: ModuleQuizQuestion[] = []; // Randomly selected questions
   private state: QuizState = {
     currentQuestion: 0,
     answers: new Map(),
@@ -33,6 +34,10 @@ export class ModuleQuizHandler {
 
   startQuiz(quiz: ModuleQuiz, previousScore?: number): void {
     this.quiz = quiz;
+
+    // Randomly select questions if questionsToShow is specified
+    this.selectedQuestions = this.selectRandomQuestions(quiz);
+
     this.state = {
       currentQuestion: 0,
       answers: new Map(),
@@ -42,6 +47,25 @@ export class ModuleQuizHandler {
     };
 
     this.render(previousScore);
+  }
+
+  // Fisher-Yates shuffle algorithm
+  private shuffleArray<T>(array: T[]): T[] {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  }
+
+  private selectRandomQuestions(quiz: ModuleQuiz): ModuleQuizQuestion[] {
+    const questionsToShow = quiz.questionsToShow || quiz.questions.length;
+    const numToSelect = Math.min(questionsToShow, quiz.questions.length);
+
+    // Shuffle all questions and take the first N
+    const shuffled = this.shuffleArray(quiz.questions);
+    return shuffled.slice(0, numToSelect);
   }
 
   private render(previousScore?: number): void {
@@ -57,7 +81,8 @@ export class ModuleQuizHandler {
   private renderQuiz(previousScore?: number): void {
     if (!this.quiz) return;
 
-    const totalQuestions = this.quiz.questions.length;
+    const totalQuestions = this.selectedQuestions.length;
+    const totalPool = this.quiz.questions.length;
     const answeredCount = this.state.answers.size;
     const progressPercent = (answeredCount / totalQuestions) * 100;
 
@@ -74,6 +99,7 @@ export class ModuleQuizHandler {
           <div class="module-quiz-title-section">
             <h1 class="module-quiz-title">${this.quiz.title}</h1>
             <p class="module-quiz-subtitle">${this.quiz.description}</p>
+            ${totalQuestions < totalPool ? `<p class="module-quiz-random-info">${totalQuestions} tilfeldig valgte spørsmål fra en pool på ${totalPool}</p>` : ''}
           </div>
         </div>
 
@@ -96,7 +122,7 @@ export class ModuleQuizHandler {
         </div>
 
         <div class="module-quiz-questions">
-          ${this.quiz.questions.map((q, index) => this.renderQuestion(q, index)).join('')}
+          ${this.selectedQuestions.map((q, index) => this.renderQuestion(q, index)).join('')}
         </div>
 
         <div class="module-quiz-actions">
@@ -147,7 +173,7 @@ export class ModuleQuizHandler {
   private renderResults(): void {
     if (!this.quiz) return;
 
-    const totalQuestions = this.quiz.questions.length;
+    const totalQuestions = this.selectedQuestions.length;
     const correctCount = this.calculateScore();
     const scorePercent = Math.round((correctCount / totalQuestions) * 100);
     const passed = scorePercent >= this.quiz.passingScore;
@@ -198,7 +224,7 @@ export class ModuleQuizHandler {
 
         <div class="results-review">
           <h2 class="results-review-title">Gjennomgang av svar</h2>
-          ${this.quiz.questions.map((q, index) => this.renderReviewQuestion(q, index)).join('')}
+          ${this.selectedQuestions.map((q, index) => this.renderReviewQuestion(q, index)).join('')}
         </div>
 
         <div class="results-actions">
@@ -218,7 +244,7 @@ export class ModuleQuizHandler {
                 <polyline points="23 4 23 10 17 10"></polyline>
                 <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
               </svg>
-              Prøv igjen
+              Prøv igjen (nye spørsmål)
             </button>
           `}
         </div>
@@ -274,7 +300,7 @@ export class ModuleQuizHandler {
     if (!this.quiz) return 0;
 
     let correct = 0;
-    this.quiz.questions.forEach((question, index) => {
+    this.selectedQuestions.forEach((question, index) => {
       if (this.state.answers.get(index) === question.correctAnswer) {
         correct++;
       }
@@ -299,7 +325,7 @@ export class ModuleQuizHandler {
     const submitBtn = this.container.querySelector('.module-quiz-submit');
     if (submitBtn) {
       submitBtn.addEventListener('click', () => {
-        if (this.state.answers.size === this.quiz?.questions.length) {
+        if (this.state.answers.size === this.selectedQuestions.length) {
           this.state.submitted = true;
           this.render();
           window.scrollTo(0, 0);

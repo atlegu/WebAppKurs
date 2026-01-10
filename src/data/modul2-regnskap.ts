@@ -939,8 +939,9 @@ export const modul2RegnskapModule: Module = {
   moduleQuiz: {
     id: 'modul-2-regnskap-quiz',
     title: 'Modulquiz: Grunnleggende Regnskap',
-    description: 'Test din forståelse av resultatregnskap, balanse, kontantstrøm og nøkkeltall. Du trenger minst 90% riktig for å bestå.',
-    passingScore: 90,
+    description: 'Test din forståelse av resultatregnskap, balanse, kontantstrøm og nøkkeltall. Du trenger minst 80% riktig for å bestå.',
+    passingScore: 80,
+    questionsToShow: 20,
     questions: [
       {
         id: 'q2-1',
@@ -1085,6 +1086,342 @@ export const modul2RegnskapModule: Module = {
         ],
         correctAnswer: 0,
         explanation: 'Rentedekningsgrad = EBIT/Rentekostnader måler hvor mange ganger selskapet kan betale sine rentekostnader med driftsresultatet. Over 3 anses som trygt.'
+      },
+      {
+        id: 'q2-13',
+        question: 'Hva er regnskapets tre hovedoppgaver?',
+        options: [
+          'Budsjettering, planlegging og kontroll',
+          'Dokumentasjon, rapportering og beslutningsgrunnlag',
+          'Inntekter, kostnader og resultat',
+          'Drift, investering og finansiering'
+        ],
+        correctAnswer: 1,
+        explanation: 'Regnskapets tre hovedoppgaver er: Dokumentasjon av økonomiske hendelser, rapportering til interessenter, og beslutningsgrunnlag for ledelsen.'
+      },
+      {
+        id: 'q2-14',
+        question: 'Hva ser en bank primært etter i regnskapet når den vurderer et lån?',
+        options: [
+          'Høy avkastning på egenkapitalen',
+          'Betalingsevne og sikkerhet',
+          'Høye inntekter',
+          'Lave lønnskostnader'
+        ],
+        correctAnswer: 1,
+        explanation: 'Banker fokuserer på betalingsevne (kan selskapet betale tilbake?) og sikkerhet (hva kan de ta pant i?). De er mindre opptatt av høy avkastning.'
+      },
+      {
+        id: 'q2-15',
+        question: 'Hva betyr periodisering i regnskapssammenheng?',
+        options: [
+          'At regnskapet deles inn i perioder',
+          'At inntekter og kostnader føres når de oppstår, ikke når pengene går',
+          'At selskapet rapporterer kvartalsvis',
+          'At gjeld fordeles over flere år'
+        ],
+        correctAnswer: 1,
+        explanation: 'Periodisering betyr at inntekter føres når de opptjenes og kostnader når de påløper, uavhengig av når pengene faktisk betales.'
+      },
+      {
+        id: 'q2-16',
+        question: 'Hva er bruttofortjeneste?',
+        options: [
+          'Inntekter minus alle kostnader',
+          'Inntekter minus varekostnad (direkte kostnader)',
+          'Resultat etter skatt',
+          'EBIT minus rentekostnader'
+        ],
+        correctAnswer: 1,
+        explanation: 'Bruttofortjeneste = Inntekter minus varekostnad. Det viser hva som er igjen etter direkte kostnader for å dekke driftskostnader og generere overskudd.'
+      },
+      {
+        id: 'q2-17',
+        question: 'Hvorfor er EBITDA populært, men kan være misvisende?',
+        options: [
+          'Fordi det inkluderer skatt',
+          'Fordi det ignorerer behovet for investeringer og vedlikehold',
+          'Fordi det er vanskelig å beregne',
+          'Fordi det kun gjelder børsnoterte selskaper'
+        ],
+        correctAnswer: 1,
+        explanation: 'EBITDA ignorerer avskrivninger, som representerer slitasje på eiendeler. Et selskap trenger å investere for å opprettholde kapasiteten, og dette fanges ikke opp av EBITDA.'
+      },
+      {
+        id: 'q2-18',
+        question: 'Hva er arbeidskapital?',
+        options: [
+          'Kapitalen som brukes til å betale lønn',
+          'Omløpsmidler minus kortsiktig gjeld',
+          'Egenkapital minus langsiktig gjeld',
+          'Anleggsmidler minus avskrivninger'
+        ],
+        correctAnswer: 1,
+        explanation: 'Arbeidskapital = Omløpsmidler - Kortsiktig gjeld. Den viser selskapets likviditetsreserve og evne til å betale løpende forpliktelser.'
+      },
+      {
+        id: 'q2-19',
+        question: 'Et selskap har eiendeler på 1000, gjeld på 600. Hva er egenkapitalandelen?',
+        options: [
+          '60%',
+          '40%',
+          '150%',
+          '67%'
+        ],
+        correctAnswer: 1,
+        explanation: 'Egenkapital = 1000 - 600 = 400. Egenkapitalandel = 400/1000 = 40%. Dette betyr at 40% av eiendelene er finansiert med egenkapital.'
+      },
+      {
+        id: 'q2-20',
+        question: 'Hva kjennetegner kortsiktig gjeld?',
+        options: [
+          'Gjeld med lav rente',
+          'Gjeld som forfaller til betaling innen ett år',
+          'Gjeld til banker',
+          'Gjeld som kan konverteres til aksjer'
+        ],
+        correctAnswer: 1,
+        explanation: 'Kortsiktig gjeld er gjeld som forfaller til betaling innen ett år, som leverandørgjeld, skyldig skatt og kassekreditt.'
+      },
+      {
+        id: 'q2-21',
+        question: 'Hva viser kundefordringer på balansen?',
+        options: [
+          'Hvor mye selskapet skylder kundene',
+          'Hvor mye kunder skylder selskapet for varer/tjenester som er levert',
+          'Fremtidige salg som er avtalt',
+          'Kontanter mottatt fra kunder'
+        ],
+        correctAnswer: 1,
+        explanation: 'Kundefordringer er penger selskapet har til gode fra kunder for varer eller tjenester som er levert, men ennå ikke betalt.'
+      },
+      {
+        id: 'q2-22',
+        question: 'Hvorfor legges avskrivninger til når vi beregner kontantstrøm fra drift?',
+        options: [
+          'Fordi avskrivninger øker verdien',
+          'Fordi avskrivninger er en kostnad som ikke medfører kontantutbetaling',
+          'Fordi avskrivninger reduserer skatt',
+          'Fordi avskrivninger er en inntekt'
+        ],
+        correctAnswer: 1,
+        explanation: 'Avskrivninger trekkes fra i resultatregnskapet som en kostnad, men innebærer ingen faktisk kontantutbetaling. De legges derfor tilbake når vi beregner kontantstrøm.'
+      },
+      {
+        id: 'q2-23',
+        question: 'Hva menes med fri kontantstrøm (Free Cash Flow)?',
+        options: [
+          'Kontanter selskapet kan bruke fritt',
+          'Kontantstrøm fra drift minus nødvendige investeringer',
+          'Kontanter etter skatt',
+          'Kontantstrøm fra finansiering'
+        ],
+        correctAnswer: 1,
+        explanation: 'Fri kontantstrøm = Kontantstrøm fra drift minus investeringer. Det viser kontanter tilgjengelig for eierne og kreditorene etter at selskapet har gjort nødvendige investeringer.'
+      },
+      {
+        id: 'q2-24',
+        question: 'Økt varelager har hvilken effekt på kontantstrømmen?',
+        options: [
+          'Positiv - det øker kontantstrømmen',
+          'Negativ - kontanter er bundet opp i varer',
+          'Ingen effekt',
+          'Avhenger av varelagets verdi'
+        ],
+        correctAnswer: 1,
+        explanation: 'Økt varelager binder opp kontanter i varer som ikke er solgt ennå. Dette reduserer kontantstrømmen selv om resultatet ikke påvirkes.'
+      },
+      {
+        id: 'q2-25',
+        question: 'Hva betyr det når et selskap finansierer utbytte med nye lån?',
+        options: [
+          'Det er en smart finansiell strategi',
+          'Det er ikke bærekraftig og tyder på svak kontantgenerering',
+          'Det viser at selskapet har god kredittverdighet',
+          'Det er vanlig praksis i alle bransjer'
+        ],
+        correctAnswer: 1,
+        explanation: 'Å låne for å betale utbytte er et faresignal. Sunne selskaper finansierer utbytte fra driften. Dette kan tyde på at kjernevirksomheten ikke genererer nok kontanter.'
+      },
+      {
+        id: 'q2-26',
+        question: 'Hva er ROA (Return on Assets)?',
+        options: [
+          'Årsresultat / Eiendeler',
+          'EBIT / Eiendeler',
+          'Egenkapital / Eiendeler',
+          'Inntekter / Eiendeler'
+        ],
+        correctAnswer: 1,
+        explanation: 'ROA = EBIT / Eiendeler viser hvor effektivt selskapet utnytter sine eiendeler til å generere driftsresultat, uavhengig av finansiering.'
+      },
+      {
+        id: 'q2-27',
+        question: 'Hva er forskjellen mellom likviditetsgrad 1 og 2?',
+        options: [
+          'Likviditetsgrad 2 inkluderer langsiktig gjeld',
+          'Likviditetsgrad 2 ekskluderer varelager',
+          'Likviditetsgrad 1 måler langsiktig likviditet',
+          'Det er ingen forskjell'
+        ],
+        correctAnswer: 1,
+        explanation: 'Likviditetsgrad 2 (acid test) = (Omløpsmidler - Varelager) / Kortsiktig gjeld. Den ekskluderer varelager fordi det kan være vanskelig å selge raskt.'
+      },
+      {
+        id: 'q2-28',
+        question: 'I DuPont-analysen, hva betyr høy finansiell gearing?',
+        options: [
+          'Lav gjeld i forhold til egenkapital',
+          'Høy gjeld i forhold til egenkapital, som øker både ROE og risiko',
+          'Høye inntekter i forhold til kostnader',
+          'Rask omsetning av eiendeler'
+        ],
+        correctAnswer: 1,
+        explanation: 'Finansiell gearing = Eiendeler/Egenkapital. Høy gearing betyr mye gjeld, som forsterker ROE både oppover og nedover, og øker finansiell risiko.'
+      },
+      {
+        id: 'q2-29',
+        question: 'Hva betyr det at en dagligvarekjede har høyt kapitalomløp?',
+        options: [
+          'At de har mye kapital',
+          'At de genererer mye salg per investert krone',
+          'At de betaler ut mye utbytte',
+          'At de har høy egenkapitalandel'
+        ],
+        correctAnswer: 1,
+        explanation: 'Kapitalomløp = Inntekter/Eiendeler. Dagligvare har lave marginer men høyt volum - de selger varer raskt og genererer mye omsetning per investert krone.'
+      },
+      {
+        id: 'q2-30',
+        question: 'Hva er opptjent egenkapital?',
+        options: [
+          'Penger som aksjonærene har skutt inn',
+          'Overskudd som er tilbakeholdt i selskapet over tid',
+          'Lån som er konvertert til egenkapital',
+          'Egenkapital som er lovet, men ikke innbetalt'
+        ],
+        correctAnswer: 1,
+        explanation: 'Opptjent egenkapital er akkumulerte overskudd som ikke er utbetalt som utbytte, men reinvestert i selskapet.'
+      },
+      {
+        id: 'q2-31',
+        question: 'Et selskap med resultatmargin på 5%, kapitalomløp 2, og gearing 2,5 har ROE på:',
+        options: [
+          '10%',
+          '25%',
+          '50%',
+          '5%'
+        ],
+        correctAnswer: 1,
+        explanation: 'DuPont: ROE = Resultatmargin × Kapitalomløp × Gearing = 5% × 2 × 2,5 = 25%.'
+      },
+      {
+        id: 'q2-32',
+        question: 'Hva er immaterielle eiendeler?',
+        options: [
+          'Eiendeler som ikke er viktige',
+          'Ikke-fysiske eiendeler som patenter, varemerker og goodwill',
+          'Eiendeler som er leid, ikke eid',
+          'Kortsiktige eiendeler'
+        ],
+        correctAnswer: 1,
+        explanation: 'Immaterielle eiendeler er ikke-fysiske verdier som patenter, varemerker, lisenser og goodwill fra oppkjøp.'
+      },
+      {
+        id: 'q2-33',
+        question: 'Hva betyr negativt årsresultat for egenkapitalen?',
+        options: [
+          'Egenkapitalen øker',
+          'Egenkapitalen reduseres',
+          'Ingen effekt på egenkapitalen',
+          'Egenkapitalen nullstilles'
+        ],
+        correctAnswer: 1,
+        explanation: 'Negativt resultat (underskudd) reduserer opptjent egenkapital. Over tid kan gjentatte underskudd spise opp egenkapitalen.'
+      },
+      {
+        id: 'q2-34',
+        question: 'Hva viser driftsmarginen?',
+        options: [
+          'Hvor mye av inntektene som går til eierne',
+          'Hvor mye av inntektene som blir til driftsresultat (EBIT)',
+          'Hvor raskt selskapet omsetter varene',
+          'Selskapets gjeldsgrad'
+        ],
+        correctAnswer: 1,
+        explanation: 'Driftsmargin = EBIT / Inntekter. Den viser hvor stor andel av inntektene som blir til driftsresultat etter alle driftskostnader.'
+      },
+      {
+        id: 'q2-35',
+        question: 'Hvorfor er det viktig å sammenligne nøkkeltall med bransjen?',
+        options: [
+          'Fordi alle bransjer har samme "normale" nøkkeltall',
+          'Fordi ulike bransjer har ulike kapitalstrukturer og marginer som er normale',
+          'Fordi det er påbudt av myndighetene',
+          'Fordi det er den eneste måten å beregne nøkkeltall på'
+        ],
+        correctAnswer: 1,
+        explanation: 'Ulike bransjer har helt ulike "normale" tall. En dagligvarekjede har lav margin men høyt omløp, mens et teknologiselskap kan ha høy margin men lavt kapitalomløp.'
+      },
+      {
+        id: 'q2-36',
+        question: 'Hva betyr det at kontantstrøm fra drift er negativ over flere år?',
+        options: [
+          'Selskapet investerer mye',
+          'Kjernevirksomheten genererer ikke kontanter - et alvorlig faresignal',
+          'Selskapet betaler ut mye utbytte',
+          'Regnskapet er feil ført'
+        ],
+        correctAnswer: 1,
+        explanation: 'Vedvarende negativ kontantstrøm fra drift betyr at kjernevirksomheten ikke genererer kontanter. Dette er et alvorlig varselflagg om selskapets bærekraft.'
+      },
+      {
+        id: 'q2-37',
+        question: 'Hva er leverandørgjeld?',
+        options: [
+          'Lån fra leverandører',
+          'Penger selskapet skylder leverandører for varer/tjenester som er mottatt',
+          'Forskuddsbetaling til leverandører',
+          'Langsiktige innkjøpsavtaler'
+        ],
+        correctAnswer: 1,
+        explanation: 'Leverandørgjeld er penger selskapet skylder sine leverandører for varer eller tjenester som er mottatt, men ikke betalt ennå.'
+      },
+      {
+        id: 'q2-38',
+        question: 'Hva var hovedproblemet med Enron-skandalen?',
+        options: [
+          'For høye lønninger til ledelsen',
+          'Kreativ regnskapsføring som skjulte gjeld og tap',
+          'For lave priser på energi',
+          'For mye investering i ny teknologi'
+        ],
+        correctAnswer: 1,
+        explanation: 'Enron brukte komplekse strukturer for å skjule gjeld utenfor balansen og kunstig oppblåse resultater. Dette viser viktigheten av å kunne lese regnskap kritisk.'
+      },
+      {
+        id: 'q2-39',
+        question: 'Et selskap har omløpsmidler på 500 og kortsiktig gjeld på 600. Hva betyr dette?',
+        options: [
+          'Selskapet har god likviditet',
+          'Selskapet kan ha problemer med å betale kortsiktige forpliktelser',
+          'Selskapet er svært lønnsomt',
+          'Selskapet bør øke utbyttet'
+        ],
+        correctAnswer: 1,
+        explanation: 'Arbeidskapital = 500 - 600 = -100. Negativ arbeidskapital betyr at kortsiktig gjeld overstiger omløpsmidler, noe som kan indikere likviditetsproblemer.'
+      },
+      {
+        id: 'q2-40',
+        question: 'Hva viser kontantstrømoppstillingen som ikke vises i resultatregnskapet?',
+        options: [
+          'Selskapets inntekter',
+          'Når pengene faktisk kommer inn og går ut',
+          'Selskapets overskudd',
+          'Selskapets kostnadsstruktur'
+        ],
+        correctAnswer: 1,
+        explanation: 'Kontantstrømmen viser faktiske pengebevegelser - når kontanter mottas og betales ut. Resultatregnskapet bruker periodisering og viser ikke dette direkte.'
       }
     ]
   }

@@ -1,10 +1,10 @@
 import { Module } from '../types/course';
 
 export const modul8KapitalstrukturModule: Module = {
-  id: 'modul-8-kapitalstruktur',
+  id: 'modul-9-kapitalstruktur',
   title: 'Kapitalstruktur og Dividende',
   icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>',
-  order: 8,
+  order: 9,
   learningObjectives: [
     'Forstå hva kapitalstruktur er og hvorfor det er viktig',
     'Forklare Modigliani-Miller-teoremet og dets implikasjoner',
@@ -785,8 +785,9 @@ export const modul8KapitalstrukturModule: Module = {
   moduleQuiz: {
     id: 'modul-8-kapitalstruktur-quiz',
     title: 'Modulquiz: Kapitalstruktur og Dividende',
-    description: 'Test din forståelse av kapitalstruktur, WACC og dividendepolitikk. Du trenger minst 90% riktig for å bestå.',
-    passingScore: 90,
+    description: 'Test din forståelse av kapitalstruktur, WACC og dividendepolitikk. Du trenger minst 80% riktig for å bestå.',
+    passingScore: 80,
+    questionsToShow: 20,
     questions: [
       {
         id: 'q8-1',
@@ -931,6 +932,342 @@ export const modul8KapitalstrukturModule: Module = {
         ],
         correctAnswer: 1,
         explanation: 'Høy gjeldsgrad gir økt finansiell risiko. Selskapet må betjene gjelden uansett resultat, noe som kan føre til betalingsproblemer i dårlige perioder.'
+      },
+      {
+        id: 'q8-13',
+        question: 'Hva er gjeldsskatteskjoldet (tax shield)?',
+        options: [
+          'Skatt på gjeldsrenter',
+          'Skattebesparelsen fra at rentekostnader er fradragsberettiget',
+          'Skattereduksjon ved å betale dividende',
+          'Skatteutsettelse ved tilbakekjøp'
+        ],
+        correctAnswer: 1,
+        explanation: 'Gjeldsskatteskjoldet = Rentekostnad × Skattesats. Det er verdien av skattefordelen ved å bruke gjeld i stedet for egenkapital.'
+      },
+      {
+        id: 'q8-14',
+        question: 'Hva er trade-off-teorien for kapitalstruktur?',
+        options: [
+          'At man alltid skal maksimere gjeld',
+          'At optimal gjeldsgrad balanserer skattefordeler mot konkurskostnader',
+          'At gjeld og egenkapital alltid er like dyre',
+          'At selskaper alltid skal unngå gjeld'
+        ],
+        correctAnswer: 1,
+        explanation: 'Trade-off-teorien sier at selskapet veier skattefordeler ved gjeld mot økte konkurskostnader for å finne optimal gjeldsgrad.'
+      },
+      {
+        id: 'q8-15',
+        question: 'Hva er agentproblem mellom aksjonærer og kreditorer?',
+        options: [
+          'At aksjonærer og kreditorer alltid samarbeider',
+          'At aksjonærer kan ta risikable beslutninger som skader kreditorene',
+          'At kreditorer kontrollerer selskapet',
+          'At det ikke finnes interessekonflikter'
+        ],
+        correctAnswer: 1,
+        explanation: 'Aksjonærer kan ta høy risiko siden de har begrenset nedsideansvar - gevinsten er deres, tapene bæres delvis av kreditorene. Dette skaper interessekonflikt.'
+      },
+      {
+        id: 'q8-16',
+        question: 'Hva er finansiell gearing/leverage?',
+        options: [
+          'Bruk av derivater for å øke avkastning',
+          'Bruk av gjeld for å forsterke avkastningen på egenkapitalen',
+          'Bruk av sikring mot valutarisiko',
+          'Bruk av kontantreserver'
+        ],
+        correctAnswer: 1,
+        explanation: 'Finansiell gearing er bruk av gjeld. Det forsterker ROE både oppover (gode tider) og nedover (dårlige tider) - høyere risiko og potensielt høyere avkastning.'
+      },
+      {
+        id: 'q8-17',
+        question: 'Hva er effekten på aksjekurs typisk ved kunngjøring av høyere dividende?',
+        options: [
+          'Kursen faller alltid',
+          'Kursen stiger ofte fordi det signaliserer tro på fremtiden',
+          'Kursen påvirkes ikke',
+          'Kursen halveres'
+        ],
+        correctAnswer: 1,
+        explanation: 'Økt dividende signaliserer ofte at ledelsen er optimistisk om fremtidige kontantstrømmer. Markedet tolker dette positivt, og kursen stiger ofte.'
+      },
+      {
+        id: 'q8-18',
+        question: 'Hva er dividend irrelevans-teorien (Miller-Modigliani)?',
+        options: [
+          'At dividende alltid er viktig for aksjonærene',
+          'At i et perfekt marked er selskapets verdi uavhengig av dividendepolitikken',
+          'At dividende alltid bør være null',
+          'At tilbakekjøp er forbudt'
+        ],
+        correctAnswer: 1,
+        explanation: 'I perfekte markeder kan investorer lage "hjemmelaget dividende" ved å selge aksjer. Derfor er selskapets verdi teoretisk uavhengig av dividendepolitikken.'
+      },
+      {
+        id: 'q8-19',
+        question: 'Hva er "bird-in-the-hand"-argumentet for dividende?',
+        options: [
+          'At aksjer er som fugler - de kan fly bort',
+          'At investorer foretrekker sikker dividende i dag fremfor usikker kursgevinst i fremtiden',
+          'At man bør investere i fugleindustrien',
+          'At dividende er dobbeltbeskattet'
+        ],
+        correctAnswer: 1,
+        explanation: 'Noen investorer foretrekker sikker dividende nå ("en fugl i hånden") fremfor usikre fremtidige gevinster ("to i busken"). Dette taler for dividende.'
+      },
+      {
+        id: 'q8-20',
+        question: 'Hva er "clientele-effekten" i dividendepolitikk?',
+        options: [
+          'At alle investorer foretrekker samme dividendenivå',
+          'At ulike investorer tiltrekkes av ulike dividendepolitikker',
+          'At kun institusjonelle investorer bryr seg om dividende',
+          'At dividende kun påvirker private investorer'
+        ],
+        correctAnswer: 1,
+        explanation: 'Investorer med ulike behov og skattesituasjoner velger selskaper med passende dividendepolitikk. Pensjonister vil ha høy dividende, unge vil ha vekst.'
+      },
+      {
+        id: 'q8-21',
+        question: 'Hva er gjeldsgrad (debt-to-equity ratio)?',
+        options: [
+          'Rentekostnad dividert på resultat',
+          'Gjeld dividert på egenkapital',
+          'Egenkapital dividert på eiendeler',
+          'Omsetning dividert på gjeld'
+        ],
+        correctAnswer: 1,
+        explanation: 'Gjeldsgrad = Gjeld / Egenkapital. Den måler hvor mye gjeld selskapet har i forhold til egenkapitalen. Høy gjeldsgrad = høy finansiell risiko.'
+      },
+      {
+        id: 'q8-22',
+        question: 'Hva er rentedekningsgrad (interest coverage ratio)?',
+        options: [
+          'EBIT dividert på rentekostnader',
+          'Rentekostnader dividert på omsetning',
+          'Gjeld dividert på rente',
+          'Overskudd etter skatt dividert på rente'
+        ],
+        correctAnswer: 0,
+        explanation: 'Rentedekningsgrad = EBIT / Rentekostnader. Den viser hvor mange ganger driftsresultatet dekker rentekostnadene. Høyere er tryggere for kreditorer.'
+      },
+      {
+        id: 'q8-23',
+        question: 'Hvorfor har finansielle selskaper (banker) typisk høyere gjeldsgrad enn industriselskaper?',
+        options: [
+          'Fordi de ikke kan bruke egenkapital',
+          'Fordi deres eiendeler (lån) er mer stabile og forutsigbare',
+          'Fordi de ikke betaler skatt',
+          'Fordi de ikke har konkurskostnader'
+        ],
+        correctAnswer: 1,
+        explanation: 'Bankers eiendeler (utlån) har mer stabile kontantstrømmer enn f.eks. industri. Dette gjør at de kan bære mer gjeld før finansiell nød blir sannsynlig.'
+      },
+      {
+        id: 'q8-24',
+        question: 'Hva er en mulig fordel med tilbakekjøp sammenlignet med dividende?',
+        options: [
+          'Tilbakekjøp er gratis for selskapet',
+          'Tilbakekjøp gir mer fleksibilitet og kan være skatteeffektivt',
+          'Tilbakekjøp øker antall aksjer',
+          'Tilbakekjøp er obligatorisk'
+        ],
+        correctAnswer: 1,
+        explanation: 'Tilbakekjøp gir fleksibilitet (ikke forpliktende som dividende), kan være skatteeffektivt, og kan brukes til å signalisere at aksjen er underpriset.'
+      },
+      {
+        id: 'q8-25',
+        question: 'Hva er asymmetrisk informasjon i kapitalstruktursammenheng?',
+        options: [
+          'At alle har lik informasjon',
+          'At ledelsen vet mer om selskapet enn markedet',
+          'At kreditorer vet mer enn aksjonærer',
+          'At informasjon er symmetrisk fordelt'
+        ],
+        correctAnswer: 1,
+        explanation: 'Ledelsen har mer informasjon om selskapets virkelige verdi og fremtidsutsikter. Dette påvirker hvordan markedet tolker finansieringsbeslutninger.'
+      },
+      {
+        id: 'q8-26',
+        question: 'Hva er "financial distress" (finansiell nød)?',
+        options: [
+          'Når selskapet har for mye egenkapital',
+          'Når selskapet sliter med å betjene gjeldsforpliktelser',
+          'Når aksjekursen stiger raskt',
+          'Når selskapet betaler for mye dividende'
+        ],
+        correctAnswer: 1,
+        explanation: 'Finansiell nød oppstår når selskapet ikke klarer å møte gjeldsforpliktelser. Det medfører direkte kostnader (advokater) og indirekte (tapt kundetillit).'
+      },
+      {
+        id: 'q8-27',
+        question: 'Hva er en konvertibel obligasjon?',
+        options: [
+          'En obligasjon som kun kan handles i utlandet',
+          'En obligasjon som kan konverteres til aksjer',
+          'En obligasjon med variabel rente',
+          'En obligasjon uten kupongrente'
+        ],
+        correctAnswer: 1,
+        explanation: 'Konvertible obligasjoner kan byttes til aksjer til en forhåndsbestemt kurs. De kombinerer egenskaper fra gjeld og egenkapital.'
+      },
+      {
+        id: 'q8-28',
+        question: 'Hvorfor er WACC viktig i investeringsbeslutninger?',
+        options: [
+          'WACC er kun viktig for banker',
+          'WACC brukes som avkastningskrav/diskonteringsrate for å vurdere prosjekter',
+          'WACC bestemmer dividendepolitikken',
+          'WACC er irrelevant for prosjektvurdering'
+        ],
+        correctAnswer: 1,
+        explanation: 'WACC representerer selskapets kapitalkostnad. Prosjekter må gi avkastning over WACC for å skape verdi (positiv NPV).'
+      },
+      {
+        id: 'q8-29',
+        question: 'Hva skjer med WACC når gjeldsandelen øker (innen rimelige grenser)?',
+        options: [
+          'WACC øker alltid',
+          'WACC kan synke fordi gjeld er billigere etter skatt',
+          'WACC forblir konstant',
+          'WACC blir negativ'
+        ],
+        correctAnswer: 1,
+        explanation: 'Gjeld etter skatt er billigere enn egenkapital. Derfor kan WACC synke når man øker gjeld - opp til et punkt der konkurskostnader begynner å dominere.'
+      },
+      {
+        id: 'q8-30',
+        question: 'Hva er M&M Proposisjon II?',
+        options: [
+          'At WACC er konstant uavhengig av kapitalstruktur',
+          'At avkastningskravet til egenkapital øker lineært med gjeldsgraden',
+          'At gjeld alltid er risikofritt',
+          'At dividende er irrelevant'
+        ],
+        correctAnswer: 1,
+        explanation: 'M&M II sier at når gjelden øker, øker også risikoen for aksjonærene, og dermed avkastningskravet til egenkapital (re øker med D/E).'
+      },
+      {
+        id: 'q8-31',
+        question: 'Hva er "utbytteutjevning" (dividend smoothing)?',
+        options: [
+          'Å alltid øke dividende hvert år',
+          'At selskaper holder dividende stabil og bare endrer den gradvis',
+          'Å aldri betale dividende',
+          'Å variere dividende med aksjekursen'
+        ],
+        correctAnswer: 1,
+        explanation: 'De fleste selskaper jevner ut dividende over tid og er motvillige til å kutte. Dividendekutt oppfattes svært negativt av markedet.'
+      },
+      {
+        id: 'q8-32',
+        question: 'Hva er et mulig problem med for mye fri kontantstrøm (free cash flow)?',
+        options: [
+          'Selskapet blir for lønnsomt',
+          'Ledelsen kan bruke pengene på verdiødeleggende prosjekter (empire building)',
+          'Aksjonærene krever for høy dividende',
+          'Selskapet får for lite gjeld'
+        ],
+        correctAnswer: 1,
+        explanation: 'Frie kontantstrømmer kan misbrukes av ledelsen til ulønnsom ekspansjon eller frynsegoder. Gjeld og dividende kan disiplinere ledelsen.'
+      },
+      {
+        id: 'q8-33',
+        question: 'Hva er "debt covenants" (lånebetingelser)?',
+        options: [
+          'Fordeler som kommer med gjeld',
+          'Begrensninger kreditorer legger på selskapet for å beskytte sine interesser',
+          'Renter som må betales på gjeld',
+          'Skattefordeler ved gjeld'
+        ],
+        correctAnswer: 1,
+        explanation: 'Covenants er vilkår i låneavtaler som begrenser selskapets handlingsrom (f.eks. max gjeldsgrad, minimumlikviditet) for å beskytte kreditorene.'
+      },
+      {
+        id: 'q8-34',
+        question: 'Hvorfor unngår mange selskaper å kutte dividende selv i dårlige tider?',
+        options: [
+          'Det er ulovlig å kutte dividende',
+          'Fordi dividendekutt sender sterkt negativt signal om selskapets fremtid',
+          'Fordi aksjonærene ikke merker det',
+          'Fordi det øker gjelden'
+        ],
+        correctAnswer: 1,
+        explanation: 'Dividendekutt tolkes som et signal om at ledelsen ikke tror på fremtiden. Derfor holder selskaper ofte ut lenge før de kutter.'
+      },
+      {
+        id: 'q8-35',
+        question: 'Hva er en "leveraged buyout" (LBO)?',
+        options: [
+          'Kjøp av aksjer med egne midler',
+          'Oppkjøp finansiert hovedsakelig med gjeld',
+          'Salg av selskapet til ansatte',
+          'Emisjon av nye aksjer'
+        ],
+        correctAnswer: 1,
+        explanation: 'LBO er oppkjøp der store deler av kjøpesummen finansieres med gjeld, sikret i målselskapets eiendeler og kontantstrømmer.'
+      },
+      {
+        id: 'q8-36',
+        question: 'Hva er et særskilt utbytte (special dividend)?',
+        options: [
+          'Vanlig kvartalsvis utbytte',
+          'En engangsbetaling utover ordinær dividende',
+          'Utbytte til ansatte',
+          'Utbytte i form av aksjer'
+        ],
+        correctAnswer: 1,
+        explanation: 'Særskilt utbytte er en engangsbetaling, ofte etter salg av eiendeler eller ekstraordinært gode resultater. Det er ikke forventet å gjentas.'
+      },
+      {
+        id: 'q8-37',
+        question: 'Hva er "payout ratio" (utbetalingsandel)?',
+        options: [
+          'Gjeld dividert på egenkapital',
+          'Dividende dividert på årsresultat',
+          'Rente dividert på gjeld',
+          'Aksjekurs dividert på resultat'
+        ],
+        correctAnswer: 1,
+        explanation: 'Payout ratio = Dividende / Nettoresultat. Den viser hvor stor andel av overskuddet som deles ut vs. beholdes i selskapet.'
+      },
+      {
+        id: 'q8-38',
+        question: 'Hva er effekten av gjeld på WACC ifølge trade-off-teorien?',
+        options: [
+          'WACC øker alltid med gjeld',
+          'WACC synker først (skattefordel), men øker til slutt (konkurskostnader)',
+          'WACC er konstant uansett gjeldsgrad',
+          'WACC synker alltid med gjeld'
+        ],
+        correctAnswer: 1,
+        explanation: 'Trade-off-teorien sier at WACC er U-formet: først synker den pga. skattefordeler, men ved høy gjeldsgrad øker den igjen pga. konkurskostnader og økt risiko.'
+      },
+      {
+        id: 'q8-39',
+        question: 'Hva er forskjellen mellom operasjonell og finansiell risiko?',
+        options: [
+          'Det finnes ingen forskjell',
+          'Operasjonell risiko kommer fra driften, finansiell risiko fra kapitalstrukturen',
+          'Begge kommer fra kapitalstrukturen',
+          'Operasjonell risiko er alltid høyere'
+        ],
+        correctAnswer: 1,
+        explanation: 'Operasjonell risiko (forretningsrisiko) avhenger av bransje og drift. Finansiell risiko legges til gjennom gjeldsfinansiering og forsterker totalrisikoen.'
+      },
+      {
+        id: 'q8-40',
+        question: 'Hvorfor bruker modne selskaper ofte mer gjeld enn vekstselskaper?',
+        options: [
+          'Fordi modne selskaper har mindre behov for kontanter',
+          'Fordi modne selskaper har stabile kontantstrømmer som kan betjene gjelden',
+          'Fordi vekstselskaper har for mye gjeld allerede',
+          'Fordi bankene ikke låner til vekstselskaper'
+        ],
+        correctAnswer: 1,
+        explanation: 'Modne selskaper med stabile, forutsigbare kontantstrømmer kan trygt ta mer gjeld. Vekstselskaper har usikre kontantstrømmer og trenger finansiell fleksibilitet.'
       }
     ]
   }

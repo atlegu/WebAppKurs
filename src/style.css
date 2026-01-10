@@ -3089,6 +3089,13 @@ a:hover {
   margin: 0;
 }
 
+.module-quiz-random-info {
+  font-size: var(--text-sm);
+  color: var(--primary);
+  margin: var(--space-2) 0 0 0;
+  font-weight: 500;
+}
+
 /* Previous Score Banner */
 .module-quiz-previous-score {
   display: flex;

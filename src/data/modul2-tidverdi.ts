@@ -1010,8 +1010,9 @@ export const modul2TidverdiModule: Module = {
   moduleQuiz: {
     id: 'modul-2-tidverdi-quiz',
     title: 'Modulquiz: Tidsverdien av Penger',
-    description: 'Test din forståelse av nåverdi, fremtidsverdi, renters rente og annuiteter. Du trenger minst 90% riktig for å bestå.',
-    passingScore: 90,
+    description: 'Test din forståelse av nåverdi, fremtidsverdi, renters rente og annuiteter. Du trenger minst 80% riktig for å bestå.',
+    passingScore: 80,
+    questionsToShow: 20,
     questions: [
       {
         id: 'q3-1',
@@ -1156,6 +1157,342 @@ export const modul2TidverdiModule: Module = {
         ],
         correctAnswer: 1,
         explanation: 'Høyere diskonteringsrente betyr at fremtidige kontantstrømmer er mindre verdt i dag, så nåverdien synker.'
+      },
+      {
+        id: 'q3-13',
+        question: 'Hva er de tre hovedgrunnene til at penger i dag er mer verdifulle?',
+        options: [
+          'Renter, skatt og risiko',
+          'Investeringsmulighet, inflasjon og usikkerhet',
+          'Valuta, renter og avgifter',
+          'Inflasjon, skatt og valutasvingninger'
+        ],
+        correctAnswer: 1,
+        explanation: 'De tre hovedgrunnene er: 1) Investeringsmulighet - pengene kan vokse, 2) Inflasjon - kjøpekraft synker, 3) Usikkerhet - fremtidige penger er mindre sikre.'
+      },
+      {
+        id: 'q3-14',
+        question: 'Hva er forskjellen mellom enkel rente og renters rente?',
+        options: [
+          'Enkel rente er alltid lavere',
+          'Renters rente beregnes kun på hovedstolen',
+          'Renters rente beregnes på hovedstol + tidligere opptjent rente',
+          'Det er ingen praktisk forskjell over tid'
+        ],
+        correctAnswer: 2,
+        explanation: 'Med renters rente får du rente på rentene - eksponentiell vekst. Med enkel rente får du kun rente på det opprinnelige beløpet.'
+      },
+      {
+        id: 'q3-15',
+        question: 'Med 72-regelen: Hvor lang tid tar det å doble pengene med 9% rente?',
+        options: [
+          '6 år',
+          '8 år',
+          '9 år',
+          '12 år'
+        ],
+        correctAnswer: 1,
+        explanation: '72-regelen: 72 ÷ 9 = 8 år. Med 9% årlig rente tar det omtrent 8 år å doble pengene.'
+      },
+      {
+        id: 'q3-16',
+        question: 'Hva er hovedformelen for nåverdi?',
+        options: [
+          'PV = FV × (1 + r)^n',
+          'PV = FV ÷ (1 + r)^n',
+          'PV = FV × r × n',
+          'PV = FV - (r × n)'
+        ],
+        correctAnswer: 1,
+        explanation: 'Nåverdi = Fremtidsverdi ÷ (1 + rente)^antall perioder. Vi "diskonterer" det fremtidige beløpet tilbake til i dag.'
+      },
+      {
+        id: 'q3-17',
+        question: 'Du skal motta 200 000 kr om 8 år. Med 6% diskonteringsrente, hva er nåverdien omtrent?',
+        options: [
+          'Ca 200 000 kr',
+          'Ca 150 000 kr',
+          'Ca 125 000 kr',
+          'Ca 100 000 kr'
+        ],
+        correctAnswer: 2,
+        explanation: 'PV = 200 000 ÷ (1,06)^8 ≈ 200 000 ÷ 1,594 ≈ 125 470 kr. Over 8 år mister beløpet nesten 40% av sin nåverdi.'
+      },
+      {
+        id: 'q3-18',
+        question: 'Hva er alternativkostnaden i sammenheng med diskonteringsrenten?',
+        options: [
+          'Kostnaden ved å ta opp lån',
+          'Hva du kunne tjent ved å investere pengene annerledes',
+          'Gebyrer til banken',
+          'Skattebelastningen på avkastningen'
+        ],
+        correctAnswer: 1,
+        explanation: 'Diskonteringsrenten reflekterer alternativkostnaden - hva du kunne oppnådd ved å investere pengene på en annen måte.'
+      },
+      {
+        id: 'q3-19',
+        question: 'Du sparer 2 000 kr i måneden i 35 år til 7% rente. Hvor mye av sluttsummen er renter?',
+        options: [
+          'Ca 20%',
+          'Ca 40%',
+          'Ca 60%',
+          'Ca 80%'
+        ],
+        correctAnswer: 3,
+        explanation: 'Du sparer inn 2000 × 12 × 35 = 840 000 kr. Med 7% blir sluttsummen ca 4,2 mill kr. Rentene utgjør ca 80% av sluttsummen!'
+      },
+      {
+        id: 'q3-20',
+        question: 'Hva er typisk brukt for annuitetsformelen i praksis?',
+        options: [
+          'Kun for pensjonsberegninger',
+          'Boliglån, billån, pensjonssparing og forsikringer',
+          'Bare for beregning av skatt',
+          'Kun for aksjevurdering'
+        ],
+        correctAnswer: 1,
+        explanation: 'Annuiteter brukes for å beregne faste betalinger over tid - typisk boliglån, billån, pensjonsinnskudd og utbetalinger.'
+      },
+      {
+        id: 'q3-21',
+        question: 'Hva er inflasjonsmålet til Norges Bank?',
+        options: [
+          '0% - prisstabilitet',
+          'Ca 2% årlig',
+          'Ca 5% årlig',
+          'Det varierer med konjunkturene'
+        ],
+        correctAnswer: 1,
+        explanation: 'Norges Bank styrer mot ca 2% årlig inflasjon. Litt inflasjon anses som sunt, men det betyr at du trenger minst 2% avkastning bare for å holde tritt.'
+      },
+      {
+        id: 'q3-22',
+        question: 'Du har 3% nominell avkastning og 2,5% inflasjon. Hva er reell avkastning?',
+        options: [
+          '5,5%',
+          '3%',
+          '0,5%',
+          '2,5%'
+        ],
+        correctAnswer: 2,
+        explanation: 'Reell avkastning ≈ Nominell avkastning - Inflasjon = 3% - 2,5% = 0,5%. Kjøpekraften øker bare med 0,5%.'
+      },
+      {
+        id: 'q3-23',
+        question: 'Hvorfor kalles inflasjon en "skjult skatt"?',
+        options: [
+          'Fordi staten får skatteinntekter fra inflasjon',
+          'Fordi den usynlig reduserer kjøpekraften til sparepengene dine',
+          'Fordi den er inkludert i skattesystemet',
+          'Fordi ingen merker den'
+        ],
+        correctAnswer: 1,
+        explanation: 'Selv om kontosaldoen din forblir uendret, kan du kjøpe mindre og mindre for pengene over tid. Pengene "skattlegges" uten at du ser det.'
+      },
+      {
+        id: 'q3-24',
+        question: 'Med 2,5% gjennomsnittlig inflasjon, hvor lang tid tar det å halvere kjøpekraften?',
+        options: [
+          'Ca 15 år',
+          'Ca 28 år',
+          'Ca 40 år',
+          'Ca 50 år'
+        ],
+        correctAnswer: 1,
+        explanation: '72-regelen fungerer også for inflasjon: 72 ÷ 2,5 ≈ 29 år. På ca 28-30 år mister pengene halvparten av kjøpekraften.'
+      },
+      {
+        id: 'q3-25',
+        question: 'Hva er den beste langsiktige beskyttelsen mot inflasjon historisk?',
+        options: [
+          'Sparekonto',
+          'Kontanter',
+          'Aksjer og aksjefond',
+          'Kortsiktige obligasjoner'
+        ],
+        correctAnswer: 2,
+        explanation: 'Aksjer har historisk gitt 7-10% årlig avkastning, godt over inflasjonen. De er beste langsiktige beskyttelse mot inflasjon.'
+      },
+      {
+        id: 'q3-26',
+        question: 'Hvorfor gir ekstra avdrag på lån så stor effekt?',
+        options: [
+          'Fordi banken gir bonus for tidlig nedbetaling',
+          'Fordi du reduserer hovedstolen som renten beregnes på - "omvendt" renters rente',
+          'Fordi ekstra avdrag er skattefradrag',
+          'Fordi renten automatisk synker'
+        ],
+        correctAnswer: 1,
+        explanation: 'Når du betaler ekstra, reduserer du hovedstolen. Mindre hovedstol = mindre renter fremover. Du får renters rente-effekten i din favør.'
+      },
+      {
+        id: 'q3-27',
+        question: 'Erik betaler 2000 kr ekstra per måned på boliglånet. Hva kan han typisk spare?',
+        options: [
+          'Bare det han betaler ekstra',
+          'Dobbelt så mye som ekstrabetalingene',
+          'Flere hundre tusen kroner i renter over lånets løpetid',
+          'Ingenting - banken beholder gevinsten'
+        ],
+        correctAnswer: 2,
+        explanation: 'Ekstra avdrag kan spare hundretusenvis i renter og forkorte lånetiden betydelig. I eksempelet sparer Erik ca 610 000 kr.'
+      },
+      {
+        id: 'q3-28',
+        question: 'Hva viser eksempelet med Lars (25-35) vs Marte (35-65)?',
+        options: [
+          'At det er best å spare mye på kort tid',
+          'At tidspunktet for start av sparing er viktigere enn totalt spart beløp',
+          'At begge strategier gir likt resultat',
+          'At høyere sparebeløp alltid vinner'
+        ],
+        correctAnswer: 1,
+        explanation: 'Lars sparte 720 000 kr mindre enn Marte, men hadde mer ved pensjon fordi han startet tidligere. Tid i markedet slår timing av markedet.'
+      },
+      {
+        id: 'q3-29',
+        question: 'Hva er en diskonteringsrente?',
+        options: [
+          'En rabatt banken gir på lån',
+          'Renten brukt for å beregne nåverdi av fremtidige beløp',
+          'Den laveste mulige renten',
+          'Renten etter fradrag for skatt'
+        ],
+        correctAnswer: 1,
+        explanation: 'Diskonteringsrenten er renten vi bruker for å beregne nåverdien av fremtidige kontantstrømmer. Den reflekterer alternativkostnaden.'
+      },
+      {
+        id: 'q3-30',
+        question: 'Hvis du kan velge: 80 000 nå eller 100 000 om 3 år, og kan investere til 8%. Hva bør du velge?',
+        options: [
+          '100 000 om 3 år fordi det er mer penger',
+          '80 000 nå fordi nåverdien av 100 000 om 3 år er ca 79 400',
+          'Det spiller ingen rolle',
+          '100 000 om 3 år fordi nåverdien er over 80 000'
+        ],
+        correctAnswer: 1,
+        explanation: 'PV av 100 000 = 100 000 ÷ (1,08)³ ≈ 79 383 kr. Siden dette er mindre enn 80 000, bør du velge pengene nå.'
+      },
+      {
+        id: 'q3-31',
+        question: 'Hva er PMT i en annuitetsformel?',
+        options: [
+          'Principal Monthly Total',
+          'Periodisk (månedlig/årlig) betaling',
+          'Percentage Monthly Tax',
+          'Present Market Total'
+        ],
+        correctAnswer: 1,
+        explanation: 'PMT står for Payment - den periodiske betalingen (månedlig eller årlig) i en annuitet, som lån eller spareavtale.'
+      },
+      {
+        id: 'q3-32',
+        question: 'Hva er typisk reell avkastning på en sparekonto?',
+        options: [
+          '+5 til +8%',
+          '+2 til +4%',
+          '-0,5% til +1,5%',
+          'Alltid positiv'
+        ],
+        correctAnswer: 2,
+        explanation: 'Med typisk sparerente 2-4% og inflasjon 2-3%, blir reell avkastning ofte -0,5% til +1,5%. Sparekontoen holder sjelden tritt med inflasjon.'
+      },
+      {
+        id: 'q3-33',
+        question: 'Ida sparer 2500 kr/mnd fra 30 til 67 år (7% avkastning). Hvor mye blir renter av totalen?',
+        options: [
+          'Ca 25%',
+          'Ca 50%',
+          'Ca 75%',
+          'Ca 90%'
+        ],
+        correctAnswer: 2,
+        explanation: 'Ida sparer inn ca 1,1 mill kr, men får ca 5,3 mill kr. Rentene utgjør over 4 mill kr - ca 75% av sluttsummen.'
+      },
+      {
+        id: 'q3-34',
+        question: 'Hva er konsumprisindeksen (KPI)?',
+        options: [
+          'Et mål på aksjekursutvikling',
+          'Et mål på prisutviklingen i økonomien - brukes for å beregne inflasjon',
+          'En indeks over forbrukergjeld',
+          'Et mål på kjøpekraft internasjonalt'
+        ],
+        correctAnswer: 1,
+        explanation: 'KPI måler prisutviklingen på varer og tjenester som husholdninger kjøper. Endringen i KPI er inflasjonsraten.'
+      },
+      {
+        id: 'q3-35',
+        question: 'Hvorfor anbefales det å ha sparepenger i aksjer/fond fremfor sparekonto for langsiktig sparing?',
+        options: [
+          'Fordi aksjer er risikofrie',
+          'Fordi aksjer historisk slår inflasjonen, mens sparekonto ofte ikke gjør det',
+          'Fordi det gir skattefordeler',
+          'Fordi banker er upålitelige'
+        ],
+        correctAnswer: 1,
+        explanation: 'Aksjer har historisk gitt 7-10% årlig avkastning vs. inflasjon på 2-3%. Sparekonto (2-4%) holder ofte ikke tritt med inflasjonen.'
+      },
+      {
+        id: 'q3-36',
+        question: 'Hva betyr "tid i markedet slår timing av markedet"?',
+        options: [
+          'At du bør handle aksjer på riktig tidspunkt',
+          'At langvarig investering er viktigere enn å prøve å kjøpe på bunn',
+          'At markedet alltid stiger',
+          'At timing er helt uvesentlig'
+        ],
+        correctAnswer: 1,
+        explanation: 'Forsøk på å "time" markedet ved å kjøpe på bunn og selge på topp fungerer sjelden. Å være investert over lang tid er mer pålitelig.'
+      },
+      {
+        id: 'q3-37',
+        question: 'Hva er en perpetuitet?',
+        options: [
+          'Et lån som aldri betales tilbake',
+          'En serie uendelige like betalinger',
+          'En investering med garantert avkastning',
+          'Et avgiftsfritt investeringsprodukt'
+        ],
+        correctAnswer: 1,
+        explanation: 'En perpetuitet er en annuitet som varer evig - uendelige like betalinger. Nåverdi av perpetuitet = Betaling ÷ Rente.'
+      },
+      {
+        id: 'q3-38',
+        question: 'Hvordan påvirker lengre løpetid på lån de totale rentekostnadene?',
+        options: [
+          'De totale rentekostnadene synker',
+          'De totale rentekostnadene øker betydelig',
+          'Ingen effekt på totale renter',
+          'Det avhenger kun av rentesatsen'
+        ],
+        correctAnswer: 1,
+        explanation: 'Lengre løpetid gir lavere månedlig betaling, men du betaler renter i flere år. Totale rentekostnader øker betydelig.'
+      },
+      {
+        id: 'q3-39',
+        question: 'Hva er hovedpoenget med å konvertere beløp til samme tidspunkt?',
+        options: [
+          'Det er et krav fra skattemyndighetene',
+          'Det gjør det mulig å sammenligne ulike alternativer på rettferdig måte',
+          'Det er bare for regnskapsmessige formål',
+          'Det kreves av bankene'
+        ],
+        correctAnswer: 1,
+        explanation: 'Penger på ulike tidspunkter kan ikke sammenlignes direkte. Ved å konvertere til samme tidspunkt (nåverdi) kan vi sammenligne alternativer rettferdig.'
+      },
+      {
+        id: 'q3-40',
+        question: 'Med 7% årlig avkastning, hvor lang tid tar det omtrent å tredoble pengene?',
+        options: [
+          'Ca 8 år',
+          'Ca 16 år (to doblinger)',
+          'Ca 21 år',
+          'Ca 30 år'
+        ],
+        correctAnswer: 1,
+        explanation: '72-regelen: Én dobling tar 72÷7 ≈ 10 år. For å tredoble (2 til 4 = 2 doblinger) tar det ca 2 × 10 = 20 år. Alternativt: ca 16-17 år for nøyaktig tredobling.'
       }
     ]
   }

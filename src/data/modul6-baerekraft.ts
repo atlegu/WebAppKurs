@@ -1,10 +1,10 @@
 import { Module } from '../types/course';
 
 export const modul6BaerekraftModule: Module = {
-  id: 'modul-6-baerekraft',
+  id: 'modul-10-baerekraft',
   title: 'Bærekraftig Finans i Praksis',
   icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"></path><path d="M10 20c5.5-2.5.8-6.4 3-10"></path><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"></path><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"></path></svg>',
-  order: 9,
+  order: 10,
   learningObjectives: [
     'Forstå det grønne skiftet og hvordan det påvirker finansmarkedene',
     'Kjenne til EU-taksonomien og regulatoriske rammeverk for bærekraftig finans',
@@ -964,8 +964,9 @@ export const modul6BaerekraftModule: Module = {
   moduleQuiz: {
     id: 'modul-6-baerekraft-quiz',
     title: 'Modulquiz: Bærekraftig Finans i Praksis',
-    description: 'Test din forståelse av ESG, EU-taksonomi og grønnvasking. Du trenger minst 90% riktig for å bestå.',
-    passingScore: 90,
+    description: 'Test din forståelse av ESG, EU-taksonomi og grønnvasking. Du trenger minst 80% riktig for å bestå.',
+    passingScore: 80,
+    questionsToShow: 20,
     questions: [
       {
         id: 'q9-1',
@@ -1110,6 +1111,342 @@ export const modul6BaerekraftModule: Module = {
         ],
         correctAnswer: 1,
         explanation: 'Impact investing sikter mot å oppnå både finansiell avkastning og målbar positiv samfunns- eller miljøeffekt. Det er mer aktivt enn bare å unngå "dårlige" selskaper.'
+      },
+      {
+        id: 'q9-13',
+        question: 'Hva betyr "Do No Significant Harm" (DNSH) i EU-taksonomien?',
+        options: [
+          'At investeringer må være risikofrie',
+          'At en aktivitet ikke skal skade andre miljømål mens den oppfyller ett',
+          'At selskaper ikke kan gå konkurs',
+          'At fond ikke kan tape penger'
+        ],
+        correctAnswer: 1,
+        explanation: 'DNSH betyr at en aktivitet som bidrar til ett miljømål (f.eks. klima) ikke skal gjøre betydelig skade på de andre miljømålene (vann, sirkulær økonomi, etc.).'
+      },
+      {
+        id: 'q9-14',
+        question: 'Hva er "transition finance"?',
+        options: [
+          'Finansiering av konkurser',
+          'Finansiering som hjelper høyutslippssektorer med å bli mer bærekraftige',
+          'Kortsiktige lån',
+          'Finansiering av oppstartsbedrifter'
+        ],
+        correctAnswer: 1,
+        explanation: 'Transition finance støtter selskaper i karbonintensive sektorer (stål, sement, energi) i overgangen til lavere utslipp, selv om de ikke er "grønne" i dag.'
+      },
+      {
+        id: 'q9-15',
+        question: 'Hva er negativ screening i ESG-investering?',
+        options: [
+          'Å velge de beste ESG-selskapene',
+          'Å utelukke selskaper eller sektorer som ikke oppfyller etiske kriterier',
+          'Å investere i nedadgående aksjer',
+          'Å redusere risiko gjennom diversifisering'
+        ],
+        correctAnswer: 1,
+        explanation: 'Negativ screening betyr å ekskludere selskaper basert på kriterier som våpen, tobakk, gambling eller fossile brensler fra investeringsuniverset.'
+      },
+      {
+        id: 'q9-16',
+        question: 'Hva er "Paris-aligned" investeringer?',
+        options: [
+          'Investeringer kun i franske selskaper',
+          'Investeringer som er i tråd med Parisavtalens mål om maks 1,5-2°C oppvarming',
+          'Investeringer i eiendom i Paris',
+          'Investeringer godkjent av EU'
+        ],
+        correctAnswer: 1,
+        explanation: 'Paris-aligned betyr at porteføljen er på en utslippsbane forenlig med Parisavtalen - typisk netto null innen 2050 og betydelig reduksjon underveis.'
+      },
+      {
+        id: 'q9-17',
+        question: 'Hva er fysisk klimarisiko?',
+        options: [
+          'Risikoen for nye klimareguleringer',
+          'Direkte skader fra klimaendringer som flom, tørke og ekstremvær',
+          'Risikoen for at grønne teknologier mislykkes',
+          'Kostnaden ved klimarapportering'
+        ],
+        correctAnswer: 1,
+        explanation: 'Fysisk klimarisiko er direkte skader fra klimaendringer: akutte (stormer, flom) og kroniske (havnivåstigning, temperaturstigningen). Påvirker eiendom, infrastruktur og forsyningskjeder.'
+      },
+      {
+        id: 'q9-18',
+        question: 'Hva er overgangsrisiko (transition risk)?',
+        options: [
+          'Risiko ved å bytte jobb',
+          'Risiko knyttet til politikk, teknologi og markedsendringer i overgangen til lavutslippsøkonomi',
+          'Risiko ved å endre porteføljesammensetning',
+          'Risiko ved generasjonsskifte'
+        ],
+        correctAnswer: 1,
+        explanation: 'Overgangsrisiko oppstår fra reguleringsendringer (karbonskatt), teknologiskift (elbiler) og endrede kundepreferanser som kan gjøre visse eiendeler mindre verdifulle.'
+      },
+      {
+        id: 'q9-19',
+        question: 'Hva er Scope 3-utslipp typisk for de fleste selskaper?',
+        options: [
+          'En liten andel av totale utslipp',
+          'Den klart største andelen - ofte 80-90% av totale utslipp',
+          'Like stor som Scope 1',
+          'Irrelevant for de fleste bransjer'
+        ],
+        correctAnswer: 1,
+        explanation: 'Scope 3 (verdikjede-utslipp) utgjør ofte 80-90% av et selskaps klimaavtrykk. Det inkluderer alt fra råvareproduksjon til kundens bruk av produktet.'
+      },
+      {
+        id: 'q9-20',
+        question: 'Hva kjennetegner et Artikkel 9-fond under SFDR?',
+        options: [
+          'Det har ingen bærekraftsfokus',
+          'Det har bærekraftig investering som eksplisitt hovedmål',
+          'Det fremmer miljøegenskaper som et av flere mål',
+          'Det er et rent obligasjonsfond'
+        ],
+        correctAnswer: 1,
+        explanation: 'Artikkel 9-fond (mørkegrønne) har bærekraftig investering som hovedmål, for eksempel å investere i selskaper som bidrar til FNs bærekraftsmål.'
+      },
+      {
+        id: 'q9-21',
+        question: 'Hva er Science Based Targets initiative (SBTi)?',
+        options: [
+          'En statlig forskningsinstitusjon',
+          'Et initiativ som validerer at selskapers klimamål er i tråd med klimavitenskapen',
+          'En ESG-ratingorganisasjon',
+          'Et EU-direktiv'
+        ],
+        correctAnswer: 1,
+        explanation: 'SBTi validerer at selskapers utslippsmål er i tråd med vitenskapens krav for å begrense oppvarming til 1,5°C. Det gir troverdighet til klimaforpliktelser.'
+      },
+      {
+        id: 'q9-22',
+        question: 'Hva er "ESG-integration"?',
+        options: [
+          'Å kun investere i grønne selskaper',
+          'Å systematisk inkludere ESG-faktorer i tradisjonell finansiell analyse',
+          'Å slå sammen flere ESG-fond',
+          'Å rapportere ESG-data til myndighetene'
+        ],
+        correctAnswer: 1,
+        explanation: 'ESG-integration betyr at ESG-informasjon brukes sammen med finansielle data i investeringsbeslutninger, ikke som et separat filter eller ekslusjonsverktøy.'
+      },
+      {
+        id: 'q9-23',
+        question: 'Hva er "active ownership" eller "stewardship"?',
+        options: [
+          'Å kjøpe og selge aksjer ofte',
+          'Å bruke eierrettigheter for å påvirke selskapers bærekraftsarbeid',
+          'Å eie aksjer i mange selskaper',
+          'Å være majoritetsaksjonær'
+        ],
+        correctAnswer: 1,
+        explanation: 'Active ownership betyr å bruke stemmerett, dialog og engasjement til å påvirke selskaper i bærekraftig retning - ikke bare selge aksjer i "dårlige" selskaper.'
+      },
+      {
+        id: 'q9-24',
+        question: 'Hva er hovedkritikken mot ESG-ratinger?',
+        options: [
+          'De er for strenge',
+          'Mangel på standardisering og lav korrelasjon mellom ulike byråers ratinger',
+          'De fokuserer for mye på klima',
+          'De er for dyre å kjøpe'
+        ],
+        correctAnswer: 1,
+        explanation: 'ESG-ratinger fra ulike byråer korrelerer bare ca. 50%. Ulike metodologier, vekter og datakilder gir forvirrende og til dels motstridende signaler.'
+      },
+      {
+        id: 'q9-25',
+        question: 'Hva er EU Green Bond Standard?',
+        options: [
+          'En obligatorisk standard for alle obligasjoner i EU',
+          'Frivillig standard med strenge krav til grønne obligasjoner knyttet til taksonomien',
+          'En skatt på grønne obligasjoner',
+          'Minimumskrav til obligasjoners kupongrente'
+        ],
+        correctAnswer: 1,
+        explanation: 'EU Green Bond Standard er en frivillig standard som krever at pengene brukes til taksonomi-aligned aktiviteter og verifiseres av uavhengig tredjepart.'
+      },
+      {
+        id: 'q9-26',
+        question: 'Hva betyr "net zero" for en investor?',
+        options: [
+          'Å ha null avkastning',
+          'At porteføljens utslipp balanseres mot karbonfjerning, typisk innen 2050',
+          'Å ikke ha noen investeringer',
+          'Å kun investere i nullkupong-obligasjoner'
+        ],
+        correctAnswer: 1,
+        explanation: 'Net zero betyr at de gjenværende utslippene fra porteføljen balanseres av karbonfjerning (eller investeringer i slik teknologi), vanligvis med 2050 som målår.'
+      },
+      {
+        id: 'q9-27',
+        question: 'Hva er TCFD?',
+        options: [
+          'En type grønn obligasjon',
+          'Et rammeverk for klimarelatert finansiell rapportering',
+          'En europeisk skatt',
+          'En ESG-ratingorganisasjon'
+        ],
+        correctAnswer: 1,
+        explanation: 'TCFD (Task Force on Climate-related Financial Disclosures) er et rammeverk som anbefaler hvordan selskaper bør rapportere klimarisiko og -muligheter.'
+      },
+      {
+        id: 'q9-28',
+        question: 'Hvorfor er Scope 3-utslipp vanskelig å måle?',
+        options: [
+          'Fordi de ikke eksisterer',
+          'Fordi de involverer hele verdikjeden - leverandører, transport, kundebruk - som er utenfor direkte kontroll',
+          'Fordi de er hemmelige',
+          'Fordi de kun gjelder store selskaper'
+        ],
+        correctAnswer: 1,
+        explanation: 'Scope 3 krever data fra hele verdikjeden - tusenvis av leverandører, logistikk, og hvordan produktene brukes og kasseres. Mye må estimeres.'
+      },
+      {
+        id: 'q9-29',
+        question: 'Hva er et "just transition" prinsipp?',
+        options: [
+          'At klimaomstillingen skal skje så raskt som mulig',
+          'At klimaomstillingen skal ta hensyn til arbeidere og samfunn som rammes',
+          'At alle land skal ha like klimamål',
+          'At grønne investeringer skal være rettferdig fordelt'
+        ],
+        correctAnswer: 1,
+        explanation: 'Just transition handler om at overgangen til lavutslippssamfunnet må ivareta arbeidere (f.eks. i kullgruver) og lokalsamfunn som berøres negativt.'
+      },
+      {
+        id: 'q9-30',
+        question: 'Hva er formålet med EU-taksonomiens seks miljømål?',
+        options: [
+          'Å rangere selskaper fra 1 til 6',
+          'Å definere hva som er bærekraftig innen klima, vann, sirkulærøkonomi, forurensning, biologisk mangfold og økosystemer',
+          'Å sette skattesatser',
+          'Å klassifisere land etter miljøprestasjon'
+        ],
+        correctAnswer: 1,
+        explanation: 'EU-taksonomien har seks miljømål: klimatilpasning, klimabegrensning, vannressurser, sirkulær økonomi, forurensning og biologisk mangfold.'
+      },
+      {
+        id: 'q9-31',
+        question: 'Hva er "brown spinning"?',
+        options: [
+          'En ny type energiproduksjon',
+          'Å skille ut forurensende aktiviteter i egne selskaper for å pynte på morselskapet',
+          'Å rotere porteføljen hyppig',
+          'Å investere i sjokoladeproduksjon'
+        ],
+        correctAnswer: 1,
+        explanation: 'Brown spinning er en risiko der selskaper selger ut forurensende virksomhet til private eiere som ikke er underlagt ESG-press, slik at utslippene fortsetter uovervåket.'
+      },
+      {
+        id: 'q9-32',
+        question: 'Hva er forskjellen mellom "exclusion" og "engagement"?',
+        options: [
+          'Det finnes ingen forskjell',
+          'Exclusion er å selge seg ut, engagement er å påvirke innenfra som eier',
+          'Exclusion gjelder aksjer, engagement gjelder obligasjoner',
+          'Begge handler om å øke avkastning'
+        ],
+        correctAnswer: 1,
+        explanation: 'Exclusion betyr å utelukke selskaper fra porteføljen. Engagement betyr å forbli eier og bruke dialog, stemmerett og forventningsbrev til å påvirke selskapet.'
+      },
+      {
+        id: 'q9-33',
+        question: 'Hva er "carbon footprint" for en portefølje?',
+        options: [
+          'Kostnaden ved å handle aksjer',
+          'De samlede klimagassutslippene knyttet til selskapene i porteføljen',
+          'Avkastningen fra klimarelaterte investeringer',
+          'Antall klimaaksjer i porteføljen'
+        ],
+        correctAnswer: 1,
+        explanation: 'Porteføljens carbon footprint måler hvor mye klimagassutslipp som er knyttet til investeringene, typisk vektet etter eierandel og normalisert per investert krone.'
+      },
+      {
+        id: 'q9-34',
+        question: 'Hva er et Principal Adverse Impact (PAI)?',
+        options: [
+          'En positiv ESG-indikator',
+          'Negativ bærekraftseffekt som investeringer kan ha på miljø/samfunn',
+          'En type aksjeindeks',
+          'Lederlønn i ESG-selskaper'
+        ],
+        correctAnswer: 1,
+        explanation: 'PAI er negative effekter på bærekraftsfaktorer, som CO2-utslipp, vannforbruk eller brudd på menneskerettigheter. SFDR krever at fond rapporterer på disse.'
+      },
+      {
+        id: 'q9-35',
+        question: 'Hva betyr "additionality" i impact investing?',
+        options: [
+          'At investeringen gir ekstra avkastning',
+          'At investeringen bidrar til noe som ikke ville skjedd uten den',
+          'At flere investorer går sammen',
+          'At investeringen er i tillegg til eksisterende portefølje'
+        ],
+        correctAnswer: 1,
+        explanation: 'Additionality betyr at investeringen faktisk skaper positiv effekt som ikke ville oppstått ellers - ikke bare finansierer noe som uansett ville blitt gjennomført.'
+      },
+      {
+        id: 'q9-36',
+        question: 'Hvordan kan klimarisiko påvirke eiendomsverdier?',
+        options: [
+          'Den påvirker ikke eiendom',
+          'Fysiske risikoer som flom og havnivåstigning kan redusere verdier betydelig',
+          'Klimarisiko øker alltid eiendomsverdier',
+          'Bare kommersielle eiendommer påvirkes'
+        ],
+        correctAnswer: 1,
+        explanation: 'Eiendommer i flomutsatte områder eller langs kysten kan tape verdi når forsikringspremier øker og fysiske skader blir hyppigere.'
+      },
+      {
+        id: 'q9-37',
+        question: 'Hva er "best-in-class" ESG-tilnærming?',
+        options: [
+          'Å kun investere i de grønneste sektorene',
+          'Å velge de beste ESG-utøverne innen hver sektor, inkludert "brune"',
+          'Å investere i de største selskapene',
+          'Å utelukke alle fossile selskaper'
+        ],
+        correctAnswer: 1,
+        explanation: 'Best-in-class betyr å velge de selskapene som scorer best på ESG innen sin bransje - også i sektorer som olje, der "beste" kan være relativt bedre, ikke absolutt grønn.'
+      },
+      {
+        id: 'q9-38',
+        question: 'Hva er formålet med et "sustainability-linked loan"?',
+        options: [
+          'Et lån som bare kan brukes til grønne prosjekter',
+          'Et lån der rentebetingelsene er knyttet til låntakers bærekraftsprestasjon',
+          'Et lån med evig løpetid',
+          'Et lån garantert av staten'
+        ],
+        correctAnswer: 1,
+        explanation: 'Sustainability-linked loans har renten knyttet til oppnåelse av ESG-mål. Oppnår selskapet målene, får de bedre rente; mislykkes de, øker renten.'
+      },
+      {
+        id: 'q9-39',
+        question: 'Hva er biodiversitetsrisiko?',
+        options: [
+          'Kun et lokalt miljøproblem',
+          'Finansiell risiko fra tap av arter og økosystemer som forretningsmodeller avhenger av',
+          'Risikoen ved å investere i mange sektorer',
+          'Forskjellen mellom ESG-ratinger'
+        ],
+        correctAnswer: 1,
+        explanation: 'Biodiversitetsrisiko er økende fokus. Mange virksomheter er avhengige av naturens tjenester (pollinering, rent vann) som trues av naturtap.'
+      },
+      {
+        id: 'q9-40',
+        question: 'Hva er TNFD?',
+        options: [
+          'En type grønn obligasjon',
+          'Et rammeverk for rapportering av naturrelatert finansiell risiko',
+          'Et norsk klimafond',
+          'En EU-regulering'
+        ],
+        correctAnswer: 1,
+        explanation: 'TNFD (Taskforce on Nature-related Financial Disclosures) er et rammeverk (inspirert av TCFD) for rapportering av finansiell risiko knyttet til naturtap og biodiversitet.'
       }
     ]
   }

@@ -1998,8 +1998,9 @@ export const modul3ObligasjonerModule: Module = {
   moduleQuiz: {
     id: 'modul-3-obligasjoner-quiz',
     title: 'Modulquiz: Obligasjoner',
-    description: 'Test din forståelse av obligasjonsprising, renterisiko og kredittrisiko. Du trenger minst 90% riktig for å bestå.',
-    passingScore: 90,
+    description: 'Test din forståelse av obligasjonsprising, renterisiko og kredittrisiko. Du trenger minst 80% riktig for å bestå.',
+    passingScore: 80,
+    questionsToShow: 20,
     questions: [
       {
         id: 'q4-1',
@@ -2144,6 +2145,342 @@ export const modul3ObligasjonerModule: Module = {
         ],
         correctAnswer: 1,
         explanation: 'Grønne obligasjoner er obligasjoner der kapitalen øremerkes til miljø- og klimavennlige prosjekter som fornybar energi, energieffektivisering eller grønne bygg.'
+      },
+      {
+        id: 'q4-13',
+        question: 'Hva er pålydende verdi på en obligasjon?',
+        options: [
+          'Markedsprisen på obligasjonen',
+          'Beløpet som utbetales ved forfall (hovedstolen)',
+          'Den årlige kupongutbetalingen',
+          'Forskjellen mellom kjøps- og salgspris'
+        ],
+        correctAnswer: 1,
+        explanation: 'Pålydende verdi (face value) er hovedstolen som utsteder forplikter seg til å tilbakebetale ved forfall. Typisk er dette 1000 kr eller 1000 000 kr.'
+      },
+      {
+        id: 'q4-14',
+        question: 'Hvorfor har en nullkupongobligasjon durasjon lik løpetiden?',
+        options: [
+          'Fordi den ikke betaler rente',
+          'Fordi all kontantstrøm kommer på ett tidspunkt - ved forfall',
+          'Fordi den handles til pålydende',
+          'Fordi den har høyere risiko'
+        ],
+        correctAnswer: 1,
+        explanation: 'En nullkupongobligasjon har ingen mellomliggende kupongutbetalinger. All kontantstrøm kommer ved forfall, så vektet gjennomsnittlig tid = løpetiden.'
+      },
+      {
+        id: 'q4-15',
+        question: 'Hva er NIBOR?',
+        options: [
+          'Norges inflasjonsmål',
+          'Referanserenten i det norske pengemarkedet',
+          'Norges Banks styringsrente',
+          'Et mål på kronekursen'
+        ],
+        correctAnswer: 1,
+        explanation: 'NIBOR (Norwegian Interbank Offered Rate) er referanserenten bankene bruker seg imellom. De fleste norske foretaksobligasjoner har rente basert på NIBOR + påslag.'
+      },
+      {
+        id: 'q4-16',
+        question: 'Hva er OMF (obligasjoner med fortrinnsrett)?',
+        options: [
+          'Statsobligasjoner med høy likviditet',
+          'Obligasjoner sikret med bankens boliglånsportefølje',
+          'Obligasjoner som kun handles på Nordic ABM',
+          'High yield-obligasjoner fra norske banker'
+        ],
+        correctAnswer: 1,
+        explanation: 'OMF (Covered Bonds) er obligasjoner utstedt av banker, sikret med en pool av boliglån. Ved konkurs har OMF-eierne førsteprioritet på disse lånene, noe som gir svært lav risiko.'
+      },
+      {
+        id: 'q4-17',
+        question: 'En obligasjon med modifisert durasjon 7 opplever en rentestigning på 0,5%. Hva skjer med prisen?',
+        options: [
+          'Prisen stiger ca. 3,5%',
+          'Prisen faller ca. 3,5%',
+          'Prisen faller ca. 7%',
+          'Prisen forblir uendret'
+        ],
+        correctAnswer: 1,
+        explanation: 'Prisendring ≈ -Durasjon × Renteendring = -7 × 0,5% = -3,5%. Prisen faller når renten stiger, og durasjonen bestemmer hvor mye.'
+      },
+      {
+        id: 'q4-18',
+        question: 'Hva er grensen mellom investment grade og high yield?',
+        options: [
+          'A- / BBB+',
+          'BBB- / BB+',
+          'BB- / B+',
+          'AA- / A+'
+        ],
+        correctAnswer: 1,
+        explanation: 'BBB- er laveste investment grade, og BB+ er høyeste high yield. Denne grensen er viktig fordi mange fond kun kan investere i investment grade.'
+      },
+      {
+        id: 'q4-19',
+        question: 'Hva er inflasjonsrisiko for obligasjonsinvestorer?',
+        options: [
+          'Risikoen for at utsteder ikke betaler tilbake',
+          'Risikoen for at kjøpekraften av kontantstrømmene eroderes',
+          'Risikoen for at obligasjonen ikke kan selges',
+          'Risikoen for valutakursendringer'
+        ],
+        correctAnswer: 1,
+        explanation: 'Inflasjonsrisiko betyr at selv om du får nominelt det du er lovet, kan høy inflasjon redusere realverdien av disse pengene betydelig.'
+      },
+      {
+        id: 'q4-20',
+        question: 'Hva betyr det når en obligasjon handles til "overkurs"?',
+        options: [
+          'Prisen er over pålydende, og YTM er lavere enn kupongrenten',
+          'Prisen er under pålydende, og YTM er høyere enn kupongrenten',
+          'Obligasjonen har blitt oppgradert av ratingbyråene',
+          'Obligasjonen er illikvid og vanskelig å selge'
+        ],
+        correctAnswer: 0,
+        explanation: 'Overkurs (premie) betyr at prisen er over 100% av pålydende. Dette skjer når kupongrenten er høyere enn markedsrenten, slik at YTM blir lavere enn kupongen.'
+      },
+      {
+        id: 'q4-21',
+        question: 'Hvilken risikotype er MEST relevant for en langsiktig statsobligasjon?',
+        options: [
+          'Kredittrisiko',
+          'Renterisiko',
+          'Valutarisiko',
+          'Konkursrisiko'
+        ],
+        correctAnswer: 1,
+        explanation: 'Statsobligasjoner fra utviklede land har minimal kredittrisiko. Renterisiko er hovedrisikoen, spesielt for lange løpetider med høy durasjon.'
+      },
+      {
+        id: 'q4-22',
+        question: 'Hva er "credit spread"?',
+        options: [
+          'Forskjellen mellom lange og korte renter',
+          'Rentepåslaget utover risikofri rente for å kompensere for kredittrisiko',
+          'Differansen mellom kjøps- og salgspris',
+          'Forskjellen mellom fast og flytende rente'
+        ],
+        correctAnswer: 1,
+        explanation: 'Credit spread er den ekstra avkastningen investorer krever for å bære kredittrisiko, målt som differansen mellom obligasjonsrenten og statsrenten.'
+      },
+      {
+        id: 'q4-23',
+        question: 'Hva skjer typisk med credit spreader i økonomiske kriser?',
+        options: [
+          'De holder seg stabile',
+          'De krymper (blir smalere)',
+          'De øker (blir bredere)',
+          'De blir negative'
+        ],
+        correctAnswer: 2,
+        explanation: 'I kriser øker investorenes risikoaversjon. De krever høyere kompensasjon for kredittrisiko, så spreadene utvides betydelig.'
+      },
+      {
+        id: 'q4-24',
+        question: 'Hva er forskjellen mellom Macaulay-durasjon og modifisert durasjon?',
+        options: [
+          'Det finnes ingen forskjell - det er samme begrep',
+          'Macaulay måler tid til kontantstrømmer, modifisert måler prisendring ved renteendring',
+          'Macaulay brukes kun for statsobligasjoner',
+          'Modifisert durasjon er alltid høyere enn Macaulay'
+        ],
+        correctAnswer: 1,
+        explanation: 'Macaulay-durasjon er vektet gjennomsnittlig tid til kontantstrømmene. Modifisert durasjon = Macaulay / (1+r) og måler prosentvis prisendring ved 1% renteendring.'
+      },
+      {
+        id: 'q4-25',
+        question: 'Hva kjennetegner en "Second Party Opinion" (SPO)?',
+        options: [
+          'En vurdering fra kredittratingsbyråer som S&P eller Moody\'s',
+          'En uavhengig vurdering av om en obligasjon faktisk er "grønn"',
+          'En analyse av obligasjonens likviditetsrisiko',
+          'En prognose for fremtidig renteutvikling'
+        ],
+        correctAnswer: 1,
+        explanation: 'SPO er en uavhengig vurdering fra eksperter som CICERO som bekrefter at pengene fra en grønn obligasjon faktisk går til miljøvennlige prosjekter.'
+      },
+      {
+        id: 'q4-26',
+        question: 'Hva betyr det at de fleste norske foretaksobligasjoner har "flytende rente"?',
+        options: [
+          'Renten endres daglig basert på aksjemarkdet',
+          'Kupongen justeres periodisk basert på NIBOR',
+          'Utsteder kan endre renten når som helst',
+          'Investorer kan velge mellom ulike rentenivåer'
+        ],
+        correctAnswer: 1,
+        explanation: 'Flytende rente betyr at kupongen er NIBOR + et fast påslag. Når NIBOR endres (typisk hver 3. måned), endres også kupongen tilsvarende.'
+      },
+      {
+        id: 'q4-27',
+        question: 'En investor kjøper en 5-årig obligasjon til kurs 90. Hva skjer med YTM sammenlignet med kupongrenten?',
+        options: [
+          'YTM er lavere enn kupongrenten',
+          'YTM er høyere enn kupongrenten',
+          'YTM er lik kupongrenten',
+          'YTM kan ikke beregnes'
+        ],
+        correctAnswer: 1,
+        explanation: 'Ved kjøp til underkurs (90%) får investoren kursgevinst ved forfall (90 → 100). Dette øker totalavkastningen, så YTM > kupongrente.'
+      },
+      {
+        id: 'q4-28',
+        question: 'Hva er likviditetsrisiko for obligasjonsinvestorer?',
+        options: [
+          'Risikoen for at utsteder mangler likviditet',
+          'Risikoen for at du ikke kan selge obligasjonen raskt til fair pris',
+          'Risikoen for at banken går konkurs',
+          'Risikoen for høy inflasjon'
+        ],
+        correctAnswer: 1,
+        explanation: 'Likviditetsrisiko er risikoen for at det ikke finnes kjøpere når du vil selge, eller at du må akseptere stor rabatt for å selge raskt.'
+      },
+      {
+        id: 'q4-29',
+        question: 'Hva er konveksitet (convexity) i obligasjonssammenheng?',
+        options: [
+          'Hvor ofte kupongen utbetales',
+          'Krumningen i pris-rente-forholdet - prisøkning > prisfall ved like renteendringer',
+          'Forskjellen mellom nominell og reell rente',
+          'Antall år til forfall'
+        ],
+        correctAnswer: 1,
+        explanation: 'Konveksitet fanger at pris-rente-kurven er buet, ikke lineær. Prisgevinsten ved rentefall er større enn pristapet ved tilsvarende rentestigning.'
+      },
+      {
+        id: 'q4-30',
+        question: 'Hvilken rating indikerer at en obligasjon er i mislighold?',
+        options: [
+          'BBB-',
+          'CCC',
+          'D',
+          'BB+'
+        ],
+        correctAnswer: 2,
+        explanation: 'D-rating betyr at utsteder har misligholdt - enten ikke betalt kuponger eller ikke tilbakebetalt hovedstol som avtalt.'
+      },
+      {
+        id: 'q4-31',
+        question: 'Hva finansierer typisk grønne obligasjoner?',
+        options: [
+          'Nye oljefelt og gassproduksjon',
+          'Fornybar energi, energieffektive bygg og bærekraftig transport',
+          'Oppkjøp av konkurrenter',
+          'Utbetaling av ekstra utbytte til aksjonærer'
+        ],
+        correctAnswer: 1,
+        explanation: 'Grønne obligasjoner finansierer prosjekter som vindparker, solceller, BREEAM-sertifiserte bygg, elektriske ferger og lignende miljøvennlige tiltak.'
+      },
+      {
+        id: 'q4-32',
+        question: 'Hva er "grønnvasking" (greenwashing)?',
+        options: [
+          'Når miljøvennlige prosjekter faktisk lønner seg',
+          'Når selskaper gir falskt inntrykk av å være miljøvennlige',
+          'Når grønne obligasjoner har lavere rente',
+          'Når ratingbyråer oppgraderer miljøselskaper'
+        ],
+        correctAnswer: 1,
+        explanation: 'Grønnvasking er når selskaper overdriver miljøvennligheten for å tiltrekke investorer. EU-taksonomien og SPO-er skal motvirke dette.'
+      },
+      {
+        id: 'q4-33',
+        question: 'En rentekurve som er "invertert" betyr at:',
+        options: [
+          'Korte renter er høyere enn lange renter',
+          'Lange renter er høyere enn korte renter',
+          'Alle renter er like',
+          'Renten varierer gjennom døgnet'
+        ],
+        correctAnswer: 0,
+        explanation: 'Invertert rentekurve oppstår når kortsiktige renter er høyere enn langsiktige. Dette sees ofte som et varsel om kommende resesjon.'
+      },
+      {
+        id: 'q4-34',
+        question: 'Hva er Nordic ABM?',
+        options: [
+          'Et skandinavisk ratingbyrå',
+          'En markedsplass for unoterte obligasjoner i Norge',
+          'En type grønn obligasjon',
+          'Et fond som investerer i nordiske obligasjoner'
+        ],
+        correctAnswer: 1,
+        explanation: 'Nordic ABM (Alternative Bond Market) er en markedsplass for obligasjoner som ikke er notert på Oslo Børs, med lempeligere krav til utsteder.'
+      },
+      {
+        id: 'q4-35',
+        question: 'Hvorfor er high yield-obligasjoner populære i det norske markedet?',
+        options: [
+          'Fordi Norge ikke har investment grade-selskaper',
+          'Fordi offshore/shipping-sektoren er stor og syklisk',
+          'Fordi Norges Bank krever det',
+          'Fordi det ikke finnes alternativer'
+        ],
+        correctAnswer: 1,
+        explanation: 'Norge har en stor offshore- og shippingsektor med selskaper som ofte ikke oppnår investment grade. Dette har skapt et aktivt high yield-marked.'
+      },
+      {
+        id: 'q4-36',
+        question: 'Hvordan påvirker lengre løpetid durasjonen?',
+        options: [
+          'Ingen påvirkning - durasjon er uavhengig av løpetid',
+          'Lengre løpetid gir høyere durasjon og mer renterisiko',
+          'Lengre løpetid gir lavere durasjon og mindre renterisiko',
+          'Det avhenger kun av kupongrenten'
+        ],
+        correctAnswer: 1,
+        explanation: 'Lengre løpetid øker durasjonen fordi flere kontantstrømmer påvirkes av renteendringer over lengre tid. Mer tid = mer eksponering.'
+      },
+      {
+        id: 'q4-37',
+        question: 'Hva skjer med obligasjonens verdi hvis utstederens kredittrating nedgraderes?',
+        options: [
+          'Verdien øker fordi renten stiger',
+          'Verdien faller fordi investorer krever høyere avkastning',
+          'Verdien forblir uendret - ratingen påvirker ikke prisen',
+          'Verdien øker fordi færre vil kjøpe'
+        ],
+        correctAnswer: 1,
+        explanation: 'Ved nedgradering øker oppfattet risiko. Investorer krever høyere avkastning (høyere yield), som betyr at prisen må falle.'
+      },
+      {
+        id: 'q4-38',
+        question: 'Hva er hovedfordelen med obligasjonsfond for privatpersoner?',
+        options: [
+          'Garantert høyere avkastning enn direktekjøp',
+          'Diversifisering, lav minstetegning og profesjonell forvaltning',
+          'Skattefritak på all avkastning',
+          'Mulighet til å påvirke selskapenes strategi'
+        ],
+        correctAnswer: 1,
+        explanation: 'Obligasjonsfond gir tilgang til diversifisert obligasjonsportefølje med lav minstetegning (ofte 100-1000 kr), i motsetning til direktekjøp som ofte krever 100 000+ kr.'
+      },
+      {
+        id: 'q4-39',
+        question: 'En obligasjon utstedes med 5% kupong når markedsrenten er 5%. Hva er utstedelseskursen?',
+        options: [
+          'Under pålydende (underkurs)',
+          'Over pålydende (overkurs)',
+          'Til pålydende (pari/100%)',
+          'Det kan ikke bestemmes'
+        ],
+        correctAnswer: 2,
+        explanation: 'Når kupongrente = markedsrente, handles obligasjonen til pålydende (100%). Det er ingen grunn til premie eller rabatt.'
+      },
+      {
+        id: 'q4-40',
+        question: 'Hva er hovedformålet med EU-taksonomien for grønne obligasjoner?',
+        options: [
+          'Å gi lavere skatt til grønne investeringer',
+          'Å etablere standarder for hva som kan kalles "bærekraftig"',
+          'Å forby fossil-relaterte obligasjoner',
+          'Å garantere avkastningen på grønne obligasjoner'
+        ],
+        correctAnswer: 1,
+        explanation: 'EU-taksonomien gir et klassifiseringssystem for bærekraftige aktiviteter, slik at investorer kan stole på at "grønne" produkter faktisk oppfyller miljøkrav.'
       }
     ]
   }

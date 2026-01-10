@@ -18,6 +18,7 @@ export interface ModuleQuiz {
   title: string;
   description: string;
   passingScore: number; // Percentage required to pass (e.g., 90)
+  questionsToShow?: number; // Number of questions to randomly select (default: all)
   questions: ModuleQuizQuestion[];
 }
 
