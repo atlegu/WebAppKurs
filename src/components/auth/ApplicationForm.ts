@@ -160,6 +160,9 @@ export class ApplicationForm {
               Takk for din søknad. Du vil motta en e-post når søknaden din er behandlet.
               Dette tar vanligvis 1-2 virkedager.
             </p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
+              Sjekk gjerne søppelpost/spam hvis du ikke finner e-posten.
+            </p>
             <button class="auth-btn auth-btn-secondary" id="back-to-login">
               Tilbake til innlogging
             </button>
