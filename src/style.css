@@ -2599,7 +2599,7 @@ a:hover {
 
 .hero-image {
   width: 100%;
-  max-width: 350px;
+  max-width: 500px;
 }
 
 .hero-image-img {
@@ -2987,7 +2987,7 @@ a:hover {
   }
 
   .hero-image {
-    max-width: 280px;
+    max-width: 350px;
   }
 
   .progress-card {
