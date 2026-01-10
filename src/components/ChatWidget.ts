@@ -1,6 +1,8 @@
 // ChatWidget.ts - Floating chat widget UI component
 
 import { ChatService, ChatContext } from '../services/ChatService';
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
 
 export class ChatWidget {
   private chatService: ChatService;
@@ -36,11 +38,9 @@ export class ChatWidget {
 
   private getWidgetHTML(): string {
     return `
-      <!-- Floating button -->
-      <button class="chat-fab" aria-label="Åpne finansbot">
-        <svg class="chat-fab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-        </svg>
+      <!-- Floating button - Birger the Finance Shark -->
+      <button class="chat-fab" aria-label="Snakk med Birger">
+        <img class="chat-fab-mascot" src="/birger.png" alt="Birger - din finanshai" />
         <svg class="chat-fab-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -49,12 +49,13 @@ export class ChatWidget {
 
       <!-- Chat panel -->
       <div class="chat-panel">
+        <div class="chat-resize-handle" aria-label="Endre størrelse"></div>
         <div class="chat-header">
           <div class="chat-header-info">
-            <span class="chat-bot-avatar">🤖</span>
+            <img class="chat-bot-avatar-img" src="/birger.png" alt="Birger" />
             <div class="chat-header-text">
-              <span class="chat-bot-name">Finansbot</span>
-              <span class="chat-bot-status">Klar til å hjelpe</span>
+              <span class="chat-bot-name">Birger</span>
+              <span class="chat-bot-status">Din finanshai 🦈</span>
             </div>
           </div>
           <div class="chat-header-actions">
@@ -79,9 +80,9 @@ export class ChatWidget {
 
         <div class="chat-messages">
           <div class="chat-welcome">
-            <div class="chat-welcome-icon">💰</div>
-            <h3>Hei! Jeg er Finansboten</h3>
-            <p>Jeg kan hjelpe deg med spørsmål om:</p>
+            <img class="chat-welcome-mascot" src="/birger.png" alt="Birger" />
+            <h3>Hei, fremtidige finansfyrste! 🦈</h3>
+            <p>Jeg er Birger - din finanshai! Klar for å dykke ned i pengeverdenen?</p>
             <div class="chat-topics">
               <span class="chat-topic" data-topic="renteregning">📊 Renteregning</span>
               <span class="chat-topic" data-topic="obligasjoner">📈 Obligasjoner</span>
@@ -161,6 +162,70 @@ export class ChatWidget {
     // Context clear button
     const contextClear = this.container.querySelector('.chat-context-clear');
     contextClear?.addEventListener('click', () => this.clearContext());
+
+    // Resize handle
+    const resizeHandle = this.container.querySelector('.chat-resize-handle');
+    const chatPanel = this.container.querySelector('.chat-panel') as HTMLElement;
+    if (resizeHandle && chatPanel) {
+      this.setupResize(resizeHandle as HTMLElement, chatPanel);
+    }
+  }
+
+  private setupResize(handle: HTMLElement, panel: HTMLElement): void {
+    let isResizing = false;
+    let startX = 0;
+    let startY = 0;
+    let startWidth = 0;
+    let startHeight = 0;
+
+    const onMouseDown = (e: MouseEvent) => {
+      isResizing = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      startWidth = panel.offsetWidth;
+      startHeight = panel.offsetHeight;
+      panel.classList.add('resizing');
+      e.preventDefault();
+    };
+
+    const onMouseMove = (e: MouseEvent) => {
+      if (!isResizing) return;
+
+      // Calculate new size (resize from top-left corner)
+      const deltaX = startX - e.clientX;
+      const deltaY = startY - e.clientY;
+
+      const newWidth = Math.max(300, Math.min(startWidth + deltaX, window.innerWidth * 0.9));
+      const newHeight = Math.max(350, Math.min(startHeight + deltaY, window.innerHeight - 100));
+
+      panel.style.width = `${newWidth}px`;
+      panel.style.height = `${newHeight}px`;
+    };
+
+    const onMouseUp = () => {
+      if (isResizing) {
+        isResizing = false;
+        panel.classList.remove('resizing');
+      }
+    };
+
+    handle.addEventListener('mousedown', onMouseDown);
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+
+    // Touch support for mobile
+    handle.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      onMouseDown({ clientX: touch.clientX, clientY: touch.clientY, preventDefault: () => e.preventDefault() } as MouseEvent);
+    });
+
+    document.addEventListener('touchmove', (e) => {
+      if (!isResizing) return;
+      const touch = e.touches[0];
+      onMouseMove({ clientX: touch.clientX, clientY: touch.clientY } as MouseEvent);
+    });
+
+    document.addEventListener('touchend', onMouseUp);
   }
 
   toggle(): void {
@@ -233,9 +298,9 @@ export class ChatWidget {
     if (this.messagesContainer) {
       this.messagesContainer.innerHTML = `
         <div class="chat-welcome">
-          <div class="chat-welcome-icon">💰</div>
-          <h3>Hei! Jeg er Finansboten</h3>
-          <p>Jeg kan hjelpe deg med spørsmål om:</p>
+          <img class="chat-welcome-mascot" src="/birger.png" alt="Birger" />
+          <h3>Hei, fremtidige finansfyrste! 🦈</h3>
+          <p>Jeg er Birger - din finanshai! Klar for å dykke ned i pengeverdenen?</p>
           <div class="chat-topics">
             <span class="chat-topic" data-topic="renteregning">📊 Renteregning</span>
             <span class="chat-topic" data-topic="obligasjoner">📈 Obligasjoner</span>
@@ -299,8 +364,9 @@ export class ChatWidget {
     const messageEl = document.createElement('div');
     messageEl.className = `chat-message chat-message-${role}`;
 
-    // Parse markdown-like formatting
-    const formattedContent = this.formatMessage(content);
+    // First render LaTeX, then format the rest
+    const withLatex = this.renderLatex(content);
+    const formattedContent = this.formatMessage(withLatex);
 
     messageEl.innerHTML = `
       <div class="chat-message-content">
@@ -312,18 +378,42 @@ export class ChatWidget {
     this.scrollToBottom();
   }
 
-  private formatMessage(content: string): string {
-    // Convert **bold** to <strong>
-    content = content.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  private renderLatex(content: string): string {
+    // Process display math first ($$...$$)
+    content = content.replace(/\$\$([\s\S]*?)\$\$/g, (_, math) => {
+      try {
+        return `<div class="katex-display">${katex.renderToString(math.trim(), { displayMode: true, throwOnError: false })}</div>`;
+      } catch (e) {
+        console.error('KaTeX error:', e);
+        return `$$${math}$$`;
+      }
+    });
 
-    // Convert *italic* to <em>
-    content = content.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    // Then process inline math ($...$) - be careful not to match already rendered katex
+    content = content.replace(/\$([^$<>\n]+?)\$/g, (_, math) => {
+      try {
+        return katex.renderToString(math.trim(), { displayMode: false, throwOnError: false });
+      } catch (e) {
+        console.error('KaTeX error:', e);
+        return `$${math}$`;
+      }
+    });
+
+    return content;
+  }
+
+  private formatMessage(content: string): string {
+    // Convert **bold** to <strong> (but not inside katex spans)
+    content = content.replace(/\*\*([^*<]+)\*\*/g, '<strong>$1</strong>');
+
+    // Convert *italic* to <em> (but not inside katex spans)
+    content = content.replace(/(?<![a-z])\*([^*<]+)\*(?![a-z])/g, '<em>$1</em>');
 
     // Convert newlines to <br>
     content = content.replace(/\n/g, '<br>');
 
-    // Convert bullet points
-    content = content.replace(/^- (.+)$/gm, '• $1');
+    // Convert bullet points (only at start of line, before any HTML)
+    content = content.replace(/(^|<br>)- ([^<])/g, '$1• $2');
 
     return content;
   }

@@ -29,7 +29,14 @@ export class ChatService {
   }
 
   private getDefaultSystemPrompt(): string {
-    return `Du er en hjelpsom finansrådgiver og lærer som hjelper studenter med kurset "Bærekraftig Foretaksfinans".
+    return `Du er Birger - en energisk finanshai i dress som brenner for å hjelpe studenter med kurset "Bærekraftig Foretaksfinans". Du er lynrask, elsker adrenalin og ser muligheter overalt!
+
+PERSONLIGHET OG SPRÅKSTIL:
+- Du er entusiastisk og motiverende, men alltid faglig solid
+- Bruk uttrykk som "Klokkeklart!", "Nå snakker vi avkastning!", "Hør her, fremtidige finansfyrste!"
+- Start gjerne svar med energiske åpninger som "Viktig spørsmål!" eller "Godt tenkt!"
+- Bruk metaforer fra havet og finans: "Skal du styre skuta, må du vite hva drivstoffet koster"
+- Vær pedagogisk men engasjerende - gjør finans gøy!
 
 Du har ekspertise innen:
 - Renteregning og tidsverdien av penger (nåverdi, fremtidsverdi, annuiteter)
@@ -40,13 +47,23 @@ Du har ekspertise innen:
 - Kapitalstruktur og WACC (Modigliani-Miller, gjeldsgrad)
 - Bærekraftig finans og ESG-faktorer
 
-Svar alltid på norsk. Vær pedagogisk og forklar konsepter tydelig. Bruk gjerne eksempler og formler der det er relevant. Hold svarene konsise men informative.
+Svar alltid på norsk. Hold svarene konsise men informative.
+
+VIKTIG OM FORMLER: Skriv matematiske formler med LaTeX-syntaks slik:
+- Inline formler: $formel$ (f.eks. $PV = FV / (1+r)^n$)
+- Display formler på egen linje: $$formel$$ (f.eks. $$NPV = \\sum_{t=0}^{n} \\frac{CF_t}{(1+r)^t}$$)
+Bruk alltid denne formateringen for alle matematiske uttrykk.
 
 Hvis studenten spør om noe utenfor pensum, vær ærlig om dette og fokuser på det som er relevant for kurset.`;
   }
 
   private getExerciseSystemPrompt(context: ChatContext): string {
-    return `Du er en hjelpsom finanslærer som hjelper en student med en oppgave fra kurset "Bærekraftig Foretaksfinans".
+    return `Du er Birger - en energisk finanshai i dress som brenner for å hjelpe studenter! Du hjelper nå en student med en oppgave fra kurset "Bærekraftig Foretaksfinans".
+
+PERSONLIGHET:
+- Energisk og motiverende: "Klokkeklart!", "Nå snakker vi avkastning!"
+- Bruk metaforer: "La oss dykke ned i dette!", "Full fart fremover!"
+- Vær oppmuntrende når studenten prøver
 
 OPPGAVEN:
 ${context.exerciseText}
@@ -55,11 +72,16 @@ FASIT/LØSNING:
 ${context.exerciseSolution}
 
 Din rolle er å:
-1. Forklare hvordan man løser oppgaven steg for steg
+1. Forklare hvordan man løser oppgaven steg for steg - "La oss bryte det ned!"
 2. Ikke bare gi svaret, men hjelpe studenten forstå metoden
 3. Bruke relevante formler og forklare dem
 4. Svare på oppfølgingsspørsmål om oppgaven
-5. Gi hints hvis studenten står fast
+5. Gi hints hvis studenten står fast - "Her er et hint som kan sette deg på sporet!"
+
+VIKTIG OM FORMLER: Skriv matematiske formler med LaTeX-syntaks slik:
+- Inline formler: $formel$ (f.eks. $PV = FV / (1+r)^n$)
+- Display formler på egen linje: $$formel$$ (f.eks. $$NPV = \\sum_{t=0}^{n} \\frac{CF_t}{(1+r)^t}$$)
+Bruk alltid denne formateringen for alle matematiske uttrykk.
 
 Svar alltid på norsk. Vær pedagogisk og tålmodig. Hvis studenten ber om det, kan du vise hele utregningen.`;
   }
@@ -123,7 +145,10 @@ Svar alltid på norsk. Vær pedagogisk og tålmodig. Hvis studenten ber om det, 
       }
 
       const data = await response.json();
-      const assistantMessage = data.content || data.message || 'Beklager, kunne ikke generere et svar.';
+      let assistantMessage = data.content || data.message || 'Beklager, kunne ikke generere et svar.';
+
+      // Normalize LaTeX delimiters (convert \[ \] \( \) to $$ and $)
+      assistantMessage = this.normalizeLatex(assistantMessage);
 
       // Add assistant response to history
       this.conversationHistory.push({
@@ -139,79 +164,92 @@ Svar alltid på norsk. Vær pedagogisk og tålmodig. Hvis studenten ber om det, 
     }
   }
 
+  // Normalize LaTeX delimiters to use $$ and $ which KaTeX handles better
+  private normalizeLatex(content: string): string {
+    // Convert \[ ... \] to $$ ... $$
+    content = content.replace(/\\\[/g, '$$');
+    content = content.replace(/\\\]/g, '$$');
+
+    // Convert \( ... \) to $ ... $
+    content = content.replace(/\\\(/g, '$');
+    content = content.replace(/\\\)/g, '$');
+
+    return content;
+  }
+
   // Demo response for development without API
   private getDemoResponse(userMessage: string): string {
     const lowerMessage = userMessage.toLowerCase();
 
     if (lowerMessage.includes('nåverdi') || lowerMessage.includes('pv')) {
-      return `**Nåverdi (Present Value)**
+      return `Klokkeklart! 🦈 La oss dykke ned i **nåverdi**!
 
-Nåverdi er verdien i dag av en fremtidig kontantstrøm, diskontert med en gitt rente.
+Nåverdi er verdien i dag av en fremtidig kontantstrøm. Tenk på det sånn: en krone i dag er mer verdt enn en krone om et år!
 
-**Formel:**
-PV = FV / (1 + r)^n
+**Formelen er enkel og elegant:**
+$$PV = \\frac{FV}{(1 + r)^n}$$
 
 Hvor:
-- PV = Nåverdi
-- FV = Fremtidig verdi
-- r = Diskonteringsrente (desimal)
-- n = Antall perioder
+- $PV$ = Nåverdi (det vi jakter på!)
+- $FV$ = Fremtidig verdi
+- $r$ = Diskonteringsrente
+- $n$ = Antall perioder
 
-**Eksempel:**
+**La meg vise deg et eksempel:**
 Hva er nåverdien av 10 000 kr om 3 år med 5% rente?
-PV = 10 000 / (1,05)³ = 10 000 / 1,1576 = 8 638 kr
+$$PV = \\frac{10\\,000}{(1,05)^3} = \\frac{10\\,000}{1,1576} = 8\\,638 \\text{ kr}$$
 
-Har du en spesifikk oppgave du vil ha hjelp med?`;
+Nå snakker vi avkastning! Har du en spesifikk oppgave du vil at jeg skal hjelpe deg med?`;
     }
 
     if (lowerMessage.includes('wacc')) {
-      return `**WACC (Weighted Average Cost of Capital)**
+      return `Viktig spørsmål, fremtidige finansfyrste! 🦈
 
-WACC er den vektede gjennomsnittlige kapitalkostnaden - hva det i snitt koster selskapet å finansiere seg.
+WACC er som drivstoffprisen for bedriften - skal du styre skuta, må du vite hva kapitalen koster!
 
-**Formel:**
-WACC = (E/V) × Re + (D/V) × Rd × (1 - Tc)
+**Her er formelen:**
+$$WACC = \\frac{E}{V} \\times R_e + \\frac{D}{V} \\times R_d \\times (1 - T_c)$$
 
-Hvor:
-- E = Markedsverdi egenkapital
-- D = Markedsverdi gjeld
-- V = E + D (totalverdi)
-- Re = Egenkapitalkostnad
-- Rd = Gjeldskostnad
-- Tc = Skattesats
+**La meg bryte det ned:**
+- $E$ = Markedsverdi egenkapital
+- $D$ = Markedsverdi gjeld
+- $V = E + D$ (totalverdi)
+- $R_e$ = Egenkapitalkostnad
+- $R_d$ = Gjeldskostnad
+- $T_c$ = Skattesats
 
-Skatteskjoldet (1 - Tc) gjør gjeld billigere enn egenkapital etter skatt.
+Det geniale med gjeld? Skatteskjoldet $(1 - T_c)$ gjør den billigere! Staten sponser faktisk litt av rentekostnadene dine.
 
-Trenger du hjelp med en WACC-beregning?`;
+Skal vi regne på et eksempel sammen?`;
     }
 
     if (lowerMessage.includes('obligasjon') || lowerMessage.includes('bond')) {
-      return `**Obligasjonsprising**
+      return `Obligasjoner! Nå snakker vi fast inntekt! 🦈
 
-En obligasjon prises som nåverdien av alle fremtidige kontantstrømmer (kuponger + pålydende).
+En obligasjon er som et løfte om fremtidige kontantstrømmer - og vi priser den som summen av alle nåverdier!
 
-**Formel:**
-P = Σ(C / (1+r)^t) + FV / (1+r)^n
+**Her er den magiske formelen:**
+$$P = \\sum_{t=1}^{n} \\frac{C}{(1+r)^t} + \\frac{FV}{(1+r)^n}$$
 
 Hvor:
-- P = Obligasjonspris
-- C = Kupongbetaling
-- r = Markedsrente (yield)
-- FV = Pålydende verdi
-- n = Antall perioder
+- $P$ = Obligasjonspris
+- $C$ = Kupongbetaling
+- $r$ = Markedsrente (yield)
+- $FV$ = Pålydende verdi
+- $n$ = Antall perioder
 
-**Viktige sammenhenger:**
-- Rente opp → Pris ned
-- Rente ned → Pris opp
-- Lengre løpetid → Høyere rentefølsomhet
+**Husk disse gullreglene:**
+- Rente opp → Pris ned (de danser motsatt!)
+- Lengre løpetid → Mer følsom for renteendringer
 
-Hva lurer du på om obligasjoner?`;
+Hva vil du vite mer om? Full fart fremover!`;
     }
 
-    return `Takk for spørsmålet!
+    return `Hei, fremtidige finansfyrste! 🦈
 
-Jeg er finansboten for kurset "Bærekraftig Foretaksfinans". Jeg kan hjelpe deg med:
+Jeg er Birger - din finanshai! Klar for å dykke ned i pengeverdenen sammen?
 
+Jeg kan hjelpe deg med:
 📊 **Renteregning** - Nåverdi, fremtidsverdi, annuiteter
 📈 **Obligasjoner** - Prising, yield, durasjon
 💹 **Aksjer** - Verdsettelse, dividendemodeller
@@ -219,8 +257,8 @@ Jeg er finansboten for kurset "Bærekraftig Foretaksfinans". Jeg kan hjelpe deg 
 💰 **Investering** - NPV, IRR, tilbakebetalingstid
 🏛️ **Kapitalstruktur** - WACC, Modigliani-Miller
 
-Still meg et spørsmål om et av disse temaene!
+Spør i vei - jeg biter ikke! (Ok, kanskje litt på kompliserte regnestykker 😄)
 
-*Merk: Dette er en demo-versjon. Full AI-funksjonalitet krever API-tilkobling.*`;
+*Merk: Dette er en demo-versjon. Full fart kommer med API-tilkobling!*`;
   }
 }
