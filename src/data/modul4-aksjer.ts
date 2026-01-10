@@ -29,9 +29,18 @@ export const modul4AksjerModule: Module = {
           emphasis: 'important'
         },
         {
+          id: '4-1-podcast',
+          type: 'audio',
+          order: 2,
+          title: 'Podcast: Introduksjon til aksjer og aksjeprising',
+          duration: '15 min',
+          url: '/aksjer.m4a',
+          description: 'Vi anbefaler at du lytter til denne podcasten før du leser videre. Her får du en grundig og lettfattelig introduksjon til aksjer, eierskap og verdsettelse – fortalt på en engasjerende måte som gir deg et solid fundament for resten av modulen.'
+        },
+        {
           id: '4-1-intro',
           type: 'text',
-          order: 2,
+          order: 3,
           text: 'I forrige modul lærte du om obligasjoner – der du er kreditor og låner ut penger. Nå snur vi perspektivet: med aksjer blir du *eier*. Du tar mer risiko, men har også mulighet for langt høyere avkastning.'
         },
         {
