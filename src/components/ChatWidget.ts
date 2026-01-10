@@ -39,13 +39,16 @@ export class ChatWidget {
   private getWidgetHTML(): string {
     return `
       <!-- Floating button - Birger the Finance Shark -->
-      <button class="chat-fab" aria-label="Snakk med Birger">
-        <img class="chat-fab-mascot" src="/birger.png" alt="Birger - din finanshai" />
-        <svg class="chat-fab-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
+      <div class="chat-fab-wrapper">
+        <div class="chat-speech-bubble">Spør meg!</div>
+        <button class="chat-fab" aria-label="Snakk med Birger">
+          <img class="chat-fab-mascot" src="/birger.png" alt="Birger - din finanshai" />
+          <svg class="chat-fab-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
 
       <!-- Chat panel -->
       <div class="chat-panel">
@@ -118,6 +121,10 @@ export class ChatWidget {
     // FAB button
     const fab = this.container.querySelector('.chat-fab');
     fab?.addEventListener('click', () => this.toggle());
+
+    // Speech bubble (also opens chat)
+    const speechBubble = this.container.querySelector('.chat-speech-bubble');
+    speechBubble?.addEventListener('click', () => this.open());
 
     // Close button
     const closeBtn = this.container.querySelector('.chat-btn-close');

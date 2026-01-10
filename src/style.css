@@ -4320,6 +4320,53 @@ a:hover {
   font-family: var(--font-body);
 }
 
+/* Floating Action Button Wrapper */
+.chat-fab-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Speech Bubble */
+.chat-speech-bubble {
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  color: #1a365d;
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  margin-right: 12px;
+  animation: bubble-bounce 2s ease-in-out infinite;
+  cursor: pointer;
+}
+
+.chat-speech-bubble::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 8px solid transparent;
+  border-left-color: white;
+}
+
+@keyframes bubble-bounce {
+  0%, 100% { transform: translateY(-50%) translateX(0); }
+  50% { transform: translateY(-50%) translateX(-5px); }
+}
+
+.chat-widget-open .chat-speech-bubble {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
 /* Floating Action Button */
 .chat-fab {
   width: 100px;
