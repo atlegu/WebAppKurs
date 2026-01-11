@@ -319,9 +319,42 @@ export const modul8KapitalkostnadModule: Module = {
           ]
         },
         {
+          id: '8-2-model-capm',
+          type: 'interactive-model',
+          order: 21,
+          modelType: 'capm-sml',
+          title: 'CAPM og Security Market Line',
+          description: 'Utforsk sammenhengen mellom beta og forventet avkastning. Juster parameterne og se hvordan Security Market Line (SML) endres.',
+          controls: [
+            { key: 'riskFreeRate', label: 'Risikofri rente (rf)', type: 'slider', min: 0, max: 10, step: 0.5, default: 3.5, unit: '%', helpText: '10-års statsobligasjonsrente' },
+            { key: 'marketReturn', label: 'Markedsavkastning (rM)', type: 'slider', min: 5, max: 20, step: 0.5, default: 9, unit: '%', helpText: 'Forventet avkastning på markedsporteføljen' },
+            { key: 'beta', label: 'Aksjens beta (β)', type: 'slider', min: 0, max: 2.5, step: 0.1, default: 1.2, helpText: 'Systematisk risiko relativt til markedet' },
+            { key: 'assetReturn', label: 'Aksjens faktiske avkastning', type: 'slider', min: 0, max: 25, step: 0.5, default: 10, unit: '%', helpText: 'Faktisk observert avkastning' }
+          ],
+          outputs: [
+            { key: 'expectedReturn', label: 'Forventet avkastning (CAPM)', unit: '%', precision: 2, highlight: true },
+            { key: 'marketPremium', label: 'Markedspremie', unit: '%', precision: 2 },
+            { key: 'alpha', label: 'Alpha (meravkastning)', unit: '%', precision: 2 },
+            { key: 'sharpeRatio', label: 'Markedets Sharpe-ratio', precision: 2 }
+          ],
+          charts: [
+            {
+              type: 'line',
+              title: 'Security Market Line (SML)',
+              xAxis: { key: 'beta', label: 'Beta', unit: '' },
+              yAxis: { key: 'return', label: 'Forventet avkastning (%)', unit: '%' },
+              series: [
+                { key: 'sml', name: 'SML', color: '#3b82f6' },
+                { key: 'asset', name: 'Aksjen', color: '#10b981' }
+              ]
+            }
+          ],
+          explanation: 'Grønt punkt over linjen = undervurdert aksje (positiv alpha). Rødt punkt under = overvurdert aksje.'
+        },
+        {
           id: '8-2-quiz-1',
           type: 'quiz',
-          order: 21,
+          order: 22,
           question: 'Et selskap har beta = 1,5. Risikofri rente er 4% og markedspremien er 6%. Hva er egenkapitalkostnaden?',
           options: [
             '10%',
@@ -689,9 +722,28 @@ export const modul8KapitalkostnadModule: Module = {
           ]
         },
         {
+          id: '8-4-calc-wacc',
+          type: 'calculator',
+          order: 16,
+          title: 'WACC-kalkulator',
+          description: 'Beregn vektet gjennomsnittlig kapitalkostnad for ditt selskap. Juster verdiene og se hvordan kapitalstruktur og kostnad påvirker WACC.',
+          calculatorType: 'wacc',
+          inputs: [
+            { key: 'equity', label: 'Egenkapital (MNOK)', type: 'currency', default: 600, min: 0, step: 50, helpText: 'Markedsverdi av egenkapital' },
+            { key: 'debt', label: 'Gjeld (MNOK)', type: 'currency', default: 400, min: 0, step: 50, helpText: 'Markedsverdi av gjeld' },
+            { key: 'costEquity', label: 'Egenkapitalkostnad', type: 'percentage', default: 10, min: 0, max: 30, step: 0.5, helpText: 'Beregnet med CAPM' },
+            { key: 'costDebt', label: 'Gjeldskostnad før skatt', type: 'percentage', default: 5, min: 0, max: 20, step: 0.25, helpText: 'Renten på gjelden' },
+            { key: 'taxRate', label: 'Skattesats', type: 'percentage', default: 22, min: 0, max: 50, step: 1, helpText: 'Norsk selskapsskatt er 22%' }
+          ],
+          formula: 'WACC = (E/V) × rE + (D/V) × rD × (1 - Tc)',
+          resultLabel: 'WACC',
+          resultUnit: '%',
+          explanation: 'Prøv å endre kapitalstrukturen og se hvordan WACC endrer seg!'
+        },
+        {
           id: '8-4-quiz-1',
           type: 'quiz',
-          order: 16,
+          order: 17,
           question: 'Et selskap finansieres 50% med EK (kostnad 12%) og 50% med gjeld (6% rente, 22% skatt). Hva er WACC?',
           options: [
             '9,00%',
