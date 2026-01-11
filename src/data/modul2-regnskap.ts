@@ -920,9 +920,39 @@ export const modul2RegnskapModule: Module = {
           explanation: 'DuPont bryter ned ROE i: Resultatmargin (lønnsomhet per salg) × Kapitalomløp (effektivitet) × Finansiell gearing (bruk av gjeld).'
         },
         {
+          id: '2-5-model-dupont',
+          type: 'interactive-model',
+          order: 21,
+          modelType: 'dupont-analysis',
+          title: 'DuPont-analyse: Forstå hva som driver lønnsomhet',
+          description: 'Legg inn regnskapstall for et selskap og se hvordan DuPont-modellen bryter ned ROE i tre drivere: lønnsomhet, effektivitet og gearing.',
+          controls: [
+            { key: 'netIncome', label: 'Årsresultat', type: 'slider', min: 0, max: 500, step: 10, default: 100, unit: ' MNOK', helpText: 'Resultat etter skatt' },
+            { key: 'revenue', label: 'Inntekter', type: 'slider', min: 100, max: 5000, step: 100, default: 1000, unit: ' MNOK', helpText: 'Totale driftsinntekter' },
+            { key: 'assets', label: 'Eiendeler', type: 'slider', min: 100, max: 5000, step: 100, default: 800, unit: ' MNOK', helpText: 'Sum eiendeler' },
+            { key: 'equity', label: 'Egenkapital', type: 'slider', min: 50, max: 2000, step: 50, default: 400, unit: ' MNOK', helpText: 'Sum egenkapital' }
+          ],
+          outputs: [
+            { key: 'profitMargin', label: 'Resultatmargin', unit: '%', precision: 1 },
+            { key: 'assetTurnover', label: 'Kapitalomløp', precision: 2 },
+            { key: 'equityMultiplier', label: 'Gearing (Aktiva/EK)', precision: 2 },
+            { key: 'roa', label: 'ROA (totalrentabilitet)', unit: '%', precision: 1 },
+            { key: 'roe', label: 'ROE (egenkapitalrent.)', unit: '%', precision: 1, highlight: true },
+            { key: 'debtRatio', label: 'Gjeldsandel', unit: '%', precision: 0 }
+          ],
+          charts: [{
+            type: 'bar',
+            title: 'DuPont-komponentene',
+            xAxis: { key: 'component', label: 'Komponent' },
+            yAxis: { key: 'value', label: 'Verdi' },
+            series: [{ key: 'components', name: 'DuPont', color: '#3b82f6' }]
+          }],
+          explanation: '**DuPont-formelen:** ROE = Margin × Omløp × Gearing\n\nDenne modellen viser at høy ROE kan skyldes:\n• Høy **margin** (god lønnsomhet per krone salg)\n• Høyt **kapitalomløp** (effektiv bruk av kapital)\n• Høy **gearing** (mye gjeld øker avkastningen på EK, men også risikoen)\n\nSammenlign selskaper i samme bransje for å forstå hva som driver forskjeller i lønnsomhet.'
+        },
+        {
           id: '2-5-exercise-1',
           type: 'exercise',
-          order: 21,
+          order: 22,
           title: 'Oppgave: Komplett regnskapsanalyse',
           description: 'Et selskap har følgende tall:\n\nResultatregnskap:\n• Inntekter: 800\n• EBIT: 80\n• Årsresultat: 48\n\nBalanse:\n• Eiendeler: 600\n• Herav omløpsmidler: 200\n• Egenkapital: 240\n• Kortsiktig gjeld: 100\n• Rentekostnader: 20\n\n1. Beregn driftsmargin, resultatmargin og ROE.\n2. Beregn likviditetsgrad 1 og egenkapitalandel.\n3. Beregn rentedekningsgrad.\n4. Gjør en DuPont-analyse.\n5. Er dette et godt selskap å investere i? Begrunn.',
           hint: 'Bruk formlene fra tabellene. For DuPont trenger du Resultatmargin × (Inntekter/Eiendeler) × (Eiendeler/EK).'
@@ -930,7 +960,7 @@ export const modul2RegnskapModule: Module = {
         {
           id: '2-5-reflection-1',
           type: 'reflection',
-          order: 22,
+          order: 23,
           question: 'Nå har du lært å lese og analysere regnskap. Hvordan vil denne kunnskapen hjelpe deg som investor eller i en fremtidig jobb? Hva er det viktigste du tar med deg fra denne modulen?'
         }
       ]

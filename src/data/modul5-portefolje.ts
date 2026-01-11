@@ -977,9 +977,41 @@ export const modul5PortefoljeModule: Module = {
           ]
         },
         {
+          id: '5-4-model-portfolio-builder',
+          type: 'interactive-model',
+          order: 22,
+          title: 'Bygg din egen portefølje',
+          description: 'Eksperimenter med ulike aktivaallokeringer og se hvordan det påvirker forventet avkastning og risiko. Grafen viser de fire aktivaklassene og din porteføljes posisjon.',
+          modelType: 'portfolio-builder',
+          controls: [
+            { key: 'stocks', label: 'Aksjer', type: 'slider', min: 0, max: 100, default: 60, step: 5, unit: '%', helpText: 'Høy forventet avkastning, høy risiko (volatilitet ~18%)' },
+            { key: 'bonds', label: 'Obligasjoner', type: 'slider', min: 0, max: 100, default: 25, step: 5, unit: '%', helpText: 'Moderat avkastning, lav risiko (volatilitet ~5%)' },
+            { key: 'realestate', label: 'Eiendom', type: 'slider', min: 0, max: 100, default: 10, step: 5, unit: '%', helpText: 'Middels risiko/avkastning, diversifisering (volatilitet ~12%)' },
+            { key: 'cash', label: 'Bankinnskudd', type: 'slider', min: 0, max: 100, default: 5, step: 5, unit: '%', helpText: 'Trygt, men lav avkastning (volatilitet ~1%)' }
+          ],
+          outputs: [
+            { key: 'portfolioReturn', label: 'Forventet avkastning', unit: '%', precision: 1, highlight: true },
+            { key: 'portfolioVol', label: 'Volatilitet (risiko)', unit: '%', precision: 1 },
+            { key: 'sharpeRatio', label: 'Sharpe-ratio', precision: 2 },
+            { key: 'projectedValue', label: '100.000 kr etter 10 år', unit: ' kr', precision: 0 },
+            { key: 'valueAtRisk', label: 'Value at Risk (95%)', unit: ' kr', precision: 0 }
+          ],
+          charts: [{
+            type: 'scatter',
+            title: 'Risiko-avkastning: Aktivaklasser og din portefølje',
+            xAxis: { key: 'std', label: 'Volatilitet (%)' },
+            yAxis: { key: 'return', label: 'Forventet avkastning (%)' },
+            series: [
+              { key: 'assets', name: 'Aktivaklasser', color: '#6b7280' },
+              { key: 'portfolio', name: 'Din portefølje', color: '#8b5cf6' }
+            ]
+          }],
+          explanation: 'Hver aktivaklasse har sin egen risiko-avkastningsprofil. Aksjer gir høyest forventet avkastning, men med høyest risiko. Ved å kombinere aktivaklasser med ulik korrelasjon kan du oppnå bedre risikojustert avkastning (Sharpe-ratio). Eksperimenter med vektene for å finne din optimale portefølje!'
+        },
+        {
           id: '5-4-reflection',
           type: 'reflection',
-          order: 22,
+          order: 23,
           question: 'Har du en spareavtale i dag? Vet du hva du er investert i? Sjekk fordelingen mellom aksjer og obligasjoner i dine fond.'
         }
       ]

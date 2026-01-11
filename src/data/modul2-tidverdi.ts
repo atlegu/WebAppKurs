@@ -975,28 +975,59 @@ export const modul2TidverdiModule: Module = {
           ]
         },
         {
+          id: '2-5-model-inflation',
+          type: 'interactive-model',
+          order: 21,
+          modelType: 'inflation-visualizer',
+          title: 'Inflasjonens tidsmaskinn',
+          description: 'Se hvordan inflasjonen spiser opp kjøpekraften din over tid. Juster inflasjonsnivået og antall år for å visualisere effekten.',
+          controls: [
+            { key: 'amount', label: 'Beløp i dag', type: 'slider', min: 10000, max: 1000000, step: 10000, default: 100000, unit: ' kr', helpText: 'Verdien du starter med' },
+            { key: 'inflationRate', label: 'Årlig inflasjon', type: 'slider', min: 0, max: 10, step: 0.5, default: 2.5, unit: '%', helpText: 'Norges Banks mål er 2%' },
+            { key: 'years', label: 'Antall år', type: 'slider', min: 1, max: 50, step: 1, default: 20, unit: ' år', helpText: 'Tidshorisont' }
+          ],
+          outputs: [
+            { key: 'realValue', label: 'Kjøpekraft etter perioden', unit: ' kr', precision: 0, highlight: true },
+            { key: 'purchasingPowerLostPct', label: 'Kjøpekraft tapt', unit: '%', precision: 0 },
+            { key: 'nominalNeeded', label: 'Beløp nødvendig for å beholde kjøpekraft', unit: ' kr', precision: 0 },
+            { key: 'annualLoss', label: 'Årlig tap av kjøpekraft', unit: ' kr', precision: 0 },
+            { key: 'yearsToHalve', label: 'År til halvert kjøpekraft', precision: 0 }
+          ],
+          charts: [{
+            type: 'line',
+            title: 'Kjøpekraft over tid',
+            xAxis: { key: 'year', label: 'År' },
+            yAxis: { key: 'value', label: 'Verdi (kr)' },
+            series: [
+              { key: 'nominal', name: 'Nominell verdi', color: '#3b82f6' },
+              { key: 'real', name: 'Kjøpekraft', color: '#ef4444' }
+            ]
+          }],
+          explanation: 'Grafen viser hvordan 100 000 kr "på papiret" (blå stiplet linje) holder seg konstant, mens den **reelle kjøpekraften** (rød linje) synker år for år.\n\nDet røde området representerer **tapt kjøpekraft** – det du ikke lenger har råd til å kjøpe.\n\nMed Norges Banks inflasjonsmål på 2% mister du halvparten av kjøpekraften på ca 36 år. Med 3% inflasjon skjer dette på bare 24 år!'
+        },
+        {
           id: '2-5-reflection',
           type: 'reflection',
-          order: 21,
+          order: 22,
           question: 'Se på dine egne sparepenger. Hvor mye står på vanlig sparekonto vs. investert i fond eller aksjer? Er du fornøyd med denne fordelingen når du tenker på inflasjonens effekt?'
         },
         {
           id: '2-5-oppsummering-modul',
           type: 'heading',
-          order: 22,
+          order: 23,
           level: 2,
           text: 'Oppsummering av Modul 2'
         },
         {
           id: '2-5-text-oppsummering',
           type: 'text',
-          order: 23,
+          order: 24,
           text: 'Du har nå lært det kanskje viktigste konseptet i personlig økonomi: **pengenes tidsverdi**. Du forstår hvorfor penger i dag er mer verdt enn penger i morgen, hvordan renters rente kan jobbe for deg (eller mot deg), og hvordan inflasjon spiser opp kjøpekraften din hvis du ikke passer på.'
         },
         {
           id: '2-5-list-oppsummering',
           type: 'list',
-          order: 24,
+          order: 25,
           ordered: false,
           items: [
             'Pengenes tidsverdi: Penger i dag > penger i fremtiden',
@@ -1009,7 +1040,7 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-5-text-neste',
           type: 'text',
-          order: 25,
+          order: 26,
           text: '**Neste steg:** I Modul 3 skal vi bruke alt du har lært til å forstå obligasjoner – hvordan de prises, hvilken avkastning de gir, og hvorfor de er en viktig del av enhver portefølje.',
           emphasis: 'important'
         }

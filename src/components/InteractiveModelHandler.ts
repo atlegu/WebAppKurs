@@ -3,6 +3,9 @@ import { InteractiveModelContent, InteractiveModelType } from '../types/course';
 type StateRecord = Record<string, number>;
 type ChartDataPoint = Record<string, number>;
 
+// Asset labels for portfolio builder chart (indexed by assetIndex)
+const ASSET_LABELS = ['Aksjer', 'Obligasjoner', 'Eiendom', 'Bankinnskudd'];
+
 export class InteractiveModelHandler {
   private models: Map<string, InteractiveModelContent> = new Map();
   private states: Map<string, StateRecord> = new Map();
@@ -99,6 +102,14 @@ export class InteractiveModelHandler {
         return this.calculateCapmSml(state);
       case 'portfolio-two-asset':
         return this.calculatePortfolio(state);
+      case 'portfolio-builder':
+        return this.calculatePortfolioBuilder(state);
+      case 'duration-simulator':
+        return this.calculateDurationSimulator(state);
+      case 'dupont-analysis':
+        return this.calculateDupontAnalysis(state);
+      case 'inflation-visualizer':
+        return this.calculateInflationVisualizer(state);
       default:
         return {};
     }
@@ -255,6 +266,205 @@ export class InteractiveModelHandler {
     };
   }
 
+  // ============== PORTFOLIO BUILDER (4 ASSET CLASSES) ==============
+  private calculatePortfolioBuilder(state: StateRecord): StateRecord {
+    const { stocks, bonds, realestate, cash } = state;
+
+    // Normalize weights to ensure they sum to 100%
+    const total = stocks + bonds + realestate + cash;
+    const w = {
+      stocks: (stocks / total) || 0,
+      bonds: (bonds / total) || 0,
+      realestate: (realestate / total) || 0,
+      cash: (cash / total) || 0
+    };
+
+    // Historical Norwegian market data (annual returns and volatilities)
+    const assets = {
+      stocks: { return: 0.08, vol: 0.18 },      // OSEBX-like
+      bonds: { return: 0.035, vol: 0.05 },      // Norwegian bonds
+      realestate: { return: 0.06, vol: 0.12 },  // Real estate funds
+      cash: { return: 0.015, vol: 0.01 }        // Bank deposits
+    };
+
+    // Correlation matrix (symmetric)
+    const corr = {
+      stocks_bonds: 0.2,
+      stocks_realestate: 0.5,
+      stocks_cash: 0.0,
+      bonds_realestate: 0.3,
+      bonds_cash: 0.1,
+      realestate_cash: 0.0
+    };
+
+    // Portfolio expected return
+    const portReturn =
+      w.stocks * assets.stocks.return +
+      w.bonds * assets.bonds.return +
+      w.realestate * assets.realestate.return +
+      w.cash * assets.cash.return;
+
+    // Portfolio variance (full covariance calculation)
+    const variance =
+      // Variance terms
+      Math.pow(w.stocks * assets.stocks.vol, 2) +
+      Math.pow(w.bonds * assets.bonds.vol, 2) +
+      Math.pow(w.realestate * assets.realestate.vol, 2) +
+      Math.pow(w.cash * assets.cash.vol, 2) +
+      // Covariance terms (2 * w_i * w_j * sigma_i * sigma_j * rho_ij)
+      2 * w.stocks * w.bonds * assets.stocks.vol * assets.bonds.vol * corr.stocks_bonds +
+      2 * w.stocks * w.realestate * assets.stocks.vol * assets.realestate.vol * corr.stocks_realestate +
+      2 * w.stocks * w.cash * assets.stocks.vol * assets.cash.vol * corr.stocks_cash +
+      2 * w.bonds * w.realestate * assets.bonds.vol * assets.realestate.vol * corr.bonds_realestate +
+      2 * w.bonds * w.cash * assets.bonds.vol * assets.cash.vol * corr.bonds_cash +
+      2 * w.realestate * w.cash * assets.realestate.vol * assets.cash.vol * corr.realestate_cash;
+
+    const portVol = Math.sqrt(variance);
+
+    // Sharpe ratio (using cash rate as risk-free)
+    const sharpeRatio = portVol > 0 ? (portReturn - assets.cash.return) / portVol : 0;
+
+    // Calculate 10-year projection
+    const initialValue = 100000;
+    const projectedValue = initialValue * Math.pow(1 + portReturn, 10);
+
+    // Value at Risk (95% confidence, 1-year)
+    const var95 = initialValue * (portReturn - 1.645 * portVol);
+
+    return {
+      portfolioReturn: portReturn * 100,
+      portfolioVol: portVol * 100,
+      sharpeRatio,
+      projectedValue,
+      valueAtRisk: Math.max(0, -var95),
+      totalWeight: total
+    };
+  }
+
+  // ============== DURATION SIMULATOR ==============
+  private calculateDurationSimulator(state: StateRecord): StateRecord {
+    const { couponRate, ytm, maturity, rateChange } = state;
+    const faceValue = 1000;
+    // Annual coupon assumed
+
+    // Calculate bond price
+    const couponPayment = faceValue * (couponRate / 100);
+    const rate = ytm / 100;
+
+    let price = 0;
+    let weightedTime = 0;
+
+    for (let t = 1; t <= maturity; t++) {
+      const pvCoupon = couponPayment / Math.pow(1 + rate, t);
+      price += pvCoupon;
+      weightedTime += t * pvCoupon;
+    }
+    const pvPrincipal = faceValue / Math.pow(1 + rate, maturity);
+    price += pvPrincipal;
+    weightedTime += maturity * pvPrincipal;
+
+    // Macaulay Duration
+    const macaulayDuration = weightedTime / price;
+
+    // Modified Duration
+    const modifiedDuration = macaulayDuration / (1 + rate);
+
+    // Price at new yield (with rate change)
+    const newRate = (ytm + rateChange) / 100;
+    let newPrice = 0;
+    for (let t = 1; t <= maturity; t++) {
+      newPrice += couponPayment / Math.pow(1 + newRate, t);
+    }
+    newPrice += faceValue / Math.pow(1 + newRate, maturity);
+
+    // Actual price change
+    const priceChange = newPrice - price;
+    const priceChangePct = (priceChange / price) * 100;
+
+    // Duration-estimated price change
+    const estPriceChangePct = -modifiedDuration * rateChange;
+
+    // Estimation error (due to convexity)
+    const estimationError = priceChangePct - estPriceChangePct;
+
+    return {
+      price,
+      macaulayDuration,
+      modifiedDuration,
+      newPrice,
+      priceChange,
+      priceChangePct,
+      estPriceChangePct,
+      estimationError
+    };
+  }
+
+  // ============== DUPONT ANALYSIS ==============
+  private calculateDupontAnalysis(state: StateRecord): StateRecord {
+    const { netIncome, revenue, assets, equity } = state;
+
+    // Profit Margin = Net Income / Revenue
+    const profitMargin = revenue > 0 ? (netIncome / revenue) * 100 : 0;
+
+    // Asset Turnover = Revenue / Assets
+    const assetTurnover = assets > 0 ? revenue / assets : 0;
+
+    // Equity Multiplier = Assets / Equity
+    const equityMultiplier = equity > 0 ? assets / equity : 1;
+
+    // Return on Assets = Net Income / Assets
+    const roa = assets > 0 ? (netIncome / assets) * 100 : 0;
+
+    // Return on Equity = Net Income / Equity (or Margin × Turnover × Multiplier)
+    const roe = equity > 0 ? (netIncome / equity) * 100 : 0;
+
+    // DuPont verification: ROE = Margin × Turnover × Multiplier
+    const dupontRoe = (profitMargin / 100) * assetTurnover * equityMultiplier * 100;
+
+    // Debt ratio
+    const debtRatio = assets > 0 ? ((assets - equity) / assets) * 100 : 0;
+
+    return {
+      profitMargin,
+      assetTurnover,
+      equityMultiplier,
+      roa,
+      roe,
+      dupontRoe,
+      debtRatio
+    };
+  }
+
+  // ============== INFLATION VISUALIZER ==============
+  private calculateInflationVisualizer(state: StateRecord): StateRecord {
+    const { amount, years, inflationRate } = state;
+
+    // Real value after inflation
+    const realValue = amount / Math.pow(1 + inflationRate / 100, years);
+
+    // Purchasing power lost
+    const purchasingPowerLost = amount - realValue;
+    const purchasingPowerLostPct = (purchasingPowerLost / amount) * 100;
+
+    // Nominal value needed to maintain purchasing power
+    const nominalNeeded = amount * Math.pow(1 + inflationRate / 100, years);
+
+    // Annual loss of purchasing power
+    const annualLoss = amount * (inflationRate / 100);
+
+    // Rule of 72: years to halve purchasing power
+    const yearsToHalve = inflationRate > 0 ? 72 / inflationRate : 999;
+
+    return {
+      realValue,
+      purchasingPowerLost,
+      purchasingPowerLostPct,
+      nominalNeeded,
+      annualLoss,
+      yearsToHalve
+    };
+  }
+
   private updateOutputDisplays(modelId: string, model: InteractiveModelContent, outputs: StateRecord): void {
     model.outputs.forEach(output => {
       const element = document.querySelector(
@@ -298,6 +508,14 @@ export class InteractiveModelHandler {
         return this.generateSmlChartData(state);
       case 'portfolio-two-asset':
         return this.generatePortfolioChartData(state);
+      case 'portfolio-builder':
+        return this.generatePortfolioBuilderChartData(state);
+      case 'duration-simulator':
+        return this.generateDurationChartData(state);
+      case 'dupont-analysis':
+        return this.generateDupontChartData(state);
+      case 'inflation-visualizer':
+        return this.generateInflationChartData(state);
       default:
         return [];
     }
@@ -413,6 +631,146 @@ export class InteractiveModelHandler {
     return data;
   }
 
+  private generatePortfolioBuilderChartData(state: StateRecord): ChartDataPoint[] {
+    const { stocks, bonds, realestate, cash } = state;
+    const data: ChartDataPoint[] = [];
+
+    // Asset data (index corresponds to ASSET_LABELS)
+    const assets = [
+      { return: 8, vol: 18 },     // 0: Aksjer
+      { return: 3.5, vol: 5 },    // 1: Obligasjoner
+      { return: 6, vol: 12 },     // 2: Eiendom
+      { return: 1.5, vol: 1 }     // 3: Bankinnskudd
+    ];
+
+    // Add individual asset points with assetIndex for labeling
+    data.push({ std: assets[0].vol, return: assets[0].return, isAsset: 1, assetIndex: 0 });
+    data.push({ std: assets[1].vol, return: assets[1].return, isAsset: 1, assetIndex: 1 });
+    data.push({ std: assets[2].vol, return: assets[2].return, isAsset: 1, assetIndex: 2 });
+    data.push({ std: assets[3].vol, return: assets[3].return, isAsset: 1, assetIndex: 3 });
+
+    // Calculate current portfolio position
+    const total = stocks + bonds + realestate + cash;
+    const w = {
+      stocks: (stocks / total) || 0,
+      bonds: (bonds / total) || 0,
+      realestate: (realestate / total) || 0,
+      cash: (cash / total) || 0
+    };
+
+    // Correlation matrix (symmetric)
+    const corr = {
+      stocks_bonds: 0.2,
+      stocks_realestate: 0.5,
+      stocks_cash: 0.0,
+      bonds_realestate: 0.3,
+      bonds_cash: 0.1,
+      realestate_cash: 0.0
+    };
+
+    // Use indexed access: 0=stocks, 1=bonds, 2=realestate, 3=cash
+    const portReturn =
+      w.stocks * assets[0].return +
+      w.bonds * assets[1].return +
+      w.realestate * assets[2].return +
+      w.cash * assets[3].return;
+
+    const variance =
+      Math.pow(w.stocks * assets[0].vol / 100, 2) +
+      Math.pow(w.bonds * assets[1].vol / 100, 2) +
+      Math.pow(w.realestate * assets[2].vol / 100, 2) +
+      Math.pow(w.cash * assets[3].vol / 100, 2) +
+      2 * w.stocks * w.bonds * (assets[0].vol / 100) * (assets[1].vol / 100) * corr.stocks_bonds +
+      2 * w.stocks * w.realestate * (assets[0].vol / 100) * (assets[2].vol / 100) * corr.stocks_realestate +
+      2 * w.stocks * w.cash * (assets[0].vol / 100) * (assets[3].vol / 100) * corr.stocks_cash +
+      2 * w.bonds * w.realestate * (assets[1].vol / 100) * (assets[2].vol / 100) * corr.bonds_realestate +
+      2 * w.bonds * w.cash * (assets[1].vol / 100) * (assets[3].vol / 100) * corr.bonds_cash +
+      2 * w.realestate * w.cash * (assets[2].vol / 100) * (assets[3].vol / 100) * corr.realestate_cash;
+
+    const portVol = Math.sqrt(variance) * 100;
+
+    // Add portfolio point
+    data.push({ std: portVol, return: portReturn, isPortfolio: 1 });
+
+    return data;
+  }
+
+  private generateDurationChartData(state: StateRecord): ChartDataPoint[] {
+    const { couponRate, ytm, maturity } = state;
+    const faceValue = 1000;
+    const data: ChartDataPoint[] = [];
+
+    // Generate price-yield curve for current bond
+    for (let yieldPct = 0.5; yieldPct <= 15; yieldPct += 0.5) {
+      const rate = yieldPct / 100;
+      const couponPayment = faceValue * (couponRate / 100);
+      let price = 0;
+
+      for (let t = 1; t <= maturity; t++) {
+        price += couponPayment / Math.pow(1 + rate, t);
+      }
+      price += faceValue / Math.pow(1 + rate, maturity);
+
+      data.push({
+        yield: yieldPct,
+        price: price,
+        isCurve: 1
+      });
+    }
+
+    // Add current position marker
+    const currentRate = ytm / 100;
+    const couponPayment = faceValue * (couponRate / 100);
+    let currentPrice = 0;
+    for (let t = 1; t <= maturity; t++) {
+      currentPrice += couponPayment / Math.pow(1 + currentRate, t);
+    }
+    currentPrice += faceValue / Math.pow(1 + currentRate, maturity);
+
+    data.push({
+      yield: ytm,
+      price: currentPrice,
+      isCurrent: 1
+    });
+
+    return data;
+  }
+
+  private generateDupontChartData(state: StateRecord): ChartDataPoint[] {
+    const { netIncome, revenue, assets, equity } = state;
+    const data: ChartDataPoint[] = [];
+
+    // DuPont components as bar chart data
+    const profitMargin = revenue > 0 ? (netIncome / revenue) * 100 : 0;
+    const assetTurnover = assets > 0 ? (revenue / assets) * 100 : 0; // Scaled for display
+    const equityMultiplier = equity > 0 ? (assets / equity) * 100 : 100; // Scaled for display
+    const roe = equity > 0 ? (netIncome / equity) * 100 : 0;
+
+    data.push({ component: 0, value: profitMargin, label: 1 }); // Margin
+    data.push({ component: 1, value: assetTurnover, label: 2 }); // Turnover (scaled)
+    data.push({ component: 2, value: equityMultiplier, label: 3 }); // Multiplier (scaled)
+    data.push({ component: 3, value: roe, label: 4 }); // ROE
+
+    return data;
+  }
+
+  private generateInflationChartData(state: StateRecord): ChartDataPoint[] {
+    const { amount, years, inflationRate } = state;
+    const data: ChartDataPoint[] = [];
+
+    // Generate purchasing power over time
+    for (let year = 0; year <= Math.min(years, 50); year++) {
+      const realValue = amount / Math.pow(1 + inflationRate / 100, year);
+      data.push({
+        year,
+        realValue,
+        nominalValue: amount // Original amount stays constant
+      });
+    }
+
+    return data;
+  }
+
   private renderSingleChart(
     container: HTMLElement,
     config: any,
@@ -465,6 +823,36 @@ export class InteractiveModelHandler {
       xMax = 2.5;
       yMin = 0;
       yMax = 20;
+    } else if (modelType === 'portfolio-builder') {
+      xLabel = 'Risiko (Standardavvik %)';
+      yLabel = 'Forventet avkastning (%)';
+      xMin = 0;
+      xMax = 22;
+      yMin = 0;
+      yMax = 10;
+    } else if (modelType === 'duration-simulator') {
+      xLabel = 'Rente (%)';
+      yLabel = 'Obligasjonspris (kr)';
+      xMin = 0;
+      xMax = 15;
+      const prices = data.filter(d => d.price !== undefined).map(d => d.price);
+      yMin = Math.min(...prices) * 0.9;
+      yMax = Math.max(...prices) * 1.1;
+    } else if (modelType === 'dupont-analysis') {
+      xLabel = 'Komponent';
+      yLabel = 'Verdi (%)';
+      xMin = -0.5;
+      xMax = 3.5;
+      yMin = 0;
+      const values = data.map(d => d.value);
+      yMax = Math.max(...values) * 1.2;
+    } else if (modelType === 'inflation-visualizer') {
+      xLabel = 'År';
+      yLabel = 'Verdi (kr)';
+      xMin = 0;
+      xMax = data.length > 0 ? Math.max(...data.map(d => d.year)) : 30;
+      yMin = 0;
+      yMax = data.length > 0 ? Math.max(...data.map(d => d.nominalValue)) * 1.1 : 100;
     } else {
       xLabel = 'Risiko (Standardavvik %)';
       yLabel = 'Forventet avkastning (%)';
@@ -521,11 +909,11 @@ export class InteractiveModelHandler {
     svg.appendChild(gridGroup);
 
     // Draw data
-    if (modelType === 'bond-pricing') {
+    if (modelType === 'bond-pricing' || modelType === 'duration-simulator') {
       // Price-yield curve
+      const curveData = data.filter(d => d.price !== undefined && d.isCurrent === undefined);
       const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      const points = data
-        .filter(d => d.price !== undefined)
+      const points = curveData
         .map((d, i) => `${i === 0 ? 'M' : 'L'} ${scaleX(d.yield)} ${scaleY(d.price)}`)
         .join(' ');
       path.setAttribute('d', points);
@@ -533,6 +921,35 @@ export class InteractiveModelHandler {
       path.setAttribute('stroke', '#10b981');
       path.setAttribute('stroke-width', '2');
       svg.appendChild(path);
+
+      // Current position marker (for duration-simulator)
+      const currentPoint = data.find(d => d.isCurrent === 1);
+      if (currentPoint) {
+        const glowCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        glowCircle.setAttribute('cx', scaleX(currentPoint.yield).toString());
+        glowCircle.setAttribute('cy', scaleY(currentPoint.price).toString());
+        glowCircle.setAttribute('r', '12');
+        glowCircle.setAttribute('fill', 'rgba(239, 68, 68, 0.2)');
+        svg.appendChild(glowCircle);
+
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', scaleX(currentPoint.yield).toString());
+        circle.setAttribute('cy', scaleY(currentPoint.price).toString());
+        circle.setAttribute('r', '6');
+        circle.setAttribute('fill', '#ef4444');
+        circle.setAttribute('stroke', '#fff');
+        circle.setAttribute('stroke-width', '2');
+        svg.appendChild(circle);
+
+        const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        label.setAttribute('x', (scaleX(currentPoint.yield) + 10).toString());
+        label.setAttribute('y', (scaleY(currentPoint.price) - 8).toString());
+        label.setAttribute('fill', '#ef4444');
+        label.setAttribute('font-size', '11');
+        label.setAttribute('font-weight', '500');
+        label.textContent = `${currentPoint.price.toFixed(0)} kr`;
+        svg.appendChild(label);
+      }
     } else if (modelType === 'capm-sml') {
       // SML line
       const smlData = data.filter(d => d.smlReturn !== undefined && d.isAsset === undefined);
@@ -586,6 +1003,163 @@ export class InteractiveModelHandler {
         cmlPath.setAttribute('stroke-dasharray', '5,5');
         svg.appendChild(cmlPath);
       }
+    } else if (modelType === 'portfolio-builder') {
+      // Draw individual asset points
+      const assetColors = ['#ef4444', '#3b82f6', '#f59e0b', '#10b981']; // Red, Blue, Orange, Green
+
+      const assetPoints = data.filter(d => d.isAsset === 1);
+      assetPoints.forEach(asset => {
+        const idx = asset.assetIndex;
+        // Asset circle
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', scaleX(asset.std).toString());
+        circle.setAttribute('cy', scaleY(asset.return).toString());
+        circle.setAttribute('r', '6');
+        circle.setAttribute('fill', assetColors[idx] || '#6b7280');
+        svg.appendChild(circle);
+
+        // Asset label
+        const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        label.setAttribute('x', (scaleX(asset.std) + 10).toString());
+        label.setAttribute('y', (scaleY(asset.return) + 4).toString());
+        label.setAttribute('fill', '#374151');
+        label.setAttribute('font-size', '10');
+        label.textContent = ASSET_LABELS[idx];
+        svg.appendChild(label);
+      });
+
+      // Draw portfolio point (larger, highlighted)
+      const portfolioPoint = data.find(d => d.isPortfolio === 1);
+      if (portfolioPoint) {
+        // Outer glow circle
+        const glowCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        glowCircle.setAttribute('cx', scaleX(portfolioPoint.std).toString());
+        glowCircle.setAttribute('cy', scaleY(portfolioPoint.return).toString());
+        glowCircle.setAttribute('r', '12');
+        glowCircle.setAttribute('fill', 'rgba(139, 92, 246, 0.3)');
+        svg.appendChild(glowCircle);
+
+        // Portfolio circle
+        const portfolioCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        portfolioCircle.setAttribute('cx', scaleX(portfolioPoint.std).toString());
+        portfolioCircle.setAttribute('cy', scaleY(portfolioPoint.return).toString());
+        portfolioCircle.setAttribute('r', '8');
+        portfolioCircle.setAttribute('fill', '#8b5cf6');
+        portfolioCircle.setAttribute('stroke', '#fff');
+        portfolioCircle.setAttribute('stroke-width', '2');
+        svg.appendChild(portfolioCircle);
+
+        // Portfolio label
+        const portfolioLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        portfolioLabel.setAttribute('x', (scaleX(portfolioPoint.std) + 14).toString());
+        portfolioLabel.setAttribute('y', (scaleY(portfolioPoint.return) + 4).toString());
+        portfolioLabel.setAttribute('fill', '#8b5cf6');
+        portfolioLabel.setAttribute('font-size', '11');
+        portfolioLabel.setAttribute('font-weight', '600');
+        portfolioLabel.textContent = 'Din portefølje';
+        svg.appendChild(portfolioLabel);
+      }
+    } else if (modelType === 'dupont-analysis') {
+      // DuPont bar chart
+      const barColors = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'];
+      const barLabels = ['Margin', 'Omløp', 'Gearing', 'ROE'];
+      const barWidth = chartWidth / 6;
+
+      data.forEach((d, i) => {
+        const x = scaleX(d.component) - barWidth / 2;
+        const barHeight = d.value > 0 ? (d.value / yMax) * chartHeight : 0;
+        const y = height - margin.bottom - barHeight;
+
+        // Bar
+        const bar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        bar.setAttribute('x', x.toString());
+        bar.setAttribute('y', y.toString());
+        bar.setAttribute('width', barWidth.toString());
+        bar.setAttribute('height', barHeight.toString());
+        bar.setAttribute('fill', barColors[i] || '#6b7280');
+        bar.setAttribute('rx', '4');
+        svg.appendChild(bar);
+
+        // Value label
+        const valueLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        valueLabel.setAttribute('x', scaleX(d.component).toString());
+        valueLabel.setAttribute('y', (y - 5).toString());
+        valueLabel.setAttribute('text-anchor', 'middle');
+        valueLabel.setAttribute('fill', '#374151');
+        valueLabel.setAttribute('font-size', '11');
+        valueLabel.setAttribute('font-weight', '500');
+        valueLabel.textContent = d.value.toFixed(1) + '%';
+        svg.appendChild(valueLabel);
+
+        // Bar label
+        const barLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        barLabel.setAttribute('x', scaleX(d.component).toString());
+        barLabel.setAttribute('y', (height - margin.bottom + 15).toString());
+        barLabel.setAttribute('text-anchor', 'middle');
+        barLabel.setAttribute('fill', '#6b7280');
+        barLabel.setAttribute('font-size', '10');
+        barLabel.textContent = barLabels[i];
+        svg.appendChild(barLabel);
+      });
+
+      // DuPont formula indicator
+      const formula = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      formula.setAttribute('x', (width / 2).toString());
+      formula.setAttribute('y', '15');
+      formula.setAttribute('text-anchor', 'middle');
+      formula.setAttribute('fill', '#9ca3af');
+      formula.setAttribute('font-size', '10');
+      formula.textContent = 'ROE = Margin × Omløp × Gearing';
+      svg.appendChild(formula);
+    } else if (modelType === 'inflation-visualizer') {
+      // Nominal value line (flat)
+      const nominalPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const nominalPoints = data
+        .map((d, i) => `${i === 0 ? 'M' : 'L'} ${scaleX(d.year)} ${scaleY(d.nominalValue)}`)
+        .join(' ');
+      nominalPath.setAttribute('d', nominalPoints);
+      nominalPath.setAttribute('fill', 'none');
+      nominalPath.setAttribute('stroke', '#3b82f6');
+      nominalPath.setAttribute('stroke-width', '2');
+      nominalPath.setAttribute('stroke-dasharray', '5,5');
+      svg.appendChild(nominalPath);
+
+      // Real value line (declining)
+      const realPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const realPoints = data
+        .map((d, i) => `${i === 0 ? 'M' : 'L'} ${scaleX(d.year)} ${scaleY(d.realValue)}`)
+        .join(' ');
+      realPath.setAttribute('d', realPoints);
+      realPath.setAttribute('fill', 'none');
+      realPath.setAttribute('stroke', '#ef4444');
+      realPath.setAttribute('stroke-width', '2');
+      svg.appendChild(realPath);
+
+      // Area between lines (purchasing power lost)
+      const areaPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const areaPoints = data.map((d, i) => `${i === 0 ? 'M' : 'L'} ${scaleX(d.year)} ${scaleY(d.nominalValue)}`).join(' ') +
+        data.slice().reverse().map((d) => `L ${scaleX(d.year)} ${scaleY(d.realValue)}`).join(' ') + ' Z';
+      areaPath.setAttribute('d', areaPoints);
+      areaPath.setAttribute('fill', 'rgba(239, 68, 68, 0.15)');
+      svg.appendChild(areaPath);
+
+      // Legend
+      const legendY = margin.top + 10;
+      const nominalLegend = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      nominalLegend.setAttribute('x', (margin.left + 10).toString());
+      nominalLegend.setAttribute('y', legendY.toString());
+      nominalLegend.setAttribute('fill', '#3b82f6');
+      nominalLegend.setAttribute('font-size', '10');
+      nominalLegend.textContent = '- - Nominell verdi';
+      svg.appendChild(nominalLegend);
+
+      const realLegend = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      realLegend.setAttribute('x', (margin.left + 100).toString());
+      realLegend.setAttribute('y', legendY.toString());
+      realLegend.setAttribute('fill', '#ef4444');
+      realLegend.setAttribute('font-size', '10');
+      realLegend.textContent = '— Kjøpekraft';
+      svg.appendChild(realLegend);
     }
 
     // Add axes

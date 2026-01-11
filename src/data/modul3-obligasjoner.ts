@@ -942,15 +942,46 @@ export const modul3ObligasjonerModule: Module = {
           ]
         },
         {
+          id: '3-5-model-duration-simulator',
+          type: 'interactive-model',
+          order: 18,
+          modelType: 'duration-simulator',
+          title: 'Durasjonssimulator – se effekten av renteendring',
+          description: 'Test hvordan obligasjonsprisen reagerer på renteendringer. Endre kupongrente, løpetid og markedsrente for å se hvordan disse påvirker durasjonen og prisendringen.',
+          controls: [
+            { key: 'couponRate', label: 'Kupongrente', type: 'slider', min: 0, max: 10, step: 0.5, default: 5, unit: '%', helpText: 'Høyere kupong = lavere durasjon' },
+            { key: 'ytm', label: 'Markedsrente (YTM)', type: 'slider', min: 1, max: 12, step: 0.25, default: 5, unit: '%', helpText: 'Obligasjonens yield to maturity' },
+            { key: 'maturity', label: 'Løpetid', type: 'slider', min: 1, max: 30, step: 1, default: 10, unit: ' år', helpText: 'Lengre løpetid = høyere durasjon' },
+            { key: 'rateChange', label: 'Renteendring', type: 'slider', min: -3, max: 3, step: 0.25, default: 1, unit: ' %-poeng', helpText: 'Simulert endring i markedsrenten' }
+          ],
+          outputs: [
+            { key: 'price', label: 'Nåværende pris', unit: ' kr', precision: 0 },
+            { key: 'macaulayDuration', label: 'Macaulay-durasjon', unit: ' år', precision: 2 },
+            { key: 'modifiedDuration', label: 'Modifisert durasjon', precision: 2, highlight: true },
+            { key: 'newPrice', label: 'Ny pris (etter renteendring)', unit: ' kr', precision: 0 },
+            { key: 'priceChangePct', label: 'Faktisk prisendring', unit: '%', precision: 2 },
+            { key: 'estPriceChangePct', label: 'Estimat fra durasjon', unit: '%', precision: 2 },
+            { key: 'estimationError', label: 'Avvik (konveksitet)', unit: '%', precision: 2 }
+          ],
+          charts: [{
+            type: 'line',
+            title: 'Pris-rente kurve',
+            xAxis: { key: 'yield', label: 'Markedsrente (%)' },
+            yAxis: { key: 'price', label: 'Pris (kr)' },
+            series: [{ key: 'curve', name: 'Pris-rente', color: '#10b981' }]
+          }],
+          explanation: 'Legg merke til forskjellen mellom faktisk prisendring og durasjonsestimatet. Ved store renteendringer gir durasjon et unøyaktig estimat – dette er **konveksitetseffekten**. Kurven er buet, ikke rett, så durasjonen (stigningstallet i ett punkt) underestimerer prisøkning ved rentefall og overestimerer prisfall ved renteøkning.'
+        },
+        {
           id: '3-5-reflection',
           type: 'reflection',
-          order: 18,
+          order: 19,
           question: 'Du er snart pensjonist og har sparepenger i obligasjonsfond. Bør du velge fond med høy eller lav durasjon? Hvorfor?'
         },
         {
           id: '3-5-interactive-bond-pricing',
           type: 'interactive-model',
-          order: 19,
+          order: 20,
           modelType: 'bond-pricing',
           title: 'Interaktiv obligasjonsprismodell',
           description: 'Utforsk sammenhengen mellom rente, obligasjonspris, durasjon og konveksitet. Juster parametrene og se hvordan grafen og nøkkeltallene endres i sanntid.',

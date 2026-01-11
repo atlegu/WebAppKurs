@@ -249,7 +249,11 @@ export interface UserProgress {
 export type InteractiveModelType =
   | 'bond-pricing'
   | 'capm-sml'
-  | 'portfolio-two-asset';
+  | 'portfolio-two-asset'
+  | 'portfolio-builder'
+  | 'duration-simulator'
+  | 'dupont-analysis'
+  | 'inflation-visualizer';
 
 export interface ModelControl {
   key: string;
