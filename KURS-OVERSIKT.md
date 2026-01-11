@@ -24,6 +24,7 @@ Alle podcast-filer ligger i `/public/` mappen:
 
 | Fil | Modul | Plassering |
 |-----|-------|------------|
+| /public/renteregning.m4a | modul2-tidverdi.ts (Pengenes Tidsverdi) | Seksjon 3-1, order 2 |
 | /public/riskreturn.m4a | modul5-portefolje.ts (Porteføljeteori) | Seksjon 5-1, order 2 |
 | /public/obligasjon.m4a | modul3-obligasjoner.ts | Seksjon 4-1 |
 | /public/aksjer.m4a | modul4-aksjer.ts | Seksjon 5-1 |

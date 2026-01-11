@@ -29,9 +29,18 @@ export const modul2TidverdiModule: Module = {
           emphasis: 'important'
         },
         {
+          id: '2-1-podcast',
+          type: 'audio',
+          order: 2,
+          title: 'Podcast: Renteregning og pengenes tidsverdi',
+          duration: '20 min',
+          url: '/renteregning.m4a',
+          description: 'Lytt til denne podcasten for en grundig innføring i renteregning, nåverdi og fremtidsverdi.'
+        },
+        {
           id: '2-1-video',
           type: 'video',
-          order: 2,
+          order: 3,
           title: 'Video: Introduksjon til renteregning',
           duration: '15 min',
           url: 'https://www.youtube.com/embed/733mgqrzNKs?start=23'
@@ -39,33 +48,33 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-1-intro-2',
           type: 'text',
-          order: 3,
+          order: 4,
           text: 'Hvis du valgte pengene i dag – gratulerer, du tenker som en finansekspert! Men *hvorfor* er dette det riktige valget? Svaret ligger i et av finansens mest fundamentale prinsipper: **pengenes tidsverdi**.'
         },
         {
           id: '2-1-heading-konsept',
           type: 'heading',
-          order: 3,
+          order: 5,
           level: 2,
           text: 'Det grunnleggende prinsippet'
         },
         {
           id: '2-1-def-tidsverdi',
           type: 'definition',
-          order: 4,
+          order: 6,
           term: 'Pengenes tidsverdi (Time Value of Money)',
           definition: 'Prinsippet om at penger tilgjengelig i dag er mer verdt enn samme beløp i fremtiden, fordi pengene kan investeres og vokse over tid.'
         },
         {
           id: '2-1-text-hvorfor',
           type: 'text',
-          order: 5,
+          order: 7,
           text: 'Tre hovedgrunner forklarer hvorfor penger i dag er mer verdifulle:'
         },
         {
           id: '2-1-list-grunner',
           type: 'list',
-          order: 6,
+          order: 8,
           ordered: true,
           items: [
             '**Investeringsmulighet:** 100 000 kr i dag kan settes i banken og tjene renter. Om ett år har du mer enn 100 000 kr.',
@@ -76,20 +85,20 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-1-heading-praksis',
           type: 'heading',
-          order: 7,
+          order: 9,
           level: 2,
           text: 'Hvorfor dette betyr alt for deg'
         },
         {
           id: '2-1-text-praksis',
           type: 'text',
-          order: 8,
+          order: 10,
           text: 'Pengenes tidsverdi påvirker nesten alle finansielle beslutninger du tar i livet:'
         },
         {
           id: '2-1-table-eksempler',
           type: 'table',
-          order: 9,
+          order: 11,
           headers: ['Situasjon', 'Tidsverdi-spørsmålet'],
           rows: [
             ['Boliglån', 'Er det verdt å betale ekstra nå for å spare renter senere?'],
@@ -102,7 +111,7 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-1-example',
           type: 'example',
-          order: 10,
+          order: 12,
           title: 'Emmas valg: Leilighet nå eller vente?',
           content: 'Emma (28) har spart opp 500 000 kr til egenkapital. Hun vurderer å kjøpe leilighet nå eller vente 2 år til hun har spart opp 700 000 kr.\n\n**Scenario A: Kjøpe nå**\n- Egenkapital: 500 000 kr\n- Leilighetspris: 3 000 000 kr\n- Lån: 2 500 000 kr\n- Om 2 år: Leiligheten kan ha steget i verdi, og hun har begynt å betale ned lånet\n\n**Scenario B: Vente 2 år**\n- Sparepenger vokser til 700 000 kr\n- Men: Leilighetsprisen kan ha steget til 3 300 000 kr\n- Lån: 2 600 000 kr (mer enn før!)\n- I tillegg: 2 år med husleie "tapt"',
           calculation: 'Hvis Emma betaler 12 000 kr/mnd i husleie i 2 år:\n12 000 × 24 = 288 000 kr i "tapt" husleie\n\nHvis leilighetsprisen stiger 5% per år:\n3 000 000 × 1.05² = 3 307 500 kr\n\n**Konklusjon:** Ved å vente "sparer" Emma 200 000 kr i egenkapital, men "taper" 288 000 kr i husleie og må betale 307 500 kr mer for leiligheten. Totalt tap: ca 395 500 kr.'
@@ -110,7 +119,7 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-1-quiz',
           type: 'quiz',
-          order: 11,
+          order: 13,
           question: 'Hvorfor er 1000 kr i dag verdt mer enn 1000 kr om ett år?',
           options: [
             'Fordi sedlene slites ut over tid',
@@ -124,7 +133,7 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-1-keypoint',
           type: 'keypoint',
-          order: 12,
+          order: 14,
           points: [
             'Penger i dag er alltid mer verdt enn samme beløp i fremtiden',
             'Tre faktorer: investeringsmulighet, inflasjon og usikkerhet',
@@ -135,7 +144,7 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-1-reflection',
           type: 'reflection',
-          order: 13,
+          order: 15,
           question: 'Tenk på en stor finansiell beslutning du har tatt eller skal ta. Hvordan påvirker pengenes tidsverdi denne beslutningen? Har du vurdert "kostnaden" ved å vente?'
         }
       ]
