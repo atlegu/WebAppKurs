@@ -31,6 +31,27 @@ Alle podcast-filer ligger i `/public/` mappen:
 | /public/investanalyse.m4a | modul7-investeringsanalyse.ts | Seksjon 7-1, order 2 |
 | /public/Kapitalkostnad.m4a | modul8-kapitalkostnad.ts | Seksjon 8-1, order 2 |
 
+## Interaktive verktøy
+
+### Kalkulatorer
+| Type | Modul | Beskrivelse |
+|------|-------|-------------|
+| compound-interest | modul2-tidverdi.ts | Renters rente-kalkulator |
+| present-value | modul2-tidverdi.ts | Nåverdi-kalkulator |
+| future-value | modul2-tidverdi.ts | Fremtidsverdi-kalkulator |
+| loan-payment | modul2-tidverdi.ts | Lånekalkulator |
+| bond-price | modul3-obligasjoner.ts | Obligasjonspris-kalkulator |
+| npv | modul7-investeringsanalyse.ts | NPV-kalkulator |
+| irr-approx | modul7-investeringsanalyse.ts | IRR-kalkulator |
+| wacc | modul8-kapitalkostnad.ts | WACC-kalkulator (NY) |
+
+### Interaktive modeller
+| Type | Modul | Beskrivelse |
+|------|-------|-------------|
+| bond-pricing | modul3-obligasjoner.ts | Pris-rente kurve med durasjon |
+| capm-sml | modul8-kapitalkostnad.ts | Security Market Line visualisering (NY) |
+| portfolio-two-asset | modul5-portefolje.ts | Effektiv front med to aktiva |
+
 ## Quiz-system
 
 - Hver modul har ca **40 spørsmål** i moduleQuiz
