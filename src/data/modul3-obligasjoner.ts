@@ -1086,6 +1086,48 @@ export const modul3ObligasjonerModule: Module = {
             }
           ],
           explanation: 'Legg merke til at pris-rente kurven er **konveks** (buet). Dette betyr at prisøkningen ved rentefall er større enn prisfallet ved tilsvarende renteøkning. Konveksitet er en fordel for obligasjonsinvestorer!\n\n**Tips:** Prøv å endre kupongrente og løpetid for å se hvordan de påvirker durasjon og konveksitet.'
+        } as InteractiveModelContent,
+        {
+          id: '3-5-heading-yield-curve',
+          type: 'heading',
+          order: 21,
+          level: 2,
+          text: 'Rentekurven (Yield Curve)'
+        },
+        {
+          id: '3-5-text-yield-curve',
+          type: 'text',
+          order: 22,
+          text: 'Rentekurven viser sammenhengen mellom løpetid og rente. Normalt er lange renter høyere enn korte (normal kurve), men dette kan snu (invertert kurve) – ofte et varsel om lavkonjunktur.'
+        },
+        {
+          id: '3-5-model-yield-curve',
+          type: 'interactive-model',
+          order: 23,
+          modelType: 'yield-curve',
+          title: 'Rentekurven – se hvordan form og nivå endrer seg',
+          description: 'Utforsk hvordan kort- og langrenter påvirker rentekurvens form. En normal kurve stiger oppover, mens en invertert kurve varsler ofte om økonomisk nedgang.',
+          controls: [
+            { key: 'shortRate', label: 'Kortrente (3 mnd)', type: 'slider', min: 0, max: 8, default: 3, step: 0.25, unit: '%' },
+            { key: 'longRate', label: 'Langrente (30 år)', type: 'slider', min: 0, max: 10, default: 5, step: 0.25, unit: '%' },
+            { key: 'curvature', label: 'Krumning', type: 'slider', min: -2, max: 2, default: 0.5, step: 0.25, unit: '', helpText: 'Positiv = hump, Negativ = dump' },
+            { key: 'expectedInflation', label: 'Forventet inflasjon', type: 'slider', min: 0, max: 6, default: 2, step: 0.25, unit: '%' }
+          ],
+          outputs: [
+            { key: 'slope', label: 'Kurvens stigning', unit: ' %-poeng', precision: 2, highlight: true },
+            { key: 'termPremium', label: 'Terminpremie', unit: ' %-poeng', precision: 2 },
+            { key: 'realShort', label: 'Realrente (kort)', unit: '%', precision: 2 },
+            { key: 'realLong', label: 'Realrente (lang)', unit: '%', precision: 2 },
+            { key: 'forwardRate', label: 'Forward-rente (1 år)', unit: '%', precision: 2 }
+          ],
+          charts: [{
+            type: 'line',
+            title: 'Rentekurven',
+            xAxis: { key: 'maturity', label: 'Løpetid (år)' },
+            yAxis: { key: 'yield', label: 'Rente (%)' },
+            series: [{ key: 'curve', name: 'Yield', color: '#3b82f6' }]
+          }],
+          explanation: '**Normal kurve:** Lang rente > kort rente (investorer krever mer for å låse inn pengene lenger).\n**Flat kurve:** Liten forskjell mellom kort og lang rente.\n**Invertert kurve:** Kort rente > lang rente – historisk en sterk prediktor for resesjon!'
         } as InteractiveModelContent
       ]
     },

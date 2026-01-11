@@ -253,7 +253,10 @@ export type InteractiveModelType =
   | 'portfolio-builder'
   | 'duration-simulator'
   | 'dupont-analysis'
-  | 'inflation-visualizer';
+  | 'inflation-visualizer'
+  | 'sensitivity-spider'
+  | 'capital-structure'
+  | 'yield-curve';
 
 export interface ModelControl {
   key: string;
@@ -276,7 +279,7 @@ export interface ModelOutput {
 }
 
 export interface ChartConfig {
-  type: 'line' | 'scatter' | 'area' | 'composed';
+  type: 'line' | 'scatter' | 'area' | 'composed' | 'bar' | 'tornado';
   title: string;
   xAxis: { key: string; label: string; unit?: string };
   yAxis: { key: string; label: string; unit?: string };

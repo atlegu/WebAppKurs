@@ -1,4 +1,4 @@
-import { Module, CalculatorContent } from '../types/course';
+import { Module, CalculatorContent, InteractiveModelContent } from '../types/course';
 
 export const modul7InvesteringsanalyseModule: Module = {
   id: 'modul-7-investeringsanalyse',
@@ -821,9 +821,40 @@ export const modul7InvesteringsanalyseModule: Module = {
           text: 'Eksempel: Hvis break-even salgspris er 85% av forventet pris, kan prisen falle 15% før prosjektet går i minus. Jo større margin til break-even, jo tryggere er prosjektet.'
         },
         {
+          id: '7-5-model-sensitivity',
+          type: 'interactive-model',
+          order: 8,
+          modelType: 'sensitivity-spider',
+          title: 'Sensitivitetsanalyse – Tornado-diagram',
+          description: 'Se hvilke variabler som påvirker NPV mest. Tornado-diagrammet rangerer variablene etter hvor stor påvirkning de har på prosjektets lønnsomhet.',
+          controls: [
+            { key: 'investment', label: 'Investering', type: 'slider', min: 500000, max: 2000000, default: 1000000, step: 100000, unit: ' kr' },
+            { key: 'annualCashFlow', label: 'Årlig kontantstrøm', type: 'slider', min: 100000, max: 500000, default: 250000, step: 25000, unit: ' kr' },
+            { key: 'discountRate', label: 'Avkastningskrav', type: 'slider', min: 5, max: 15, default: 10, step: 0.5, unit: '%' },
+            { key: 'years', label: 'Levetid', type: 'slider', min: 3, max: 15, default: 8, step: 1, unit: ' år' },
+            { key: 'priceChange', label: 'Prisendring å teste', type: 'slider', min: -30, max: 30, default: 20, step: 5, unit: '%' },
+            { key: 'volumeChange', label: 'Volumendring å teste', type: 'slider', min: -30, max: 30, default: 20, step: 5, unit: '%' },
+            { key: 'costChange', label: 'Kostnadsendring å teste', type: 'slider', min: -30, max: 30, default: 20, step: 5, unit: '%' }
+          ],
+          outputs: [
+            { key: 'baseNPV', label: 'Base-NPV', unit: ' kr', precision: 0, highlight: true },
+            { key: 'priceImpact', label: 'Priseffekt på NPV', unit: ' kr', precision: 0 },
+            { key: 'volumeImpact', label: 'Volumeffekt på NPV', unit: ' kr', precision: 0 },
+            { key: 'costImpact', label: 'Kostnadseffekt på NPV', unit: ' kr', precision: 0 }
+          ],
+          charts: [{
+            type: 'tornado',
+            title: 'Tornado-diagram: NPV-sensitivitet',
+            xAxis: { key: 'npv', label: 'NPV (kr)' },
+            yAxis: { key: 'variable', label: 'Variabel' },
+            series: [{ key: 'range', name: 'NPV-spenn', color: '#3b82f6' }]
+          }],
+          explanation: 'Tornado-diagrammet viser hvilke variabler som har størst påvirkning på NPV. Lengre barer betyr høyere sensitivitet. Bruk dette til å identifisere hvilke antagelser du bør være mest forsiktig med.'
+        } as InteractiveModelContent,
+        {
           id: '7-5-heading-3',
           type: 'heading',
-          order: 8,
+          order: 9,
           level: 2,
           text: 'Scenarioanalyse'
         },

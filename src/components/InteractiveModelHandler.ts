@@ -110,6 +110,12 @@ export class InteractiveModelHandler {
         return this.calculateDupontAnalysis(state);
       case 'inflation-visualizer':
         return this.calculateInflationVisualizer(state);
+      case 'sensitivity-spider':
+        return this.calculateSensitivitySpider(state);
+      case 'capital-structure':
+        return this.calculateCapitalStructure(state);
+      case 'yield-curve':
+        return this.calculateYieldCurve(state);
       default:
         return {};
     }
@@ -465,6 +471,177 @@ export class InteractiveModelHandler {
     };
   }
 
+  // ============== SENSITIVITY SPIDER (TORNADO DIAGRAM) ==============
+  private calculateSensitivitySpider(state: StateRecord): StateRecord {
+    const { investment, annualCashFlow, discountRate, years, priceChange, volumeChange, costChange } = state;
+
+    // Base case NPV calculation
+    const r = discountRate / 100;
+    let baseNPV = -investment;
+    for (let t = 1; t <= years; t++) {
+      baseNPV += annualCashFlow / Math.pow(1 + r, t);
+    }
+
+    // NPV with price change (affects revenue/cash flow)
+    const priceAdjustedCF = annualCashFlow * (1 + priceChange / 100);
+    let priceNPV = -investment;
+    for (let t = 1; t <= years; t++) {
+      priceNPV += priceAdjustedCF / Math.pow(1 + r, t);
+    }
+
+    // NPV with volume change
+    const volumeAdjustedCF = annualCashFlow * (1 + volumeChange / 100);
+    let volumeNPV = -investment;
+    for (let t = 1; t <= years; t++) {
+      volumeNPV += volumeAdjustedCF / Math.pow(1 + r, t);
+    }
+
+    // NPV with cost change (negative impact on cash flow)
+    const costAdjustedCF = annualCashFlow * (1 - costChange / 100 * 0.6); // Costs are ~60% of revenue
+    let costNPV = -investment;
+    for (let t = 1; t <= years; t++) {
+      costNPV += costAdjustedCF / Math.pow(1 + r, t);
+    }
+
+    // NPV with different discount rate
+    const newRate = r * 1.2; // 20% higher discount rate
+    let rateNPV = -investment;
+    for (let t = 1; t <= years; t++) {
+      rateNPV += annualCashFlow / Math.pow(1 + newRate, t);
+    }
+
+    // Sensitivity measures (change in NPV per 1% change in variable)
+    const priceSensitivity = (priceNPV - baseNPV) / Math.abs(priceChange || 1);
+    const volumeSensitivity = (volumeNPV - baseNPV) / Math.abs(volumeChange || 1);
+    const costSensitivity = (costNPV - baseNPV) / Math.abs(costChange || 1);
+
+    // Break-even points
+    const breakEvenPrice = baseNPV > 0 ? -priceChange * (baseNPV / (priceNPV - baseNPV)) : 0;
+
+    return {
+      baseNPV,
+      priceNPV,
+      volumeNPV,
+      costNPV,
+      rateNPV,
+      priceSensitivity,
+      volumeSensitivity,
+      costSensitivity,
+      breakEvenPrice,
+      priceImpact: priceNPV - baseNPV,
+      volumeImpact: volumeNPV - baseNPV,
+      costImpact: costNPV - baseNPV,
+      rateImpact: rateNPV - baseNPV
+    };
+  }
+
+  // ============== CAPITAL STRUCTURE SIMULATOR ==============
+  private calculateCapitalStructure(state: StateRecord): StateRecord {
+    const { equityBeta, riskFreeRate, marketPremium, taxRate, baseDebtRate, ebitda } = state;
+
+    // Unlevered cost of equity (asset beta)
+    const rf = riskFreeRate / 100;
+    const mrp = marketPremium / 100;
+    const tax = taxRate / 100;
+
+    // Calculate WACC for different debt ratios
+    // At 0% debt
+    const costEquity0 = rf + equityBeta * mrp;
+    const wacc0 = costEquity0;
+
+    // Current values (50% debt as default scenario)
+    const debtRatio = 0.5;
+    const equityRatio = 1 - debtRatio;
+
+    // Hamada equation: βL = βU × (1 + (1-T) × D/E)
+    const unleveredBeta = equityBeta / (1 + (1 - tax) * (debtRatio / equityRatio));
+    const leveragedBeta = unleveredBeta * (1 + (1 - tax) * (debtRatio / equityRatio));
+    const costEquity = rf + leveragedBeta * mrp;
+
+    // Cost of debt increases with leverage (simplified)
+    const debtSpread = Math.max(0, (debtRatio - 0.3) * 0.05); // Spread increases after 30% debt
+    const costDebt = baseDebtRate / 100 + debtSpread;
+    const afterTaxCostDebt = costDebt * (1 - tax);
+
+    // WACC
+    const wacc = equityRatio * costEquity + debtRatio * afterTaxCostDebt;
+
+    // Find optimal debt ratio (minimize WACC)
+    let optimalDebt = 0;
+    let minWACC = wacc0;
+    for (let d = 0; d <= 0.8; d += 0.01) {
+      const e = 1 - d;
+      const levBeta = unleveredBeta * (1 + (1 - tax) * (d / e));
+      const ce = rf + levBeta * mrp;
+      const spread = Math.max(0, (d - 0.3) * 0.05) + (d > 0.6 ? Math.pow(d - 0.6, 2) * 0.5 : 0);
+      const cd = baseDebtRate / 100 + spread;
+      const atcd = cd * (1 - tax);
+      const w = e * ce + d * atcd;
+      if (w < minWACC) {
+        minWACC = w;
+        optimalDebt = d;
+      }
+    }
+
+    // Enterprise value impact (simplified using EBITDA multiple)
+    const evMultiple = 1 / wacc;
+    const enterpriseValue = ebitda * evMultiple * 10; // Simplified
+
+    return {
+      costEquity: costEquity * 100,
+      costDebt: costDebt * 100,
+      afterTaxCostDebt: afterTaxCostDebt * 100,
+      wacc: wacc * 100,
+      optimalDebt: optimalDebt * 100,
+      minWACC: minWACC * 100,
+      unleveredBeta,
+      leveragedBeta,
+      taxShield: (debtRatio * costDebt * tax) * 100,
+      enterpriseValue
+    };
+  }
+
+  // ============== YIELD CURVE VISUALIZER ==============
+  private calculateYieldCurve(state: StateRecord): StateRecord {
+    const { shortRate, longRate, curvature, expectedInflation } = state;
+
+    // Calculate yields at different maturities
+    const y1 = shortRate;
+    const y2 = shortRate + (longRate - shortRate) * 0.3 + curvature * 0.2;
+    const y5 = shortRate + (longRate - shortRate) * 0.6 + curvature * 0.4;
+    const y10 = shortRate + (longRate - shortRate) * 0.85 + curvature * 0.15;
+    const y30 = longRate;
+
+    // Term premium (compensation for longer maturity risk)
+    const termPremium = (y10 - y1) - (expectedInflation * 0.1);
+
+    // Curve slope
+    const slope = y10 - y1;
+
+    // Real yields (nominal - expected inflation)
+    const realShort = y1 - expectedInflation;
+    const realLong = y30 - expectedInflation;
+
+    // Curve shape indicator
+    let curveShape: number;
+    if (slope > 1) curveShape = 1; // Normal
+    else if (slope > -0.5) curveShape = 0; // Flat
+    else curveShape = -1; // Inverted
+
+    // Forward rate (1-year rate, 1 year forward)
+    const forwardRate = 2 * y2 - y1;
+
+    return {
+      y1, y2, y5, y10, y30,
+      slope,
+      termPremium,
+      realShort,
+      realLong,
+      curveShape,
+      forwardRate
+    };
+  }
+
   private updateOutputDisplays(modelId: string, model: InteractiveModelContent, outputs: StateRecord): void {
     model.outputs.forEach(output => {
       const element = document.querySelector(
@@ -516,6 +693,12 @@ export class InteractiveModelHandler {
         return this.generateDupontChartData(state);
       case 'inflation-visualizer':
         return this.generateInflationChartData(state);
+      case 'sensitivity-spider':
+        return this.generateSensitivityChartData(state);
+      case 'capital-structure':
+        return this.generateCapitalStructureChartData(state);
+      case 'yield-curve':
+        return this.generateYieldCurveChartData(state);
       default:
         return [];
     }
@@ -771,6 +954,150 @@ export class InteractiveModelHandler {
     return data;
   }
 
+  private generateSensitivityChartData(state: StateRecord): ChartDataPoint[] {
+    const { investment, annualCashFlow, discountRate, years } = state;
+    const data: ChartDataPoint[] = [];
+    const r = discountRate / 100;
+
+    // Calculate base NPV
+    let baseNPV = -investment;
+    for (let t = 1; t <= years; t++) {
+      baseNPV += annualCashFlow / Math.pow(1 + r, t);
+    }
+
+    // Generate sensitivity data for tornado diagram
+    // Each bar shows NPV range for +/-20% change in variable
+    const variables = [
+      { name: 'Pris', factor: 1.0 },      // Price affects full cash flow
+      { name: 'Volum', factor: 1.0 },     // Volume affects full cash flow
+      { name: 'Kostnader', factor: -0.6 }, // Costs are ~60% of cash flow
+      { name: 'Diskontering', factor: 0 }  // Special handling
+    ];
+
+    variables.forEach((v, index) => {
+      let lowNPV: number, highNPV: number;
+
+      if (v.name === 'Diskontering') {
+        // For discount rate, +20% means higher rate = lower NPV
+        const lowRate = r * 0.8;
+        const highRate = r * 1.2;
+        lowNPV = -investment;
+        highNPV = -investment;
+        for (let t = 1; t <= years; t++) {
+          highNPV += annualCashFlow / Math.pow(1 + lowRate, t);  // Lower rate = higher NPV
+          lowNPV += annualCashFlow / Math.pow(1 + highRate, t);   // Higher rate = lower NPV
+        }
+      } else {
+        const lowCF = annualCashFlow * (1 + v.factor * -0.2);
+        const highCF = annualCashFlow * (1 + v.factor * 0.2);
+        lowNPV = -investment;
+        highNPV = -investment;
+        for (let t = 1; t <= years; t++) {
+          lowNPV += lowCF / Math.pow(1 + r, t);
+          highNPV += highCF / Math.pow(1 + r, t);
+        }
+      }
+
+      data.push({
+        variable: index,
+        lowNPV: Math.min(lowNPV, highNPV),
+        highNPV: Math.max(lowNPV, highNPV),
+        baseNPV,
+        range: Math.abs(highNPV - lowNPV)
+      });
+    });
+
+    // Sort by range (largest impact first)
+    data.sort((a, b) => b.range - a.range);
+    // Re-assign variable index after sorting
+    data.forEach((d, i) => d.variable = i);
+
+    return data;
+  }
+
+  private generateCapitalStructureChartData(state: StateRecord): ChartDataPoint[] {
+    const { equityBeta, riskFreeRate, marketPremium, taxRate, baseDebtRate } = state;
+    const data: ChartDataPoint[] = [];
+
+    const rf = riskFreeRate / 100;
+    const mrp = marketPremium / 100;
+    const tax = taxRate / 100;
+
+    // Calculate unlevered beta at 50% debt (default)
+    const unleveredBeta = equityBeta / (1 + (1 - tax) * 1); // D/E = 1 at 50% debt
+
+    // Generate WACC curve for different debt ratios
+    let minWACC = 100;
+    let optimalDebt = 0;
+
+    for (let debtPct = 0; debtPct <= 80; debtPct += 2) {
+      const d = debtPct / 100;
+      const e = 1 - d;
+
+      // Levered beta using Hamada
+      const de = d > 0 ? d / e : 0;
+      const leveredBeta = unleveredBeta * (1 + (1 - tax) * de);
+
+      // Cost of equity (CAPM)
+      const costEquity = (rf + leveredBeta * mrp) * 100;
+
+      // Cost of debt with spread increasing at high leverage
+      const spread = Math.max(0, (d - 0.3) * 5) + (d > 0.6 ? Math.pow(d - 0.6, 2) * 50 : 0);
+      const costDebt = baseDebtRate + spread;
+      const afterTaxCostDebt = costDebt * (1 - tax);
+
+      // WACC
+      const wacc = e * costEquity + d * afterTaxCostDebt;
+
+      if (wacc < minWACC) {
+        minWACC = wacc;
+        optimalDebt = debtPct;
+      }
+
+      data.push({
+        debtRatio: debtPct,
+        wacc,
+        costEquity,
+        costDebt,
+        afterTaxCostDebt,
+        isOptimal: 0
+      });
+    }
+
+    // Mark optimal point
+    const optimalPoint = data.find(d => d.debtRatio === optimalDebt);
+    if (optimalPoint) optimalPoint.isOptimal = 1;
+
+    return data;
+  }
+
+  private generateYieldCurveChartData(state: StateRecord): ChartDataPoint[] {
+    const { shortRate, longRate, curvature } = state;
+    const data: ChartDataPoint[] = [];
+
+    // Standard maturity points
+    const maturities = [0.25, 0.5, 1, 2, 3, 5, 7, 10, 20, 30];
+
+    maturities.forEach(m => {
+      // Nelson-Siegel style interpolation (simplified)
+      const tau = 2; // decay parameter
+      const factor = (1 - Math.exp(-m / tau)) / (m / tau);
+      const humpFactor = factor - Math.exp(-m / tau);
+
+      const yield_ = shortRate +
+                    (longRate - shortRate) * (1 - factor) +
+                    curvature * humpFactor;
+
+      data.push({
+        maturity: m,
+        yield: yield_,
+        isCurve: 1
+      });
+    });
+
+    return data;
+  }
+
   private renderSingleChart(
     container: HTMLElement,
     config: any,
@@ -853,6 +1180,31 @@ export class InteractiveModelHandler {
       xMax = data.length > 0 ? Math.max(...data.map(d => d.year)) : 30;
       yMin = 0;
       yMax = data.length > 0 ? Math.max(...data.map(d => d.nominalValue)) * 1.1 : 100;
+    } else if (modelType === 'sensitivity-spider') {
+      xLabel = 'NPV (kr)';
+      yLabel = '';
+      const npvs = data.flatMap(d => [d.lowNPV, d.highNPV, d.baseNPV]).filter(v => v !== undefined);
+      xMin = Math.min(...npvs) * 1.1;
+      xMax = Math.max(...npvs) * 1.1;
+      yMin = -0.5;
+      yMax = data.length - 0.5;
+    } else if (modelType === 'capital-structure') {
+      xLabel = 'Gjeldsandel (%)';
+      yLabel = 'Kapitalkostnad (%)';
+      xMin = 0;
+      xMax = 80;
+      const waccs = data.map(d => d.wacc).filter(v => v !== undefined);
+      const costs = data.map(d => d.costEquity).filter(v => v !== undefined);
+      yMin = Math.min(...waccs) * 0.8;
+      yMax = Math.max(...costs) * 1.1;
+    } else if (modelType === 'yield-curve') {
+      xLabel = 'Løpetid (år)';
+      yLabel = 'Rente (%)';
+      xMin = 0;
+      xMax = 32;
+      const yields = data.map(d => d.yield).filter(v => v !== undefined);
+      yMin = Math.min(...yields) * 0.8;
+      yMax = Math.max(...yields) * 1.2;
     } else {
       xLabel = 'Risiko (Standardavvik %)';
       yLabel = 'Forventet avkastning (%)';
@@ -1160,6 +1512,216 @@ export class InteractiveModelHandler {
       realLegend.setAttribute('font-size', '10');
       realLegend.textContent = '— Kjøpekraft';
       svg.appendChild(realLegend);
+    } else if (modelType === 'sensitivity-spider') {
+      // Tornado diagram (horizontal bars)
+      const barHeight = chartHeight / (data.length + 1);
+      const baseX = scaleX(data[0]?.baseNPV || 0);
+      const variableLabels = ['Pris', 'Volum', 'Kostnader', 'Diskontering'];
+      const barColors = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'];
+
+      // Draw base NPV line
+      const baseLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      baseLine.setAttribute('x1', baseX.toString());
+      baseLine.setAttribute('y1', margin.top.toString());
+      baseLine.setAttribute('x2', baseX.toString());
+      baseLine.setAttribute('y2', (height - margin.bottom).toString());
+      baseLine.setAttribute('stroke', '#374151');
+      baseLine.setAttribute('stroke-width', '2');
+      baseLine.setAttribute('stroke-dasharray', '4,4');
+      svg.appendChild(baseLine);
+
+      // Draw bars
+      data.forEach((d, i) => {
+        const y = margin.top + (i + 0.5) * barHeight;
+        const x1 = scaleX(d.lowNPV);
+        const x2 = scaleX(d.highNPV);
+
+        // Bar
+        const bar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        bar.setAttribute('x', Math.min(x1, x2).toString());
+        bar.setAttribute('y', (y - barHeight * 0.35).toString());
+        bar.setAttribute('width', Math.abs(x2 - x1).toString());
+        bar.setAttribute('height', (barHeight * 0.7).toString());
+        bar.setAttribute('fill', barColors[i % barColors.length]);
+        bar.setAttribute('rx', '4');
+        svg.appendChild(bar);
+
+        // Variable label
+        const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        label.setAttribute('x', (margin.left - 5).toString());
+        label.setAttribute('y', (y + 4).toString());
+        label.setAttribute('text-anchor', 'end');
+        label.setAttribute('fill', '#374151');
+        label.setAttribute('font-size', '11');
+        label.setAttribute('font-weight', '500');
+        label.textContent = variableLabels[i] || `Var ${i + 1}`;
+        svg.appendChild(label);
+
+        // Range value
+        const rangeLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        rangeLabel.setAttribute('x', (Math.max(x1, x2) + 5).toString());
+        rangeLabel.setAttribute('y', (y + 4).toString());
+        rangeLabel.setAttribute('fill', '#6b7280');
+        rangeLabel.setAttribute('font-size', '10');
+        rangeLabel.textContent = `±${(d.range / 2 / 1000).toFixed(0)}k`;
+        svg.appendChild(rangeLabel);
+      });
+
+      // Base NPV label
+      const baseLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      baseLabel.setAttribute('x', baseX.toString());
+      baseLabel.setAttribute('y', (margin.top - 5).toString());
+      baseLabel.setAttribute('text-anchor', 'middle');
+      baseLabel.setAttribute('fill', '#374151');
+      baseLabel.setAttribute('font-size', '10');
+      baseLabel.setAttribute('font-weight', '600');
+      baseLabel.textContent = `Base: ${((data[0]?.baseNPV || 0) / 1000).toFixed(0)}k`;
+      svg.appendChild(baseLabel);
+    } else if (modelType === 'capital-structure') {
+      // WACC curve
+      const waccPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const waccPoints = data
+        .map((d, i) => `${i === 0 ? 'M' : 'L'} ${scaleX(d.debtRatio)} ${scaleY(d.wacc)}`)
+        .join(' ');
+      waccPath.setAttribute('d', waccPoints);
+      waccPath.setAttribute('fill', 'none');
+      waccPath.setAttribute('stroke', '#8b5cf6');
+      waccPath.setAttribute('stroke-width', '3');
+      svg.appendChild(waccPath);
+
+      // Cost of equity line
+      const equityPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const equityPoints = data
+        .map((d, i) => `${i === 0 ? 'M' : 'L'} ${scaleX(d.debtRatio)} ${scaleY(d.costEquity)}`)
+        .join(' ');
+      equityPath.setAttribute('d', equityPoints);
+      equityPath.setAttribute('fill', 'none');
+      equityPath.setAttribute('stroke', '#ef4444');
+      equityPath.setAttribute('stroke-width', '2');
+      equityPath.setAttribute('stroke-dasharray', '5,5');
+      svg.appendChild(equityPath);
+
+      // After-tax cost of debt line
+      const debtPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const debtPoints = data
+        .map((d, i) => `${i === 0 ? 'M' : 'L'} ${scaleX(d.debtRatio)} ${scaleY(d.afterTaxCostDebt)}`)
+        .join(' ');
+      debtPath.setAttribute('d', debtPoints);
+      debtPath.setAttribute('fill', 'none');
+      debtPath.setAttribute('stroke', '#3b82f6');
+      debtPath.setAttribute('stroke-width', '2');
+      debtPath.setAttribute('stroke-dasharray', '5,5');
+      svg.appendChild(debtPath);
+
+      // Optimal point marker
+      const optimalPoint = data.find(d => d.isOptimal === 1);
+      if (optimalPoint) {
+        const glowCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        glowCircle.setAttribute('cx', scaleX(optimalPoint.debtRatio).toString());
+        glowCircle.setAttribute('cy', scaleY(optimalPoint.wacc).toString());
+        glowCircle.setAttribute('r', '12');
+        glowCircle.setAttribute('fill', 'rgba(16, 185, 129, 0.3)');
+        svg.appendChild(glowCircle);
+
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', scaleX(optimalPoint.debtRatio).toString());
+        circle.setAttribute('cy', scaleY(optimalPoint.wacc).toString());
+        circle.setAttribute('r', '6');
+        circle.setAttribute('fill', '#10b981');
+        circle.setAttribute('stroke', '#fff');
+        circle.setAttribute('stroke-width', '2');
+        svg.appendChild(circle);
+
+        const optLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        optLabel.setAttribute('x', (scaleX(optimalPoint.debtRatio) + 10).toString());
+        optLabel.setAttribute('y', (scaleY(optimalPoint.wacc) - 8).toString());
+        optLabel.setAttribute('fill', '#10b981');
+        optLabel.setAttribute('font-size', '10');
+        optLabel.setAttribute('font-weight', '600');
+        optLabel.textContent = `Optimal: ${optimalPoint.debtRatio.toFixed(0)}%`;
+        svg.appendChild(optLabel);
+      }
+
+      // Legend
+      const legendItems = [
+        { color: '#8b5cf6', label: 'WACC', dashed: false },
+        { color: '#ef4444', label: 'EK-kostnad', dashed: true },
+        { color: '#3b82f6', label: 'Gjeldskostnad (e.s.)', dashed: true }
+      ];
+      legendItems.forEach((item, i) => {
+        const ly = margin.top + 10 + i * 15;
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', (width - margin.right - 120).toString());
+        line.setAttribute('y1', ly.toString());
+        line.setAttribute('x2', (width - margin.right - 100).toString());
+        line.setAttribute('y2', ly.toString());
+        line.setAttribute('stroke', item.color);
+        line.setAttribute('stroke-width', '2');
+        if (item.dashed) line.setAttribute('stroke-dasharray', '5,5');
+        svg.appendChild(line);
+
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', (width - margin.right - 95).toString());
+        text.setAttribute('y', (ly + 4).toString());
+        text.setAttribute('fill', '#6b7280');
+        text.setAttribute('font-size', '10');
+        text.textContent = item.label;
+        svg.appendChild(text);
+      });
+    } else if (modelType === 'yield-curve') {
+      // Yield curve line
+      const curvePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const curvePoints = data
+        .map((d, i) => `${i === 0 ? 'M' : 'L'} ${scaleX(d.maturity)} ${scaleY(d.yield)}`)
+        .join(' ');
+      curvePath.setAttribute('d', curvePoints);
+      curvePath.setAttribute('fill', 'none');
+      curvePath.setAttribute('stroke', '#3b82f6');
+      curvePath.setAttribute('stroke-width', '3');
+      svg.appendChild(curvePath);
+
+      // Area under curve
+      const areaPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const areaPoints = curvePoints + ` L ${scaleX(data[data.length - 1].maturity)} ${scaleY(yMin)} L ${scaleX(data[0].maturity)} ${scaleY(yMin)} Z`;
+      areaPath.setAttribute('d', areaPoints);
+      areaPath.setAttribute('fill', 'rgba(59, 130, 246, 0.1)');
+      svg.appendChild(areaPath);
+
+      // Data points
+      data.forEach(d => {
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', scaleX(d.maturity).toString());
+        circle.setAttribute('cy', scaleY(d.yield).toString());
+        circle.setAttribute('r', '4');
+        circle.setAttribute('fill', '#3b82f6');
+        circle.setAttribute('stroke', '#fff');
+        circle.setAttribute('stroke-width', '1');
+        svg.appendChild(circle);
+      });
+
+      // Curve shape label
+      const firstYield = data[0]?.yield || 0;
+      const lastYield = data[data.length - 1]?.yield || 0;
+      const slope = lastYield - firstYield;
+      let shapeText = 'Normal kurve';
+      let shapeColor = '#10b981';
+      if (slope < -0.5) {
+        shapeText = 'Invertert kurve';
+        shapeColor = '#ef4444';
+      } else if (slope < 0.5) {
+        shapeText = 'Flat kurve';
+        shapeColor = '#f59e0b';
+      }
+
+      const shapeLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      shapeLabel.setAttribute('x', (width - margin.right - 10).toString());
+      shapeLabel.setAttribute('y', (margin.top + 15).toString());
+      shapeLabel.setAttribute('text-anchor', 'end');
+      shapeLabel.setAttribute('fill', shapeColor);
+      shapeLabel.setAttribute('font-size', '11');
+      shapeLabel.setAttribute('font-weight', '600');
+      shapeLabel.textContent = shapeText;
+      svg.appendChild(shapeLabel);
     }
 
     // Add axes

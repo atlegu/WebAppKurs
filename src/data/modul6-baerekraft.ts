@@ -755,9 +755,33 @@ export const modul6BaerekraftModule: Module = {
           hint: 'Tenk på hva som kan verifiseres og hva som bare er løfter.'
         },
         {
+          id: '6-4-draggame-greenwashing',
+          type: 'draggame',
+          order: 18,
+          title: 'Grønnvasking-detektor',
+          instructions: 'Vurder hver påstand fra selskaper og fond. Dra dem til riktig kategori basert på om de representerer troverdig bærekraft eller sannsynlig grønnvasking.',
+          categories: [
+            { id: 'genuine', title: 'Troverdig bærekraft', color: '#10b981' },
+            { id: 'greenwashing', title: 'Sannsynlig grønnvasking', color: '#ef4444' }
+          ],
+          items: [
+            { id: 'gw-1', text: '"Vi har kuttet Scope 1 og 2 utslipp med 45% siden 2015, verifisert av DNV"', correctCategory: 'genuine', explanation: 'Konkret tall, tidsperiode og tredjepartsverifisering gjør dette troverdig.' },
+            { id: 'gw-2', text: '"Vi jobber for en bærekraftig fremtid for kommende generasjoner"', correctCategory: 'greenwashing', explanation: 'Vag formulering uten konkrete forpliktelser eller målbare resultater.' },
+            { id: 'gw-3', text: '"Fondet har ekskludert tobakk, pornografi og kontroversielle våpen"', correctCategory: 'genuine', explanation: 'Klare eksklusjonskriterier som kan verifiseres mot beholdningslisten.' },
+            { id: 'gw-4', text: '"Vi er et av de mest bærekraftige selskapene i bransjen"', correctCategory: 'greenwashing', explanation: 'Relativ påstand uten dokumentasjon eller sammenligning.' },
+            { id: 'gw-5', text: '"Netto null innen 2050" (fra oljeselskap uten 2030-mål)', correctCategory: 'greenwashing', explanation: 'Langsiktig løfte uten kortsiktige forpliktelser eller konkret plan.' },
+            { id: 'gw-6', text: '"Science Based Targets godkjente våre klimamål i 2023"', correctCategory: 'genuine', explanation: 'SBTi er en anerkjent tredjepartsstandard med strenge krav.' },
+            { id: 'gw-7', text: '"100% fornybar energi i vår kaffeproduksjon" (fra oljeselskap)', correctCategory: 'greenwashing', explanation: 'Fokuserer på marginal del av virksomheten mens kjernevirksomheten er fossil.' },
+            { id: 'gw-8', text: '"Vi rapporterer alle utslipp inkludert Scope 3 etter GHG Protocol"', correctCategory: 'genuine', explanation: 'Full transparens om alle utslippskategorier etter anerkjent standard.' },
+            { id: 'gw-9', text: '"Naturlige ingredienser"', correctCategory: 'greenwashing', explanation: '"Naturlig" er et uregulert begrep uten klar definisjon.' },
+            { id: 'gw-10', text: '"SFDR Artikkel 9-fond med minimum 80% bærekraftige investeringer"', correctCategory: 'genuine', explanation: 'EU-regulert klassifisering med klare krav og definisjoner.' }
+          ],
+          successMessage: 'Bra jobbet! Du har utviklet et kritisk blikk for å skille ekte bærekraft fra grønnvasking. Husk: Jo mer konkret og verifiserbart, jo mer troverdig.'
+        },
+        {
           id: '6-4-reflection-1',
           type: 'reflection',
-          order: 18,
+          order: 19,
           question: 'Har du noen gang kjøpt et produkt eller investert i noe fordi det ble markedsført som "miljøvennlig"? I ettertid, tror du påstanden var troverdig?'
         }
       ]

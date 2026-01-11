@@ -1,4 +1,4 @@
-import { Module } from '../types/course';
+import { Module, InteractiveModelContent } from '../types/course';
 
 export const modul8KapitalstrukturModule: Module = {
   id: 'modul-9-kapitalstruktur',
@@ -444,9 +444,44 @@ export const modul8KapitalstrukturModule: Module = {
           ]
         },
         {
+          id: 'kapitalstruktur-8-3-model-capital-structure',
+          type: 'interactive-model',
+          order: 19,
+          modelType: 'capital-structure',
+          title: 'Kapitalstruktur-simulator',
+          description: 'Se hvordan WACC endrer seg med gjeldsgraden. Finn den optimale kapitalstrukturen som minimerer selskapets kapitalkostnad.',
+          controls: [
+            { key: 'equityBeta', label: 'Egenkapitalbeta', type: 'slider', min: 0.5, max: 2.5, default: 1.2, step: 0.1 },
+            { key: 'riskFreeRate', label: 'Risikofri rente', type: 'slider', min: 1, max: 6, default: 3, step: 0.5, unit: '%' },
+            { key: 'marketPremium', label: 'Markedspremie', type: 'slider', min: 3, max: 8, default: 5, step: 0.5, unit: '%' },
+            { key: 'taxRate', label: 'Skattesats', type: 'slider', min: 0, max: 35, default: 22, step: 1, unit: '%' },
+            { key: 'baseDebtRate', label: 'Basisrente på gjeld', type: 'slider', min: 2, max: 8, default: 4, step: 0.5, unit: '%' },
+            { key: 'ebitda', label: 'EBITDA', type: 'slider', min: 50, max: 500, default: 100, step: 25, unit: ' MNOK' }
+          ],
+          outputs: [
+            { key: 'wacc', label: 'WACC', unit: '%', precision: 2, highlight: true },
+            { key: 'costEquity', label: 'Egenkapitalkostnad', unit: '%', precision: 2 },
+            { key: 'afterTaxCostDebt', label: 'Gjeldskostnad (e.s.)', unit: '%', precision: 2 },
+            { key: 'optimalDebt', label: 'Optimal gjeldsandel', unit: '%', precision: 0 },
+            { key: 'minWACC', label: 'Minimum WACC', unit: '%', precision: 2 }
+          ],
+          charts: [{
+            type: 'line',
+            title: 'WACC-kurven: Kapitalkostnad vs. gjeldsandel',
+            xAxis: { key: 'debtRatio', label: 'Gjeldsandel (%)' },
+            yAxis: { key: 'wacc', label: 'Kapitalkostnad (%)' },
+            series: [
+              { key: 'wacc', name: 'WACC', color: '#8b5cf6' },
+              { key: 'costEquity', name: 'Egenkapitalkostnad', color: '#ef4444', dashed: true },
+              { key: 'afterTaxCostDebt', name: 'Gjeldskostnad (e.s.)', color: '#3b82f6', dashed: true }
+            ]
+          }],
+          explanation: 'WACC-kurven viser trade-off-teorien i praksis: Litt gjeld gir skattefordeler og lavere WACC. Men for mye gjeld øker risikoen, egenkapitalkostnaden stiger, og WACC begynner å øke igjen. Det grønne punktet viser optimal gjeldsandel.'
+        } as InteractiveModelContent,
+        {
           id: 'kapitalstruktur-8-3-exercise',
           type: 'exercise',
-          order: 19,
+          order: 20,
           title: 'Beregn WACC',
           description: 'Bølgekraft AS har markedsverdi av egenkapital på 800 mill. kr og gjeld på 200 mill. kr. Aksjens beta er 1,4, risikofri rente er 2,5%, og markedets risikopremie er 5%. Gjeldskostnaden er 4,5% og skattesatsen 22%. Beregn selskapets WACC.',
           hint: 'Beregn først egenkapitalkostnaden med CAPM, deretter WACC-formelen.'
