@@ -27,6 +27,7 @@ Alle podcast-filer ligger i `/public/` mappen:
 | /public/riskreturn.m4a | modul5-portefolje.ts (Porteføljeteori) | Seksjon 5-1, order 2 |
 | /public/obligasjon.m4a | modul3-obligasjoner.ts | Seksjon 4-1 |
 | /public/aksjer.m4a | modul4-aksjer.ts | Seksjon 5-1 |
+| /public/investanalyse.m4a | modul7-investeringsanalyse.ts | Seksjon 7-1, order 2 |
 | /public/Kapitalkostnad.m4a | modul8-kapitalkostnad.ts | Seksjon 8-1, order 2 |
 
 ## Quiz-system

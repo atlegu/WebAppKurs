@@ -27,36 +27,45 @@ export const modul7InvesteringsanalyseModule: Module = {
           emphasis: 'important'
         },
         {
+          id: '7-1-podcast',
+          type: 'audio',
+          order: 2,
+          title: 'Podcast: Investeringsanalyse',
+          duration: '20 min',
+          url: '/investanalyse.m4a',
+          description: 'Lytt til denne podcasten for en grundig innføring i investeringsanalyse, NPV, IRR og hvordan bedrifter tar investeringsbeslutninger.'
+        },
+        {
           id: '7-1-heading-1',
           type: 'heading',
-          order: 2,
+          order: 3,
           level: 2,
           text: 'Hva er en investering?'
         },
         {
           id: '7-1-def-1',
           type: 'definition',
-          order: 3,
+          order: 4,
           term: 'Investering',
           definition: 'En utbetaling i dag i forventning om fremtidige innbetalinger. Kjernen i investeringsanalyse er å vurdere om de fremtidige kontantstrømmene rettferdiggjør dagens investering.'
         },
         {
           id: '7-1-text-2',
           type: 'text',
-          order: 4,
+          order: 5,
           text: 'Investeringsbeslutninger er blant de viktigste beslutningene et selskap tar. De binder kapital over lang tid og er ofte irreversible.'
         },
         {
           id: '7-1-heading-2',
           type: 'heading',
-          order: 5,
+          order: 6,
           level: 2,
           text: 'Typer investeringer'
         },
         {
           id: '7-1-table-1',
           type: 'table',
-          order: 6,
+          order: 7,
           headers: ['Type', 'Beskrivelse', 'Eksempel'],
           rows: [
             ['Ekspansjonsinvestering', 'Øke kapasitet eller entre nye markeder', 'Ny fabrikk, oppkjøp av konkurrent'],
@@ -69,20 +78,20 @@ export const modul7InvesteringsanalyseModule: Module = {
         {
           id: '7-1-heading-3',
           type: 'heading',
-          order: 7,
+          order: 8,
           level: 2,
           text: 'Kontantstrømtankegang'
         },
         {
           id: '7-1-text-3',
           type: 'text',
-          order: 8,
+          order: 9,
           text: 'I investeringsanalyse fokuserer vi på kontantstrømmer, ikke regnskapsmessig resultat. Grunnen er at kontanter er det som faktisk kan brukes til å betale tilbake investorer.'
         },
         {
           id: '7-1-list-1',
           type: 'list',
-          order: 9,
+          order: 10,
           ordered: false,
           items: [
             'Inkluder alle relevante kontantstrømmer (investeringer, driftsinnbetalinger, driftsutbetalinger)',
@@ -95,14 +104,14 @@ export const modul7InvesteringsanalyseModule: Module = {
         {
           id: '7-1-example-1',
           type: 'example',
-          order: 10,
+          order: 11,
           title: 'Inkrementelle kontantstrømmer',
           content: 'Et selskap vurderer å lansere et nytt produkt som vil generere 10 MNOK i årlig salg. MEN: 3 MNOK av dette vil kannibalisere salg av eksisterende produkter.\n\n• Feil: Bruke 10 MNOK som årlig kontantstrøm\n• Riktig: Bruke 10 - 3 = 7 MNOK som inkrementell kontantstrøm\n\nSelskapet har også brukt 2 MNOK på markedsundersøkelser før beslutningen. Skal dette inkluderes?\n\n• Nei – dette er en sunk cost. Pengene er brukt uansett om prosjektet gjennomføres eller ikke.'
         },
         {
           id: '7-1-keypoint-1',
           type: 'keypoint',
-          order: 11,
+          order: 12,
           points: [
             'Investeringer binder kapital over tid og må analyseres grundig',
             'Fokuser på kontantstrømmer, ikke regnskapsmessig resultat',
@@ -113,7 +122,7 @@ export const modul7InvesteringsanalyseModule: Module = {
         {
           id: '7-1-quiz-1',
           type: 'quiz',
-          order: 12,
+          order: 13,
           question: 'Hva er en sunk cost?',
           options: [
             'En kostnad som kommer i fremtiden',
@@ -127,7 +136,7 @@ export const modul7InvesteringsanalyseModule: Module = {
         {
           id: '7-1-quiz-2',
           type: 'quiz',
-          order: 13,
+          order: 14,
           question: 'Hvorfor bruker vi kontantstrømmer og ikke regnskapsmessig resultat i investeringsanalyse?',
           options: [
             'Fordi kontantstrømmer er enklere å beregne',
@@ -141,7 +150,7 @@ export const modul7InvesteringsanalyseModule: Module = {
         {
           id: '7-1-exercise-1',
           type: 'exercise',
-          order: 14,
+          order: 15,
           title: 'Oppgave: Identifiser relevante kontantstrømmer',
           description: 'Et selskap vurderer å bygge en ny fabrikk. Her er informasjonen:\n\n• Tomten ble kjøpt for 5 år siden for 20 MNOK (markedsverdi i dag: 30 MNOK)\n• Bygge- og utstyrskostnad: 100 MNOK\n• Forventet årlig salg fra fabrikken: 50 MNOK\n• 20% av salget vil komme fra kunder som ellers ville kjøpt fra eksisterende fabrikk\n• Årlige driftskostnader: 30 MNOK\n• Markedsundersøkelse (allerede gjennomført): 2 MNOK\n• Økt arbeidskapitalbehov: 10 MNOK\n\n1. Hva er initial investering (kontantutgang i år 0)?\n2. Hva er årlig inkrementell kontantstrøm fra driften?\n3. Hvilke poster er sunk costs?',
           hint: 'Tomten har alternativkostnad = markedsverdi. Kannibaliseringseffekten må trekkes fra.'
@@ -149,7 +158,7 @@ export const modul7InvesteringsanalyseModule: Module = {
         {
           id: '7-1-reflection-1',
           type: 'reflection',
-          order: 15,
+          order: 16,
           question: 'Tenk på en stor investeringsbeslutning du eller familien din har tatt (f.eks. kjøpe bolig, bil, utdanning). Hvordan ble fremtidige kontantstrømmer vurdert, bevisst eller ubevisst?'
         }
       ]
