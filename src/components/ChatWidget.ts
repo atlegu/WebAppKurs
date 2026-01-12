@@ -12,6 +12,7 @@ export class ChatWidget {
   private messagesContainer: HTMLElement | null = null;
   private inputElement: HTMLTextAreaElement | null = null;
   private currentContext: ChatContext = { type: 'general' };
+  private welcomeOverlay: HTMLElement | null = null;
 
   constructor(apiEndpoint?: string) {
     this.chatService = new ChatService(apiEndpoint);
@@ -458,5 +459,67 @@ export class ChatWidget {
       exerciseSolution
     });
     this.open();
+  }
+
+  // Show first-time welcome overlay
+  showFirstTimeWelcome(): void {
+    const hasSeenWelcome = localStorage.getItem('birger-welcome-seen');
+    if (hasSeenWelcome) return;
+
+    this.welcomeOverlay = document.createElement('div');
+    this.welcomeOverlay.className = 'birger-welcome-overlay';
+    this.welcomeOverlay.innerHTML = `
+      <div class="birger-welcome-modal">
+        <div class="birger-welcome-image">
+          <img src="/birger.png" alt="Birger" />
+        </div>
+        <div class="birger-welcome-content">
+          <h2>Hei! Jeg er Birger</h2>
+          <p>
+            Jeg er her for å hjelpe deg med kurset i foretaksfinans!
+            Lurer du på noe underveis? Bare spør meg – jeg kan forklare
+            begreper, hjelpe med oppgaver, eller ta en prat om finansielle temaer.
+          </p>
+          <p class="birger-welcome-hint">
+            Du finner meg alltid nede i høyre hjørne, klar til å svare!
+          </p>
+          <button class="birger-welcome-btn">Fint, la oss begynne!</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(this.welcomeOverlay);
+
+    // Animate in
+    requestAnimationFrame(() => {
+      this.welcomeOverlay?.classList.add('birger-welcome-visible');
+    });
+
+    // Close button handler
+    const closeBtn = this.welcomeOverlay.querySelector('.birger-welcome-btn');
+    closeBtn?.addEventListener('click', () => this.closeFirstTimeWelcome());
+
+    // Also close on overlay click
+    this.welcomeOverlay.addEventListener('click', (e) => {
+      if (e.target === this.welcomeOverlay) {
+        this.closeFirstTimeWelcome();
+      }
+    });
+  }
+
+  private closeFirstTimeWelcome(): void {
+    localStorage.setItem('birger-welcome-seen', 'true');
+    this.welcomeOverlay?.classList.remove('birger-welcome-visible');
+
+    setTimeout(() => {
+      this.welcomeOverlay?.remove();
+      this.welcomeOverlay = null;
+
+      // Pulse the chat button to draw attention
+      this.container?.querySelector('.chat-fab')?.classList.add('chat-fab-pulse');
+      setTimeout(() => {
+        this.container?.querySelector('.chat-fab')?.classList.remove('chat-fab-pulse');
+      }, 2000);
+    }, 300);
   }
 }

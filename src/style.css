@@ -5562,3 +5562,170 @@ a:hover {
   font-size: 0.85rem;
   font-style: italic;
 }
+
+/* =============================================
+   BIRGER WELCOME MODAL (First-time user welcome)
+   ============================================= */
+
+.birger-welcome-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: var(--space-4);
+}
+
+.birger-welcome-overlay.birger-welcome-visible {
+  opacity: 1;
+}
+
+.birger-welcome-modal {
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(4, 101, 48, 0.15);
+  max-width: 500px;
+  width: 100%;
+  overflow: hidden;
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.3s ease;
+  animation: birgerModalIn 0.4s ease forwards;
+}
+
+@keyframes birgerModalIn {
+  0% {
+    transform: scale(0.9) translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.birger-welcome-image {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  padding: var(--space-8) var(--space-6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.birger-welcome-image img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+  animation: birgerFloat 3s ease-in-out infinite;
+}
+
+@keyframes birgerFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.birger-welcome-content {
+  padding: var(--space-6);
+  text-align: center;
+}
+
+.birger-welcome-content h2 {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-4) 0;
+}
+
+.birger-welcome-content p {
+  color: var(--text-secondary);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  margin: 0 0 var(--space-4) 0;
+}
+
+.birger-welcome-hint {
+  background: #e8f5e9;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm) !important;
+  color: var(--primary-dark) !important;
+}
+
+.birger-welcome-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: var(--text-base);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: var(--space-4);
+  box-shadow: 0 4px 12px rgba(4, 101, 48, 0.3);
+}
+
+.birger-welcome-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(4, 101, 48, 0.4);
+}
+
+.birger-welcome-btn:active {
+  transform: translateY(0);
+}
+
+/* Chat FAB pulse animation */
+.chat-fab-pulse {
+  animation: fabPulse 0.6s ease 3;
+}
+
+@keyframes fabPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+@media (max-width: 480px) {
+  .birger-welcome-modal {
+    max-width: 100%;
+    margin: var(--space-4);
+    border-radius: var(--radius-lg);
+  }
+
+  .birger-welcome-image {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .birger-welcome-image img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .birger-welcome-content {
+    padding: var(--space-4);
+  }
+
+  .birger-welcome-content h2 {
+    font-size: var(--text-xl);
+  }
+}

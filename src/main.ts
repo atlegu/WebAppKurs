@@ -130,6 +130,11 @@ class SustainableFinanceApp {
 
     // Initial render
     this.render();
+
+    // Vis velkomst for førstegangsbrukere (med liten forsinkelse så siden laster først)
+    setTimeout(() => {
+      this.chatWidget.showFirstTimeWelcome();
+    }, 500);
   }
 
   private setupAppStructure(): void {
@@ -207,7 +212,41 @@ class SustainableFinanceApp {
     const nextBtn = document.querySelector('.nav-btn-next');
 
     prevBtn?.addEventListener('click', () => this.navigateToPrevSection());
-    nextBtn?.addEventListener('click', () => this.navigateToNextSection());
+    nextBtn?.addEventListener('click', () => this.handleNextButtonClick());
+  }
+
+  private handleNextButtonClick(): void {
+    console.log('QUIZ DEBUG: handleNextButtonClick called');
+    console.log('QUIZ DEBUG: currentModule:', this.currentModule?.id);
+    console.log('QUIZ DEBUG: currentSection:', this.currentSection?.id);
+
+    if (!this.currentModule || !this.currentSection) {
+      console.log('QUIZ DEBUG: No current module or section, returning');
+      return;
+    }
+
+    // Check if we're on last section and module has quiz
+    const moduleSections = this.currentModule.sections.sort((a, b) => a.order - b.order);
+    const currentModuleSectionIndex = moduleSections.findIndex(s => s.id === this.currentSection?.id);
+    const isLastSectionInModule = currentModuleSectionIndex === moduleSections.length - 1;
+    const hasModuleQuiz = !!this.currentModule.moduleQuiz;
+
+    console.log('QUIZ DEBUG: moduleSections count:', moduleSections.length);
+    console.log('QUIZ DEBUG: currentModuleSectionIndex:', currentModuleSectionIndex);
+    console.log('QUIZ DEBUG: isLastSectionInModule:', isLastSectionInModule);
+    console.log('QUIZ DEBUG: hasModuleQuiz:', hasModuleQuiz);
+
+    if (isLastSectionInModule && hasModuleQuiz) {
+      console.log('QUIZ DEBUG: Showing module quiz!');
+      // Show module quiz instead of navigating
+      this.progressTracker.markSectionComplete(this.currentModule.id, this.currentSection.id);
+      this.navigation.setCompletedSections(this.progressTracker.getCompletedSections());
+      this.showModuleQuiz(this.currentModule.id);
+    } else {
+      console.log('QUIZ DEBUG: Normal navigation to next section');
+      // Normal navigation
+      this.navigateToNextSection();
+    }
   }
 
   private navigateToPrevSection(): void {
@@ -299,14 +338,7 @@ class SustainableFinanceApp {
       nextBtn.innerHTML = quizPassed
         ? `<span class="quiz-btn-icon">✓</span> Modulquiz bestått - Gjenta?`
         : `<span class="quiz-btn-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></span> Ta modulquiz`;
-
-      // Replace the click handler for quiz
-      nextBtn.onclick = () => {
-        // Mark current section as completed first
-        this.progressTracker.markSectionComplete(this.currentModule!.id, this.currentSection!.id);
-        this.navigation.setCompletedSections(this.progressTracker.getCompletedSections());
-        this.showModuleQuiz(this.currentModule!.id);
-      };
+      // Click handler is now in handleNextButtonClick()
     } else if (currentIndex < allSections.length - 1) {
       const nextSection = allSections[currentIndex + 1];
       const nextModule = this.course.modules.find(m => m.id === nextSection.moduleId);
@@ -315,12 +347,10 @@ class SustainableFinanceApp {
       nextBtn.disabled = false;
       nextBtn.classList.remove('quiz-btn');
       nextBtn.innerHTML = `${nextSectionData?.title || 'Neste'} →`;
-      nextBtn.onclick = null; // Reset to default behavior
     } else {
       nextBtn.disabled = true;
       nextBtn.classList.remove('quiz-btn');
       nextBtn.innerHTML = 'Neste →';
-      nextBtn.onclick = null;
     }
   }
 
@@ -514,8 +544,14 @@ class SustainableFinanceApp {
 
   // Module Quiz Methods
   showModuleQuiz(moduleId: string): void {
+    console.log('QUIZ DEBUG: showModuleQuiz called with moduleId:', moduleId);
     const module = this.course.modules.find(m => m.id === moduleId);
-    if (!module?.moduleQuiz) return;
+    console.log('QUIZ DEBUG: found module:', module?.title);
+    console.log('QUIZ DEBUG: module has quiz:', !!module?.moduleQuiz);
+    if (!module?.moduleQuiz) {
+      console.log('QUIZ DEBUG: No moduleQuiz found, returning early');
+      return;
+    }
 
     this.currentModule = module;
 
