@@ -39,6 +39,14 @@ export const modul3ObligasjonerModule: Module = {
           description: 'Vi anbefaler at du lytter til denne podcasten før du leser videre. Her får du en grundig og lettfattelig introduksjon til obligasjoner, renter og prising – fortalt på en engasjerende måte som gir deg et solid fundament for resten av modulen.'
         },
         {
+          id: '3-1-video',
+          type: 'video',
+          order: 2.5,
+          title: 'Video: Obligasjoner forklart',
+          url: 'https://www.youtube.com/watch?v=fHW2V18qy14',
+          description: 'En visuell gjennomgang som utfyller podkasten og gir deg enda bedre forståelse av obligasjoner.'
+        },
+        {
           id: '3-1-intro',
           type: 'text',
           order: 3,
