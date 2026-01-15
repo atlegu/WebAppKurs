@@ -43,7 +43,7 @@ export const modul3ObligasjonerModule: Module = {
           type: 'video',
           order: 2.5,
           title: 'Video: Obligasjoner forklart',
-          url: 'https://www.youtube.com/watch?v=fHW2V18qy14',
+          url: 'https://www.youtube.com/embed/fHW2V18qy14',
           duration: '10 min'
         },
         {
