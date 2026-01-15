@@ -44,7 +44,7 @@ export const modul3ObligasjonerModule: Module = {
           order: 2.5,
           title: 'Video: Obligasjoner forklart',
           url: 'https://www.youtube.com/watch?v=fHW2V18qy14',
-          description: 'En visuell gjennomgang som utfyller podkasten og gir deg enda bedre forståelse av obligasjoner.'
+          duration: '10 min'
         },
         {
           id: '3-1-intro',
