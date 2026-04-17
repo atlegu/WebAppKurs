@@ -16,6 +16,7 @@ import { LoginPage } from './components/auth/LoginPage';
 import { ApplicationForm } from './components/auth/ApplicationForm';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { SignupCompletionPage } from './components/auth/SignupCompletionPage';
+import { LandingPage } from './components/LandingPage';
 import { modul1VelkommenModule } from './data/modul1-velkommen';
 import { modul2RegnskapModule } from './data/modul2-regnskap';
 import { modul2TidverdiModule } from './data/modul2-tidverdi';
@@ -642,7 +643,8 @@ class AppRouter {
   private applicationForm: ApplicationForm | null = null;
   private adminDashboard: AdminDashboard | null = null;
   private signupCompletionPage: SignupCompletionPage | null = null;
-  private currentView: 'loading' | 'login' | 'apply' | 'course' | 'admin' | 'complete-signup' = 'loading';
+  private landingPage: LandingPage | null = null;
+  private currentView: 'loading' | 'landing' | 'login' | 'apply' | 'course' | 'admin' | 'complete-signup' = 'loading';
 
   constructor() {
     this.app = document.querySelector<HTMLDivElement>('#app')!;
@@ -661,34 +663,44 @@ class AppRouter {
         return;
       }
 
-      // Check URL for admin route
-      const isAdminRoute = window.location.hash === '#admin';
-
       if (state.isAuthenticated && state.user) {
-        // Check if user needs to complete signup (set password)
-        if (this.authService.needsSignupCompletion()) {
-          this.showSignupCompletion();
-        } else if (isAdminRoute && state.user.role === 'admin') {
-          this.showAdmin();
-        } else {
-          this.showCourse();
-        }
+        this.routeAuthenticated(state.user);
       } else {
-        this.showLogin();
+        this.routeUnauthenticated();
       }
     });
 
-    // Listen for hash changes (for admin route)
+    // Listen for hash changes
     window.addEventListener('hashchange', () => {
       const state = this.authService.getState();
+      if (state.isLoading) return;
       if (state.isAuthenticated && state.user) {
-        if (window.location.hash === '#admin' && state.user.role === 'admin') {
-          this.showAdmin();
-        } else if (window.location.hash === '' || window.location.hash === '#') {
-          this.showCourse();
-        }
+        this.routeAuthenticated(state.user);
+      } else {
+        this.routeUnauthenticated();
       }
     });
+  }
+
+  private routeAuthenticated(user: { role?: string }): void {
+    if (this.authService.needsSignupCompletion()) {
+      this.showSignupCompletion();
+    } else if (window.location.hash === '#admin' && user.role === 'admin') {
+      this.showAdmin();
+    } else {
+      this.showCourse();
+    }
+  }
+
+  private routeUnauthenticated(): void {
+    const hash = window.location.hash;
+    if (hash === '#login') {
+      this.showLogin();
+    } else if (hash === '#apply') {
+      this.showApplicationForm();
+    } else {
+      this.showLanding();
+    }
   }
 
   private showLoading(): void {
@@ -709,11 +721,28 @@ class AppRouter {
     `;
   }
 
+  private showLanding(): void {
+    if (this.currentView === 'landing') return;
+    this.currentView = 'landing';
+    this.app.classList.remove('auth-active');
+    this.app.innerHTML = '';
+
+    this.landingPage = new LandingPage(
+      this.app,
+      () => {
+        window.location.hash = '#login';
+      },
+      () => {
+        window.location.hash = '#apply';
+      }
+    );
+    this.landingPage.render();
+  }
+
   private showLogin(): void {
     if (this.currentView === 'login') return;
     this.currentView = 'login';
     this.app.classList.add('auth-active');
-    window.location.hash = '';
 
     this.loginPage = new LoginPage(
       this.app,
@@ -721,7 +750,7 @@ class AppRouter {
         // Success - will be handled by auth state change
       },
       () => {
-        this.showApplicationForm();
+        window.location.hash = '#apply';
       }
     );
     this.loginPage.render();
@@ -735,7 +764,7 @@ class AppRouter {
     this.applicationForm = new ApplicationForm(
       this.app,
       () => {
-        this.showLogin();
+        window.location.hash = '#login';
       }
     );
     this.applicationForm.render();
@@ -762,7 +791,7 @@ class AppRouter {
     this.adminDashboard = new AdminDashboard(
       this.app,
       () => {
-        this.showLogin();
+        window.location.hash = '#login';
       }
     );
     this.adminDashboard.render();

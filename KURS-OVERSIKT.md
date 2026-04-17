@@ -82,13 +82,16 @@ Alle podcast-filer ligger i `/public/` mappen:
 - `src/types/course.ts` - TypeScript-typer inkl. questionsToShow
 - `src/style.css` - All styling
 
-## Fargepalett
+## Fargepalett – "Nordic Finance"
 
-- Primary (NMBU-grønn): `#046530`
-- Primary light: `#058240`
-- Primary dark: `#034d24`
+- Primary (Teal/Bærekraft): `#0D9488`
+- Primary light: `#14B8A6`
+- Primary dark: `#0F766E`
 - Accent gold: `#F59E0B`
-- Accent blue: `#4682b4`
+- Accent blue: `#3B82F6`
+- Accent purple: `#8B5CF6`
+- Success: `#10B981`
+- Error: `#EF4444`
 
 ## Deploy
 
@@ -101,4 +104,4 @@ Alle podcast-filer ligger i `/public/` mappen:
 - Edge Functions i `supabase/functions/`
 
 ---
-*Sist oppdatert: 10. januar 2026*
+*Sist oppdatert: 17. april 2026*
