@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BUS 220 – Forelesning 10: Investeringsanalyse (del 1)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css" id="theme">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap');
+  :root { --nmbu-green: #046530; --nmbu-green-light: #f0f7f2; --accent-orange: #f59e0b; --tavle-bg: #fef3c7; --text-dark: #1a1a1a; --text-muted: #4b5563; }
+  .reveal { font-family: 'Source Serif 4', Georgia, serif; font-size: 28px; color: var(--text-dark); }
+  .reveal h1, .reveal h2, .reveal h3, .reveal h4 { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); text-transform: none; letter-spacing: 0; font-weight: 700; }
+  .reveal h1 { font-size: 1.8em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.5em; line-height: 1.2; margin-bottom: 0.5em; }
+  .reveal h3 { font-size: 1.2em; }
+  .reveal p { line-height: 1.5; }
+  .reveal ul, .reveal ol { display: block; margin-left: 1em; }
+  .reveal li { margin-bottom: 0.4em; line-height: 1.5; }
+  .reveal .title-slide { background: var(--nmbu-green); color: white; padding: 60px; }
+  .reveal .title-slide h1 { color: white; font-size: 2.4em; margin-bottom: 0.3em; }
+  .reveal .title-slide .subtitle { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 1.4em; color: rgba(255,255,255,0.95); margin-bottom: 1em; }
+  .reveal .title-slide .meta { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 0.85em; color: rgba(255,255,255,0.8); margin-top: 2em; }
+  .reveal .section-divider { background: var(--nmbu-green); color: white; }
+  .reveal .section-divider h2 { color: white; font-size: 2.2em; }
+  .reveal .section-divider .section-number { font-family: 'Source Sans 3', Arial, sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9em; letter-spacing: 0.2em; margin-bottom: 1em; }
+  .reveal .definisjon { background: var(--nmbu-green-light); border-left: 5px solid var(--nmbu-green); padding: 18px 24px; margin: 20px 0; text-align: left; border-radius: 0 8px 8px 0; }
+  .reveal .definisjon .term { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: var(--nmbu-green); margin-bottom: 6px; }
+  .reveal .formel { background: white; border: 2px solid var(--nmbu-green); padding: 24px 32px; margin: 20px auto; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+  .reveal .key-point { background: var(--nmbu-green-light); padding: 16px 22px; margin: 16px 0; border-radius: 8px; text-align: left; font-size: 0.95em; }
+  .reveal .key-point::before { content: "→ "; color: var(--nmbu-green); font-weight: 700; }
+  .reveal .tavle-marker { background: var(--tavle-bg); border: 2px dashed var(--accent-orange); padding: 18px 24px; margin: 24px 0; border-radius: 10px; text-align: left; }
+  .reveal .tavle-marker .tavle-label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #b45309; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.15em; margin-bottom: 8px; }
+  .reveal .norsk-eksempel { background: #fef9f0; border-left: 4px solid #d97706; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .norsk-eksempel .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #b45309; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal table { margin: 16px auto; border-collapse: collapse; font-size: 0.8em; }
+  .reveal table th { background: var(--nmbu-green); color: white; padding: 8px 12px; font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; }
+  .reveal table td { padding: 6px 12px; border: 1px solid #d4d4d4; text-align: center; }
+  .reveal .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; text-align: left; }
+  .reveal .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-items: start; text-align: left; }
+  .reveal .caption { font-size: 0.7em; color: var(--text-muted); font-style: italic; margin-top: 8px; }
+  .reveal .slide-number { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); background: transparent; }
+  .reveal mjx-container { font-size: 1.0em !important; }
+  .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+  .reveal blockquote { background: var(--nmbu-green-light); border-left: 4px solid var(--nmbu-green); padding: 14px 22px; margin: 16px 0; font-style: italic; font-size: 0.95em; text-align: left; border-radius: 0 6px 6px 0; box-shadow: none; }
+</style>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }, svg: { fontCache: 'global' }, startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { if (window.Reveal) Reveal.layout(); }); } } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section class="title-slide">
+  <h1>Investeringsanalyse</h1>
+  <div class="subtitle">Del 1: Kontantstrøm, NPV, IRR og andre metoder</div>
+  <div class="meta">BUS 220 — Finansiering og investering<br>Atle G. Guttormsen · Høst 2026<br>Pensum: HRWJ kapittel 8–9</div>
+</section>
+
+<section>
+  <h2>Læringsmål</h2>
+  <p style="text-align:left">Etter denne forelesningen skal du kunne:</p>
+  <ul>
+    <li>Forklare hva <strong>investeringsanalyse (capital budgeting)</strong> er, og hvorfor det er sentralt i bedriftsøkonomien</li>
+    <li>Identifisere <strong>relevant kontantstrøm</strong> (inkrementell, etter skatt) — og hva som ikke er relevant (sunk costs, finansieringskostnader)</li>
+    <li>Beregne og tolke <strong>nåverdi (NPV)</strong></li>
+    <li>Beregne og tolke <strong>internrente (IRR)</strong> og forstå dens svakheter</li>
+    <li>Anvende <strong>tilbakebetalingstid (payback)</strong> og <strong>diskontert payback</strong></li>
+    <li>Bruke <strong>Profitability Index (NPV-indeks)</strong></li>
+    <li>Velge riktig metode i ulike beslutningssituasjoner</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Hva er investeringsanalyse?</h2>
+  <div class="definisjon">
+    <div class="term">Investeringsanalyse (capital budgeting)</div>
+    Prosessen der bedriften <strong>analyserer og velger</strong> blant langsiktige investeringsprosjekter — den enkeltbeslutningen som har størst påvirkning på selskapets fremtidige verdi.
+  </div>
+  <p style="text-align:left">Investeringer kan være:</p>
+  <ul>
+    <li><strong>Utvidelse:</strong> ny fabrikk, nytt produkt, nytt marked</li>
+    <li><strong>Erstatning:</strong> bytte ut gammelt utstyr</li>
+    <li><strong>Effektivisering:</strong> automatisere produksjon</li>
+    <li><strong>Strategisk:</strong> oppkjøp, FoU, grønn omstilling</li>
+    <li><strong>Lovpålagt:</strong> miljøkrav, sikkerhetstiltak</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Hvorfor er det viktig?</h2>
+  <blockquote>«Investeringsbeslutninger former selskapets fremtid for tiår framover. En feilinvestering kan koste hundretalls millioner — eller bedriftens eksistens.»</blockquote>
+  <div class="norsk-eksempel">
+    <div class="label">Norske eksempler</div>
+    <ul style="margin-top: 6px">
+      <li><strong>Equinor — Johan Sverdrup-feltet</strong> (~210 mrd. kr investering, oppstart 2019): et av Nordens største kapitalprosjekter noensinne. NPV avhenger sterkt av oljepris- og kostnadsforutsetningene.</li>
+      <li><strong>Yara — grønne ammoniakk-anlegg</strong>: store investeringer i grønn hydrogen/ammoniakk, basert på antakelser om fremtidige karbonpriser og energikostnader.</li>
+      <li><strong>NMBU/Veterinærhøgskolen</strong>: ~7 mrd. kr nybygg. Politisk-økonomisk beslutning med lang horisont.</li>
+    </ul>
+  </div>
+  <div class="key-point">For en kommune, en bedrift, eller en privatperson: investeringsanalysen vurderer om <em>nåverdien av forventede kontantstrømmer overstiger investeringen</em>.</div>
+</section>
+
+<section>
+  <h2>Et investeringsprosjekts livssyklus</h2>
+  <p style="text-align:left">Et typisk prosjekt går gjennom fire faser:</p>
+  <ol>
+    <li><strong>Idégenerering</strong> — strategi, markedsbehov, teknologiendring</li>
+    <li><strong>Analyse og evaluering</strong> ← <em>her er vi i dette kurset</em></li>
+    <li><strong>Beslutning</strong> — godkjenning av styret/ledelsen</li>
+    <li><strong>Implementering og oppfølging</strong></li>
+  </ol>
+  <p style="text-align:left">I store norske selskaper kreves typisk:</p>
+  <ul>
+    <li><strong>Tidligfase-analyse</strong> for prosjekter over 10 mill. kr</li>
+    <li><strong>Detaljanalyse</strong> for prosjekter over 100 mill. kr</li>
+    <li><strong>Styrebehandling</strong> for prosjekter over 500 mill. kr</li>
+  </ul>
+  <div class="key-point">Investeringsanalysen er <em>verktøyet</em> som hjelper ledelsen å si <strong>ja eller nei</strong>.</div>
+</section>
+
+<section>
+  <h2>Pengenes tidsverdi — repetisjon</h2>
+  <p style="text-align:left">En krone i fremtiden er mindre verdt enn en krone i dag, fordi:</p>
+  <ul>
+    <li>Man kunne tjent <strong>rente</strong> på kronen i mellomtiden (alternativkost)</li>
+    <li><strong>Inflasjon</strong> spiser kjøpekraften</li>
+    <li><strong>Risiko</strong> — kanskje får du den ikke i det hele tatt</li>
+  </ul>
+  <p style="text-align:left">Vi diskonterer fremtidige kontantstrømmer med et <strong>avkastningskrav</strong> som tar hensyn til alle tre:</p>
+  <div class="formel">
+    $r = r_f + \text{Risikopremie}$
+  </div>
+  <p style="text-align:left"><strong>Avkastningskravet</strong> ($r$): den prosentvise avkastningen investorene krever for å bære risikoen i prosjektet.</p>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL A</div>
+  <h2>Kontantstrømmen</h2>
+</section>
+
+<section>
+  <h2>Hva er relevant kontantstrøm?</h2>
+  <div class="definisjon">
+    <div class="term">Relevant kontantstrøm</div>
+    <strong>Inkrementell</strong> (endring på grunn av prosjektet), <strong>etter skatt</strong> og <strong>uten finansieringskostnader</strong>.
+  </div>
+  <p style="text-align:left">Tre regler:</p>
+  <ol>
+    <li><strong>Bare inkrementelle CF</strong> — hva endrer seg dersom prosjektet gjennomføres vs ikke?</li>
+    <li><strong>Etter skatt</strong> — investorene mottar kontantstrømmer etter at skatten er betalt</li>
+    <li><strong>Ikke ta med finansieringskostnader</strong> (renter, utbytte) — diskonteringsrenten dekker dette</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Hva skal IKKE tas med?</h2>
+  <div class="definisjon">
+    <div class="term">Sunk costs (ugjenkallelige kostnader)</div>
+    Penger som allerede er brukt, uansett om prosjektet kjøres eller ikke. <strong>Ignorer</strong> — de er irrelevante for beslutningen.
+  </div>
+  <p style="text-align:left"><em>Eksempel:</em> Et selskap har brukt 500 000 kr på forstudie. Nå skal de beslutte om de skal investere 5 mill. i prosjektet. De 500 000 er sunk — skal ikke regnes inn.</p>
+  <div class="definisjon">
+    <div class="term">Opportunity costs (alternativkostnader)</div>
+    Verdien av <em>beste alternative bruk</em> av en ressurs. <strong>Skal tas med</strong> som en kostnad i prosjektet.
+  </div>
+  <p style="text-align:left"><em>Eksempel:</em> Et selskap eier en tomt fra før. Brukt i nytt prosjekt = tap av leieinntekt. Alternativkostnad må tas med.</p>
+</section>
+
+<section>
+  <h2>Driftskapital (NWC)</h2>
+  <div class="definisjon">
+    <div class="term">Endring i netto driftskapital ($\Delta$NWC)</div>
+    Penger som <em>bindes</em> i økte varelagre, kundefordringer minus leverandørgjeld — på grunn av prosjektet.
+  </div>
+  <p style="text-align:left">$\Delta$NWC er en <strong>negativ kontantstrøm</strong> i investeringsåret og påfølgende vekstår.</p>
+  <p style="text-align:left">Ved prosjektslutt: $\Delta$NWC <strong>frigjøres</strong> og blir en positiv kontantstrøm.</p>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Trevarefabrikk: nytt produkt krever:
+    <ul style="margin-top:6px">
+      <li>Varelager: + kr 300 000</li>
+      <li>Kundefordringer: + kr 250 000</li>
+      <li>Leverandørgjeld: + kr 100 000</li>
+    </ul>
+    Netto $\Delta$NWC = 300 + 250 − 100 = kr 450 000 (binding i år 0). Frigjøres ved prosjektslutt.
+  </div>
+</section>
+
+<section>
+  <h2>Avskrivninger</h2>
+  <p style="text-align:left">Avskrivninger er en <strong>regnskapsmessig kostnad</strong>, ikke en kontantbevegelse. Hvordan tas de hensyn til?</p>
+  <div class="key-point">Avskrivninger reduserer <em>skattbar inntekt</em> — gir <strong>skatteskjold</strong>.</div>
+  <div class="formel big-formula">
+    $\text{Skatteskjold} = \text{Avskrivning} \times \text{Skattesats}$
+  </div>
+  <p style="text-align:left">Operasjonell kontantstrøm:</p>
+  <div class="formel">
+    $\text{OCF} = (\text{Salgsinntekter} - \text{Kostnader}) \times (1-t) + \text{Avskrivning} \times t$
+  </div>
+  <p style="text-align:left">Eller ekvivalent:</p>
+  <div class="formel">
+    $\text{OCF} = \text{Nettoresultat} + \text{Avskrivning}$
+  </div>
+  <p class="caption">Norsk skattesats 2024: 22 % for vanlige selskaper.</p>
+</section>
+
+<section>
+  <h2>Eksempel: AS Trevare — kontantstrøm</h2>
+  <table style="font-size: 0.72em">
+    <tr><th>År</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+    <tr><td>Salgsinntekter</td><td></td><td>2 400 000</td><td>2 520 000</td><td>2 520 000</td><td>2 460 000</td><td>2 280 000</td></tr>
+    <tr><td>Materialkostnader</td><td></td><td>−600 000</td><td>−630 000</td><td>−630 000</td><td>−615 000</td><td>−570 000</td></tr>
+    <tr><td>Lønnskostnader</td><td></td><td>−540 000</td><td>−567 000</td><td>−567 000</td><td>−553 500</td><td>−513 000</td></tr>
+    <tr><td><strong>Dekningsbidrag</strong></td><td></td><td>1 260 000</td><td>1 323 000</td><td>1 323 000</td><td>1 291 500</td><td>1 197 000</td></tr>
+    <tr><td>Faste kostnader</td><td></td><td>−360 000</td><td>−360 000</td><td>−360 000</td><td>−360 000</td><td>−360 000</td></tr>
+    <tr><td>Anleggsmidler</td><td>−2 200 000</td><td></td><td></td><td></td><td></td><td>500 000</td></tr>
+    <tr><td>Driftskapital</td><td>−602 500</td><td>−38 375</td><td>−</td><td>19 188</td><td>57 563</td><td>729 125</td></tr>
+    <tr style="background:#dcfce7"><td><strong>Kontantstrøm</strong></td><td><strong>−2 802 500</strong></td><td><strong>861 625</strong></td><td><strong>963 000</strong></td><td><strong>982 188</strong></td><td><strong>989 063</strong></td><td><strong>2 066 125</strong></td></tr>
+  </table>
+  <p style="text-align:left; font-size: 0.85em">Merk:</p>
+  <ul style="font-size: 0.85em">
+    <li>Investering i anleggsmidler i år 0; restverdi (skrapverdi) i år 5</li>
+    <li>Driftskapital bindes opp år 0, frigjøres ved prosjektslutt</li>
+    <li>Skatteskjold fra avskrivninger er innbakt i tallene</li>
+  </ul>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL B</div>
+  <h2>Nåverdi (NPV)</h2>
+</section>
+
+<section>
+  <h2>NPV — Net Present Value</h2>
+  <div class="definisjon">
+    <div class="term">Nåverdi (NPV)</div>
+    Summen av nåverdien av alle prosjektets kontantstrømmer — investeringen pluss diskonterte fremtidige kontantstrømmer.
+  </div>
+  <div class="formel big-formula">
+    $$\text{NPV} = -CF_0 + \sum_{t=1}^{n} \frac{CF_t}{(1+r)^t}$$
+  </div>
+  <p style="text-align:left">der:</p>
+  <ul>
+    <li>$CF_0$ = investeringsutgift i år 0</li>
+    <li>$CF_t$ = netto kontantstrøm i år $t$ (etter skatt)</li>
+    <li>$n$ = prosjektets levetid</li>
+    <li>$r$ = avkastningskravet</li>
+  </ul>
+</section>
+
+<section>
+  <h2>NPV — beslutningsregel</h2>
+  <div class="definisjon">
+    <div class="term">Beslutningsregel</div>
+    <ul style="margin-top: 6px">
+      <li><strong>NPV &gt; 0</strong> → Aksepter prosjektet</li>
+      <li><strong>NPV &lt; 0</strong> → Forkast prosjektet</li>
+      <li><strong>NPV = 0</strong> → Indifferent</li>
+    </ul>
+  </div>
+  <p style="text-align:left">Forutsetninger:</p>
+  <ul>
+    <li>Prosjektene er <strong>uavhengige</strong></li>
+    <li>Det er <strong>ubegrenset med kapital</strong></li>
+  </ul>
+  <div class="key-point">NPV måler <strong>verdiøkningen for eierne</strong> i dagens kroner. Positiv NPV = prosjektet skaper verdi, utover det avkastningskravet allerede krever.</div>
+</section>
+
+<section>
+  <h2>AS Trevare — NPV-beregning</h2>
+  <p style="text-align:left">Avkastningskrav $r = 15\,\%$:</p>
+  <table style="font-size: 0.85em">
+    <tr><th>År</th><th>Kontantstrøm</th><th>Diskonteringsfaktor</th><th>Nåverdi</th></tr>
+    <tr><td>0</td><td>−2 802 500</td><td>1,000</td><td>−2 802 500</td></tr>
+    <tr><td>1</td><td>861 625</td><td>0,8696</td><td>749 239</td></tr>
+    <tr><td>2</td><td>963 000</td><td>0,7561</td><td>728 166</td></tr>
+    <tr><td>3</td><td>982 188</td><td>0,6575</td><td>645 805</td></tr>
+    <tr><td>4</td><td>989 063</td><td>0,5718</td><td>565 500</td></tr>
+    <tr><td>5</td><td>2 066 125</td><td>0,4972</td><td>1 027 229</td></tr>
+    <tr style="background:#fef3c7"><td colspan="3"><strong>NPV</strong></td><td><strong>913 439</strong></td></tr>
+  </table>
+  <div class="key-point">NPV &gt; 0 → <strong>aksepter prosjektet</strong>. Eierne får 15 % avkastning <em>pluss</em> 913 439 kr i dagens kroner.</div>
+</section>
+
+<section>
+  <h2>Nåverdiprofilen</h2>
+  <p style="text-align:left">NPV avhenger av avkastningskravet $r$. <strong>Nåverdiprofilen</strong> viser NPV ved ulike $r$:</p>
+  <div style="margin: 20px auto; text-align: center;">
+    <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+      <line x1="80" y1="260" x2="660" y2="260" stroke="#1a1a1a" stroke-width="1.5"/>
+      <line x1="80" y1="260" x2="80" y2="40" stroke="#1a1a1a" stroke-width="1.5"/>
+      <!-- x-axis labels: 0%, 10%, 20%, 30% -->
+      <text x="80" y="280" text-anchor="middle" font-family="Source Sans 3" font-size="12">0%</text>
+      <text x="240" y="280" text-anchor="middle" font-family="Source Sans 3" font-size="12">10%</text>
+      <text x="400" y="280" text-anchor="middle" font-family="Source Sans 3" font-size="12">20%</text>
+      <text x="560" y="280" text-anchor="middle" font-family="Source Sans 3" font-size="12">30%</text>
+      <text x="660" y="280" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#4b5563">r</text>
+      <!-- y-axis labels -->
+      <text x="70" y="265" text-anchor="end" font-family="Source Sans 3" font-size="12">−25</text>
+      <text x="70" y="200" text-anchor="end" font-family="Source Sans 3" font-size="12">0</text>
+      <text x="70" y="120" text-anchor="end" font-family="Source Sans 3" font-size="12">+10</text>
+      <text x="70" y="50" text-anchor="end" font-family="Source Sans 3" font-size="12">+20</text>
+      <!-- zero line -->
+      <line x1="80" y1="200" x2="660" y2="200" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4 4"/>
+      <!-- NPV curve -->
+      <path d="M 80 60 Q 200 90 300 145 Q 400 195 500 235 L 660 270" stroke="#046530" stroke-width="3" fill="none"/>
+      <!-- IRR marker -->
+      <circle cx="277" cy="200" r="5" fill="#f59e0b"/>
+      <text x="290" y="195" font-family="Source Sans 3" font-size="12" fill="#b45309">IRR = 12,32 %</text>
+      <text x="290" y="210" font-family="Source Sans 3" font-size="12" fill="#b45309">(NPV = 0)</text>
+      <text x="360" y="25" text-anchor="middle" font-family="Source Sans 3" font-size="13" font-style="italic" fill="#4b5563">NPV ved ulike avkastningskrav (eksempel)</text>
+    </svg>
+  </div>
+  <p style="text-align:left">Skjæringspunktet med x-aksen er <strong>internrenten (IRR)</strong> — vi kommer dit straks.</p>
+</section>
+
+<section>
+  <h2>NPV — fordeler og svakheter</h2>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">Fordeler</div>
+      <ul style="font-size: 0.9em">
+        <li>Måler verdiøkning <em>direkte i kroner</em></li>
+        <li>Tar hensyn til pengenes tidsverdi</li>
+        <li>Bruker alle kontantstrømmer over hele levetiden</li>
+        <li>Maksimerer aksjonærverdi</li>
+      </ul>
+    </div>
+    <div class="definisjon">
+      <div class="term">Svakheter</div>
+      <ul style="font-size: 0.9em">
+        <li>Krever et godt anslag på avkastningskravet $r$</li>
+        <li>Avhenger sterkt av kontantstrøm-prognoser</li>
+        <li>Et tall — viser ikke risiko/sensitivitet</li>
+        <li>Ved ulik størrelse: NPV ikke direkte sammenlignbart</li>
+      </ul>
+    </div>
+  </div>
+  <div class="key-point">NPV er <strong>«gullstandarden»</strong> i investeringsanalyse — men bør alltid kombineres med sensitivitets- og scenarioanalyse. Det kommer vi til i del 2.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL C</div>
+  <h2>Internrenten (IRR)</h2>
+</section>
+
+<section>
+  <h2>IRR — Internal Rate of Return</h2>
+  <div class="definisjon">
+    <div class="term">Internrente (IRR)</div>
+    Den diskonteringsrenten som gir <strong>NPV = 0</strong> — den avkastningen prosjektet faktisk gir, uavhengig av avkastningskravet.
+  </div>
+  <div class="formel big-formula">
+    $$-CF_0 + \sum_{t=1}^{n} \frac{CF_t}{(1+\text{IRR})^t} = 0$$
+  </div>
+  <p style="text-align:left"><strong>Tolkning:</strong> IRR er det «effektive avkastningen» på den bundne kapitalen.</p>
+  <div class="definisjon">
+    <div class="term">Beslutningsregel</div>
+    <ul style="margin-top: 6px">
+      <li><strong>IRR &gt; $r$</strong> → Aksepter</li>
+      <li><strong>IRR &lt; $r$</strong> → Forkast</li>
+      <li><strong>IRR = $r$</strong> → Indifferent</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>IRR — eksempel</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Investering kr 100 i år 0. Levetid 4 år. Årlig kontantstrøm kr 40. Hva er IRR?
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    $$-100 + \frac{40}{(1+r)} + \frac{40}{(1+r)^2} + \frac{40}{(1+r)^3} + \frac{40}{(1+r)^4} = 0$$
+    <p>«Prøve og feile» med kalkulator eller Excel:</p>
+    <ul style="font-size: 0.92em">
+      <li>$r=20\,\%$: NPV = $40 \times 2{,}589 - 100 = +3{,}55$</li>
+      <li>$r=22\,\%$: NPV = $40 \times 2{,}494 - 100 = -0{,}24$</li>
+      <li>$r \approx 21{,}86\,\%$: NPV ≈ 0</li>
+    </ul>
+    <p class="final-answer" style="background: #fef3c7; padding: 8px; border-radius: 4px"><strong>IRR ≈ 21,86 %</strong></p>
+  </div>
+  <p style="text-align:left">Excel: <code>=IRR({-100; 40; 40; 40; 40})</code></p>
+</section>
+
+<section>
+  <h2>Problemer med IRR</h2>
+  <p style="text-align:left">IRR gir ofte korrekte signaler — men feiler i flere situasjoner:</p>
+  <div class="definisjon">
+    <div class="term">1 · Flere fortegnsskift → flere IRR-er</div>
+    Hvis kontantstrømmen skifter fortegn mer enn én gang (f.eks. $-, +, -$), kan det finnes flere IRR-løsninger. Hvilken velger man? Ingen entydig.
+  </div>
+  <div class="definisjon">
+    <div class="term">2 · Gjensidig utelukkende prosjekter</div>
+    Velger man prosjekt A med IRR 30 % framfor B med IRR 20 %? Ikke nødvendigvis — det kommer an på størrelsen. NPV er sikrere.
+  </div>
+  <div class="definisjon">
+    <div class="term">3 · Ulik levetid</div>
+    To prosjekter med ulik levetid kan ikke sammenlignes direkte på IRR.
+  </div>
+  <div class="definisjon">
+    <div class="term">4 · Reinvesteringsforutsetningen</div>
+    IRR antar at frigjorte midler reinvesteres til IRR — urealistisk hvis IRR er svært høy.
+  </div>
+</section>
+
+<section>
+  <h2>Multiple IRR — eksempel</h2>
+  <p style="text-align:left">Kontantstrøm: $(-200, +520, -330)$. Avkastningskrav 15 %.</p>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    $$-200 + \frac{520}{1+r} - \frac{330}{(1+r)^2} = 0$$
+    <p>Andregradslikning i $1/(1+r)$. Løsning:</p>
+    <ul>
+      <li>IRR<sub>1</sub> = 10 %</li>
+      <li>IRR<sub>2</sub> = 50 %</li>
+    </ul>
+    <p>To gyldige internrenter — hvilken bruker vi?</p>
+    <p><strong>NPV ved 15 %:</strong> $-200 + 520/1{,}15 - 330/1{,}15^2 = +2{,}65 > 0$ → aksepter.</p>
+  </div>
+  <div class="key-point">Når kontantstrømmen har flere fortegnsskift: <strong>bruk NPV i stedet for IRR</strong>.</div>
+</section>
+
+<section>
+  <h2>NPV vs IRR — sammenligning</h2>
+  <table style="font-size: 0.78em">
+    <tr><th>Aspekt</th><th>NPV</th><th>IRR</th></tr>
+    <tr><td>Type mål</td><td>Absolutt (kroner)</td><td>Relativt (%)</td></tr>
+    <tr><td>Tar hensyn til tidsverdi</td><td>Ja</td><td>Ja</td></tr>
+    <tr><td>Trenger $r$ for beregning</td><td>Ja</td><td>Nei (men for beslutning)</td></tr>
+    <tr><td>Maksimerer aksjonærverdi</td><td>Direkte</td><td>Indirekte</td></tr>
+    <tr><td>Multiple løsninger?</td><td>Nei</td><td>Mulig</td></tr>
+    <tr><td>Gjensidig utelukkende prosjekter</td><td>OK</td><td>Kan feile</td></tr>
+    <tr><td>Intuitivt for ledelsen</td><td>Mindre</td><td>Mer (alle forstår %)</td></tr>
+  </table>
+  <div class="key-point">I praksis: <strong>bruk begge</strong>. NPV er teoretisk korrekt; IRR er kommunikativt nyttig. Hvis de gir motstridende signaler, <em>stol på NPV</em>.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL D</div>
+  <h2>Andre metoder:<br>Payback og PI</h2>
+</section>
+
+<section>
+  <h2>Tilbakebetalingstid (Payback)</h2>
+  <div class="definisjon">
+    <div class="term">Payback-tid</div>
+    Antall år det tar før prosjektet har «tjent inn» den opprinnelige investeringen — uten å ta hensyn til pengenes tidsverdi.
+  </div>
+  <p style="text-align:left"><strong>Beslutningsregel:</strong> Aksepter hvis payback &lt; en forhåndsbestemt grense (f.eks. økonomisk levetid).</p>
+  <p style="text-align:left">Bruk: rask «sanity check», likviditetsvurdering — særlig for prosjekter med høy usikkerhet på lang sikt.</p>
+  <div class="key-point">Ikke en god metode for investeringsbeslutninger — men nyttig som tilleggsmål. Brukes mye i praksis, særlig i mindre bedrifter.</div>
+</section>
+
+<section>
+  <h2>Payback — eksempel</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Maskinkjøp 1,91 mill. kr. Forventet kontantstrøm:
+  </div>
+  <table>
+    <tr><th>År</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+    <tr><td>CF</td><td>−1 910 000</td><td>500 000</td><td>680 000</td><td>680 000</td><td>680 000</td><td>570 000</td></tr>
+    <tr><td>Akkumulert</td><td>−1 910 000</td><td>−1 410 000</td><td>−730 000</td><td>−50 000</td><td>+630 000</td><td>+1 200 000</td></tr>
+  </table>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    <p>Etter år 3 mangler vi fortsatt 50 000. I år 4 kommer det inn 680 000.</p>
+    <p>Brøkdel av år 4 vi trenger: $50\,000 / 680\,000 = 0{,}074$ år = 0,88 mnd.</p>
+    <p class="final-answer" style="background: #fef3c7; padding: 8px; border-radius: 4px"><strong>Payback ≈ 3 år og 0,88 måneder</strong></p>
+  </div>
+</section>
+
+<section>
+  <h2>Diskontert payback</h2>
+  <p style="text-align:left">En forbedret variant som <strong>tar hensyn til tidsverdien</strong>:</p>
+  <div class="definisjon">
+    <div class="term">Diskontert payback</div>
+    Antall år til summen av <em>diskonterte</em> kontantstrømmer dekker investeringen.
+  </div>
+  <p style="text-align:left">Resultater:</p>
+  <ul>
+    <li>Diskontert payback &gt; vanlig payback (siden vi diskonterer)</li>
+    <li>Hvis prosjektet aldri har positiv diskontert akkumulert CF: NPV &lt; 0</li>
+  </ul>
+  <div class="key-point">Diskontert payback fikser én svakhet ved vanlig payback (tidsverdi), men ignorerer fortsatt CF etter payback-perioden.</div>
+</section>
+
+<section>
+  <h2>Payback — fordeler og ulemper</h2>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">Fordeler</div>
+      <ul style="font-size: 0.9em">
+        <li>Enkel å beregne og forstå</li>
+        <li>Et grovt mål på <strong>likviditet</strong></li>
+        <li>Nyttig for prosjekter med høy usikkerhet på lang sikt</li>
+        <li>Mye brukt i praksis</li>
+      </ul>
+    </div>
+    <div class="definisjon">
+      <div class="term">Ulemper</div>
+      <ul style="font-size: 0.9em">
+        <li>Ignorerer pengenes tidsverdi</li>
+        <li>Ignorerer CF etter tilbakebetalingstiden</li>
+        <li>Ingen objektive kriterier for «riktig» grense</li>
+        <li>Maksimerer ikke aksjonærverdi</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Profitability Index (NPV-indeks)</h2>
+  <div class="definisjon">
+    <div class="term">Profitability Index (PI)</div>
+    Nåverdien av fremtidige kontantstrømmer dividert på investeringen — viser <strong>verdiøkning per investert krone</strong>.
+  </div>
+  <div class="formel big-formula">
+    $\text{PI} = \dfrac{\text{NV av fremtidige CF}}{\text{Investering}} = \dfrac{\text{NPV} + CF_0}{CF_0}$
+  </div>
+  <p style="text-align:left"><strong>Beslutningsregel:</strong></p>
+  <ul>
+    <li><strong>PI &gt; 1</strong> → Aksepter (tilsvarer NPV &gt; 0)</li>
+    <li><strong>PI &lt; 1</strong> → Forkast</li>
+  </ul>
+  <div class="key-point">Særlig nyttig ved <strong>kapitalrasjonering</strong> — å rangere prosjekter når kapital er knapp. Mer om dette i del 2.</div>
+</section>
+
+<section>
+  <h2>Sammenligning av alle metodene</h2>
+  <table style="font-size: 0.78em">
+    <tr><th>Metode</th><th>Tar tidsverdi?</th><th>Alle CF?</th><th>Type</th><th>Brukes til</th></tr>
+    <tr><td><strong>NPV</strong></td><td>Ja</td><td>Ja</td><td>Absolutt (kr)</td><td>Primær beslutning</td></tr>
+    <tr><td><strong>IRR</strong></td><td>Ja</td><td>Ja</td><td>Relativ (%)</td><td>Kommunikasjon</td></tr>
+    <tr><td><strong>Payback</strong></td><td>Nei</td><td>Nei</td><td>Tid (år)</td><td>Likviditet, screening</td></tr>
+    <tr><td><strong>Disk. payback</strong></td><td>Ja</td><td>Nei</td><td>Tid (år)</td><td>Risiko, screening</td></tr>
+    <tr><td><strong>PI</strong></td><td>Ja</td><td>Ja</td><td>Forhold</td><td>Kapitalrasjonering</td></tr>
+  </table>
+  <div class="key-point">I praksis bruker bedrifter ofte <strong>flere metoder samtidig</strong> — NPV for beslutning, IRR for kommunikasjon, payback for likviditet.</div>
+</section>
+
+<section>
+  <h2>Oppsummering forelesning 10</h2>
+  <ol style="font-size: 0.92em">
+    <li><strong>Investeringsanalyse</strong> = beslutningsverktøy for langsiktige prosjekter</li>
+    <li><strong>Relevant kontantstrøm</strong>: inkrementell, etter skatt, uten finansiering. Ignorer sunk costs, inkluder opportunity costs og $\Delta$NWC</li>
+    <li><strong>NPV</strong> = $-CF_0 + \sum CF_t/(1+r)^t$. Aksepter hvis &gt; 0</li>
+    <li><strong>IRR</strong> = den $r$ som gir NPV = 0. Aksepter hvis IRR &gt; $r$. Pass på multiple IRR og gjensidig utelukkende prosjekter</li>
+    <li><strong>Payback</strong> og <strong>diskontert payback</strong>: nyttig som tilleggsmål</li>
+    <li><strong>PI</strong>: brukes ved kapitalrasjonering</li>
+  </ol>
+  <div class="key-point">Forelesning 11: ekvivalente annuiteter, kapitalrasjonering, real vs nominell — og det viktige nye: <strong>sensitivitet, scenarioanalyse, break-even og risikoanalyse</strong>.</div>
+</section>
+
+<section>
+  <h2>Til selvstudium</h2>
+  <div class="definisjon">
+    <div class="term">Oppgaver</div>
+    <strong>Oppgavesett 4 — Investeringsanalyse</strong> (eldre nummerering: 3). Oppgavene 1–11 dekker temaer fra del 1.
+  </div>
+  <div class="definisjon">
+    <div class="term">Pensum</div>
+    <strong>HRWJ kapittel 8</strong> (NPV og investeringsregler) og kapittel <strong>9</strong> (kontantstrøm-beregning).
+  </div>
+  <div class="definisjon">
+    <div class="term">Praktisk øvelse</div>
+    Tenk på et investeringsprosjekt du selv kunne vurdere — solpaneler på taket, ny PC, oppstart av eget firma. Lag en enkel kontantstrøm og beregn NPV med et avkastningskrav på 6–8 %. Bør du gjennomføre?
+  </div>
+  <p style="text-align:center; color: var(--nmbu-green); margin-top: 20px"><strong>Neste forelesning:</strong> Investeringsanalyse del 2 — sensitivitet, scenario, break-even og risiko.</p>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script>const params = new URLSearchParams(window.location.search);
+const useSlides = params.get('view') === 'slides';
+Reveal.initialize({
+  hash: !useSlides,
+  slideNumber: useSlides ? 'c/t' : false,
+  width: 1280,
+  height: 800,
+  margin: 0.06,
+  controls: useSlides,
+  progress: useSlides,
+  center: useSlides,
+  transition: useSlides ? 'slide' : 'none',
+  view: useSlides ? undefined : 'scroll',
+  scrollProgress: !useSlides,
+  plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
+});</script>
+</body>
+</html>

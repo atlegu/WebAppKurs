@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BUS 220 – Forelesning 12: Risiko og avkastning (del 1)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css" id="theme">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap');
+  :root { --nmbu-green: #046530; --nmbu-green-light: #f0f7f2; --accent-orange: #f59e0b; --tavle-bg: #fef3c7; --text-dark: #1a1a1a; --text-muted: #4b5563; }
+  .reveal { font-family: 'Source Serif 4', Georgia, serif; font-size: 28px; color: var(--text-dark); }
+  .reveal h1, .reveal h2, .reveal h3, .reveal h4 { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); text-transform: none; letter-spacing: 0; font-weight: 700; }
+  .reveal h1 { font-size: 1.8em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.5em; line-height: 1.2; margin-bottom: 0.5em; }
+  .reveal h3 { font-size: 1.2em; }
+  .reveal p { line-height: 1.5; }
+  .reveal ul, .reveal ol { display: block; margin-left: 1em; }
+  .reveal li { margin-bottom: 0.4em; line-height: 1.5; }
+  .reveal .title-slide { background: var(--nmbu-green); color: white; padding: 60px; }
+  .reveal .title-slide h1 { color: white; font-size: 2.4em; margin-bottom: 0.3em; }
+  .reveal .title-slide .subtitle { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 1.4em; color: rgba(255,255,255,0.95); margin-bottom: 1em; }
+  .reveal .title-slide .meta { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 0.85em; color: rgba(255,255,255,0.8); margin-top: 2em; }
+  .reveal .section-divider { background: var(--nmbu-green); color: white; }
+  .reveal .section-divider h2 { color: white; font-size: 2.2em; }
+  .reveal .section-divider .section-number { font-family: 'Source Sans 3', Arial, sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9em; letter-spacing: 0.2em; margin-bottom: 1em; }
+  .reveal .definisjon { background: var(--nmbu-green-light); border-left: 5px solid var(--nmbu-green); padding: 18px 24px; margin: 20px 0; text-align: left; border-radius: 0 8px 8px 0; }
+  .reveal .definisjon .term { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: var(--nmbu-green); margin-bottom: 6px; }
+  .reveal .formel { background: white; border: 2px solid var(--nmbu-green); padding: 24px 32px; margin: 20px auto; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+  .reveal .key-point { background: var(--nmbu-green-light); padding: 16px 22px; margin: 16px 0; border-radius: 8px; text-align: left; font-size: 0.95em; }
+  .reveal .key-point::before { content: "→ "; color: var(--nmbu-green); font-weight: 700; }
+  .reveal .tavle-marker { background: var(--tavle-bg); border: 2px dashed var(--accent-orange); padding: 18px 24px; margin: 24px 0; border-radius: 10px; text-align: left; }
+  .reveal .tavle-marker .tavle-label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #b45309; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.15em; margin-bottom: 8px; }
+  .reveal .norsk-eksempel { background: #fef9f0; border-left: 4px solid #d97706; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .norsk-eksempel .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #b45309; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal .interactive-model { background: #ede9fe; border-left: 4px solid #7c3aed; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .interactive-model .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #6d28d9; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal .interactive-model a { color: #6d28d9; text-decoration: underline; }
+  .reveal table { margin: 16px auto; border-collapse: collapse; font-size: 0.8em; }
+  .reveal table th { background: var(--nmbu-green); color: white; padding: 8px 12px; font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; }
+  .reveal table td { padding: 6px 12px; border: 1px solid #d4d4d4; text-align: center; }
+  .reveal .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; text-align: left; }
+  .reveal .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-items: start; text-align: left; }
+  .reveal .caption { font-size: 0.7em; color: var(--text-muted); font-style: italic; margin-top: 8px; }
+  .reveal mjx-container { font-size: 1.0em !important; }
+  .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+  .reveal blockquote { background: var(--nmbu-green-light); border-left: 4px solid var(--nmbu-green); padding: 14px 22px; margin: 16px 0; font-style: italic; font-size: 0.95em; text-align: left; border-radius: 0 6px 6px 0; box-shadow: none; }
+</style>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }, svg: { fontCache: 'global' }, startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { if (window.Reveal) Reveal.layout(); }); } } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section class="title-slide">
+  <h1>Risiko og avkastning</h1>
+  <div class="subtitle">Del 1: Avkastningsmål, varians og forventet avkastning</div>
+  <div class="meta">BUS 220 — Finansiering og investering<br>Atle G. Guttormsen · Høst 2026<br>Pensum: HRWJ kapittel 11</div>
+</section>
+
+<section>
+  <h2>Læringsmål</h2>
+  <ul>
+    <li>Definere og beregne ulike <strong>avkastningsmål</strong>: HPR, monetær, prosentvis</li>
+    <li>Skille mellom <strong>aritmetisk og geometrisk</strong> gjennomsnittlig avkastning</li>
+    <li>Annualisere periodevise avkastninger</li>
+    <li>Beregne <strong>risikopremie</strong> (meravkastning over risikofri rente)</li>
+    <li>Forstå og beregne <strong>varians, standardavvik</strong> som risikomål</li>
+    <li>Beregne <strong>forventet avkastning og standardavvik</strong> fra sannsynlighetsfordeling</li>
+    <li>Tolke <strong>normalfordelingen</strong> og høyere momenter (skjevhet, kurtose)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Hvorfor risiko-analyse?</h2>
+  <blockquote>«Investorene som klarer å få høyest mulig avkastning per enhet risiko, får over tid den beste avkastningen.»</blockquote>
+  <p style="text-align:left">Tre fundamentale spørsmål:</p>
+  <ol>
+    <li>Hvor mye <strong>avkastning</strong> har jeg fått / forventer jeg å få?</li>
+    <li>Hvor mye <strong>risiko</strong> bærer jeg?</li>
+    <li>Får jeg <strong>kompensert nok</strong> for risikoen?</li>
+  </ol>
+  <div class="norsk-eksempel">
+    <div class="label">Norsk kontekst</div>
+    Oslo Børs (OSEBX) ga i 2009 +64 % avkastning — men i 2008 −54 %. Volatiliteten i norsk aksjemarked er strukturelt høyere enn S&amp;P 500 fordi børsen er sterkt vektet i olje og sjømat.
+  </div>
+</section>
+
+<section>
+  <h2>Hva måler vi?</h2>
+  <p style="text-align:left">Statistiske risiko- og avkastningsmål kan brukes på:</p>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">Enkeltinvesteringer</div>
+      Aksjer, obligasjoner, valuta, råvarer
+    </div>
+    <div class="definisjon">
+      <div class="term">Porteføljer</div>
+      Sammensetninger av aktivaklasser og enkeltaktivum
+    </div>
+  </div>
+  <p style="text-align:left; margin-top: 20px">Målene er typisk basert på <strong>historiske data</strong>:</p>
+  <div class="key-point">Sentralt premiss: <em>Vil fremtiden bli som fortiden?</em> Av og til, men ikke alltid. Historiske mål er beste anslag vi har — men bør justeres med vurdering.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL A</div>
+  <h2>Avkastningsmål</h2>
+</section>
+
+<section>
+  <h2>To inntektskilder fra en investering</h2>
+  <ol>
+    <li><strong>Inntektskomponent</strong> — utbytte (aksjer), kuponger (obligasjoner)</li>
+    <li><strong>Kapitalavkastning</strong> — gevinst eller tap på prisutvikling</li>
+  </ol>
+  <p style="text-align:left">Sum = total avkastning.</p>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Du kjøper 100 aksjer i Equinor til 370 kr. Etter ett år har du:
+    <ul style="margin-top: 6px; font-size: 0.92em">
+      <li>Mottatt utbytte: 18,50 kr/aksje × 100 = <strong>1 850 kr</strong></li>
+      <li>Aksjekursen er 403 kr → kursgevinst: (403 − 370) × 100 = <strong>3 300 kr</strong></li>
+      <li>Total monetær avkastning: <strong>5 150 kr</strong></li>
+      <li>Investering: 37 000 kr → kontantbeholdning hvis solgt: 42 150 kr</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Prosentvis avkastning</h2>
+  <p style="text-align:left">Total avkastning som andel av investert beløp:</p>
+  <div class="formel big-formula">
+    $$R_t = \frac{D_t + P_t - P_{t-1}}{P_{t-1}} = \underbrace{\frac{D_t}{P_{t-1}}}_{\text{direkteavkastning}} + \underbrace{\frac{P_t - P_{t-1}}{P_{t-1}}}_{\text{kursavkastning}}$$
+  </div>
+  <div class="norsk-eksempel">
+    <div class="label">Equinor-eksempel</div>
+    Total prosentavkastning: $\dfrac{1\,850 + 3\,300}{37\,000} = \dfrac{5\,150}{37\,000} = 13{,}92\,\%$<br>
+    Direkteavkastning: $1\,850/37\,000 = 5{,}00\,\%$ + Kursavkastning: $3\,300/37\,000 = 8{,}92\,\%$
+  </div>
+</section>
+
+<section>
+  <h2>Holding Period Return (HPR)</h2>
+  <div class="definisjon">
+    <div class="term">HPR — periodeavkastning</div>
+    Total avkastning over hele eierperioden — uten å si noe om hvor lang perioden var.
+  </div>
+  <div class="formel big-formula">
+    $\text{HPR} = \dfrac{\text{Slutverdi} + \text{Utbytter} - \text{Startverdi}}{\text{Startverdi}}$
+  </div>
+  <p style="text-align:left">Hvis du eier en aksje i flere år, kan HPR multipliseres opp:</p>
+  <div class="formel">
+    $\text{HPR}_{\text{total}} = (1 + R_1)(1 + R_2) \dots (1 + R_n) - 1$
+  </div>
+  <div class="key-point">HPR er rå avkastning — for å sammenligne på tvers av perioder må vi <strong>annualisere</strong> eller bruke geometrisk gjennomsnitt.</div>
+</section>
+
+<section>
+  <h2>Aritmetisk vs geometrisk gjennomsnitt</h2>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">Aritmetisk gjennomsnitt</div>
+      $\bar{R}_a = \dfrac{R_1 + R_2 + \dots + R_n}{n}$
+      <p>Best for estimat av <em>forventet avkastning</em> per periode.</p>
+    </div>
+    <div class="definisjon">
+      <div class="term">Geometrisk gjennomsnitt</div>
+      $\bar{R}_g = \sqrt[n]{(1+R_1)(1+R_2)\dots(1+R_n)} - 1$
+      <p>Best for <em>faktisk realisert</em> avkastning over tid.</p>
+    </div>
+  </div>
+  <p style="text-align:left; margin-top: 20px"><strong>Hovedregel:</strong></p>
+  <ul>
+    <li>Aritmetisk for å <strong>anslå forventet</strong> avkastning fremover</li>
+    <li>Geometrisk for å <strong>rapportere faktisk</strong> historisk avkastning</li>
+  </ul>
+  <div class="key-point">Geometrisk er alltid mindre enn eller lik aritmetisk. Forskjellen øker med volatiliteten.</div>
+</section>
+
+<section>
+  <h2>Eksempel: aritmetisk vs geometrisk</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Du investerer 100 kr i en aksje. År 1: +50 %. År 2: −50 %. Hva er gjennomsnittlig årlig avkastning?
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    <p><strong>Aritmetisk:</strong> $(50\,\% + (-50\,\%))/2 = 0\,\%$</p>
+    <p><strong>Geometrisk:</strong> $\sqrt{1{,}50 \times 0{,}50} - 1 = \sqrt{0{,}75} - 1 = -13{,}40\,\%$</p>
+    <p>Faktisk: $100 \times 1{,}50 \times 0{,}50 = 75$ kr — du har tapt 25 % over 2 år.</p>
+  </div>
+  <p style="text-align:left"><strong>Aritmetisk 0 %</strong> antyder at investeringen er «verdineutral» — feil! <strong>Geometrisk −13,4 %</strong> reflekterer det faktiske tapet. Det er den korrekte måten å oppsummere historikken.</p>
+</section>
+
+<section>
+  <h2>Annualisert avkastning</h2>
+  <p style="text-align:left">Hvordan oversetter vi avkastning mellom ulike perioder?</p>
+  <div class="formel big-formula">
+    $$1 + r_{\text{annualisert}} = (1 + r_{\text{periode}})^{m}$$
+  </div>
+  <p style="text-align:left">der $m$ er antall perioder per år.</p>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempler</div>
+    <ul style="margin-top: 6px">
+      <li>Månedlig 1 % → Årlig: $(1{,}01)^{12} - 1 = 12{,}68\,\%$</li>
+      <li>Kvartalsvis 3 % → Årlig: $(1{,}03)^4 - 1 = 12{,}55\,\%$</li>
+      <li>Halvårlig 6 % → Årlig: $(1{,}06)^2 - 1 = 12{,}36\,\%$</li>
+    </ul>
+  </div>
+  <p style="text-align:left">Når perioden er <em>kortere</em> enn et år, må vi løfte med eksponenten. Når den er <em>lengre</em>, må vi ta n-te rot.</p>
+</section>
+
+<section>
+  <h2>Risikopremie / Meravkastning</h2>
+  <div class="definisjon">
+    <div class="term">Risikopremie</div>
+    Avkastningen utover risikofri rente — kompensasjon for å bære risiko.
+  </div>
+  <div class="formel big-formula">
+    $\text{Risikopremie} = r_i - r_f$
+  </div>
+  <p style="text-align:left">der $r_i$ er avkastningen på den risikable investeringen og $r_f$ er risikofri rente.</p>
+  <div class="norsk-eksempel">
+    <div class="label">Historisk risikopremie</div>
+    <ul style="margin-top: 6px">
+      <li><strong>Oslo Børs (1996–2024):</strong> ~10 % nominell vs ~3 % statsobligasjon → risikopremie ~7 %</li>
+      <li><strong>S&amp;P 500 (1928–2024):</strong> ~10 % nominell vs ~3,5 % T-bill → risikopremie ~6,5 %</li>
+      <li><strong>Globale aksjer (1900–2024):</strong> Risikopremie ~5,2 % (Dimson, Marsh, Staunton)</li>
+    </ul>
+  </div>
+  <div class="key-point">Risikopremien er ikke konstant — den varierer over tid og mellom markeder.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL B</div>
+  <h2>Risiko: varians og<br>standardavvik</h2>
+</section>
+
+<section>
+  <h2>Hva er risiko i finans?</h2>
+  <p style="text-align:left">Det finnes <strong>ingen universell definisjon</strong> av risiko. Ulike mål passer ulike situasjoner.</p>
+  <p style="text-align:left">I dette kurset:</p>
+  <ul>
+    <li><strong>Standardavvik / varians</strong> — volatilitet i avkastningen</li>
+    <li><strong>Sannsynlighetsfordeling</strong> — fordelingen av mulige utfall</li>
+  </ul>
+  <p style="text-align:left">Andre mål brukes også:</p>
+  <ul>
+    <li>Value at Risk (VaR) — maksimal tap med 95/99 % sannsynlighet</li>
+    <li>Expected Shortfall — gjennomsnittlig tap når VaR overskrides</li>
+    <li>Downside deviation — bare nedside-volatilitet</li>
+    <li>Maximum Drawdown — største historiske fall</li>
+  </ul>
+  <div class="key-point">Vi fokuserer på standardavvik fordi det matematisk passer porteføljeteori. Husker ikke det er det «sanne» risikomålet.</div>
+</section>
+
+<section>
+  <h2>Varians og standardavvik (fra historiske data)</h2>
+  <p style="text-align:left">Gitt $n$ historiske avkastninger $R_1, \dots, R_n$ med gjennomsnitt $\bar{R}$:</p>
+  <div class="formel big-formula">
+    $\sigma^2 = \dfrac{1}{n-1} \sum_{t=1}^{n} (R_t - \bar{R})^2$
+  </div>
+  <div class="formel">
+    $\sigma = \sqrt{\sigma^2}$
+  </div>
+  <p style="text-align:left"><strong>Standardavvik</strong> ($\sigma$) er kvadratroten av varians — gir et tall i samme enhet som avkastningen (prosent).</p>
+  <p style="text-align:left">Bruker vi $n-1$ i nevneren (i stedet for $n$) når vi estimerer fra utvalg — Bessel's korreksjon for å unngå skjevhet.</p>
+</section>
+
+<section>
+  <h2>Annualisert standardavvik</h2>
+  <p style="text-align:left">Standardavvik annualiseres med <strong>kvadratroten av antall perioder</strong>:</p>
+  <div class="formel big-formula">
+    $\sigma_{\text{annual}} = \sigma_{\text{periode}} \times \sqrt{m}$
+  </div>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempler</div>
+    <ul style="margin-top: 6px">
+      <li>Daglig vol 1 %, 252 handelsdager → $1\% \times \sqrt{252} = 15{,}87\,\%$ årlig</li>
+      <li>Månedlig vol 5 % → $5\% \times \sqrt{12} = 17{,}32\,\%$ årlig</li>
+      <li>Kvartalsvis vol 8 % → $8\% \times \sqrt{4} = 16\,\%$ årlig</li>
+    </ul>
+  </div>
+  <div class="key-point">Forutsetter at avkastningene er <strong>uavhengige</strong> over tid. I praksis er det ofte autokorrelasjon, så formelen er en tilnærming.</div>
+</section>
+
+<section>
+  <h2>Historisk avkastning og risiko</h2>
+  <p style="text-align:left">Klassiske aktivaklasser, USA 1928–2023 (omtrent):</p>
+  <table>
+    <tr><th>Aktivaklasse</th><th>Avkastning</th><th>Std.avvik</th></tr>
+    <tr><td>Statskasseveksler (T-bills)</td><td>~3,5 %</td><td>~3 %</td></tr>
+    <tr><td>Statsobligasjoner (10y)</td><td>~5 %</td><td>~8 %</td></tr>
+    <tr><td>Bedriftsobligasjoner</td><td>~6 %</td><td>~9 %</td></tr>
+    <tr><td>Aksjer (S&amp;P 500)</td><td>~10 %</td><td>~20 %</td></tr>
+    <tr><td>Småselskaper</td><td>~12 %</td><td>~30 %</td></tr>
+  </table>
+  <div class="norsk-eksempel">
+    <div class="label">Oslo Børs 1996–2024</div>
+    Hovedindeksen OSEBX: gjennomsnittlig årlig avkastning ~10 % (nominell), ~7 % (real). Standardavvik ~22 %. Mer volatilt enn S&amp;P 500 — gjenspeiler norsk konsentrasjon i olje, sjømat, finans.
+  </div>
+  <div class="key-point">Hovedregel: høyere avkastning ↔ høyere risiko. Markedet kompenserer for risiko.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL C</div>
+  <h2>Forventet avkastning og<br>standardavvik fra fordeling</h2>
+</section>
+
+<section>
+  <h2>Sannsynlighetsfordeling</h2>
+  <p style="text-align:left">Når vi vil estimere <strong>fremtidig</strong> avkastning, må vi vurdere sannsynligheter for ulike utfall.</p>
+  <div class="formel big-formula">
+    $$E[R] = \sum_{i} p_i \cdot R_i$$
+  </div>
+  <div class="formel big-formula">
+    $$\text{Var}(R) = \sum_{i} p_i (R_i - E[R])^2$$
+  </div>
+  <p style="text-align:left">der $p_i$ er sannsynligheten for utfall $i$ med avkastning $R_i$.</p>
+  <div class="key-point">Forskjellen fra historiske mål: nå er sannsynlighetene <em>antagelser om framtiden</em>, ikke registrerte historiske frekvenser.</div>
+</section>
+
+<section>
+  <h2>Eksempel: forventet avkastning og standardavvik</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel — Aksje A</div>
+    Du forventer følgende avkastningsscenarier:
+    <table style="margin-top: 6px">
+      <tr><th>Tilstand</th><th>Sannsynlighet</th><th>Avkastning</th></tr>
+      <tr><td>Oppgang</td><td>0,30</td><td>25 %</td></tr>
+      <tr><td>Normal</td><td>0,50</td><td>12 %</td></tr>
+      <tr><td>Nedgang</td><td>0,20</td><td>−8 %</td></tr>
+    </table>
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    <p><strong>Forventet avkastning:</strong></p>
+    $$E[R] = 0{,}30 \times 25 + 0{,}50 \times 12 + 0{,}20 \times (-8) = 7{,}5 + 6{,}0 - 1{,}6 = 11{,}9\,\%$$
+    <p><strong>Varians:</strong></p>
+    $$\text{Var}(R) = 0{,}30(25-11{,}9)^2 + 0{,}50(12-11{,}9)^2 + 0{,}20(-8-11{,}9)^2$$
+    $$= 51{,}48 + 0{,}005 + 79{,}20 = 130{,}69 \, \%^2$$
+    <p class="final-answer" style="background: #fef3c7; padding: 8px"><strong>$\sigma = \sqrt{130{,}69} = 11{,}43\,\%$</strong></p>
+  </div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL D</div>
+  <h2>Normalfordelingen og<br>høyere momenter</h2>
+</section>
+
+<section>
+  <h2>Normalfordelingen</h2>
+  <p style="text-align:left">Mange finansielle modeller antar at avkastninger er normalfordelt (klokkeformet):</p>
+  <div style="margin: 20px auto; text-align: center;">
+    <svg viewBox="0 0 700 240" xmlns="http://www.w3.org/2000/svg">
+      <!-- Axis -->
+      <line x1="80" y1="200" x2="660" y2="200" stroke="#1a1a1a" stroke-width="1.5"/>
+      <!-- Bell curve -->
+      <path d="M 80 195 Q 200 190 280 150 Q 370 60 460 150 Q 540 190 660 195" stroke="#046530" stroke-width="3" fill="rgba(4, 101, 48, 0.1)"/>
+      <!-- Mean line -->
+      <line x1="370" y1="60" x2="370" y2="200" stroke="#046530" stroke-width="1" stroke-dasharray="4 4"/>
+      <!-- σ markers -->
+      <line x1="295" y1="160" x2="295" y2="200" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3 3"/>
+      <line x1="445" y1="160" x2="445" y2="200" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3 3"/>
+      <line x1="220" y1="190" x2="220" y2="200" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3 3"/>
+      <line x1="520" y1="190" x2="520" y2="200" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3 3"/>
+      <!-- Labels -->
+      <text x="370" y="220" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#046530">μ</text>
+      <text x="295" y="220" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#b45309">μ−σ</text>
+      <text x="445" y="220" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#b45309">μ+σ</text>
+      <text x="220" y="220" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#b45309">μ−2σ</text>
+      <text x="520" y="220" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#b45309">μ+2σ</text>
+      <!-- Probability annotations -->
+      <text x="370" y="130" text-anchor="middle" font-family="Source Sans 3" font-size="12" fill="#046530">68 %</text>
+      <text x="370" y="100" text-anchor="middle" font-family="Source Sans 3" font-size="12" fill="#046530">95 %</text>
+      <text x="370" y="80" text-anchor="middle" font-family="Source Sans 3" font-size="12" fill="#046530">99,7 %</text>
+    </svg>
+  </div>
+  <p style="text-align:left">«68-95-99,7-regelen»:</p>
+  <ul style="font-size: 0.9em">
+    <li>~68 % av observasjonene innenfor ±1σ</li>
+    <li>~95 % innenfor ±2σ</li>
+    <li>~99,7 % innenfor ±3σ</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Eksempel: bruk av normalfordeling</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel — Oslo Børs</div>
+    Antar normalfordeling: forventet årlig avkastning 10 %, standardavvik 22 %.
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Sannsynlighetsintervaller</div>
+    <ul style="margin-top: 4px">
+      <li>68 % sannsynlighet for avkastning mellom $10\% \pm 22\% = [-12\%, +32\%]$</li>
+      <li>95 % sannsynlighet for avkastning mellom $10\% \pm 44\% = [-34\%, +54\%]$</li>
+      <li>99,7 % sannsynlighet for avkastning mellom $10\% \pm 66\% = [-56\%, +76\%]$</li>
+    </ul>
+    <p>Med andre ord: én av seks år kan vi forvente å tape mer enn 12 %.</p>
+  </div>
+  <div class="key-point">2008 ga −54 % på Oslo Børs — godt utenfor 95 %-intervallet. Det viser begrensningene ved å anta normalfordeling — virkelige avkastninger har «feitere haler».</div>
+</section>
+
+<section>
+  <h2>Skjevhet (skewness)</h2>
+  <div class="definisjon">
+    <div class="term">Skjevhet</div>
+    Måler asymmetri i fordelingen.
+  </div>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">Positiv skjevhet</div>
+      Flere observasjoner under snittet, men noen ekstreme på oppsiden. Investorer foretrekker (typisk).
+    </div>
+    <div class="definisjon">
+      <div class="term">Negativ skjevhet</div>
+      Flere observasjoner over snittet, men noen ekstreme tap. Investorer misliker.
+    </div>
+  </div>
+  <p style="text-align:left; margin-top: 16px">Aksjeavkastninger har <strong>typisk svak negativ skjevhet</strong> — store nedgangsdager skjer oftere enn store oppgangsdager.</p>
+  <div class="key-point">Standardavvik <em>underestimerer risiko</em> når fordelingen er negativt skjev. To investeringer kan ha samme σ men ulik skjevhet — den ene er reelt mer risikabel.</div>
+</section>
+
+<section>
+  <h2>Kurtose (kurtosis)</h2>
+  <div class="definisjon">
+    <div class="term">Kurtose</div>
+    Måler «fete haler» i fordelingen — frekvens av ekstreme observasjoner.
+  </div>
+  <p style="text-align:left">Normalfordeling: kurtose = 3. Aksjeavkastninger har vanligvis <strong>kurtose &gt; 3</strong> («leptokurtisk», fete haler).</p>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Daglige avkastninger på Oslo Børs har kurtose ~7–10. Det betyr at det skjer ekstreme dager (±5 %, ±10 %) <em>mye oftere</em> enn normalfordeling tilsier.
+  </div>
+  <div class="key-point">Standardavvik fanger ikke opp dette. Black Swan-hendelser (Taleb) skjer regelmessig i finansmarkedene — 2008, 2020 covid, 2022 renteoppgang.</div>
+</section>
+
+<section>
+  <h2>Praktisk implikasjon</h2>
+  <p style="text-align:left">Standardavvik er <strong>nyttig, men ikke perfekt</strong>:</p>
+  <ul>
+    <li>Antar ofte normalfordeling som ikke holder</li>
+    <li>Behandler oppside-svingninger som «risiko» (selv om vi liker dem)</li>
+    <li>Underestimerer tail-risk (sjeldne, ekstreme hendelser)</li>
+  </ul>
+  <p style="text-align:left">Hvorfor brukes det likevel?</p>
+  <ul>
+    <li>Matematisk håndterbart (porteføljeteori)</li>
+    <li>Korrelerer godt med subjektivt risikobegrep</li>
+    <li>Standard i finansbransjen — kommuniserer godt</li>
+  </ul>
+  <div class="key-point">For dette kurset: standardavvik er vårt primære risikomål. I praksis kombineres det med andre mål for et fullt risikobilde.</div>
+</section>
+
+<section>
+  <h2>Oppsummering forelesning 12</h2>
+  <ol style="font-size: 0.9em">
+    <li><strong>Avkastning</strong> = direkteavkastning + kursavkastning</li>
+    <li><strong>HPR</strong> = total avkastning over eierperioden; multipliseres over år</li>
+    <li><strong>Aritmetisk gj.snitt</strong> for forventet, <strong>geometrisk</strong> for faktisk realisert</li>
+    <li><strong>Annualisering:</strong> avkastning løftes med eksponenten, std.avvik med kvadratroten</li>
+    <li><strong>Risikopremie</strong> = avkastning utover risikofri rente</li>
+    <li><strong>Standardavvik</strong> = primært risikomål (men har svakheter)</li>
+    <li><strong>E[R]</strong> og $\sigma$ kan beregnes fra sannsynlighetsfordeling</li>
+    <li><strong>Normalfordeling</strong> brukes mye, men virkelige avkastninger har skjevhet og kurtose</li>
+  </ol>
+  <div class="key-point">I del 2 ser vi på hvordan flere aksjer kombineres til <strong>porteføljer</strong> — diversifikasjons-«mirakelet».</div>
+</section>
+
+<section>
+  <h2>Til selvstudium</h2>
+  <div class="definisjon">
+    <div class="term">Oppgaver</div>
+    <strong>Oppgavesett 5 — Risiko og avkastning</strong>. Oppgavene 1–5 dekker grunnleggende avkastnings- og risikomål fra del 1.
+  </div>
+  <div class="definisjon">
+    <div class="term">Pensum</div>
+    <strong>HRWJ kapittel 11</strong> — Some Lessons from Recent Capital Market History.
+  </div>
+  <div class="definisjon">
+    <div class="term">Praktisk øvelse</div>
+    Hent månedlige avkastninger for en norsk aksje (Equinor, DNB, Mowi) fra Nordnet eller Yahoo Finance — siste 5 år. Beregn aritmetisk og geometrisk gjennomsnitt, og standardavvik. Sammenlign.
+  </div>
+  <p style="text-align:center; color: var(--nmbu-green); margin-top: 20px"><strong>Neste forelesning:</strong> Risiko og avkastning del 2 — porteføljeteori og diversifisering.</p>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script>const params = new URLSearchParams(window.location.search);
+const useSlides = params.get('view') === 'slides';
+Reveal.initialize({
+  hash: !useSlides,
+  slideNumber: useSlides ? 'c/t' : false,
+  width: 1280,
+  height: 800,
+  margin: 0.06,
+  controls: useSlides,
+  progress: useSlides,
+  center: useSlides,
+  transition: useSlides ? 'slide' : 'none',
+  view: useSlides ? undefined : 'scroll',
+  scrollProgress: !useSlides,
+  plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
+});</script>
+</body>
+</html>

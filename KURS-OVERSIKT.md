@@ -59,6 +59,24 @@ Alle podcast-filer ligger i `/public/` mappen:
 - Bestått: **80%** (16 av 20 riktige)
 - Konfigurasjon: `questionsToShow: 20`, `passingScore: 80`
 
+## Forelesningsslides (fra BUS220)
+
+15 Reveal.js-presentasjoner integrert fra klasseromskurset. Ligger i `public/presentations/`.
+Vises som scrollbare sider (Reveal.js scroll view). Åpnes i presentasjonsmodus med `?view=slides`.
+
+| Modul | Presentasjoner |
+|-------|---------------|
+| Pengenes Tidsverdi | Renteregning del 1+2 |
+| Obligasjoner | Obligasjoner del 1+2 |
+| Aksjer og Eierskap | Aksjer: HvaErAksjer, Dividendemodellen, P/E-ROE-PVGO |
+| Porteføljeteori | Risiko del 1+2+3 |
+| Investeringsanalyse | Investeringsanalyse del 1+2 |
+| Kapitalkostnad | Kapitalkostnad |
+| Kapitalstruktur | Kapitalstruktur + Dividende |
+
+Hver modul har en "Forelesningsslides"-seksjon (order 0) som første seksjon.
+Content-type: `presentation` i `src/types/course.ts`.
+
 ## Bilder
 
 | Fil | Beskrivelse |

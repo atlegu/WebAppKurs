@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BUS 220 – Forelesning 9: Aksjeanalyse — P/E, ROE, PVGO og multipler</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css" id="theme">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap');
+  :root { --nmbu-green: #046530; --nmbu-green-light: #f0f7f2; --accent-orange: #f59e0b; --tavle-bg: #fef3c7; --text-dark: #1a1a1a; --text-muted: #4b5563; }
+  .reveal { font-family: 'Source Serif 4', Georgia, serif; font-size: 28px; color: var(--text-dark); }
+  .reveal h1, .reveal h2, .reveal h3, .reveal h4 { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); text-transform: none; letter-spacing: 0; font-weight: 700; }
+  .reveal h1 { font-size: 1.8em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.5em; line-height: 1.2; margin-bottom: 0.5em; }
+  .reveal h3 { font-size: 1.2em; }
+  .reveal p { line-height: 1.5; }
+  .reveal ul, .reveal ol { display: block; margin-left: 1em; }
+  .reveal li { margin-bottom: 0.4em; line-height: 1.5; }
+  .reveal .title-slide { background: var(--nmbu-green); color: white; padding: 60px; }
+  .reveal .title-slide h1 { color: white; font-size: 2.4em; margin-bottom: 0.3em; }
+  .reveal .title-slide .subtitle { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 1.4em; color: rgba(255,255,255,0.95); margin-bottom: 1em; }
+  .reveal .title-slide .meta { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 0.85em; color: rgba(255,255,255,0.8); margin-top: 2em; }
+  .reveal .section-divider { background: var(--nmbu-green); color: white; }
+  .reveal .section-divider h2 { color: white; font-size: 2.2em; }
+  .reveal .section-divider .section-number { font-family: 'Source Sans 3', Arial, sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9em; letter-spacing: 0.2em; margin-bottom: 1em; }
+  .reveal .definisjon { background: var(--nmbu-green-light); border-left: 5px solid var(--nmbu-green); padding: 18px 24px; margin: 20px 0; text-align: left; border-radius: 0 8px 8px 0; }
+  .reveal .definisjon .term { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: var(--nmbu-green); margin-bottom: 6px; }
+  .reveal .formel { background: white; border: 2px solid var(--nmbu-green); padding: 24px 32px; margin: 20px auto; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+  .reveal .key-point { background: var(--nmbu-green-light); padding: 16px 22px; margin: 16px 0; border-radius: 8px; text-align: left; font-size: 0.95em; }
+  .reveal .key-point::before { content: "→ "; color: var(--nmbu-green); font-weight: 700; }
+  .reveal .tavle-marker { background: var(--tavle-bg); border: 2px dashed var(--accent-orange); padding: 18px 24px; margin: 24px 0; border-radius: 10px; text-align: left; }
+  .reveal .tavle-marker .tavle-label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #b45309; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.15em; margin-bottom: 8px; }
+  .reveal .norsk-eksempel { background: #fef9f0; border-left: 4px solid #d97706; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .norsk-eksempel .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #b45309; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal table { margin: 16px auto; border-collapse: collapse; font-size: 0.85em; }
+  .reveal table th { background: var(--nmbu-green); color: white; padding: 10px 16px; font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; }
+  .reveal table td { padding: 8px 16px; border: 1px solid #d4d4d4; text-align: center; }
+  .reveal .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; text-align: left; }
+  .reveal .caption { font-size: 0.7em; color: var(--text-muted); font-style: italic; margin-top: 8px; }
+  .reveal .slide-number { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); background: transparent; }
+  .reveal mjx-container { font-size: 1.0em !important; }
+  .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+</style>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }, svg: { fontCache: 'global' }, startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { if (window.Reveal) Reveal.layout(); }); } } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section class="title-slide">
+  <h1>Aksjeanalyse</h1>
+  <div class="subtitle">P/E, ROE, PVGO og multiplikator-metoden</div>
+  <div class="meta">BUS 220 — Finansiering og investering<br>Atle G. Guttormsen · Høst 2026<br>Pensum: HRWJ kapittel 7</div>
+</section>
+
+<section>
+  <h2>Læringsmål</h2>
+  <ul>
+    <li>Forstå sammenhengen mellom <strong>EPS, utbytte, ROE og vekst</strong></li>
+    <li>Beregne og tolke <strong>egenkapitalrentabiliteten (ROE)</strong></li>
+    <li>Forstå <strong>PVGO</strong> — nåverdien av vekstmuligheter</li>
+    <li>Avgjøre om et selskap skaper eller ødelegger verdi med tilbakeholdt overskudd</li>
+    <li>Bruke <strong>P/E-forholdet</strong> til å sammenligne aksjer</li>
+    <li>Anvende <strong>multiplikator-metoden</strong> (P/E, EV/EBITDA, P/B) for verdsettelse</li>
+    <li>Forstå begrensninger ved multiplikatormetoden</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Repetisjon — der vi stoppet</h2>
+  <p style="text-align:left">Fra forelesning 8 har vi:</p>
+  <ul>
+    <li>Generell DDM: $P_0 = \sum Div_t/(1+r)^t$</li>
+    <li>Gordon: $P_0 = Div_1/(r-g)$</li>
+    <li>Avkastningskrav: $r = Div_1/P_0 + g$</li>
+  </ul>
+  <p style="text-align:left">I dag knytter vi disse til <strong>regnskapstall</strong>:</p>
+  <ul>
+    <li>EPS (earnings per share)</li>
+    <li>ROE (return on equity)</li>
+    <li>Utdelingsforhold (payout ratio)</li>
+    <li>PVGO (present value of growth opportunities)</li>
+    <li>P/E-forhold</li>
+  </ul>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL A</div>
+  <h2>EPS, utdelingsforhold<br>og ROE</h2>
+</section>
+
+<section>
+  <h2>EPS — Earnings Per Share</h2>
+  <div class="definisjon">
+    <div class="term">EPS — Fortjeneste per aksje</div>
+    Selskapets resultat etter skatt delt på antall utestående aksjer.
+  </div>
+  <div class="formel big-formula">
+    $\text{EPS} = \dfrac{\text{Resultat etter skatt}}{\text{Antall utestående aksjer}}$
+  </div>
+  <p style="text-align:left">EPS er et av de viktigste regnskapstallene for aksjonærer — det viser hvor mye <em>hver aksje</em> har «tjent» i regnskapsperioden.</p>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel — Equinor 2023</div>
+    Resultat etter skatt: ~12 mrd. USD<br>
+    Antall aksjer: ~2,9 mrd.<br>
+    EPS ≈ 4,15 USD (~kr 43)
+  </div>
+</section>
+
+<section>
+  <h2>Utdelingsforhold — payout ratio</h2>
+  <div class="definisjon">
+    <div class="term">Utdelingsforhold</div>
+    Hvor stor andel av EPS som betales ut som utbytte.
+  </div>
+  <div class="formel big-formula">
+    $\text{Utdelingsforhold} = \dfrac{Div_1}{\text{EPS}_1}$
+  </div>
+  <p style="text-align:left">Resten — <strong>retention ratio $(1 - \text{utdelingsforhold})$</strong> — beholdes i selskapet for reinvestering.</p>
+  <p style="text-align:left">Omvendt:</p>
+  <div class="formel">
+    $\text{EPS}_1 = \dfrac{Div_1}{\text{Utdelingsforhold}}$
+  </div>
+  <p style="text-align:left">Hvis utdelingsforholdet er 0,4 (40 %) og $Div_1 = 4$: $\text{EPS}_1 = 4/0{,}4 = 10$.</p>
+</section>
+
+<section>
+  <h2>Utdelingspolitikk — norske eksempler</h2>
+  <table>
+    <tr><th>Selskap</th><th>Utdelingsforhold</th><th>Kommentar</th></tr>
+    <tr><td>DNB</td><td>~50–60 %</td><td>Bank, stabilt</td></tr>
+    <tr><td>Telenor</td><td>~70–80 %</td><td>Moden telekom, høyt utbytte</td></tr>
+    <tr><td>Equinor</td><td>Varierer 30–80 %</td><td>Avhenger av oljepris</td></tr>
+    <tr><td>Mowi</td><td>Variabelt</td><td>Sjømat — varierende inntjening</td></tr>
+    <tr><td>Autostore</td><td>0 %</td><td>Vekstselskap, reinvesterer alt</td></tr>
+    <tr><td>Berkshire Hathaway (USA)</td><td>0 %</td><td>Buffetts politikk: alle gjenivester</td></tr>
+  </table>
+  <div class="key-point">Lavt utdelingsforhold = selskapet beholder mye = forventer å skape mer verdi internt. Høyt utdelingsforhold = modent, færre vekstmuligheter.</div>
+</section>
+
+<section>
+  <h2>ROE — Return on Equity</h2>
+  <div class="definisjon">
+    <div class="term">ROE — Egenkapitalrentabilitet</div>
+    Avkastningen aksjonærene får på den egenkapitalen som er tilført selskapet. Mål på hvor «god» selskapet er til å skape verdi for eierne.
+  </div>
+  <div class="formel big-formula">
+    $\text{ROE} = \dfrac{\text{Resultat etter skatt}}{\text{Egenkapital}}$
+  </div>
+  <p style="text-align:left"><strong>Eksempel:</strong> Et selskap har egenkapital 1 mrd. og resultat 150 mill. → ROE = 15 %.</p>
+  <div class="norsk-eksempel">
+    <div class="label">Typiske norske ROE-nivåer (2023)</div>
+    <ul style="margin-top: 6px">
+      <li>DNB: ~14 %</li>
+      <li>Equinor: ~25 % (høy oljepris)</li>
+      <li>Yara: ~10 %</li>
+      <li>Industri-snitt Norge: ~12 %</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>ROE og vekst — sentralt sammenheng</h2>
+  <p style="text-align:left">Hvis selskapet beholder en andel $b$ av overskuddet og reinvesterer det med ROE-avkastning, vil egenkapital og overskudd (og dermed utbytte) vokse:</p>
+  <div class="formel big-formula">
+    $$g = b \times \text{ROE} = (1 - \text{utdelingsforhold}) \times \text{ROE}$$
+  </div>
+  <p style="text-align:left"><strong>Intuisjon:</strong></p>
+  <ul>
+    <li>Hvis selskapet utbetaler alt (utd.forh. = 1), vokser det ikke ($g = 0$)</li>
+    <li>Hvis selskapet beholder alt (utd.forh. = 0), vokser det med full ROE-rate</li>
+    <li>Et selskap med 50 % utdeling og 12 % ROE vokser med $g = 0{,}5 \times 12\% = 6 \%$</li>
+  </ul>
+  <div class="key-point">Tre tall — utdelingsforhold, ROE, vekstrate — er knyttet sammen. Vet du to, kan du regne ut den tredje.</div>
+</section>
+
+<section>
+  <h2>Verdiskapende vs verdi-ødeleggende vekst</h2>
+  <p style="text-align:left">Vekst er ikke alltid bra! Det avhenger av forholdet mellom ROE og avkastningskravet $r$:</p>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">ROE &gt; $r$ — verdiskapende</div>
+      Selskapet bruker tilbakeholdt overskudd på prosjekter som gir høyere avkastning enn aksjonærene krever. Aksjonærene tjener på reinvesteringen.
+    </div>
+    <div class="definisjon">
+      <div class="term">ROE &lt; $r$ — verdi-ødeleggende</div>
+      Selskapet investerer i prosjekter som gir lavere avkastning enn aksjonærene krever. Aksjonærene ville fått mer ved å motta utbyttet og investere selv.
+    </div>
+  </div>
+  <div class="key-point">Hvis ROE &lt; $r$, burde selskapet utbetale <em>mer</em> i utbytte og beholde mindre — paradoksalt nok ville lavere vekst gi høyere aksjepris.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL B</div>
+  <h2>PVGO — Nåverdien<br>av vekstmuligheter</h2>
+</section>
+
+<section>
+  <h2>Det enkleste tilfellet: ingen vekst</h2>
+  <p style="text-align:left">Tenk et selskap som <em>betaler ut hele EPS</em> som utbytte (utd.forh. = 1). Da er $g = 0$ og:</p>
+  <div class="formel big-formula">
+    $$P_0 = \frac{Div_1}{r} = \frac{\text{EPS}_1}{r}$$
+  </div>
+  <p style="text-align:left">Dette er prisen for et selskap som <em>ikke vokser</em> — bare deler ut alt overskudd som utbytte for evig.</p>
+  <p style="text-align:left">Hva hvis selskapet i tillegg har <em>gode investeringsmuligheter</em>? Da bør det beholde noe av overskuddet og reinvestere. Verdien stiger med ekstra verdien fra disse reinvesteringene — <strong>nåverdien av vekstmulighetene</strong>.</p>
+</section>
+
+<section>
+  <h2>PVGO — definert</h2>
+  <div class="definisjon">
+    <div class="term">PVGO — Present Value of Growth Opportunities</div>
+    Den ekstra verdien aksjen får fra fremtidige verdiskapende reinvesteringer, i forhold til en «ikke-voksende» versjon av samme selskap.
+  </div>
+  <div class="formel big-formula">
+    $$P_0 = \frac{\text{EPS}_1}{r} + \text{PVGO}$$
+  </div>
+  <p style="text-align:left">Løst for PVGO:</p>
+  <div class="formel big-formula">
+    $$\text{PVGO} = P_0 - \frac{\text{EPS}_1}{r}$$
+  </div>
+  <div class="key-point">PVGO kan være <strong>positiv, null eller negativ</strong>. Tegnet forteller om selskapets reinvesteringer skaper, bevarer eller ødelegger verdi.</div>
+</section>
+
+<section>
+  <h2>Tre PVGO-scenarier</h2>
+  <div class="definisjon">
+    <div class="term">PVGO &gt; 0 (verdiskapende)</div>
+    Selskapet har positiv-NPV investeringsmuligheter. ROE &gt; $r$. Vekst er bra. Markedet betaler ekstra for fremtidig vekst.
+  </div>
+  <div class="definisjon">
+    <div class="term">PVGO = 0 (likegyldig)</div>
+    Selskapets reinvesteringer gir akkurat avkastningskravet. Verdi-nøytrale. Modne selskaper i konkurranselikevekt.
+  </div>
+  <div class="definisjon">
+    <div class="term">PVGO &lt; 0 (verdi-ødeleggende)</div>
+    Selskapet investerer i dårlige prosjekter (ROE &lt; $r$). Pris er <em>lavere</em> enn EPS/$r$ — markedet «straffer» reinvesteringen.
+  </div>
+  <p style="text-align:left">Empirisk er det vanskelig å observere PVGO &lt; 0 — fordi rasjonelle aksjonærer ville presse selskapet til å heve utbyttet i stedet.</p>
+</section>
+
+<section>
+  <h2>Eksempel: Positiv PVGO</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Aksje med $P_0 = 50$, $\text{EPS}_1 = 4$, $r = 10\%$.
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    $$\text{PVGO} = P_0 - \frac{\text{EPS}_1}{r} = 50 - \frac{4}{0{,}10} = 50 - 40 = 10$$
+  </div>
+  <p style="text-align:left">Tolkning:</p>
+  <ul>
+    <li>«Ikke-vekst»-prisen ville vært kr 40</li>
+    <li>Markedet betaler 10 kr ekstra fordi det forventer verdiskapende vekst</li>
+    <li>Av aksjens 50 kr verdi kommer 20 % fra vekstmuligheter</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Eksempel: Negativ PVGO</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel — Et selskap som ikke burde reinvestere</div>
+    Aksje med $P_0 = 30$, $\text{EPS}_1 = 4$, $r = 10\%$.
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    $$\text{PVGO} = 30 - \frac{4}{0{,}10} = 30 - 40 = -10$$
+  </div>
+  <p style="text-align:left">Tolkning:</p>
+  <ul>
+    <li>Hadde selskapet utbetalt hele EPS, ville aksjen vært verdt 40</li>
+    <li>Men ledelsens reinvesteringer ødelegger 10 kr i verdi</li>
+    <li>Markedet sier: «slutt å reinvestere, gi oss utbyttet»</li>
+  </ul>
+  <div class="key-point">I praksis: aktivistinvestorer (f.eks. Carl Icahn, Cevian) presser slike selskaper til å betale ut mer.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL C</div>
+  <h2>P/E-forholdet</h2>
+</section>
+
+<section>
+  <h2>Price-Earnings (P/E) ratio</h2>
+  <div class="definisjon">
+    <div class="term">P/E — Pris/Fortjeneste</div>
+    Aksjekursen delt på fortjeneste per aksje. Forteller hvor mye markedet betaler per krone overskudd.
+  </div>
+  <div class="formel big-formula">
+    $$\text{P/E} = \frac{P_0}{\text{EPS}_1}$$
+  </div>
+  <p style="text-align:left">Omvendt: <strong>earnings yield</strong>:</p>
+  <div class="formel">
+    $\dfrac{\text{EPS}_1}{P_0}$ — avkastningen hvis hele resultatet utbetalt og ingen vekst
+  </div>
+  <p style="text-align:left"><strong>Eksempel:</strong> Aksje koster kr 200, EPS er kr 10. P/E = 20.</p>
+  <div class="key-point">Tolkning: «Det tar 20 år å «tjene tilbake» kjøpsprisen via dagens overskudd» — gitt at overskuddet ikke vokser.</div>
+</section>
+
+<section>
+  <h2>Forwarding vs trailing P/E</h2>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">Trailing P/E</div>
+      Bruker EPS for siste 12 måneder (LTM). Faktisk historisk tall — etterprøvbar.
+    </div>
+    <div class="definisjon">
+      <div class="term">Forward P/E</div>
+      Bruker forventet EPS for neste 12 måneder. Basert på analytikerestimater. Mer relevant for prisingsbeslutninger, men usikrere.
+    </div>
+  </div>
+  <p style="text-align:left">Akademisk litteratur og oppgavene våre bruker som regel <strong>forward P/E</strong>: $P_0 / \text{EPS}_1$.</p>
+  <div class="key-point">I praktisk analyse rapporteres ofte begge. Forskjellen kan være betydelig for sykliske selskaper.</div>
+</section>
+
+<section>
+  <h2>P/E som funksjon av vekst og r</h2>
+  <p style="text-align:left">Fra Gordon: $P_0 = Div_1/(r-g)$. Med $Div_1 = \text{EPS}_1 \times \text{utd.forh.}$:</p>
+  <div class="formel big-formula">
+    $$\frac{P_0}{\text{EPS}_1} = \frac{\text{utdelingsforhold}}{r - g}$$
+  </div>
+  <p style="text-align:left"><strong>P/E øker når:</strong></p>
+  <ul>
+    <li>Vekstraten $g$ stiger (vekstselskaper)</li>
+    <li>Avkastningskravet $r$ faller (lavt rentenivå)</li>
+    <li>Utdelingsforholdet stiger — for konstant vekst</li>
+  </ul>
+  <p style="text-align:left">Men: hvis utdelingsforholdet stiger uten at vekst-mulighetene gjør det, kan $g$ falle. Sammenhengen er kompleks.</p>
+</section>
+
+<section>
+  <h2>Høy P/E vs lav P/E</h2>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">Høy P/E (typisk &gt; 20)</div>
+      <ul style="font-size: 0.88em">
+        <li>Vekstselskap</li>
+        <li>Markedet forventer høy fremtidig EPS-vekst</li>
+        <li>Lav rente-miljø</li>
+        <li>Eksempler: Autostore, Schibsted</li>
+      </ul>
+    </div>
+    <div class="definisjon">
+      <div class="term">Lav P/E (typisk &lt; 10)</div>
+      <ul style="font-size: 0.88em">
+        <li>Modent/verdiselskap</li>
+        <li>Lav forventet vekst</li>
+        <li>Sykliske bransjer i nedtur</li>
+        <li>Eksempler: Equinor i oljepris-nedtur, DNB</li>
+      </ul>
+    </div>
+  </div>
+  <div class="key-point">Lav P/E er <em>ikke</em> automatisk «billig». Det kan også bety at markedet ser problemer ingen andre ser. Spør alltid: «hvorfor er prisen lav?»</div>
+</section>
+
+<section>
+  <h2>P/E for norske selskaper (illustrativt)</h2>
+  <table>
+    <tr><th>Selskap</th><th>P/E</th><th>Sektor</th><th>Kommentar</th></tr>
+    <tr><td>DNB</td><td>~9–11</td><td>Bank</td><td>Modent, stabilt</td></tr>
+    <tr><td>Equinor</td><td>~7–12</td><td>Olje</td><td>Avhenger av oljepris</td></tr>
+    <tr><td>Telenor</td><td>~12–14</td><td>Telekom</td><td>Moden, høy utbytte</td></tr>
+    <tr><td>Mowi</td><td>~15–25</td><td>Sjømat</td><td>Varierende laksepriser</td></tr>
+    <tr><td>Yara</td><td>~10–15</td><td>Gjødsel</td><td>Syklisk</td></tr>
+    <tr><td>Autostore</td><td>~30–50</td><td>Tech</td><td>Høy vekstforventning</td></tr>
+    <tr><td>OSEBX-snitt</td><td>~12–15</td><td>Indeks</td><td>Vektet snitt</td></tr>
+  </table>
+  <p class="caption">Tallene varierer mye over tid. Sjekk Nordnet, Børshandel eller Finansavisen for oppdaterte tall.</p>
+</section>
+
+<section>
+  <h2>Eksempel: Sammenhenger</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    En aksje betaler ut kr 5 om ett år i utbytte og utbyttet vokser med 10 % per år. Avkastningskravet er 15 %. Selskapet har EPS om ett år på kr 8,33.<br><br>
+    a) Hva er aksjens pris?<br>
+    b) Hva er utdelingsforholdet?<br>
+    c) Hva er ROE?<br>
+    d) Hva er PVGO?
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    <p>a) Pris: $P_0 = 5/(0{,}15 - 0{,}10) = 100$</p>
+    <p>b) Utd.forh.: $5/8{,}33 = 0{,}60$ (60 %)</p>
+    <p>c) ROE: $g = (1 - \text{utd.forh.}) \times \text{ROE} \implies 0{,}10 = 0{,}40 \times \text{ROE} \implies \text{ROE} = 25\,\%$</p>
+    <p>d) PVGO: $P_0 - \text{EPS}/r = 100 - 8{,}33/0{,}15 = 100 - 55{,}56 = 44{,}44$</p>
+  </div>
+  <div class="key-point">PVGO er 44 kr av 100 — nesten halvparten av aksjens verdi kommer fra fremtidig vekst. Selskapet får et høyt PVGO fordi ROE (25 %) overstiger r (15 %).</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL D</div>
+  <h2>Multiplikatormetoden</h2>
+</section>
+
+<section>
+  <h2>Hvorfor multipler?</h2>
+  <p style="text-align:left">DDM krever mange forutsetninger om fremtidig utbytte. En alternativ metode: <strong>sammenlign med liknende selskaper</strong>.</p>
+  <p style="text-align:left">Logikken er som boligprising:</p>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">Bolig</div>
+      Pris per kvadratmeter for nabolagsleiligheter × egen leilighets m² = estimert pris
+    </div>
+    <div class="definisjon">
+      <div class="term">Aksje</div>
+      P/E for sammenlignbare selskaper × eget selskaps EPS = estimert pris
+    </div>
+  </div>
+  <p style="text-align:left; margin-top: 20px"><strong>Multipler vi bruker i praksis:</strong></p>
+  <ul style="font-size: 0.92em">
+    <li><strong>P/E</strong> — Price/Earnings</li>
+    <li><strong>EV/EBITDA</strong> — Enterprise Value / EBITDA</li>
+    <li><strong>P/B</strong> — Price/Book</li>
+    <li><strong>P/S</strong> — Price/Sales</li>
+  </ul>
+</section>
+
+<section>
+  <h2>P/E-metoden i praksis</h2>
+  <p style="text-align:left">Fremgangsmåten:</p>
+  <ol>
+    <li>Velg <strong>peer group</strong> — sammenlignbare selskaper (samme bransje, størrelse, region)</li>
+    <li>Regn ut P/E for hver peer</li>
+    <li>Ta gjennomsnitt eller median</li>
+    <li>Multipliser med ditt selskaps EPS</li>
+  </ol>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel — Verdsette Mowi</div>
+    Peer group: Salmar, Lerøy, Grieg Seafood, Bakkafrost. Snitt-P/E: 18. Mowi EPS$_1$: 15 kr.<br>
+    Estimert pris: $18 \times 15 = $ kr 270.
+  </div>
+  <div class="key-point">Hvis Mowi handles for mindre enn 270, kan den være undervurdert. Hvis mer, kanskje overvurdert. Men: bare ett verktøy — sjekk om peer group er virkelig sammenlignbar.</div>
+</section>
+
+<section>
+  <h2>Valg av peer group</h2>
+  <p style="text-align:left">Kriterier for gode peers:</p>
+  <ul>
+    <li><strong>Samme bransje</strong> — likt forretningssegment</li>
+    <li><strong>Lignende størrelse</strong> — markedsverdi i samme størrelsesorden</li>
+    <li><strong>Sammenlignbar lønnsomhet</strong> — ROE, margin</li>
+    <li><strong>Lignende vekstprofil</strong></li>
+    <li><strong>Samme geografi/region</strong></li>
+    <li><strong>Lignende kapitalstruktur</strong></li>
+  </ul>
+  <div class="norsk-eksempel">
+    <div class="label">Vanlige norske peer groups</div>
+    <ul style="margin-top: 6px">
+      <li><strong>Banker</strong>: DNB, Sparebank 1 Norge, Sparebank 1 SR-Bank, SpareBank 1 Sør-Norge</li>
+      <li><strong>Olje &amp; gass</strong>: Equinor, Aker BP, Vår Energi, OKEA</li>
+      <li><strong>Sjømat</strong>: Mowi, Salmar, Lerøy, Grieg, Bakkafrost</li>
+      <li><strong>Telekom</strong>: Telenor (peers internationalt: Telia, Tele2)</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>EV/EBITDA</h2>
+  <div class="definisjon">
+    <div class="term">EV — Enterprise Value</div>
+    Verdien av <em>hele selskapet</em>, både egenkapital og gjeld.
+  </div>
+  <div class="formel">
+    $\text{EV} = \text{Markedsverdi EK} + \text{Gjeld} - \text{Kontanter}$
+  </div>
+  <div class="definisjon">
+    <div class="term">EBITDA</div>
+    Earnings Before Interest, Taxes, Depreciation and Amortization. «Driftsresultat før avskrivninger» — et mål på driftens kontantgenererings­evne, uavhengig av finansieringsstruktur.
+  </div>
+  <div class="formel big-formula">
+    $\dfrac{\text{EV}}{\text{EBITDA}}$
+  </div>
+  <p style="text-align:left">Brukes mye fordi den er <strong>uavhengig av kapitalstruktur</strong> — sammenligner selskaper med ulike gjeldsgrader på likt grunnlag.</p>
+</section>
+
+<section>
+  <h2>Hvorfor EV/EBITDA, ikke bare P/E?</h2>
+  <ul>
+    <li><strong>P/E påvirkes av gjeldsstruktur</strong>: Selskap med mye gjeld har lavere EPS (pga renter), så høyere P/E. Ikke direkte sammenlignbart.</li>
+    <li><strong>P/E påvirkes av regnskapsmessige forhold</strong>: Avskrivninger, skattenivå, engangsposter</li>
+    <li><strong>EBITDA</strong> er nærmere kontantstrøm</li>
+    <li><strong>EV</strong> tar med både EK og gjeld i nevner</li>
+  </ul>
+  <div class="norsk-eksempel">
+    <div class="label">Typiske EV/EBITDA-nivåer</div>
+    <ul style="margin-top: 6px">
+      <li>Bank: ~ikke brukt (regnskapsmessig spesialt)</li>
+      <li>Industri/konsumvarer: 8–12</li>
+      <li>Olje &amp; gass: 4–7 (lav pga syklikalitet)</li>
+      <li>Tech/vekst: 15–30</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>P/B — Price to Book</h2>
+  <div class="formel big-formula">
+    $\text{P/B} = \dfrac{P_0}{\text{Bokført egenkapital per aksje}}$
+  </div>
+  <p style="text-align:left">Forholdet mellom markedspris og <strong>bokført</strong> verdi av egenkapital per aksje (etter regnskapsregler).</p>
+  <ul>
+    <li><strong>P/B = 1</strong> — markedet verdsetter selskapet til bokført verdi</li>
+    <li><strong>P/B &gt; 1</strong> — markedet tror selskapet vil skape mer verdi enn bokført</li>
+    <li><strong>P/B &lt; 1</strong> — markedet er pessimistisk; mulig undervurdert</li>
+  </ul>
+  <div class="key-point">P/B passer best for bedrifter med <strong>betydelige fysiske eiendeler</strong> — banker, eiendom, shipping, kraftselskaper. Mindre relevant for tech/tjeneste-selskaper med få fysiske eiendeler.</div>
+</section>
+
+<section>
+  <h2>Begrensninger ved multipler</h2>
+  <div class="definisjon">
+    <div class="term">1 · Garbage in, garbage out</div>
+    Multipler antar at peer group er «riktig priset». Hvis hele bransjen er over-/underpriset, gir multipler feil svar.
+  </div>
+  <div class="definisjon">
+    <div class="term">2 · Manglende sammenligning</div>
+    Sjelden finner du peers som er like nok. Forskjeller i vekst, risiko, regnskapsregler påvirker multiplene.
+  </div>
+  <div class="definisjon">
+    <div class="term">3 · «Snapshot» av nåtiden</div>
+    Multipler reflekterer dagens situasjon. Endrer den seg, endrer prisen seg.
+  </div>
+  <div class="key-point">Bruk multipler som <strong>sanity check</strong> mot DDM eller DCF. Aldri som eneste verdsettingsmetode.</div>
+</section>
+
+<section>
+  <h2>Praktisk: Slik gjør profesjonelle aksjeanalytikere</h2>
+  <p style="text-align:left">En typisk verdsettelse av en norsk aksje består av:</p>
+  <ol>
+    <li><strong>DCF</strong> — diskonter free cash flow over 5–10 år + terminalverdi</li>
+    <li><strong>P/E sammenligning</strong> — multipler vs peers</li>
+    <li><strong>EV/EBITDA</strong> — alternativ multippel</li>
+    <li><strong>Sum-of-parts</strong> — for konglomerater (verdivurder hver del separat)</li>
+    <li><strong>Asset-based</strong> — for eiendoms- og finansselskaper</li>
+  </ol>
+  <p style="text-align:left">Anbefaling: <strong>Buy, Hold, Sell</strong> med <strong>kursmål</strong>.</p>
+  <div class="norsk-eksempel">
+    <div class="label">Norske analysekilder</div>
+    DNB Markets, Pareto Securities, Nordea Markets, ABG Sundal Collier — alle norske banker og meglerhus utgir analyser. Tilgjengelig for kunder, og noen sammendrag finnes på <strong>finansavisen.no</strong> og <strong>e24.no</strong>.
+  </div>
+</section>
+
+<section>
+  <h2>Oppsummering forelesning 9</h2>
+  <ol style="font-size: 0.9em">
+    <li><strong>EPS</strong>: fortjeneste per aksje. <strong>Utdelingsforhold</strong>: andel av EPS som utbetales.</li>
+    <li><strong>ROE</strong>: avkastning på egenkapital. <strong>Sammenheng:</strong> $g = (1 - \text{utd.forh.}) \times \text{ROE}$</li>
+    <li><strong>Verdiskaping</strong>: vekst skaper verdi når ROE &gt; $r$. Hvis ROE &lt; $r$, burde selskapet utbetale mer.</li>
+    <li><strong>PVGO</strong> = $P_0 - \text{EPS}_1/r$. Tegnet forteller om vekst skaper, bevarer eller ødelegger verdi.</li>
+    <li><strong>P/E</strong> = $P_0/\text{EPS}_1$. Høy P/E = vekstforventning eller lav rente.</li>
+    <li><strong>Multiplikatormetoden</strong>: bruk P/E, EV/EBITDA, P/B fra sammenlignbare selskaper.</li>
+    <li><strong>Bruk flere metoder</strong>: DDM, DCF, multipler — triangulering gir best estimat.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Til selvstudium</h2>
+  <div class="definisjon">
+    <div class="term">Oppgaver</div>
+    <strong>Oppgavesett 3 — Aksjeprising</strong> på Canvas. Oppgavene 5–9 dekker ROE, PVGO og P/E direkte. Anbefales å løse alle.
+  </div>
+  <div class="definisjon">
+    <div class="term">Pensum</div>
+    <strong>HRWJ kapittel 7</strong>: avsnittene om P/E ratio, growth opportunities (PVGO), comparing multiples.
+  </div>
+  <div class="definisjon">
+    <div class="term">Praktisk øvelse</div>
+    <ol style="margin-top: 4px">
+      <li>Velg tre norske selskaper i samme bransje (f.eks. sjømat: Mowi, Salmar, Lerøy)</li>
+      <li>Finn P/E for hver hos Nordnet.no eller Finansavisen.no</li>
+      <li>Regn ut snitt-P/E og bruk det til å verdsette ett av dem — sammenlign med aktuell kurs</li>
+      <li>Forklar evt. avvik</li>
+    </ol>
+  </div>
+  <p style="text-align:center; color: var(--nmbu-green); margin-top: 20px"><strong>Neste forelesning:</strong> Investeringsanalyse — NPV, IRR og kapitalbudsjettering.</p>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script>const params = new URLSearchParams(window.location.search);
+const useSlides = params.get('view') === 'slides';
+Reveal.initialize({
+  hash: !useSlides,
+  slideNumber: useSlides ? 'c/t' : false,
+  width: 1280,
+  height: 800,
+  margin: 0.06,
+  controls: useSlides,
+  progress: useSlides,
+  center: useSlides,
+  transition: useSlides ? 'slide' : 'none',
+  view: useSlides ? undefined : 'scroll',
+  scrollProgress: !useSlides,
+  plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
+});</script>
+</body>
+</html>

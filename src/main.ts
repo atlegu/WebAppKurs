@@ -476,6 +476,9 @@ class SustainableFinanceApp {
     this.interactiveModelHandler.attachEventListeners(contentContainer as HTMLElement);
     this.exerciseSetHandler.attachEventListeners(contentContainer as HTMLElement);
 
+    // Attach presentation toggle listeners
+    this.attachPresentationListeners(contentContainer as HTMLElement);
+
     // Update navigation active state
     this.navigation.render(this.course.modules, moduleId, sectionId, () => this.showHomePage());
 
@@ -541,6 +544,31 @@ class SustainableFinanceApp {
     if (progressPercentage) {
       progressPercentage.textContent = `${progress}%`;
     }
+  }
+
+  private attachPresentationListeners(container: HTMLElement): void {
+    const toggleBtns = container.querySelectorAll('.presentation-toggle');
+    toggleBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = (btn as HTMLElement).dataset.target;
+        if (!target) return;
+
+        const wrapper = document.getElementById(`pres-${target}`);
+        const chevron = btn.querySelector('.presentation-chevron');
+        if (!wrapper) return;
+
+        const isOpen = wrapper.style.display !== 'none';
+        wrapper.style.display = isOpen ? 'none' : 'block';
+        chevron?.classList.toggle('presentation-chevron-open', !isOpen);
+
+        if (!isOpen) {
+          const iframe = wrapper.querySelector('.presentation-iframe') as HTMLIFrameElement;
+          if (iframe && !iframe.src && iframe.dataset.src) {
+            iframe.src = iframe.dataset.src;
+          }
+        }
+      });
+    });
   }
 
   // Module Quiz Methods

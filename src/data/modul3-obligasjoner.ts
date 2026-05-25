@@ -1,4 +1,4 @@
-import { Module, CalculatorContent, InteractiveModelContent } from '../types/course';
+import { Module, CalculatorContent, InteractiveModelContent, PresentationContent } from '../types/course';
 
 export const modul3ObligasjonerModule: Module = {
   id: 'modul-3-obligasjoner',
@@ -14,6 +14,28 @@ export const modul3ObligasjonerModule: Module = {
     'Kjenne til det norske obligasjonsmarkedet og grønne obligasjoner'
   ],
   sections: [
+    // ===================================
+    // SEKSJON: Forelesningsslides
+    // ===================================
+    {
+      id: 'obligasjoner-forelesningsslides',
+      title: 'Forelesningsslides',
+      icon: '🎓',
+      order: 0,
+      content: [
+        {
+          id: 'obligasjoner-pres',
+          type: 'presentation',
+          order: 1,
+          title: 'Forelesningsslides: Obligasjoner',
+          description: 'Slides fra klasseromsforelesningene om obligasjoner. Del 1 dekker prising og grunnleggende renterisiko, del 2 går dypere inn i durasjon og yield curve.',
+          slides: [
+            { title: 'Obligasjoner del 1 — Prising og renterisiko', filename: 'Forelesning5_Obligasjoner_del1_2026.html' },
+            { title: 'Obligasjoner del 2 — Durasjon og yield curve', filename: 'Forelesning6_Obligasjoner_del2_2026.html' }
+          ]
+        } as PresentationContent
+      ]
+    },
     // ===================================
     // SEKSJON 3.1: Hva er egentlig en obligasjon?
     // ===================================

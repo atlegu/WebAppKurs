@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BUS 220 – Forelesning 8: Aksjeprising — Dividendemodellen</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css" id="theme">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap');
+  :root { --nmbu-green: #046530; --nmbu-green-light: #f0f7f2; --accent-orange: #f59e0b; --tavle-bg: #fef3c7; --text-dark: #1a1a1a; --text-muted: #4b5563; }
+  .reveal { font-family: 'Source Serif 4', Georgia, serif; font-size: 28px; color: var(--text-dark); }
+  .reveal h1, .reveal h2, .reveal h3, .reveal h4 { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); text-transform: none; letter-spacing: 0; font-weight: 700; }
+  .reveal h1 { font-size: 1.8em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.5em; line-height: 1.2; margin-bottom: 0.5em; }
+  .reveal h3 { font-size: 1.2em; }
+  .reveal p { line-height: 1.5; }
+  .reveal ul, .reveal ol { display: block; margin-left: 1em; }
+  .reveal li { margin-bottom: 0.4em; line-height: 1.5; }
+  .reveal .title-slide { background: var(--nmbu-green); color: white; padding: 60px; }
+  .reveal .title-slide h1 { color: white; font-size: 2.4em; margin-bottom: 0.3em; }
+  .reveal .title-slide .subtitle { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 1.4em; color: rgba(255,255,255,0.95); margin-bottom: 1em; }
+  .reveal .title-slide .meta { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 0.85em; color: rgba(255,255,255,0.8); margin-top: 2em; }
+  .reveal .section-divider { background: var(--nmbu-green); color: white; }
+  .reveal .section-divider h2 { color: white; font-size: 2.2em; }
+  .reveal .section-divider .section-number { font-family: 'Source Sans 3', Arial, sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9em; letter-spacing: 0.2em; margin-bottom: 1em; }
+  .reveal .definisjon { background: var(--nmbu-green-light); border-left: 5px solid var(--nmbu-green); padding: 18px 24px; margin: 20px 0; text-align: left; border-radius: 0 8px 8px 0; }
+  .reveal .definisjon .term { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: var(--nmbu-green); margin-bottom: 6px; }
+  .reveal .formel { background: white; border: 2px solid var(--nmbu-green); padding: 24px 32px; margin: 20px auto; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+  .reveal .key-point { background: var(--nmbu-green-light); padding: 16px 22px; margin: 16px 0; border-radius: 8px; text-align: left; font-size: 0.95em; }
+  .reveal .key-point::before { content: "→ "; color: var(--nmbu-green); font-weight: 700; }
+  .reveal .tavle-marker { background: var(--tavle-bg); border: 2px dashed var(--accent-orange); padding: 18px 24px; margin: 24px 0; border-radius: 10px; text-align: left; }
+  .reveal .tavle-marker .tavle-label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #b45309; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.15em; margin-bottom: 8px; }
+  .reveal .norsk-eksempel { background: #fef9f0; border-left: 4px solid #d97706; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .norsk-eksempel .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #b45309; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal table { margin: 16px auto; border-collapse: collapse; font-size: 0.85em; }
+  .reveal table th { background: var(--nmbu-green); color: white; padding: 10px 16px; font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; }
+  .reveal table td { padding: 8px 16px; border: 1px solid #d4d4d4; text-align: center; }
+  .reveal .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; text-align: left; }
+  .reveal .caption { font-size: 0.7em; color: var(--text-muted); font-style: italic; margin-top: 8px; }
+  .reveal .slide-number { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); background: transparent; }
+  .reveal mjx-container { font-size: 1.0em !important; }
+  .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+</style>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }, svg: { fontCache: 'global' }, startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { if (window.Reveal) Reveal.layout(); }); } } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section class="title-slide">
+  <h1>Aksjeprising</h1>
+  <div class="subtitle">Dividendemodellen og Gordon-modellen</div>
+  <div class="meta">BUS 220 — Finansiering og investering<br>Atle G. Guttormsen · Høst 2026<br>Pensum: HRWJ kapittel 7</div>
+</section>
+
+<section>
+  <h2>Læringsmål</h2>
+  <p style="text-align:left">Etter denne forelesningen skal du kunne:</p>
+  <ul>
+    <li>Forstå hvorfor en aksjes pris = nåverdi av fremtidige kontantstrømmer</li>
+    <li>Bruke den <strong>generelle dividendemodellen</strong> til å verdsette en aksje over flere perioder</li>
+    <li>Anvende <strong>tre spesialtilfeller</strong>: konstant utbytte, konstant vekst (Gordon), supernormal vekst</li>
+    <li>Identifisere når Gordon-modellens forutsetninger er gyldige ($r > g$)</li>
+    <li>Beregne <strong>avkastningskravet $R$</strong> som direkteavkastning + kursvekst</li>
+    <li>Anvende modellen på norske selskaper med realistiske tall</li>
+    <li>Forstå modellens svakheter og kontekst</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Repetisjon: Hva har vi lært?</h2>
+  <p style="text-align:left">Vi har bygget opp et verktøysett av nåverdiformler:</p>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">Enkeltbeløp</div>
+      $PV = \dfrac{FV}{(1+r)^T}$
+    </div>
+    <div class="definisjon">
+      <div class="term">Flere CF</div>
+      $PV = \displaystyle\sum_{t=1}^T \dfrac{C_t}{(1+r)^t}$
+    </div>
+    <div class="definisjon">
+      <div class="term">Perpetuitet</div>
+      $PV = \dfrac{C}{r}$
+    </div>
+    <div class="definisjon">
+      <div class="term">Voksende perpetuitet</div>
+      $PV = \dfrac{C_1}{r-g}$
+    </div>
+  </div>
+  <p style="text-align:left; margin-top: 16px">I dag: <strong>aksjepris</strong> er ikke noe nytt — det er bare NV anvendt på en kontantstrøm vi nettopp har sett.</p>
+</section>
+
+<section>
+  <h2>Aksjepris = NV av fremtidige kontantstrømmer</h2>
+  <p style="text-align:left">Når du kjøper en aksje, får du to typer kontantstrømmer i fremtiden:</p>
+  <ol>
+    <li><strong>Utbytte</strong> (dividende) — så lenge du eier aksjen</li>
+    <li><strong>Salgspris</strong> — når du eventuelt selger aksjen</li>
+  </ol>
+  <div class="key-point">Prisen du er villig til å betale i dag = nåverdien av disse fremtidige kontantstrømmene, diskontert med ditt avkastningskrav.</div>
+  <div class="formel">
+    $$P_0 = \sum_{t=1}^{T} \frac{Div_t}{(1+r)^t} + \frac{P_T}{(1+r)^T}$$
+  </div>
+  <p style="text-align:left">der $P_T$ er salgsprisen om $T$ år.</p>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL A</div>
+  <h2>Dividendemodellen<br>— grunnformen</h2>
+</section>
+
+<section>
+  <h2>Aksjonærenes kontantstrømmer</h2>
+  <p style="text-align:left">Som aksjonær kan du få kontanter på to måter:</p>
+  <ul>
+    <li>Selskapet betaler ut <strong>utbytte (dividende)</strong> til deg som eier</li>
+    <li>Du selger aksjen <strong>videre til en annen investor</strong></li>
+  </ul>
+  <div class="key-point" style="font-size:1.1em; color: var(--nmbu-green)"><strong>Prisen på aksjen er forventet nåverdi av <em>alle</em> fremtidige kontantstrømmer.</strong></div>
+  <p style="text-align:left; margin-top: 16px">Når du selger til en ny investor — hvor får hun pengene fra? <em>Også nåverdien av fremtidige kontantstrømmer.</em> Tilbakeflyt gjør at hele kjeden kollapser:</p>
+  <div class="formel">
+    $P_0 = $ NV av ALLE fremtidige utbytter
+  </div>
+</section>
+
+<section>
+  <h2>Eksempel: 1-periode</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Du vurderer å kjøpe en aksje i <strong>Starten AS</strong>. Du forventer at de utbetaler et utbytte på <strong>kr 2</strong> per aksje om ett år, og at aksjekursen om ett år vil være <strong>kr 14</strong>. Avkastningskravet ditt er <strong>20 %</strong>. Hva er det maksimale du vil betale i dag?
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    $$P_0 = \frac{Div_1 + P_1}{1+r} = \frac{2 + 14}{1{,}20}$$
+    $$= \frac{16}{1{,}20} = \text{kr } 13{,}33$$
+  </div>
+  <p style="text-align:left">Hvis aksjen omsettes for mindre enn 13,33 kr — kjøp. Hvis mer — la være.</p>
+</section>
+
+<section>
+  <h2>Eksempel: 2-perioder</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Du bestemmer deg nå for å beholde aksjen i to år. Utbytte år 1: <strong>kr 2</strong>. Utbytte år 2: <strong>kr 2,10</strong>. Aksjepris ved slutten av år 2: <strong>kr 14,70</strong>. Avkastningskravet: <strong>20 %</strong>.
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    $$P_0 = \frac{Div_1}{1+r} + \frac{Div_2 + P_2}{(1+r)^2}$$
+    $$= \frac{2}{1{,}20} + \frac{2{,}10 + 14{,}70}{1{,}44}$$
+    $$= 1{,}67 + 11{,}67 = \text{kr } 13{,}33$$
+  </div>
+  <p style="text-align:left"><strong>Samme svar som før!</strong> Det er ikke tilfeldig — vi kommer tilbake til det.</p>
+</section>
+
+<section>
+  <h2>Eksempel: 3-perioder</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Du beholder aksjen i tre år. Utbytter: 2, 2,10, 2,205. Salgspris ved slutt av år 3: <strong>kr 15,435</strong>. Avkastningskrav: 20 %.
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    $$P_0 = \frac{2}{1{,}20} + \frac{2{,}10}{1{,}44} + \frac{2{,}205 + 15{,}435}{1{,}728}$$
+    $$= 1{,}67 + 1{,}46 + 10{,}21 = \text{kr } 13{,}33$$
+  </div>
+  <div class="key-point">Tre ulike eierhorisonter, samme pris i dag. Det er fordi salgsprisen om $T$ år <em>også</em> er NV av kontantstrømmer derfra — informasjonen er den samme.</div>
+</section>
+
+<section>
+  <h2>Den generelle formelen</h2>
+  <p style="text-align:left">For en eierperiode på $T$ år:</p>
+  <div class="formel big-formula">
+    $$P_0 = \sum_{t=1}^{T} \frac{Div_t}{(1+r)^t} + \frac{P_T}{(1+r)^T}$$
+  </div>
+  <p style="text-align:left">Når $T \to \infty$, går nåverdien av salgsprisen mot null (for «vanlige» $r > 0$), og vi har:</p>
+  <div class="formel big-formula">
+    $$P_0 = \sum_{t=1}^{\infty} \frac{Div_t}{(1+r)^t}$$
+  </div>
+  <p style="text-align:left">Aksjeprisen er <strong>nåverdien av alle fremtidige utbytter</strong>. Punktum.</p>
+</section>
+
+<section>
+  <h2>Tre spesialtilfeller av dividendemodellen</h2>
+  <div class="definisjon">
+    <div class="term">1. Konstant utbytte</div>
+    Selskapet betaler ut et fast utbytte $Div$ i all evighet ($g = 0$).
+  </div>
+  <div class="definisjon">
+    <div class="term">2. Konstant vekst (Gordon)</div>
+    Selskapet betaler ut et utbytte som vokser med konstant rate $g$ i all evighet.
+  </div>
+  <div class="definisjon">
+    <div class="term">3. Supernormal vekst</div>
+    Selskapet har en periode med uregelmessig vekst, deretter konstant vekst.
+  </div>
+  <p style="text-align:left">Alle tre er bygget på samme grunnformel. De gjør antakelser om utbyttemønsteret som forenkler regnestykket.</p>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL B</div>
+  <h2>Tilfelle 1 og 2:<br>Konstant utbytte og<br>konstant vekst</h2>
+</section>
+
+<section>
+  <h2>Tilfelle 1: Konstant utbytte</h2>
+  <p style="text-align:left">Hvis selskapet betaler samme utbytte $Div$ hvert år for evig — det er bare en perpetuitet:</p>
+  <div class="formel big-formula">
+    $$P_0 = \frac{Div_1}{r}$$
+  </div>
+  <p style="text-align:left"><strong>Eksempel:</strong> Et selskap utbetaler kr 5 hvert år for evig. Avkastningskravet er 8 %.</p>
+  <div class="formel">
+    $P_0 = 5 / 0{,}08 = $ kr 62,50
+  </div>
+  <div class="key-point">Brukes sjelden for vanlige aksjer (alle selskaper vokser eller dør), men er en god modell for <strong>preferanseaksjer</strong> med fast utbytte.</div>
+</section>
+
+<section>
+  <h2>Tilfelle 2: Gordon-modellen — konstant vekst</h2>
+  <p style="text-align:left">Mer realistisk: selskapet vokser stabilt. Utbyttet vokser med rate $g$ per år for evig:</p>
+  <div class="formel big-formula">
+    $$P_0 = \frac{Div_1}{r - g}$$
+  </div>
+  <p style="text-align:left">der:</p>
+  <ul>
+    <li>$Div_1$ = utbytte om ett år ($= Div_0 (1+g)$)</li>
+    <li>$r$ = avkastningskravet (markedets krav til avkastning på lignende risiko)</li>
+    <li>$g$ = konstant vekstrate i utbyttet</li>
+    <li><strong>Krav: $r > g$</strong> (ellers er prisen uendelig — ikke meningsfull)</li>
+  </ul>
+  <div class="key-point">Dette er <strong>kursets viktigste formel for aksjeprising</strong>. Pugg den.</div>
+</section>
+
+<section>
+  <h2>Hvordan utledes Gordon-modellen?</h2>
+  <p style="text-align:left">Fra den generelle formelen:</p>
+  <div class="formel">
+    $P_0 = \dfrac{Div_1}{1+r} + \dfrac{Div_2}{(1+r)^2} + \dfrac{Div_3}{(1+r)^3} + \dots$
+  </div>
+  <p style="text-align:left">Med vekst: $Div_2 = Div_1(1+g)$, $Div_3 = Div_1(1+g)^2$ osv.:</p>
+  <div class="formel">
+    $P_0 = \dfrac{Div_1}{1+r} + \dfrac{Div_1(1+g)}{(1+r)^2} + \dfrac{Div_1(1+g)^2}{(1+r)^3} + \dots$
+  </div>
+  <p style="text-align:left">Dette er en geometrisk rekke. Med $r > g$ konvergerer summen til:</p>
+  <div class="formel big-formula">
+    $P_0 = \dfrac{Div_1}{r - g}$
+  </div>
+</section>
+
+<section>
+  <h2>Eksempel: Gordon-modellen i bruk</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Et vekstselskap forventes å betale ut et utbytte på <strong>kr 4 om ett år</strong>, og utbyttet vil deretter vokse med <strong>6 %</strong> hvert år. Avkastningskravet er <strong>16 %</strong>.
+  </div>
+  <p style="text-align:left"><strong>a) Dagens pris?</strong></p>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    $$P_0 = \frac{Div_1}{r - g} = \frac{4}{0{,}16 - 0{,}06} = \frac{4}{0{,}10} = \text{kr } 40$$
+  </div>
+  <p style="text-align:left"><strong>b) Forventet pris om 4 år?</strong></p>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    $$P_4 = \frac{Div_5}{r - g} = \frac{Div_1 (1+g)^4}{r-g} = \frac{4 \times 1{,}06^4}{0{,}10}$$
+    $$= \frac{5{,}05}{0{,}10} = \text{kr } 50{,}50$$
+  </div>
+</section>
+
+<section>
+  <h2>Gordon — norsk eksempel: Equinor</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Tankeeksperiment med ekte tall</div>
+    Equinor utbetalte ~$1,8 per ADR i 2023. Med NOK ~10,5 per USD: ~kr 19/aksje. Forutsi vekst 4 % (langsiktig oljeprisutvikling og produksjonsvekst). Avkastningskrav: 10 % (CAPM-basert).
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    $$P_0 = \frac{Div_1}{r-g} = \frac{19 \times 1{,}04}{0{,}10 - 0{,}04} = \frac{19{,}76}{0{,}06}$$
+    $$\approx \text{kr } 329$$
+  </div>
+  <p style="text-align:left">Faktisk kurs på Equinor (2024): ~270–320 kr. Modellen er i samme størrelsesorden — men sterkt sensitiv for valg av $g$ og $r$. Liten endring → stort utslag.</p>
+  <div class="key-point">Gordon-modellen gir <em>en plausibel pris</em>, ikke <em>den riktige</em>. Brukes ofte som «sanity check» mot markedsprisen.</div>
+</section>
+
+<section>
+  <h2>Når gjelder ikke Gordon-modellen?</h2>
+  <div class="definisjon">
+    <div class="term">Kritisk forutsetning: $r > g$</div>
+    Hvis $g \geq r$: modellen gir negativ eller uendelig pris — meningsløst.
+  </div>
+  <p style="text-align:left"><strong>Andre situasjoner der den ikke passer:</strong></p>
+  <ul>
+    <li><strong>Vekstselskaper</strong> som <em>ikke</em> betaler utbytte ennå (Tesla før 2024, mange tech-selskaper)</li>
+    <li><strong>Selskaper i kraftig vekst</strong> der $g$ er høyere enn langsiktig markedsrente</li>
+    <li><strong>Selskaper i nedgang</strong> der utbyttet ikke vokser stabilt</li>
+    <li><strong>Sykliske bransjer</strong> (oljeservice, shipping) med store svingninger</li>
+  </ul>
+  <div class="key-point">For slike selskaper må vi bruke <em>supernormal vekst-modellen</em> eller <em>DCF</em> i stedet.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL C</div>
+  <h2>Tilfelle 3:<br>Supernormal vekst</h2>
+</section>
+
+<section>
+  <h2>Supernormal vekst — motivasjon</h2>
+  <p style="text-align:left">Et ungt vekstselskap kan ha:</p>
+  <ul>
+    <li>Høy vekst de første årene (20–30 % p.a.)</li>
+    <li>Avtagende vekst etter hvert som markedet modnes</li>
+    <li>Langsiktig stabil vekst (~3–5 % — i tråd med generell økonomi)</li>
+  </ul>
+  <div class="key-point">Vi kan ikke bruke Gordon direkte fordi den krever konstant vekst gjennom hele evigheten.</div>
+  <p style="text-align:left; margin-top: 20px"><strong>Løsning:</strong> Del verdsettingen i <strong>to faser</strong>:</p>
+  <ol>
+    <li><strong>Eksplisitt periode</strong> — regn ut hver enkelt utbytte for de første $T$ årene</li>
+    <li><strong>Terminalverdi</strong> — bruk Gordon på utbyttet fra år $T+1$ og framover</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Supernormal vekst — formel</h2>
+  <div class="formel big-formula">
+    $$P_0 = \sum_{t=1}^{T} \frac{Div_t}{(1+r)^t} + \frac{P_T}{(1+r)^T}$$
+  </div>
+  <p style="text-align:left">der $P_T$ er <strong>terminalverdien</strong> — verdien ved slutten av eksplisitt periode:</p>
+  <div class="formel big-formula">
+    $$P_T = \frac{Div_{T+1}}{r - g_{\text{stabil}}}$$
+  </div>
+  <p style="text-align:left"><strong>Tre skritt:</strong></p>
+  <ol>
+    <li>Regn ut $Div_1, Div_2, \dots, Div_{T+1}$ basert på de oppgitte vekstratene</li>
+    <li>Beregn terminalverdien $P_T$ med Gordon</li>
+    <li>Diskonter alt tilbake til i dag</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Eksempel: Supernormal vekst</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Et firma vil øke utbyttet med <strong>20 %</strong> år 1 og <strong>15 %</strong> år 2. Deretter vil utbyttet vokse med <strong>5 %</strong> i all evighet. Siste utbytte ($Div_0$): kr 1. Avkastningskrav: 20 %.
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    <p><strong>Skritt 1:</strong> Regn utbytter frem til konstant vekst:</p>
+    $$Div_1 = 1 \times 1{,}20 = 1{,}20$$
+    $$Div_2 = 1{,}20 \times 1{,}15 = 1{,}38$$
+    $$Div_3 = 1{,}38 \times 1{,}05 = 1{,}449$$
+    <p><strong>Skritt 2:</strong> Terminalverdi ved slutten av år 2 (med Gordon fra år 3):</p>
+    $$P_2 = \frac{Div_3}{r - g} = \frac{1{,}449}{0{,}20 - 0{,}05} = 9{,}66$$
+    <p><strong>Skritt 3:</strong> Diskonter alt til tid 0:</p>
+    $$P_0 = \frac{1{,}20}{1{,}20} + \frac{1{,}38 + 9{,}66}{1{,}20^2} = 1{,}00 + 7{,}67 = \text{kr } 8{,}67$$
+  </div>
+</section>
+
+<section>
+  <h2>Hva er en realistisk «stabil» vekst?</h2>
+  <p style="text-align:left">Den stabile veksten $g_{\text{stabil}}$ må være lavere enn:</p>
+  <ul>
+    <li>Avkastningskravet $r$ (Gordon krever $r > g$)</li>
+    <li>Langsiktig BNP-vekst i økonomien (~2–3 % i Norge)</li>
+  </ul>
+  <p style="text-align:left">Et selskap kan ikke vokse raskere enn økonomien for evig — det ville bli større enn økonomien.</p>
+  <div class="key-point">Tommelregel: bruk 2–4 % som terminal vekst for modne selskaper. Høyere bare for unge, raskt voksende selskaper — og bare for noen år.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL D</div>
+  <h2>Avkastningskravet $R$</h2>
+</section>
+
+<section>
+  <h2>Hva er avkastningskravet?</h2>
+  <p style="text-align:left">$R$ er den avkastningen investorer krever for å holde aksjen — gitt risikoen.</p>
+  <p style="text-align:left">Hvis vi løser Gordon-modellen for $r$:</p>
+  <div class="formel big-formula">
+    $$r = \frac{Div_1}{P_0} + g$$
+  </div>
+  <p style="text-align:left"><strong>To komponenter:</strong></p>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">Direkteavkastning</div>
+      $\dfrac{Div_1}{P_0}$ — det du får i kontanter relativt til prisen du betalte
+    </div>
+    <div class="definisjon">
+      <div class="term">Kursvekst</div>
+      $g$ — det du forventer i prisstigning per år
+    </div>
+  </div>
+  <div class="key-point">Hvis en aksje gir 4 % direkteavkastning og forventes å vokse 6 % per år, er forventet totalavkastning ~10 %.</div>
+</section>
+
+<section>
+  <h2>Eksempel: Beregne avkastningskravet</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    En aksje selges for <strong>kr 10,50</strong>. Selskapet har akkurat betalt ut et utbytte på <strong>kr 1</strong>, og det forventes å vokse med <strong>5 %</strong> hvert år.
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    <p><strong>a) Avkastningskravet $r$:</strong></p>
+    $$r = \frac{Div_1}{P_0} + g = \frac{1 \times 1{,}05}{10{,}50} + 0{,}05 = 0{,}10 + 0{,}05 = 15\,\%$$
+    <p><strong>b) Direkteavkastningen:</strong></p>
+    $$\frac{Div_1}{P_0} = \frac{1{,}05}{10{,}50} = 10\,\%$$
+    <p><strong>c) Kursvekst:</strong></p>
+    $$g = 5\,\%$$
+  </div>
+  <p style="text-align:left">10 % i kontanter + 5 % i kurs = 15 % totalt — som matcher markedets avkastningskrav.</p>
+</section>
+
+<section>
+  <h2>Hvor får vi $r$ og $g$ fra i praksis?</h2>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">$r$ — avkastningskrav</div>
+      <ul style="font-size: 0.88em">
+        <li>CAPM: $r = r_f + \beta(R_m - r_f)$</li>
+        <li>Sammenlignbare selskaper</li>
+        <li>Selskapets historiske avkastning</li>
+        <li>Bedriftens vurderte risiko</li>
+      </ul>
+    </div>
+    <div class="definisjon">
+      <div class="term">$g$ — vekstrate</div>
+      <ul style="font-size: 0.88em">
+        <li>Historisk vekst i utbytte</li>
+        <li>Selskapets retention rate × ROE</li>
+        <li>Analytikerprognoser</li>
+        <li>Bransjeforventninger</li>
+      </ul>
+    </div>
+  </div>
+  <p style="text-align:left; margin-top: 20px">Vi kommer tilbake til <strong>CAPM</strong> for å estimere $r$ i senere forelesninger. For nå antar vi ofte at $r$ er gitt.</p>
+  <div class="key-point">Den største utfordringen ved DDM er ofte å finne plausible verdier for $g$ — små endringer gir store utslag i prisen.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL E</div>
+  <h2>Praktisk anvendelse<br>og begrensninger</h2>
+</section>
+
+<section>
+  <h2>Når passer DDM godt?</h2>
+  <p style="text-align:left">DDM er best egnet for selskaper med:</p>
+  <ul>
+    <li><strong>Stabil utbyttepolitikk</strong> — utbyttet betales og er forutsigbart</li>
+    <li><strong>Moden bransje</strong> — vekst i tråd med økonomien</li>
+    <li><strong>Lønnsomme operasjoner</strong> — overskuddet er stabilt</li>
+  </ul>
+  <div class="norsk-eksempel">
+    <div class="label">Norske selskaper der DDM passer relativt godt</div>
+    <ul style="margin-top: 6px">
+      <li><strong>DNB</strong> — stort, modent banksektor, stabilt utbytte ~55 % av resultat</li>
+      <li><strong>Telenor</strong> — etablert telekom, stabil kontantstrøm, høyt utbytte</li>
+      <li><strong>Equinor</strong> — utbyttepolitikk basert på langsiktig oljepris og produksjon</li>
+      <li><strong>Orkla</strong> — diversifisert konsumvarekonsern, jevn vekst</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Når passer DDM dårlig?</h2>
+  <p style="text-align:left">DDM er <em>ikke</em> egnet for:</p>
+  <ul>
+    <li><strong>Selskaper som ikke betaler utbytte</strong> (mange vekst-/tech-selskaper)</li>
+    <li><strong>Sterkt sykliske bransjer</strong> (oljeservice, shipping, råvareprodusenter) hvor utbyttet svinger mye</li>
+    <li><strong>Selskaper med ujevn / uforutsigbar lønnsomhet</strong></li>
+    <li><strong>Selskaper i strukturell endring</strong> (energiomstilling, AI-disrupsjon)</li>
+  </ul>
+  <div class="norsk-eksempel">
+    <div class="label">For disse selskapene må vi bruke andre metoder</div>
+    <ul style="margin-top: 6px">
+      <li><strong>Discounted Cash Flow (DCF)</strong> — diskonter free cash flow til hele selskapet</li>
+      <li><strong>Multiplikatormetoden</strong> — P/E, EV/EBITDA, P/B (kommer i forelesning 9)</li>
+      <li><strong>Asset-based</strong> — verdsetting basert på balansen</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Tre svakheter ved DDM</h2>
+  <div class="definisjon">
+    <div class="term">1 · Avhenger av utbytteforutsetninger</div>
+    Hvis selskapet endrer utbyttepolitikk, endres prisen — men selskapets reelle verdi har ikke endret seg. DDM måler utbyttestrøm, ikke verdiskapning.
+  </div>
+  <div class="definisjon">
+    <div class="term">2 · Ekstrem følsomhet for $g$ og $r$</div>
+    Endring av $g$ fra 4 % til 5 % når $r = 8 \%$ endrer prisen med 33 %. Små endringer i forutsetninger → store endringer i pris.
+  </div>
+  <div class="definisjon">
+    <div class="term">3 · Vekst-paradokset</div>
+    Mange suksessfulle selskaper betaler ikke utbytte (Berkshire Hathaway, Amazon mange år). DDM gir da pris null — åpenbart galt.
+  </div>
+  <div class="key-point">Bruk DDM som ett verktøy — ikke det eneste. I praksis trianguleres aksjeverdier mot flere metoder.</div>
+</section>
+
+<section>
+  <h2>Oppsummering forelesning 8</h2>
+  <ol style="font-size: 0.92em">
+    <li><strong>Aksjepris</strong> = nåverdi av forventede fremtidige utbytter (DDM).</li>
+    <li><strong>Generell formel</strong>: $P_0 = \sum Div_t/(1+r)^t + P_T/(1+r)^T$.</li>
+    <li><strong>Konstant utbytte</strong>: $P_0 = Div_1/r$ — perpetuitet.</li>
+    <li><strong>Gordon (konstant vekst)</strong>: $P_0 = Div_1/(r-g)$ med $r > g$.</li>
+    <li><strong>Supernormal vekst</strong>: del i to faser, bruk Gordon for terminalverdi.</li>
+    <li><strong>Avkastningskrav</strong>: $r = Div_1/P_0 + g$ (direkteavkastning + kursvekst).</li>
+    <li><strong>Begrensninger</strong>: DDM passer dårlig for ikke-utbyttebetalende eller sykliske selskaper.</li>
+  </ol>
+  <div class="key-point">DDM er et grunnverktøy. I forelesning 9 utvider vi med P/E, ROE, PVGO og multiplikator-metoden.</div>
+</section>
+
+<section>
+  <h2>Til selvstudium</h2>
+  <div class="definisjon">
+    <div class="term">Oppgaver</div>
+    <strong>Oppgavesett 3 — Aksjeprising</strong> på Canvas. Inneholder oppgaver på DDM (1-3 perioder), Gordon-modellen, supernormal vekst, samt forberedelse for P/E og PVGO i neste forelesning.
+  </div>
+  <div class="definisjon">
+    <div class="term">Pensum</div>
+    <strong>HRWJ kapittel 7</strong> — særlig avsnittene om Dividend Discount Model og Gordon Growth Model.
+  </div>
+  <div class="definisjon">
+    <div class="term">Praktisk øvelse</div>
+    Velg et selskap fra Oslo Børs som betaler utbytte (DNB, Telenor, Equinor, Orkla). Finn siste utbytte (Nordnet.no) og forsøk en Gordon-verdsettelse med plausible $g$ og $r$. Sammenlign med markedsprisen.
+  </div>
+  <p style="text-align:center; color: var(--nmbu-green); margin-top: 20px"><strong>Neste forelesning:</strong> Aksjeanalyse — P/E, ROE, PVGO og multiplikatormetoden.</p>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script>const params = new URLSearchParams(window.location.search);
+const useSlides = params.get('view') === 'slides';
+Reveal.initialize({
+  hash: !useSlides,
+  slideNumber: useSlides ? 'c/t' : false,
+  width: 1280,
+  height: 800,
+  margin: 0.06,
+  controls: useSlides,
+  progress: useSlides,
+  center: useSlides,
+  transition: useSlides ? 'slide' : 'none',
+  view: useSlides ? undefined : 'scroll',
+  scrollProgress: !useSlides,
+  plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
+});</script>
+</body>
+</html>

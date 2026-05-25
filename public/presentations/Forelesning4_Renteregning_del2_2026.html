@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BUS 220 – Forelesning 4: Pengenes tidsverdi (del 2)</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css" id="theme">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap');
+
+  :root {
+    --nmbu-green: #046530;
+    --nmbu-green-light: #f0f7f2;
+    --accent-orange: #f59e0b;
+    --tavle-bg: #fef3c7;
+    --text-dark: #1a1a1a;
+    --text-muted: #4b5563;
+  }
+
+  .reveal {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 28px;
+    color: var(--text-dark);
+  }
+
+  .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    color: var(--nmbu-green);
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 700;
+  }
+
+  .reveal h1 { font-size: 1.8em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.5em; line-height: 1.2; margin-bottom: 0.5em; }
+  .reveal h3 { font-size: 1.2em; }
+
+  .reveal p { line-height: 1.5; }
+  .reveal ul, .reveal ol { display: block; margin-left: 1em; }
+  .reveal li { margin-bottom: 0.4em; line-height: 1.5; }
+
+  .reveal .title-slide {
+    background: var(--nmbu-green);
+    color: white;
+    padding: 60px;
+  }
+  .reveal .title-slide h1 {
+    color: white;
+    font-size: 2.4em;
+    margin-bottom: 0.3em;
+  }
+  .reveal .title-slide .subtitle {
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-size: 1.4em;
+    color: rgba(255,255,255,0.95);
+    margin-bottom: 1em;
+  }
+  .reveal .title-slide .meta {
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-size: 0.85em;
+    color: rgba(255,255,255,0.8);
+    margin-top: 2em;
+  }
+
+  .reveal .section-divider {
+    background: var(--nmbu-green);
+    color: white;
+  }
+  .reveal .section-divider h2 {
+    color: white;
+    font-size: 2.2em;
+  }
+  .reveal .section-divider .section-number {
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9em;
+    letter-spacing: 0.2em;
+    margin-bottom: 1em;
+  }
+
+  .reveal .definisjon {
+    background: var(--nmbu-green-light);
+    border-left: 5px solid var(--nmbu-green);
+    padding: 18px 24px;
+    margin: 20px 0;
+    text-align: left;
+    border-radius: 0 8px 8px 0;
+  }
+  .reveal .definisjon .term {
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-weight: 700;
+    color: var(--nmbu-green);
+    margin-bottom: 6px;
+  }
+
+  .reveal .formel {
+    background: white;
+    border: 2px solid var(--nmbu-green);
+    padding: 24px 32px;
+    margin: 20px auto;
+    border-radius: 10px;
+    display: inline-block;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  }
+
+  .reveal .key-point {
+    background: var(--nmbu-green-light);
+    padding: 16px 22px;
+    margin: 16px 0;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 0.95em;
+  }
+  .reveal .key-point::before {
+    content: "→ ";
+    color: var(--nmbu-green);
+    font-weight: 700;
+  }
+
+  .reveal .tavle-marker {
+    background: var(--tavle-bg);
+    border: 2px dashed var(--accent-orange);
+    padding: 18px 24px;
+    margin: 24px 0;
+    border-radius: 10px;
+    text-align: left;
+  }
+  .reveal .tavle-marker .tavle-label {
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-weight: 700;
+    color: #b45309;
+    text-transform: uppercase;
+    font-size: 0.75em;
+    letter-spacing: 0.15em;
+    margin-bottom: 8px;
+  }
+
+  .reveal .norsk-eksempel {
+    background: #fef9f0;
+    border-left: 4px solid #d97706;
+    padding: 14px 20px;
+    margin: 16px 0;
+    text-align: left;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.92em;
+  }
+  .reveal .norsk-eksempel .label {
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-weight: 600;
+    color: #b45309;
+    font-size: 0.85em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .reveal table {
+    margin: 16px auto;
+    border-collapse: collapse;
+    font-size: 0.85em;
+  }
+  .reveal table th {
+    background: var(--nmbu-green);
+    color: white;
+    padding: 10px 16px;
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-weight: 600;
+  }
+  .reveal table td {
+    padding: 8px 16px;
+    border: 1px solid #d4d4d4;
+    text-align: center;
+  }
+
+  .reveal .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: start;
+    text-align: left;
+  }
+
+  .reveal .caption {
+    font-size: 0.7em;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 8px;
+  }
+
+  .reveal .slide-number {
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    color: var(--nmbu-green);
+    background: transparent;
+  }
+
+  .reveal .highlight {
+    background: linear-gradient(120deg, rgba(245,158,11,0.18) 0%, rgba(245,158,11,0.18) 100%);
+    padding: 0 4px;
+    border-radius: 3px;
+  }
+
+  .reveal blockquote {
+    background: var(--nmbu-green-light);
+    border-left: 4px solid var(--nmbu-green);
+    padding: 16px 22px;
+    margin: 20px 0;
+    font-style: italic;
+    color: var(--text-dark);
+    font-size: 0.95em;
+    text-align: left;
+    border-radius: 0 6px 6px 0;
+    box-shadow: none;
+  }
+
+  .reveal mjx-container { font-size: 1.0em !important; }
+  .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+</style>
+
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']]
+  },
+  svg: { fontCache: 'global' },
+  startup: {
+    ready: () => {
+      MathJax.startup.defaultReady();
+      MathJax.startup.promise.then(() => {
+        if (window.Reveal) Reveal.layout();
+      });
+    }
+  }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ============ SLIDE 1: TITLE ============ -->
+    <section class="title-slide">
+      <h1>Pengenes tidsverdi</h1>
+      <div class="subtitle">Del 2: Effektiv rente, lån og realverdi</div>
+      <div class="meta">
+        BUS 220 — Finansiering og investering<br>
+        Atle G. Guttormsen · Høst 2026<br>
+        Pensum: HRWJ kapittel 4 og 5
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 2: LÆRINGSMÅL ============ -->
+    <section>
+      <h2>Læringsmål</h2>
+      <p style="text-align:left">Etter denne forelesningen skal du kunne:</p>
+      <ul>
+        <li>Skille mellom <strong>nominell</strong> og <strong>effektiv</strong> rente, og konvertere mellom dem</li>
+        <li>Beregne renter med ulike <strong>kapitaliseringsfrekvenser</strong> (årlig, månedlig, kontinuerlig)</li>
+        <li>Forstå strukturen til <strong>annuitetslån</strong> og <strong>serielån</strong></li>
+        <li>Sette opp og analysere en <strong>amortiseringsplan</strong></li>
+        <li>Avdekke den effektive renten i avbetalingsordninger og «rentefrie» tilbud</li>
+        <li>Bruke <strong>Fisher-relasjonen</strong> til å konvertere mellom nominell og real rente</li>
+        <li>Beregne realverdien av framtidige beløp</li>
+      </ul>
+    </section>
+
+    <!-- ============ SLIDE 3: REPETISJON ============ -->
+    <section>
+      <h2>Repetisjon fra forelesning 1</h2>
+      <p style="text-align:left">Vi har følgende formler i verktøykassen:</p>
+      <table>
+        <tr><th>Type</th><th>Formel</th></tr>
+        <tr><td>Sluttverdi enkeltbeløp</td><td>$FV = PV(1+r)^n$</td></tr>
+        <tr><td>Nåverdi enkeltbeløp</td><td>$PV = FV/(1+r)^n$</td></tr>
+        <tr><td>Annuitet (endelig rekke)</td><td>$PV = C \cdot \dfrac{1 - (1+r)^{-n}}{r}$</td></tr>
+        <tr><td>Perpetuitet (evig)</td><td>$PV = C/r$</td></tr>
+        <tr><td>Voksende perpetuitet</td><td>$PV = C_1/(r-g)$</td></tr>
+      </table>
+      <p style="text-align:left; margin-top:20px">I dag: <strong>realistiske komplikasjoner</strong> — ulike renteperioder, lån, og inflasjon.</p>
+    </section>
+
+    <!-- ============ SECTION DIVIDER ============ -->
+    <section class="section-divider">
+      <div class="section-number">DEL A</div>
+      <h2>Effektiv rente og<br>kapitaliseringsfrekvens</h2>
+    </section>
+
+    <!-- ============ SLIDE 4: HVORFOR ============ -->
+    <section>
+      <h2>Et tilsynelatende paradoks</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Norsk kontekst</div>
+        Tre banker tilbyr deg lån, alle med <strong>«6 %»</strong> rente, men ulik kapitalisering:
+        <ul style="margin-top:10px">
+          <li>Bank A: 6 % årlig (etterskuddsvis)</li>
+          <li>Bank B: 6 % nominelt, månedlig kapitalisering</li>
+          <li>Bank C: 6 % nominelt, kontinuerlig kapitalisering</li>
+        </ul>
+      </div>
+      <p style="text-align:left; font-size:1.15em; color: var(--nmbu-green); margin-top:20px">Hvilken bank er billigst?</p>
+      <p style="text-align:left">Svaret krever at vi skiller mellom <strong>nominell</strong> og <strong>effektiv</strong> rente.</p>
+    </section>
+
+    <!-- ============ SLIDE 5: DEFINISJONER ============ -->
+    <section>
+      <h2>Nominell vs. effektiv rente</h2>
+      <div class="definisjon">
+        <div class="term">Nominell årsrente (APR — Annual Percentage Rate)</div>
+        Den oppgitte årlige renten, <em>uten</em> hensyn til hvor ofte renten kapitaliseres.
+        Brukes i markedsføring og lovverk. Eksempel: <em>«6 % p.a., månedlig betaling»</em>.
+      </div>
+      <div class="definisjon">
+        <div class="term">Effektiv årsrente (EAR — Effective Annual Rate)</div>
+        Den <em>faktiske</em> årlige veksten — tar hensyn til at renter på rentene kapitaliseres flere ganger per år.
+        Dette er den «sanne» renten.
+      </div>
+      <div class="key-point">For nominell rente med kapitalisering oftere enn årlig: <strong>EAR &gt; APR</strong>. Forskjellen vokser med kapitaliseringsfrekvens.</div>
+    </section>
+
+    <!-- ============ SLIDE 6: FORMEL EAR ============ -->
+    <section>
+      <h2>Konvertering: APR → EAR</h2>
+      <div class="formel big-formula">
+        $$\text{EAR} = \left(1 + \frac{\text{APR}}{m}\right)^m - 1$$
+      </div>
+      <p style="text-align:left">der $m$ er <strong>antall kapitaliseringsperioder per år</strong>:</p>
+      <table>
+        <tr><th>Frekvens</th><th>$m$</th></tr>
+        <tr><td>Årlig</td><td>1</td></tr>
+        <tr><td>Halvårlig</td><td>2</td></tr>
+        <tr><td>Kvartalsvis</td><td>4</td></tr>
+        <tr><td>Månedlig</td><td>12</td></tr>
+        <tr><td>Daglig</td><td>365</td></tr>
+        <tr><td>Kontinuerlig</td><td>$\infty$</td></tr>
+      </table>
+    </section>
+
+    <!-- ============ SLIDE 7: EKSEMPEL EAR ============ -->
+    <section>
+      <h2>Eksempel: Tilbake til de tre bankene</h2>
+      <p style="text-align:left">Alle har APR = 6 %. Hva er effektiv rente?</p>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        <p><strong>Bank A — årlig (m=1):</strong></p>
+        $$\text{EAR} = (1 + 0{,}06/1)^1 - 1 = 6{,}00\,\%$$
+        <p><strong>Bank B — månedlig (m=12):</strong></p>
+        $$\text{EAR} = (1 + 0{,}06/12)^{12} - 1 = (1{,}005)^{12} - 1 = 6{,}17\,\%$$
+        <p><strong>Bank C — kontinuerlig:</strong></p>
+        $$\text{EAR} = e^{0{,}06} - 1 = 6{,}18\,\%$$
+      </div>
+      <p style="text-align:left">Bank A er billigst! Forskjellen er liten her, men gjør stor utslag over tid og ved høyere renter.</p>
+    </section>
+
+    <!-- ============ SLIDE 8: ANDRE VEI ============ -->
+    <section>
+      <h2>Konvertering: EAR → periodisk rente</h2>
+      <p style="text-align:left">Ofte trenger vi den motsatte konverteringen. Hvis vi har EAR og ønsker den effektive renten per periode:</p>
+      <div class="formel big-formula">
+        $$r_\text{periode} = (1 + \text{EAR})^{1/m} - 1$$
+      </div>
+      <div class="norsk-eksempel">
+        <div class="label">Eksempel</div>
+        Du har et boliglån med <strong>effektiv årsrente 6,14 %</strong> og ønsker å regne med <strong>kvartalsvis</strong> betalinger.
+        Kvartalsrenten blir:
+        $$r_q = (1{,}0614)^{1/4} - 1 = 1{,}5\,\% \text{ per kvartal}$$
+      </div>
+      <div class="key-point">Når du diskonterer en kvartalsvis kontantstrøm, må du bruke <em>kvartalsrenten</em>, ikke årsrenten.</div>
+    </section>
+
+    <!-- ============ SLIDE 9: KONTINUERLIG ============ -->
+    <section>
+      <h2>Kontinuerlig kapitalisering</h2>
+      <p style="text-align:left">Hva skjer når $m \to \infty$?</p>
+      <p style="text-align:left">Matematisk er det et klassisk grenseverdiresultat:</p>
+      <div class="formel big-formula">
+        $$\lim_{m \to \infty} \left(1 + \frac{r}{m}\right)^m = e^r$$
+      </div>
+      <p style="text-align:left"><strong>Kontinuerlig kapitalisering</strong>:</p>
+      <ul>
+        <li>Sluttverdi: $FV = PV \cdot e^{rt}$</li>
+        <li>Nåverdi: $PV = FV \cdot e^{-rt}$</li>
+        <li>EAR: $\text{EAR} = e^r - 1$</li>
+      </ul>
+      <p style="text-align:left">Brukes mye i opsjonsprising (Black-Scholes) og i teoretiske modeller, sjelden i bankavtaler.</p>
+    </section>
+
+    <!-- ============ SLIDE 10: SAMMENLIGNING TABELL ============ -->
+    <section>
+      <h2>Hvor mye betyr frekvensen?</h2>
+      <p style="text-align:left">Effektiv årsrente når APR = 12 %:</p>
+      <table>
+        <tr><th>Frekvens</th><th>$m$</th><th>EAR</th></tr>
+        <tr><td>Årlig</td><td>1</td><td>12,000 %</td></tr>
+        <tr><td>Halvårlig</td><td>2</td><td>12,360 %</td></tr>
+        <tr><td>Kvartalsvis</td><td>4</td><td>12,551 %</td></tr>
+        <tr><td>Månedlig</td><td>12</td><td>12,683 %</td></tr>
+        <tr><td>Daglig</td><td>365</td><td>12,747 %</td></tr>
+        <tr><td>Kontinuerlig</td><td>$\infty$</td><td>12,750 %</td></tr>
+      </table>
+      <p class="caption">Sprangene blir mindre når frekvensen øker — fra daglig til kontinuerlig er forskjellen mikroskopisk.</p>
+      <div class="key-point">Praktisk: «månedlig» er nesten lik «kontinuerlig» for de fleste rentenivåer.</div>
+    </section>
+
+    <!-- ============ SECTION DIVIDER ============ -->
+    <section class="section-divider">
+      <div class="section-number">DEL B</div>
+      <h2>Lånetyper og<br>amortisering</h2>
+    </section>
+
+    <!-- ============ SLIDE 11: LÅNETYPER OVERVIEW ============ -->
+    <section>
+      <h2>To grunnleggende lånetyper</h2>
+      <div class="two-col">
+        <div class="definisjon">
+          <div class="term">Annuitetslån</div>
+          <strong>Konstant termin</strong>.
+          Avdrag øker over tid, rente faller.
+          Vanligste boliglån i Norge.
+        </div>
+        <div class="definisjon">
+          <div class="term">Serielån</div>
+          <strong>Konstant avdrag</strong>.
+          Termin starter høyt og faller over tid.
+          Brukes f.eks. i Husbanken og noen banker.
+        </div>
+      </div>
+      <p style="text-align:left; margin-top:20px"><strong>Felles for begge:</strong> Hver termin = rente + avdrag. Rente beregnes på <em>resterende lånebeløp</em>.</p>
+      <p style="text-align:left">Ved nedbetalingsslutt er lånet null kroner.</p>
+    </section>
+
+    <!-- ============ SLIDE 12: ANNUITETSLÅN VISUELT ============ -->
+    <section>
+      <h2>Annuitetslån — hvordan ser det ut?</h2>
+      <p style="text-align:left">Terminbeløpet er konstant, men sammensetningen endres dramatisk:</p>
+      <div style="margin: 30px auto; text-align: center;">
+        <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+          <!-- Axes -->
+          <line x1="60" y1="280" x2="660" y2="280" stroke="#1a1a1a" stroke-width="1.5"/>
+          <line x1="60" y1="280" x2="60" y2="40" stroke="#1a1a1a" stroke-width="1.5"/>
+          <!-- X labels -->
+          <text x="60" y="300" text-anchor="middle" font-family="Source Sans 3" font-size="12">0</text>
+          <text x="180" y="300" text-anchor="middle" font-family="Source Sans 3" font-size="12">5</text>
+          <text x="300" y="300" text-anchor="middle" font-family="Source Sans 3" font-size="12">10</text>
+          <text x="420" y="300" text-anchor="middle" font-family="Source Sans 3" font-size="12">15</text>
+          <text x="540" y="300" text-anchor="middle" font-family="Source Sans 3" font-size="12">20</text>
+          <text x="660" y="300" text-anchor="middle" font-family="Source Sans 3" font-size="12">25 år</text>
+          <!-- Stacked bars: rente (lower) and avdrag (upper) - both summing to constant termin -->
+          <!-- 6 termin-bars: from start (mostly rente) to end (mostly avdrag) -->
+          <g>
+            <!-- Year 1 -->
+            <rect x="80" y="100" width="40" height="180" fill="#046530" opacity="0.85"/>
+            <rect x="80" y="60" width="40" height="40" fill="#f59e0b"/>
+            <!-- Year 5 -->
+            <rect x="180" y="135" width="40" height="145" fill="#046530" opacity="0.85"/>
+            <rect x="180" y="60" width="40" height="75" fill="#f59e0b"/>
+            <!-- Year 10 -->
+            <rect x="280" y="170" width="40" height="110" fill="#046530" opacity="0.85"/>
+            <rect x="280" y="60" width="40" height="110" fill="#f59e0b"/>
+            <!-- Year 15 -->
+            <rect x="380" y="210" width="40" height="70" fill="#046530" opacity="0.85"/>
+            <rect x="380" y="60" width="40" height="150" fill="#f59e0b"/>
+            <!-- Year 20 -->
+            <rect x="480" y="245" width="40" height="35" fill="#046530" opacity="0.85"/>
+            <rect x="480" y="60" width="40" height="185" fill="#f59e0b"/>
+            <!-- Year 25 -->
+            <rect x="580" y="270" width="40" height="10" fill="#046530" opacity="0.85"/>
+            <rect x="580" y="60" width="40" height="210" fill="#f59e0b"/>
+          </g>
+          <!-- Legend -->
+          <rect x="350" y="20" width="14" height="14" fill="#046530" opacity="0.85"/>
+          <text x="370" y="32" font-family="Source Sans 3" font-size="13" fill="#1a1a1a">Rente</text>
+          <rect x="430" y="20" width="14" height="14" fill="#f59e0b"/>
+          <text x="450" y="32" font-family="Source Sans 3" font-size="13" fill="#1a1a1a">Avdrag</text>
+          <text x="360" y="55" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-style="italic" fill="#4b5563">Annuitetslån over 25 år — konstant termin, men rente↓ og avdrag↑</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 13: BEREGNE TERMIN ============ -->
+    <section>
+      <h2>Hvordan finne terminbeløpet?</h2>
+      <p style="text-align:left">Annuitetslån er bare en annuitet sett fra långivers side. Vi løser annuitetsformelen for $C$:</p>
+      <div class="formel big-formula">
+        $$C = \frac{PV \cdot r}{1 - (1+r)^{-n}} = \frac{PV}{\text{AF}(r,n)}$$
+      </div>
+      <p style="text-align:left">der $PV$ = lånebeløp, $r$ = renten per termin, $n$ = antall terminer.</p>
+      <div class="key-point">Renten må passe terminperioden. Månedlig termin → bruk månedlig rente (= EAR konvertert til måned).</div>
+    </section>
+
+    <!-- ============ SLIDE 14: EKSEMPEL HUSLÅN ============ -->
+    <section>
+      <h2>Eksempel: Huslån</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Norsk kontekst</div>
+        Du tar opp et boliglån i DNB:
+        <ul style="margin-top:8px">
+          <li>Lånebeløp: <strong>3 000 000 kr</strong></li>
+          <li>Effektiv årsrente: <strong>4,80 %</strong></li>
+          <li>Nedbetalingstid: <strong>25 år</strong></li>
+          <li>Månedlige terminer</li>
+        </ul>
+      </div>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        <p>Månedlig rente: $r_m = (1{,}048)^{1/12} - 1 = 0{,}3914\,\%$</p>
+        <p>Antall terminer: $n = 25 \times 12 = 300$</p>
+        $$C = \frac{3\,000\,000 \times 0{,}003914}{1 - 1{,}003914^{-300}} = \frac{11\,743}{0{,}6906}$$
+        $$\approx \text{kr } 17\,005 \text{ per måned}$$
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 15: AMORTISERINGSPLAN ============ -->
+    <section>
+      <h2>Amortiseringsplan — første terminer</h2>
+      <p style="text-align:left">Hver termin: rente beregnet på <em>resterende</em> lånebeløp, deretter avdrag.</p>
+      <table style="font-size:0.78em">
+        <tr><th>Termin</th><th>IB lån</th><th>Termin</th><th>Rente</th><th>Avdrag</th><th>UB lån</th></tr>
+        <tr><td>1</td><td>3 000 000</td><td>17 005</td><td>11 742</td><td>5 263</td><td>2 994 737</td></tr>
+        <tr><td>2</td><td>2 994 737</td><td>17 005</td><td>11 722</td><td>5 283</td><td>2 989 454</td></tr>
+        <tr><td>3</td><td>2 989 454</td><td>17 005</td><td>11 701</td><td>5 304</td><td>2 984 149</td></tr>
+        <tr><td>12</td><td>2 940 057</td><td>17 005</td><td>11 508</td><td>5 497</td><td>2 934 560</td></tr>
+        <tr><td>120</td><td>2 191 824</td><td>17 005</td><td>8 580</td><td>8 425</td><td>2 183 399</td></tr>
+        <tr><td>300</td><td>16 939</td><td>17 005</td><td>66</td><td>16 939</td><td>0</td></tr>
+      </table>
+      <div class="key-point">Etter 10 år (120 terminer) er rente og avdrag omtrent like store. Det er først nå du «virkelig» begynner å betale ned lånet.</div>
+    </section>
+
+    <!-- ============ SLIDE 16: SERIELÅN ============ -->
+    <section>
+      <h2>Serielån</h2>
+      <p style="text-align:left">Hovedforskjell: <strong>avdraget er konstant</strong>. Eksempel — 3 000 000 over 25 år månedlig:</p>
+      <ul>
+        <li>Avdrag = $3\,000\,000 / 300 = 10\,000$ kr hver måned (konstant)</li>
+        <li>Termin 1: Avdrag 10 000 + Rente 11 742 = <strong>21 742</strong> kr</li>
+        <li>Termin 300: Avdrag 10 000 + Rente 39 = <strong>10 039</strong> kr</li>
+      </ul>
+      <p style="text-align:left; margin-top:20px"><strong>Effekt:</strong></p>
+      <ul>
+        <li>Høyere belastning i starten (21 742 vs 17 005 i annuitetslån)</li>
+        <li>Lavere belastning senere</li>
+        <li><strong>Totalt</strong> betaler du <em>mindre i renter</em> over hele lånet, fordi gjennomsnittlig restgjeld er lavere</li>
+      </ul>
+    </section>
+
+    <!-- ============ SLIDE 17: SAMMENLIGNING LÅN ============ -->
+    <section>
+      <h2>Annuitetslån vs serielån — hvilket er best?</h2>
+      <table>
+        <tr><th></th><th>Annuitetslån</th><th>Serielån</th></tr>
+        <tr><td>Termin 1</td><td>17 005</td><td>21 742</td></tr>
+        <tr><td>Termin 300</td><td>17 005</td><td>10 039</td></tr>
+        <tr><td>Sum betalt (25 år)</td><td>5 101 547</td><td>4 762 500</td></tr>
+        <tr><td>Sum renter</td><td>2 101 547</td><td>1 762 500</td></tr>
+      </table>
+      <p style="text-align:left; margin-top:20px"><strong>Men:</strong> Du kan ikke konkludere uten å vurdere <em>nåverdi</em> av betalingsstrømmene:</p>
+      <div class="key-point">Hvis du sammenligner NV av begge betalingsstrømmer ved samme rente $r$, blir de like (begge tilbakebetaler samme lånebeløp). Forskjellen er kun fordelingen av byrden over tid.</div>
+    </section>
+
+    <!-- ============ SLIDE 18: BETALINGSFREKVENS ============ -->
+    <section>
+      <h2>Effekt av betalingsfrekvens</h2>
+      <p style="text-align:left">Med samme effektive årsrente: betyr det noe om vi betaler månedlig eller kvartalsvis?</p>
+      <div class="norsk-eksempel">
+        <div class="label">Eksempel — lån 1 mill., 6,14 % effektiv, 10 år</div>
+        <table style="font-size:0.85em">
+          <tr><th>Frekvens</th><th>Antall terminer</th><th>Termin (kr)</th><th>Sum betalt</th></tr>
+          <tr><td>Årlig</td><td>10</td><td>135 868</td><td>1 358 685</td></tr>
+          <tr><td>Kvartalsvis</td><td>40</td><td>33 537</td><td>1 341 482</td></tr>
+          <tr><td>Månedlig</td><td>120</td><td>11 156</td><td>1 338 738</td></tr>
+        </table>
+      </div>
+      <p style="text-align:left">Sum betalt synker litt med oftere betalinger — fordi du betaler ned hovedstolen raskere og dermed har lavere gjennomsnittlig rentegrunnlag.</p>
+    </section>
+
+    <!-- ============ SLIDE 19: AVBETALINGSORDNING ============ -->
+    <section>
+      <h2>Hva er den «egentlige» renten?</h2>
+      <p style="text-align:left">Mange avbetalingsordninger oppgir ikke en rente — bare et månedlig beløp. Vi må regne den ut.</p>
+      <div class="norsk-eksempel">
+        <div class="label">Norsk kontekst — sofakjøp på Skeidar</div>
+        Du kan velge:
+        <ul style="margin-top:8px">
+          <li><strong>Kontant:</strong> kr 14 000</li>
+          <li><strong>Avbetaling:</strong> kr 3 500 i dag + 12 månedlige avdrag à kr <em>X</em></li>
+        </ul>
+        Avbetalingen oppgis som «12 mnd uten renter». Men hva er den implisitte renten?
+      </div>
+      <p style="text-align:left">For å svare må vi vite $X$. Anta $X = 1\,055$.</p>
+    </section>
+
+    <!-- ============ SLIDE 20: EKSEMPEL IMPLISITT RENTE ============ -->
+    <section>
+      <h2>Eksempel: Implisitt rente i avbetaling</h2>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        <p>Lånebeløp (kontantpris minus kontantbetaling): $14\,000 - 3\,500 = 10\,500$.</p>
+        <p>Dette er nåverdien av 12 månedlige betalinger à 1 055:</p>
+        $$10\,500 = 1\,055 \times \frac{1 - (1 + r_m)^{-12}}{r_m}$$
+        <p>Løser for $r_m$ (iterativt eller med Excel <code>RATE</code>):</p>
+        $$r_m \approx 3{,}00\,\% \text{ per måned}$$
+        <p>Effektiv årsrente:</p>
+        $$\text{EAR} = (1{,}03)^{12} - 1 = 42{,}58\,\%$$
+      </div>
+      <p style="text-align:left">«Rentefri» betyr ikke rentefri.</p>
+    </section>
+
+    <!-- ============ SECTION DIVIDER ============ -->
+    <section class="section-divider">
+      <div class="section-number">DEL C</div>
+      <h2>Nominell vs<br>realrente</h2>
+    </section>
+
+    <!-- ============ SLIDE 21: NOMINELL VS REAL ============ -->
+    <section>
+      <h2>Inflasjon spiser kjøpekraft</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Et lite mareritt</div>
+        Du setter inn 100 000 kr i banken til 4 % rente. Etter ett år har du <strong>104 000 kr</strong>.
+        Men prisene har samtidig steget med 3 %. En vare som kostet 100 000 i fjor koster nå <strong>103 000</strong>.
+        Du er <em>nesten ikke rikere i kjøpekraft</em> — bare 1 %.
+      </div>
+      <div class="definisjon">
+        <div class="term">Nominell rente ($r_n$)</div>
+        Renten du faktisk får i kroner. «Står på kontoutskriften».
+      </div>
+      <div class="definisjon">
+        <div class="term">Realrente ($r_r$)</div>
+        Den «sanne» avkastningen etter at inflasjonen er tatt hensyn til. Måler økning i kjøpekraft.
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 22: FISHER ============ -->
+    <section>
+      <h2>Fisher-relasjonen</h2>
+      <p style="text-align:left">Den eksakte sammenhengen mellom nominell rente $r_n$, realrente $r_r$ og inflasjon $\pi$:</p>
+      <div class="formel big-formula">
+        $$(1 + r_n) = (1 + r_r)(1 + \pi)$$
+      </div>
+      <p style="text-align:left">Løst for realrenten:</p>
+      <div class="formel big-formula">
+        $$r_r = \frac{1 + r_n}{1 + \pi} - 1$$
+      </div>
+      <p style="text-align:left">Intuisjon: $1 + r_n$ er hvor mange ganger pengene har vokst nominelt. $1 + \pi$ er hvor mye priser har vokst. Forholdet er den reelle veksten.</p>
+    </section>
+
+    <!-- ============ SLIDE 23: APPROKSIMASJON ============ -->
+    <section>
+      <h2>Praktisk approksimasjon</h2>
+      <p style="text-align:left">For små rentenivåer kan vi tilnærme:</p>
+      <div class="formel big-formula">
+        $$r_r \approx r_n - \pi$$
+      </div>
+      <p style="text-align:left">Eksempel: $r_n = 4\,\%, \pi = 3\,\%$:</p>
+      <ul>
+        <li>Eksakt: $r_r = 1{,}04/1{,}03 - 1 = 0{,}971\,\% \approx 0{,}97\,\%$</li>
+        <li>Approksimert: $r_r \approx 4 - 3 = 1{,}00\,\%$</li>
+      </ul>
+      <p style="text-align:left">Forskjellen er liten ved lave renter. Ved høyere nivåer (typisk i framvoksende økonomier) må du bruke den eksakte formelen.</p>
+      <div class="key-point">Approksimasjonen er god hvis $r_n$ og $\pi$ begge er under 10–15 %.</div>
+    </section>
+
+    <!-- ============ SLIDE 24: EKSEMPEL FISHER ============ -->
+    <section>
+      <h2>Eksempel: Norske renter og inflasjon 2024</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Norsk kontekst</div>
+        I 2024 var Norges Banks styringsrente <strong>4,50 %</strong>. Boliglånsrente var typisk 5,5–6 %.
+        KPI-veksten var <strong>3,1 %</strong> over året.
+      </div>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        <p>Realrente på en bankinnskudd med 4,50 % nominell rente og 3,1 % inflasjon:</p>
+        $$r_r = \frac{1{,}045}{1{,}031} - 1 = 1{,}358\,\%$$
+        <p>Realrente på boliglån med 5,75 % nominell og 3,1 % inflasjon:</p>
+        $$r_r = \frac{1{,}0575}{1{,}031} - 1 = 2{,}57\,\%$$
+      </div>
+      <p style="text-align:left">Selv om nominelle renter ser «høye» ut, er real-finansieringskostnad mer beskjeden.</p>
+    </section>
+
+    <!-- ============ SLIDE 25: REALVERDI ============ -->
+    <section>
+      <h2>Realverdi om mange år</h2>
+      <p style="text-align:left">For å regne ut realverdi av et framtidig nominelt beløp:</p>
+      <div class="formel big-formula">
+        $$\text{Realverdi} = \frac{\text{Nominell verdi}}{(1 + \pi)^n}$$
+      </div>
+      <div class="norsk-eksempel">
+        <div class="label">Eksempel</div>
+        Du sparer kr 600 000 til 4 % nominell rente i 10 år. Inflasjon: 2,5 %.
+        <p style="margin-top:10px"><strong>Nominell sluttverdi:</strong> $600\,000 \times 1{,}04^{10} = $ kr 888 145</p>
+        <p><strong>Realverdi (i dagens kroner):</strong> $888\,145 / 1{,}025^{10} = $ kr 693 819</p>
+      </div>
+      <p style="text-align:left">Tilsvarende kunne man brukt realrenten direkte: $r_r = 1{,}04/1{,}025 - 1 = 1{,}46\,\%$, og $600\,000 \times 1{,}0146^{10} = 693\,819$.</p>
+    </section>
+
+    <!-- ============ SLIDE 26: KORTE VS LANGE ============ -->
+    <section>
+      <h2>Korte og lange renter</h2>
+      <p style="text-align:left">Renter avhenger av <strong>løpetid</strong>. En 3-måneders T-bill og en 10-årig statsobligasjon har forskjellig rente, selv om begge er «risikofrie».</p>
+      <div class="definisjon">
+        <div class="term">Yieldkurven (rentestrukturkurve)</div>
+        Sammenhengen mellom løpetid og effektiv rente for samme låntaker (oftest staten).
+      </div>
+      <p style="text-align:left">Typisk er den <em>stigende</em>: lange renter høyere enn korte. Tolkning:</p>
+      <ul>
+        <li><strong>Likviditetspremie:</strong> Investorer krever ekstra for å binde pengene lenger</li>
+        <li><strong>Forventninger om framtidig rente:</strong> Markedet venter rentestigning</li>
+        <li><strong>Inflasjonsforventninger:</strong> Markedet venter høyere inflasjon framover</li>
+      </ul>
+      <p style="text-align:left">Inverter (lange &lt; korte) er sjelden — historisk en indikator på resesjon.</p>
+    </section>
+
+    <!-- ============ SLIDE 27: YIELDKURVE ILLUSTRASJON ============ -->
+    <section>
+      <h2>Eksempel: norsk yieldkurve</h2>
+      <p style="text-align:left">Typisk form for norske statsobligasjoner:</p>
+      <div style="margin: 30px auto; text-align: center;">
+        <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+          <!-- Axes -->
+          <line x1="80" y1="240" x2="650" y2="240" stroke="#1a1a1a" stroke-width="1.5"/>
+          <line x1="80" y1="240" x2="80" y2="40" stroke="#1a1a1a" stroke-width="1.5"/>
+          <!-- X labels (years to maturity) -->
+          <text x="80" y="260" text-anchor="middle" font-family="Source Sans 3" font-size="12">0,25</text>
+          <text x="180" y="260" text-anchor="middle" font-family="Source Sans 3" font-size="12">1</text>
+          <text x="280" y="260" text-anchor="middle" font-family="Source Sans 3" font-size="12">2</text>
+          <text x="400" y="260" text-anchor="middle" font-family="Source Sans 3" font-size="12">5</text>
+          <text x="520" y="260" text-anchor="middle" font-family="Source Sans 3" font-size="12">10</text>
+          <text x="630" y="260" text-anchor="middle" font-family="Source Sans 3" font-size="12">30 år</text>
+          <text x="360" y="280" text-anchor="middle" font-family="Source Sans 3" font-size="13" font-style="italic" fill="#4b5563">Løpetid</text>
+          <!-- Y labels (yield %) -->
+          <text x="70" y="245" text-anchor="end" font-family="Source Sans 3" font-size="12">3 %</text>
+          <text x="70" y="190" text-anchor="end" font-family="Source Sans 3" font-size="12">4 %</text>
+          <text x="70" y="135" text-anchor="end" font-family="Source Sans 3" font-size="12">5 %</text>
+          <text x="70" y="80" text-anchor="end" font-family="Source Sans 3" font-size="12">6 %</text>
+          <!-- Yield curve (stigende, deretter flat) -->
+          <path d="M 80 215 Q 200 200 280 175 T 520 130 Q 580 120 650 110" stroke="#046530" stroke-width="3" fill="none"/>
+          <!-- Points -->
+          <circle cx="80" cy="215" r="4" fill="#046530"/>
+          <circle cx="180" cy="205" r="4" fill="#046530"/>
+          <circle cx="280" cy="175" r="4" fill="#046530"/>
+          <circle cx="400" cy="150" r="4" fill="#046530"/>
+          <circle cx="520" cy="130" r="4" fill="#046530"/>
+          <circle cx="630" cy="115" r="4" fill="#046530"/>
+          <text x="360" y="25" text-anchor="middle" font-family="Source Sans 3" font-size="13" font-style="italic" fill="#4b5563">Yieldkurve (effektiv rente)</text>
+        </svg>
+      </div>
+      <p style="text-align:left">Når vi diskonterer, kan vi i prinsippet bruke ulike renter for ulike kontantstrømmer (matching). I praktiske oppgaver bruker vi ofte én rente for hele kontantstrømmen — en forenkling.</p>
+    </section>
+
+    <!-- ============ SLIDE 28: VARIABEL RENTE ============ -->
+    <section>
+      <h2>Variabel vs fast rente</h2>
+      <div class="two-col">
+        <div class="definisjon">
+          <div class="term">Fast rente</div>
+          Renten er låst for en periode (3–10 år vanlig).
+          <strong>Forutsigbar termin</strong>, men du må binde deg.
+        </div>
+        <div class="definisjon">
+          <div class="term">Variabel (flytende) rente</div>
+          Renten følger en referanserente (typisk NIBOR + margin).
+          <strong>Risiko for økte terminer</strong>, men fleksibilitet.
+        </div>
+      </div>
+      <p style="text-align:left; margin-top:20px"><strong>Hva velger en risikoavers norsk husholdning?</strong></p>
+      <p style="text-align:left">Empirisk: ca. 95 % av norske boliglån er flytende. Bemerkelsesverdig, sammenlignet med 80 % fast i USA. Norske husholdninger er svært eksponert for renteendringer.</p>
+      <div class="key-point">Når vi sier «boliglån har 5 % rente», er det vanligvis en variabel rente som <em>kan endres</em>. Effektiv rente over hele løpet er ukjent på forhånd.</div>
+    </section>
+
+    <!-- ============ SLIDE 29: KONTANTRABATT ============ -->
+    <section>
+      <h2>Praktisk: kontantrabatt vs kassekreditt</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Norsk kontekst — bedriftsøkonomi</div>
+        En leverandør tilbyr 2 % rabatt hvis du betaler innen 10 dager. Ellers full pris etter 50 dager.
+        Du har kassekreditt med 15 % p.a. effektiv rente.
+      </div>
+      <p style="text-align:left"><strong>Spørsmål:</strong> Bør du betale tidlig (med rabatt) eller sent (uten rabatt)?</p>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        <p>Effektiv kostnad ved <em>ikke</em> å ta rabatten: $\frac{2}{98}$ ekstra over 40 dager:</p>
+        $$r_{40 \text{dgr}} = 2/98 = 2{,}04\,\%$$
+        $$\text{EAR} = (1{,}0204)^{365/40} - 1 = 20{,}24\,\%$$
+        <p>Sammenlign med kassekreditt: 15 %.</p>
+      </div>
+      <p style="text-align:left"><strong>Konklusjon:</strong> Ta rabatten. Den implisitte kostnaden ved å la være er 20,2 % — høyere enn kassekredittrenten.</p>
+    </section>
+
+    <!-- ============ SLIDE 30: OPPSUMMERING ============ -->
+    <section>
+      <h2>Oppsummering renteregning</h2>
+      <p style="text-align:left">Etter forelesning 3 og 4 mestrer du:</p>
+      <ol>
+        <li><strong>Tidslinjen</strong> + tre tidsreise-regler</li>
+        <li><strong>Enkeltbeløp</strong>: $FV = PV(1+r)^n$, $PV = FV/(1+r)^n$</li>
+        <li><strong>Flere kontantstrømmer</strong>: sum av diskonterte CF</li>
+        <li><strong>Annuitet</strong>: $PV = C \cdot \frac{1-(1+r)^{-n}}{r}$</li>
+        <li><strong>Perpetuitet</strong>: $PV = C/r$, $C_1/(r-g)$ med vekst</li>
+        <li><strong>EAR vs APR</strong>: $\text{EAR} = (1 + \text{APR}/m)^m - 1$</li>
+        <li><strong>Lån</strong>: annuitetslån vs serielån, amortisering</li>
+        <li><strong>Fisher</strong>: $1 + r_n = (1+r_r)(1+\pi)$</li>
+      </ol>
+      <div class="key-point">Disse verktøyene brukes hele kurset. Investér tid i å automatisere dem nå — det betaler seg.</div>
+    </section>
+
+    <!-- ============ SLIDE 31: SELVSTUDIUM ============ -->
+    <section>
+      <h2>Til selvstudium</h2>
+      <div class="definisjon">
+        <div class="term">Oppgaver</div>
+        <strong>Oppgavesett 1 — Renteregning del 2</strong> (på Canvas).
+        13 oppgaver fokusert på effektiv rente, lån, og realverdi. Med fasit.
+      </div>
+      <div class="definisjon">
+        <div class="term">Pensum</div>
+        <strong>HRWJ kapittel 4 og 5</strong> — særlig avsnittene om EAR/APR og spesielle CF-mønstre.
+      </div>
+      <div class="definisjon">
+        <div class="term">Praktisk øvelse</div>
+        Sjekk ditt eget boliglån / studielån / sparekonto. Hva er effektiv rente?
+        Sammenlign med APR oppgitt i avtalen. Forskjellen kan være lærerik.
+      </div>
+      <p style="text-align:center; color: var(--nmbu-green); margin-top:30px"><strong>Neste forelesning:</strong> Obligasjoner — den første store anvendelsen av renteregningen.</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const useSlides = params.get('view') === 'slides';
+Reveal.initialize({
+  hash: !useSlides,
+  slideNumber: useSlides ? 'c/t' : false,
+  width: 1280,
+  height: 800,
+  margin: 0.06,
+  controls: useSlides,
+  progress: useSlides,
+  center: useSlides,
+  transition: useSlides ? 'slide' : 'none',
+  view: useSlides ? undefined : 'scroll',
+  scrollProgress: !useSlides,
+  plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
+});
+</script>
+</body>
+</html>

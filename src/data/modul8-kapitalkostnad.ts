@@ -1,4 +1,4 @@
-import { Module } from '../types/course';
+import { Module, PresentationContent } from '../types/course';
 
 export const modul8KapitalkostnadModule: Module = {
   id: 'modul-8-kapitalkostnad',
@@ -13,6 +13,27 @@ export const modul8KapitalkostnadModule: Module = {
     'Anvende WACC som diskonteringsrente i investeringsanalyse'
   ],
   sections: [
+    // ===================================
+    // SEKSJON: Forelesningsslides
+    // ===================================
+    {
+      id: 'kapitalkostnad-forelesningsslides',
+      title: 'Forelesningsslides',
+      icon: '🎓',
+      order: 0,
+      content: [
+        {
+          id: 'kapitalkostnad-pres',
+          type: 'presentation',
+          order: 1,
+          title: 'Forelesningsslides: Kapitalkostnad',
+          description: 'Slides fra klasseromsforelesningen om kapitalkostnad, CAPM-basert egenkapitalkostnad, gjeldskostnad og WACC.',
+          slides: [
+            { title: 'Kapitalkostnad og WACC', filename: 'Forelesning15_Kapitalkostnad_2026.html' }
+          ]
+        } as PresentationContent
+      ]
+    },
     // SEKSJON 8.1: Hva er kapitalkostnad?
     {
       id: 'seksjon-8-1-intro',

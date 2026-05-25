@@ -1,4 +1,4 @@
-import { Module, InteractiveModelContent } from '../types/course';
+import { Module, InteractiveModelContent, PresentationContent } from '../types/course';
 
 export const modul4AksjerModule: Module = {
   id: 'modul-4-aksjer',
@@ -13,6 +13,29 @@ export const modul4AksjerModule: Module = {
     'Forstå ESG-kriterier og bærekraftig aksjeinvestering'
   ],
   sections: [
+    // ===================================
+    // SEKSJON: Forelesningsslides
+    // ===================================
+    {
+      id: 'aksjer-forelesningsslides',
+      title: 'Forelesningsslides',
+      icon: '🎓',
+      order: 0,
+      content: [
+        {
+          id: 'aksjer-pres',
+          type: 'presentation',
+          order: 1,
+          title: 'Forelesningsslides: Aksjer og verdsettelse',
+          description: 'Slides fra klasseromsforelesningene om aksjer. Tre deler som dekker hva aksjer er, dividendemodellen for verdsettelse, og nøkkeltallsanalyse (P/E, ROE, PVGO).',
+          slides: [
+            { title: 'Hva er aksjer?', filename: 'Forelesning7_Aksjer_HvaErAksjer_2026.html' },
+            { title: 'Dividendemodellen', filename: 'Forelesning8_Aksjer_Dividendemodellen_2026.html' },
+            { title: 'P/E, ROE og PVGO', filename: 'Forelesning9_Aksjer_PEROEPVGO_2026.html' }
+          ]
+        } as PresentationContent
+      ]
+    },
     // ===================================
     // SEKSJON 4.1: Fra låntaker til eier
     // ===================================

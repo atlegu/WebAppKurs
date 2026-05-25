@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BUS 220 – Forelesning 7: Hva er aksjer?</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css" id="theme">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap');
+  :root { --nmbu-green: #046530; --nmbu-green-light: #f0f7f2; --accent-orange: #f59e0b; --tavle-bg: #fef3c7; --text-dark: #1a1a1a; --text-muted: #4b5563; }
+  .reveal { font-family: 'Source Serif 4', Georgia, serif; font-size: 28px; color: var(--text-dark); }
+  .reveal h1, .reveal h2, .reveal h3, .reveal h4 { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); text-transform: none; letter-spacing: 0; font-weight: 700; }
+  .reveal h1 { font-size: 1.8em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.5em; line-height: 1.2; margin-bottom: 0.5em; }
+  .reveal h3 { font-size: 1.2em; }
+  .reveal p { line-height: 1.5; }
+  .reveal ul, .reveal ol { display: block; margin-left: 1em; }
+  .reveal li { margin-bottom: 0.4em; line-height: 1.5; }
+  .reveal .title-slide { background: var(--nmbu-green); color: white; padding: 60px; }
+  .reveal .title-slide h1 { color: white; font-size: 2.4em; margin-bottom: 0.3em; }
+  .reveal .title-slide .subtitle { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 1.4em; color: rgba(255,255,255,0.95); margin-bottom: 1em; }
+  .reveal .title-slide .meta { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 0.85em; color: rgba(255,255,255,0.8); margin-top: 2em; }
+  .reveal .section-divider { background: var(--nmbu-green); color: white; }
+  .reveal .section-divider h2 { color: white; font-size: 2.2em; }
+  .reveal .section-divider .section-number { font-family: 'Source Sans 3', Arial, sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9em; letter-spacing: 0.2em; margin-bottom: 1em; }
+  .reveal .definisjon { background: var(--nmbu-green-light); border-left: 5px solid var(--nmbu-green); padding: 18px 24px; margin: 20px 0; text-align: left; border-radius: 0 8px 8px 0; }
+  .reveal .definisjon .term { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: var(--nmbu-green); margin-bottom: 6px; }
+  .reveal .formel { background: white; border: 2px solid var(--nmbu-green); padding: 24px 32px; margin: 20px auto; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+  .reveal .key-point { background: var(--nmbu-green-light); padding: 16px 22px; margin: 16px 0; border-radius: 8px; text-align: left; font-size: 0.95em; }
+  .reveal .key-point::before { content: "→ "; color: var(--nmbu-green); font-weight: 700; }
+  .reveal .tavle-marker { background: var(--tavle-bg); border: 2px dashed var(--accent-orange); padding: 18px 24px; margin: 24px 0; border-radius: 10px; text-align: left; }
+  .reveal .tavle-marker .tavle-label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #b45309; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.15em; margin-bottom: 8px; }
+  .reveal .norsk-eksempel { background: #fef9f0; border-left: 4px solid #d97706; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .norsk-eksempel .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #b45309; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal table { margin: 16px auto; border-collapse: collapse; font-size: 0.85em; }
+  .reveal table th { background: var(--nmbu-green); color: white; padding: 10px 16px; font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; }
+  .reveal table td { padding: 8px 16px; border: 1px solid #d4d4d4; text-align: center; }
+  .reveal .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; text-align: left; }
+  .reveal .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-items: start; text-align: left; }
+  .reveal .caption { font-size: 0.7em; color: var(--text-muted); font-style: italic; margin-top: 8px; }
+  .reveal .slide-number { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); background: transparent; }
+  .reveal blockquote { background: var(--nmbu-green-light); border-left: 4px solid var(--nmbu-green); padding: 16px 22px; margin: 20px 0; font-style: italic; color: var(--text-dark); font-size: 0.95em; text-align: left; border-radius: 0 6px 6px 0; box-shadow: none; }
+  .reveal mjx-container { font-size: 1.0em !important; }
+</style>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }, svg: { fontCache: 'global' }, startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { if (window.Reveal) Reveal.layout(); }); } } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section class="title-slide">
+  <h1>Hva er aksjer?</h1>
+  <div class="subtitle">Egenkapital, eierskap og Oslo Børs</div>
+  <div class="meta">BUS 220 — Finansiering og investering<br>Atle G. Guttormsen · Høst 2026<br>Pensum: HRWJ kapittel 7</div>
+</section>
+
+<section>
+  <h2>Læringsmål</h2>
+  <p style="text-align:left">Etter denne forelesningen skal du:</p>
+  <ul>
+    <li>Forstå hva en aksje <strong>er</strong> — både som juridisk eierandel og som finansielt instrument</li>
+    <li>Skille mellom <strong>AS og ASA</strong> i Norge</li>
+    <li>Vite hva en <strong>emisjon</strong> er og hvorfor selskaper utsteder aksjer</li>
+    <li>Beskrive <strong>Oslo Børs</strong> som markedsplass og hovedindeksene (OBX, OSEBX)</li>
+    <li>Forstå <strong>aksjonærenes kontantstrøm</strong>: utbytte + kursendring</li>
+    <li>Kjenne praktiske valg for norske småinvestorer: <strong>aksjesparekonto, skjerming, indeksfond</strong></li>
+    <li>Forklare aksjemarkedets <strong>samfunnsrolle</strong></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Hva er en aksje?</h2>
+  <div class="definisjon">
+    <div class="term">Aksje</div>
+    En <strong>eierandel</strong> i et aksjeselskap. Eieren (aksjonæren) er en av selskapets eiere — sammen med alle andre som eier aksjer i samme selskap.
+  </div>
+  <p style="text-align:left">En aksje gir typisk tre rettigheter:</p>
+  <ol>
+    <li><strong>Utbytte</strong> — andel av selskapets overskudd</li>
+    <li><strong>Stemmerett</strong> — påvirkning på generalforsamling (én aksje, én stemme)</li>
+    <li><strong>Restverdi</strong> — andel av selskapets verdier ved avvikling, etter at kreditorene er betalt</li>
+  </ol>
+  <div class="key-point">Aksjeeier står <em>sist i køen</em> ved konkurs — men har samtidig <em>ubegrenset oppside</em> hvis selskapet lykkes.</div>
+</section>
+
+<section>
+  <h2>Aksjeselskap i Norge: AS vs ASA</h2>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">AS — Aksjeselskap</div>
+      <ul style="font-size: 0.9em">
+        <li>Minste minstekapital: <strong>kr 30 000</strong></li>
+        <li>Aksjer som regel ikke fritt omsettelige</li>
+        <li>Ikke børsnotert</li>
+        <li>Vanligste form i Norge — over 380 000 AS</li>
+        <li>Eksempler: små familieforetak, holdingselskaper</li>
+      </ul>
+    </div>
+    <div class="definisjon">
+      <div class="term">ASA — Allmennaksjeselskap</div>
+      <ul style="font-size: 0.9em">
+        <li>Minste minstekapital: <strong>kr 1 000 000</strong></li>
+        <li>Aksjer fritt omsettelige</li>
+        <li>Kan børsnoteres</li>
+        <li>Strengere krav til styring</li>
+        <li>Eksempler: Equinor ASA, DNB ASA, Telenor ASA</li>
+      </ul>
+    </div>
+  </div>
+  <p style="text-align:left; margin-top: 16px">For å handle aksjer på Oslo Børs må selskapet være et <strong>ASA</strong> (eller utenlandsk tilsvarende).</p>
+</section>
+
+<section>
+  <h2>Hvorfor utsteder selskaper aksjer?</h2>
+  <p style="text-align:left"><strong>Behovet:</strong> Selskaper trenger kapital for å investere — bygge fabrikker, kjøpe utstyr, forske, ekspandere.</p>
+  <p style="text-align:left"><strong>To valg:</strong></p>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">Egenkapital (aksjer)</div>
+      Eier-finansiering. Ingen tilbakebetalingsforpliktelse. Eier deler i overskudd og risiko.
+    </div>
+    <div class="definisjon">
+      <div class="term">Gjeld (obligasjoner, lån)</div>
+      Kreditor-finansiering. Faste rentebetalinger. Tilbakebetales ved forfall.
+    </div>
+  </div>
+  <div class="norsk-eksempel">
+    <div class="label">Norsk kontekst</div>
+    Da Equinor (tidl. Statoil) ble delprivatisert i 2001, utstedte staten aksjer for å hente inn kapital fra investorer. Staten beholdt ~67 %, mens resten ble lagt ut på Oslo Børs.
+  </div>
+</section>
+
+<section>
+  <h2>Emisjon — utstedelse av nye aksjer</h2>
+  <div class="definisjon">
+    <div class="term">Emisjon</div>
+    Når selskapet utsteder <em>nye</em> aksjer for å skaffe ny kapital. Antall utestående aksjer øker.
+  </div>
+  <p style="text-align:left"><strong>To hovedtyper:</strong></p>
+  <ul>
+    <li><strong>IPO (Initial Public Offering):</strong> Første gang aksjer legges ut for offentlig handel — selskapet blir børsnotert.</li>
+    <li><strong>Rettet emisjon / fortrinnsrettsemisjon:</strong> Etter børsnotering kan selskapet utstede nye aksjer for å hente mer kapital.</li>
+  </ul>
+  <div class="norsk-eksempel">
+    <div class="label">Norske IPO-er — eksempler</div>
+    <ul style="margin-top: 6px">
+      <li><strong>Mowi (tidl. Marine Harvest)</strong> — verdens største oppdrettsselskap</li>
+      <li><strong>Aker BP</strong> — oljeselskap</li>
+      <li><strong>Salmar</strong> — laks</li>
+      <li><strong>Autostore</strong> — robotisert lagerteknologi (IPO 2021, en av de største på Oslo Børs)</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Aksjebok og VPS</h2>
+  <p style="text-align:left">I Norge registreres alle aksjer i et sentralt register:</p>
+  <div class="definisjon">
+    <div class="term">VPS — Verdipapirsentralen</div>
+    Drevet av Euronext Securities Oslo. Holder oversikt over hvem som eier hvilke aksjer i alle norske ASA-er. Erstatter fysiske aksjebrev.
+  </div>
+  <p style="text-align:left">For mindre AS-er finnes <strong>aksjeboken</strong> — selskapets eget register over eierne. Ofte oppdatert manuelt.</p>
+  <div class="key-point">Når du kjøper Equinor-aksjer hos Nordnet, registreres eierskapet i VPS gjennom din depotforvalter. Du eier aksjene direkte — Nordnet bare administrerer.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL A</div>
+  <h2>Aksjebørsen<br>og handel</h2>
+</section>
+
+<section>
+  <h2>Hva er en aksjebørs?</h2>
+  <div class="definisjon">
+    <div class="term">Aksjebørs</div>
+    En <strong>markedsplass</strong> der kjøpere og selgere av aksjer møtes — direkte eller via meglere. Sørger for at handel skjer åpent, transparent og under regulerte rammer.
+  </div>
+  <p style="text-align:left">Børsen har to hovedfunksjoner:</p>
+  <ol>
+    <li><strong>Primærmarked</strong> — der nye aksjer utstedes (IPO, emisjon)</li>
+    <li><strong>Sekundærmarked</strong> — der eksisterende aksjer omsettes mellom investorer</li>
+  </ol>
+  <p style="text-align:left">Sekundærmarkedet er mye større — det handles aksjer for milliarder hver eneste dag. Selv om <em>selskapet</em> ikke får penger ved hver handel, gjør markedet at <em>aksjene blir likvide</em>, noe som gjør IPO-er mulig.</p>
+</section>
+
+<section>
+  <h2>Oslo Børs</h2>
+  <p style="text-align:left">Norges hovedaksjebørs. Eies av Euronext (siden 2019).</p>
+  <table style="font-size: 0.82em">
+    <tr><th></th><th>Fakta</th></tr>
+    <tr><td>Etablert</td><td>1819 (Christiania Børs)</td></tr>
+    <tr><td>Antall noterte selskaper</td><td>~230 (2024)</td></tr>
+    <tr><td>Total markedsverdi</td><td>~3 200 mrd. kr (2024)</td></tr>
+    <tr><td>Daglig omsetning</td><td>~5–8 mrd. kr</td></tr>
+    <tr><td>Eier</td><td>Euronext (siden 2019)</td></tr>
+  </table>
+  <div class="norsk-eksempel">
+    <div class="label">Tre markedsplasser hos Oslo Børs</div>
+    <ul style="margin-top: 6px">
+      <li><strong>Oslo Børs (hovedmarkedet)</strong> — store, modne selskaper</li>
+      <li><strong>Euronext Expand</strong> — mindre, vekstselskaper</li>
+      <li><strong>Euronext Growth</strong> — yngre selskaper med lavere noteringskrav</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Hovedindekser</h2>
+  <div class="definisjon">
+    <div class="term">OSEBX — Oslo Børs Benchmark Index</div>
+    Vektet portefølje av de viktigste aksjene på Oslo Børs. Brukes som referanse for «hele markedet». Reflekterer over 80 % av total markedsverdi.
+  </div>
+  <div class="definisjon">
+    <div class="term">OBX — Oslo Børs Total Index</div>
+    Indeks over de 25 mest likvide aksjene på Oslo Børs. Brukes mye av profesjonelle aktører. Reweighet to ganger i året.
+  </div>
+  <p style="text-align:left">Andre relevante indekser:</p>
+  <ul>
+    <li><strong>OSEAX</strong> — alle aksjer på Oslo Børs</li>
+    <li><strong>OSE40, OSE60</strong> — sektorindekser</li>
+  </ul>
+  <div class="key-point">Mange indeksfond og ETF-er følger OSEBX eller OBX. Du kan «kjøpe hele Oslo Børs» ved å investere i et OSEBX-fond.</div>
+</section>
+
+<section>
+  <h2>Sektorer på Oslo Børs</h2>
+  <p style="text-align:left">Norsk børs er sterkt preget av norske næringer:</p>
+  <table style="font-size: 0.85em">
+    <tr><th>Sektor</th><th>Andel</th><th>Eksempler</th></tr>
+    <tr><td>Energi (olje/gass)</td><td>~25 %</td><td>Equinor, Aker BP, Vår Energi</td></tr>
+    <tr><td>Finans</td><td>~15 %</td><td>DNB, Sparebank 1 Norge, Storebrand</td></tr>
+    <tr><td>Sjømat/oppdrett</td><td>~10 %</td><td>Mowi, Salmar, Lerøy, Grieg Seafood</td></tr>
+    <tr><td>Konsumvarer</td><td>~8 %</td><td>Orkla, Norsk Hydro</td></tr>
+    <tr><td>Telekom</td><td>~6 %</td><td>Telenor</td></tr>
+    <tr><td>Shipping/maritim</td><td>~6 %</td><td>Frontline, Wallenius Wilhelmsen</td></tr>
+    <tr><td>Industri</td><td>~5 %</td><td>Yara, Norsk Hydro</td></tr>
+  </table>
+  <p class="caption">Vektandeler ca. 2024, varierer over tid.</p>
+</section>
+
+<section>
+  <h2>Hvordan skjer handelen?</h2>
+  <p style="text-align:left">Oslo Børs bruker en <strong>elektronisk ordrebok</strong>. Hver aksje har en bok der kjøpsordrer og salgsordrer matches kontinuerlig.</p>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">Bid (kjøp)</div>
+      Den høyeste prisen en kjøper er villig til å betale akkurat nå.
+    </div>
+    <div class="definisjon">
+      <div class="term">Ask / Offer (salg)</div>
+      Den laveste prisen en selger er villig til å motta akkurat nå.
+    </div>
+  </div>
+  <p style="text-align:left; margin-top: 16px"><strong>Spread</strong> = ask − bid. For likvide aksjer (Equinor, DNB) er spreaden bare noen øre. For mindre likvide aksjer kan den være flere prosent.</p>
+  <div class="key-point">Hvis du bruker en <em>markedsordre</em> kjøper du til ask (eller selger til bid). Bruker du en <em>limitordre</em> setter du din egen pris og venter på match.</div>
+</section>
+
+<section>
+  <h2>Markedsordrer vs limitordrer</h2>
+  <table style="font-size: 0.85em">
+    <tr><th></th><th>Markedsordre</th><th>Limitordre</th></tr>
+    <tr><td>Pris</td><td>Beste tilgjengelige</td><td>Du angir maks/min pris</td></tr>
+    <tr><td>Sikkerhet for utførelse</td><td>Veldig høy</td><td>Avhenger av pris</td></tr>
+    <tr><td>Sikkerhet for pris</td><td>Lav (kursfall mulig)</td><td>Høy</td></tr>
+    <tr><td>Risiko</td><td>Få dårlig pris i illikvid aksje</td><td>Bli ikke utført</td></tr>
+    <tr><td>Når bruke?</td><td>Likvide aksjer, raskt utløp</td><td>Mindre likvide aksjer, tålmodig</td></tr>
+  </table>
+  <p style="text-align:left; margin-top: 16px"><strong>Praktisk tips:</strong> Sjekk alltid spread før kjøp. Hvis spreaden er over 1 %, vurder limitordre i midten av spreaden.</p>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL B</div>
+  <h2>Aksjer som<br>investeringsobjekt</h2>
+</section>
+
+<section>
+  <h2>To kilder til avkastning</h2>
+  <p style="text-align:left">Når du eier en aksje, kan du tjene penger på to måter:</p>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">1 · Utbytte (dividende)</div>
+      Selskapets overskudd som deles ut til aksjonærene. Vanligvis utbetalt 1–4 ganger per år. Utbytteandel = utbytte / aksjepris.
+    </div>
+    <div class="definisjon">
+      <div class="term">2 · Kursgevinst</div>
+      Differansen mellom kjøps- og salgspris. Aksjen kan stige (gevinst) eller falle (tap).
+    </div>
+  </div>
+  <p style="text-align:left; margin-top: 20px"><strong>Totalavkastning</strong> per periode:</p>
+  <div class="formel">
+    $r = \dfrac{D_1 + P_1 - P_0}{P_0} = \underbrace{\dfrac{D_1}{P_0}}_{\text{direkteavkastning}} + \underbrace{\dfrac{P_1 - P_0}{P_0}}_{\text{kursavkastning}}$
+  </div>
+</section>
+
+<section>
+  <h2>Historisk avkastning Oslo Børs</h2>
+  <p style="text-align:left">Hovedindeksen OSEBX har hatt sterk men volatil utvikling:</p>
+  <table style="font-size: 0.82em">
+    <tr><th>Periode</th><th>Gjennomsnittlig årlig avkastning</th></tr>
+    <tr><td>1996–2024 (28 år)</td><td>~10 % nominell, ~7 % real</td></tr>
+    <tr><td>Beste år (2009)</td><td>+64 %</td></tr>
+    <tr><td>Verste år (2008)</td><td>−54 %</td></tr>
+    <tr><td>Standardavvik</td><td>~22 %</td></tr>
+  </table>
+  <div class="key-point">Tommelregel: Oslo Børs har gitt ~7–8 % real avkastning over tid. Men variasjonene er store — du må regne med +/− 25 % et enkelt år.</div>
+  <p style="text-align:left; margin-top: 16px">Sammenligning med andre aktivaklasser (2014–2024, nominell):</p>
+  <ul style="font-size: 0.85em">
+    <li><strong>Oslo Børs (OSEBX):</strong> ~8 %</li>
+    <li><strong>S&amp;P 500 (USA):</strong> ~12 %</li>
+    <li><strong>Statsobligasjoner:</strong> ~3 %</li>
+    <li><strong>Bankinnskudd:</strong> ~1,5 %</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Risiko ved aksjer</h2>
+  <p style="text-align:left">Hvorfor gir aksjer høyere forventet avkastning enn obligasjoner? Fordi de innebærer mer risiko.</p>
+  <div class="definisjon">
+    <div class="term">Risikofaktorer</div>
+    <ul style="margin-top: 6px; font-size: 0.92em">
+      <li><strong>Markedsrisiko</strong> — hele markedet kan falle (2008, 2020)</li>
+      <li><strong>Bransjerisiko</strong> — enkelte sektorer kan ramme hardt (oljepris-fall 2014)</li>
+      <li><strong>Selskapsrisiko</strong> — enkeltselskaper kan gå konkurs (selv store, jf. Norske Skog 2017)</li>
+      <li><strong>Valutarisiko</strong> — utenlandske aksjer påvirkes av NOK/USD/EUR</li>
+      <li><strong>Likviditetsrisiko</strong> — vanskelig å selge små aksjer i krisetider</li>
+    </ul>
+  </div>
+  <div class="key-point">Risiko og avkastning henger nært sammen — vi kommer tilbake til dette i forelesningene om risiko/CAPM. Foreløpig: høyere forventet avkastning krever at du tåler større svingninger.</div>
+</section>
+
+<section>
+  <h2>Hvordan handler man aksjer i Norge?</h2>
+  <p style="text-align:left">Du trenger en <strong>aksjekonto hos en megler</strong> (online bank). De mest populære i Norge:</p>
+  <table style="font-size: 0.82em">
+    <tr><th>Megler</th><th>Kjennetegn</th><th>Kurtasje (typisk)</th></tr>
+    <tr><td><strong>Nordnet</strong></td><td>Størst i Skandinavia, brukervennlig</td><td>fra 1 kr</td></tr>
+    <tr><td><strong>DNB Markets</strong></td><td>Trygt, etablert</td><td>0,05 % min. 99 kr</td></tr>
+    <tr><td><strong>Sparebank 1 Markets</strong></td><td>God for norske aksjer</td><td>0,05 % min. 95 kr</td></tr>
+    <tr><td><strong>Pareto Securities</strong></td><td>For aktive tradere</td><td>fra 39 kr</td></tr>
+    <tr><td><strong>Saxo Bank</strong></td><td>Internasjonal, mange markeder</td><td>Lavt</td></tr>
+  </table>
+  <p style="text-align:left; margin-top: 16px"><strong>Skritt for å begynne:</strong></p>
+  <ol>
+    <li>Opprett aksjesparekonto (anbefales — se neste slide)</li>
+    <li>Overfør penger</li>
+    <li>Velg aksje, sett ordre, bekreft</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Aksjesparekonto (ASK)</h2>
+  <p style="text-align:left">En spesiell norsk skatteform innført i 2017 — gunstig for langsiktig aksjesparing.</p>
+  <div class="definisjon">
+    <div class="term">ASK — Aksjesparekonto</div>
+    En konto der du kan kjøpe og selge aksjer og aksjefond uten å betale gevinstskatt før du tar pengene UT av kontoen.
+  </div>
+  <p style="text-align:left"><strong>Fordeler:</strong></p>
+  <ul>
+    <li>Du kan <strong>bytte aksjer</strong> uten skattekonsekvenser så lenge pengene blir på kontoen</li>
+    <li>Du kan ta ut <strong>opprinnelig innskutt beløp uten skatt</strong></li>
+    <li>Bare gevinster som tas ut beskattes</li>
+  </ul>
+  <div class="key-point">Anbefaling: Alle norske aksjeinvesteringer bør ligge i en ASK — med mindre du har spesielle grunner til noe annet.</div>
+</section>
+
+<section>
+  <h2>Skatt på aksjer i Norge</h2>
+  <table style="font-size: 0.82em">
+    <tr><th>Type</th><th>Skattesats 2025</th><th>Kommentar</th></tr>
+    <tr><td><strong>Gevinst ved salg</strong></td><td>37,84 %</td><td>Effektiv sats (oppjustert med faktor 1,72)</td></tr>
+    <tr><td><strong>Utbytte</strong></td><td>37,84 %</td><td>Samme effektive sats</td></tr>
+    <tr><td><strong>Skjermingsfradrag</strong></td><td>~2,5 % p.a.</td><td>Risikofri avkastning unntatt skatt</td></tr>
+    <tr><td><strong>Formuesskatt</strong></td><td>1,0–1,1 %</td><td>På formue over kr 1,7 mill. (2025)</td></tr>
+  </table>
+  <div class="definisjon">
+    <div class="term">Skjermingsfradraget — viktig norsk regel</div>
+    Hvert år får du fradrag på en «risikofri avkastning» på dine aksjeinvesteringer. Bare avkastning <em>over</em> dette beskattes. Beskytter mot at skatten «spiser opp» det risikofrie alternativet.
+  </div>
+</section>
+
+<section>
+  <h2>Indeksfond vs enkeltaksjer</h2>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">Indeksfond</div>
+      Følger en indeks (f.eks. OSEBX eller globalt MSCI World). Lave kostnader (~0,1–0,3 % p.a.). Bred diversifisering automatisk. Ingen seleksjon — du «kjøper hele markedet».
+    </div>
+    <div class="definisjon">
+      <div class="term">Enkeltaksjer</div>
+      Du velger selv hvilke selskaper. Konsentrert risiko. Krever tid og analyse. Høyere mulig avkastning, men også mulig tap.
+    </div>
+  </div>
+  <div class="norsk-eksempel">
+    <div class="label">Et råd for de fleste småinvestorer</div>
+    Empirisk forskning (Sharpe 1991, Malkiel 2012): de fleste aktive investorer slår ikke indeksen, særlig etter kostnader. For småsparere er <strong>brede indeksfond</strong> i ASK ofte det beste valget. KLP, DNB og Nordnet har norske og globale indeksfond med kostnader under 0,3 %.
+  </div>
+</section>
+
+<section>
+  <h2>Aksjer og pensjon</h2>
+  <p style="text-align:left">Pensjonssparing i Norge er nært knyttet til aksjeinvesteringer:</p>
+  <div class="definisjon">
+    <div class="term">Folketrygd</div>
+    Statlig basispensjon, dekker grunnbehovene. Finansieres delvis av Oljefondet (Government Pension Fund Global) — verdens største enkeltforvalter med ~70 % i aksjer globalt.
+  </div>
+  <div class="definisjon">
+    <div class="term">OTP — Obligatorisk tjenestepensjon</div>
+    Lovpålagt fra arbeidsgiver siden 2006. Plasseres typisk i aksjefond.
+  </div>
+  <div class="definisjon">
+    <div class="term">IPS — Individuell pensjonssparing</div>
+    Frivillig spareform med skattefradrag (begrenset til kr 15 000/år). Du velger selv profil — aksjeandel typisk 60–100 %.
+  </div>
+  <div class="key-point">Sannsynligheten for at du allerede er en stor aksjeinvestor — via OTP, IPS og Oljefondet — er nær 100 %. Forskjellen er om du forstår hva du eier.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL C</div>
+  <h2>Aksjemarkedets<br>samfunnsrolle</h2>
+</section>
+
+<section>
+  <h2>Hvorfor trenger samfunnet aksjemarkedet?</h2>
+  <p style="text-align:left">Aksjemarkedet løser et fundamentalt økonomisk problem:</p>
+  <blockquote>«Det er to typer aktører i økonomien: De som har penger, og de som har gode ideer. Aksjemarkedet er der de møtes.»</blockquote>
+  <p style="text-align:left">Tre samfunnsoppgaver:</p>
+  <ol>
+    <li><strong>Kapital til bedrifter</strong> som kan vokse, ansette og innovere</li>
+    <li><strong>Likviditet for investorer</strong> som vil komme seg ut av investeringen</li>
+    <li><strong>Prisdannelse</strong> — markedsprisene reflekterer markedets samlede informasjon</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Effektivitet og prisdannelse</h2>
+  <div class="definisjon">
+    <div class="term">Effektivt marked-hypotesen (EMH)</div>
+    Aksjeprisene reflekterer all tilgjengelig informasjon. Du kan ikke konsekvent «slå markedet» basert på offentlig informasjon.
+  </div>
+  <p style="text-align:left">Tre versjoner av EMH:</p>
+  <ul>
+    <li><strong>Svak form:</strong> Priser reflekterer historiske kurser — teknisk analyse virker ikke</li>
+    <li><strong>Halv-sterk form:</strong> Priser reflekterer all offentlig informasjon — fundamental analyse av regnskap gir ingen edge</li>
+    <li><strong>Sterk form:</strong> Priser reflekterer all informasjon, inkludert innsideinformasjon — kun innsidehandel kan gi edge (og det er ulovlig)</li>
+  </ul>
+  <div class="key-point">I praksis: Norske aktørmarked viser halv-sterk form. De som tror de kan slå markedet over tid, har som regel bare hatt flaks.</div>
+</section>
+
+<section>
+  <h2>Likviditet og samfunnsverdi</h2>
+  <p style="text-align:left">Tenk hva som ville skje hvis du ikke kunne <em>selge</em> aksjer:</p>
+  <ul>
+    <li>Ingen ville investere langsiktig kapital</li>
+    <li>Selskaper ville miste tilgang til kapital</li>
+    <li>Vekst ville stagnere</li>
+  </ul>
+  <p style="text-align:left">Børsen er sentral fordi den gjør aksjer <em>likvide</em> — du kan komme deg inn og ut med kort varsel og lav kostnad. Det gjør folk villige til å risikere kapital, som igjen finansierer realøkonomien.</p>
+  <div class="norsk-eksempel">
+    <div class="label">Norsk perspektiv</div>
+    Oslo Børs er stor i forhold til Norges befolkning. Tilknyttet sterke næringer (olje, sjømat, finans) som krever betydelig kapital. Uten et velfungerende kapitalmarked ville Norge være vesentlig fattigere.
+  </div>
+</section>
+
+<section>
+  <h2>Aksjespareloven og folkets aksjer</h2>
+  <p style="text-align:left">Norge har en relativt aktiv småinvestor-kultur, takket være:</p>
+  <ul>
+    <li><strong>Aksjesparekonto</strong> (innført 2017, omtalt tidligere)</li>
+    <li><strong>Aksjespareprogrammet for ansatte</strong> — skattefavorisert kjøp av egen bedrifts aksjer (opptil 8 000 kr / år)</li>
+    <li><strong>Lave kurtasjer</strong> hos digitale meglere — Nordnet, mfl.</li>
+  </ul>
+  <div class="norsk-eksempel">
+    <div class="label">Vekst i småsparere</div>
+    Antall personer med aksjesparekonto i Norge har vokst fra ~50 000 i 2017 til over <strong>600 000 i 2024</strong>. En tredobling de siste fem år. Spesielt unge under 30 er aktive sparere.
+  </div>
+</section>
+
+<section>
+  <h2>Oppsummering forelesning 7</h2>
+  <ol style="font-size: 0.92em">
+    <li><strong>Aksje</strong> = eierandel i ASA/AS, gir utbytte, stemmerett og restverdi-andel.</li>
+    <li><strong>Børs</strong> = markedsplass for primær- og sekundærmarked. Oslo Børs har ~230 selskaper, OSEBX som hovedindeks.</li>
+    <li><strong>Avkastning</strong> = utbytte + kursgevinst. Historisk ~7–8 % real på Oslo Børs.</li>
+    <li><strong>Risiko</strong> kommer fra markeds-, bransje-, selskaps-, valuta- og likviditetsforhold.</li>
+    <li><strong>Praktisk:</strong> Aksjesparekonto, indeksfond, lave kostnader. Skjermingsfradrag beskytter risikofri avkastning.</li>
+    <li><strong>Samfunnsrolle:</strong> Kanaliserer kapital, sikrer likviditet, danner priser via markedsmekanismer.</li>
+  </ol>
+  <div class="key-point">I dag har vi sett <em>hva aksjer er</em>. Neste forelesning: <em>hvordan vi priser dem</em>.</div>
+</section>
+
+<section>
+  <h2>Til selvstudium</h2>
+  <div class="definisjon">
+    <div class="term">Praktisk øvelse</div>
+    Besøk <strong>euronext.com/no/markets/oslo</strong> eller <strong>Nordnet.no</strong>. Velg et av selskapene fra Oslo Børs (Equinor, DNB, Mowi, Telenor, Yara) og finn:
+    <ul style="margin-top: 6px; font-size: 0.92em">
+      <li>Dagens aksjekurs</li>
+      <li>Markedsverdi (børsverdi)</li>
+      <li>Antall utestående aksjer</li>
+      <li>Siste utbytte og direkteavkastning</li>
+      <li>P/E-forhold (vi forklarer dette i forelesning 9)</li>
+    </ul>
+  </div>
+  <div class="definisjon">
+    <div class="term">Lesning</div>
+    HRWJ kapittel 7. «Aksjer for alle» fra Oslo Børs/AksjeNorge — en god innføring for norske småinvestorer.
+  </div>
+  <p style="text-align:center; color: var(--nmbu-green); margin-top: 20px"><strong>Neste forelesning:</strong> Aksjeprising — dividendemodellen og Gordon-modellen.</p>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script>const params = new URLSearchParams(window.location.search);
+const useSlides = params.get('view') === 'slides';
+Reveal.initialize({
+  hash: !useSlides,
+  slideNumber: useSlides ? 'c/t' : false,
+  width: 1280,
+  height: 800,
+  margin: 0.06,
+  controls: useSlides,
+  progress: useSlides,
+  center: useSlides,
+  transition: useSlides ? 'slide' : 'none',
+  view: useSlides ? undefined : 'scroll',
+  scrollProgress: !useSlides,
+  plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
+});</script>
+</body>
+</html>

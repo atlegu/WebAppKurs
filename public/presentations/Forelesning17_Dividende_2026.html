@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BUS 220 – Forelesning 17: Dividende</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css" id="theme">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap');
+  :root { --nmbu-green: #046530; --nmbu-green-light: #f0f7f2; --accent-orange: #f59e0b; --tavle-bg: #fef3c7; --text-dark: #1a1a1a; --text-muted: #4b5563; }
+  .reveal { font-family: 'Source Serif 4', Georgia, serif; font-size: 28px; color: var(--text-dark); }
+  .reveal h1, .reveal h2, .reveal h3 { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); text-transform: none; letter-spacing: 0; font-weight: 700; }
+  .reveal h1 { font-size: 1.8em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.5em; line-height: 1.2; margin-bottom: 0.5em; }
+  .reveal h3 { font-size: 1.2em; }
+  .reveal p { line-height: 1.5; }
+  .reveal ul, .reveal ol { display: block; margin-left: 1em; }
+  .reveal li { margin-bottom: 0.4em; line-height: 1.5; }
+  .reveal .title-slide { background: var(--nmbu-green); color: white; padding: 60px; }
+  .reveal .title-slide h1 { color: white; font-size: 2.4em; margin-bottom: 0.3em; }
+  .reveal .title-slide .subtitle { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 1.4em; color: rgba(255,255,255,0.95); margin-bottom: 1em; }
+  .reveal .title-slide .meta { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 0.85em; color: rgba(255,255,255,0.8); margin-top: 2em; }
+  .reveal .section-divider { background: var(--nmbu-green); color: white; }
+  .reveal .section-divider h2 { color: white; font-size: 2.2em; }
+  .reveal .section-divider .section-number { font-family: 'Source Sans 3', Arial, sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9em; letter-spacing: 0.2em; margin-bottom: 1em; }
+  .reveal .definisjon { background: var(--nmbu-green-light); border-left: 5px solid var(--nmbu-green); padding: 18px 24px; margin: 20px 0; text-align: left; border-radius: 0 8px 8px 0; }
+  .reveal .definisjon .term { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: var(--nmbu-green); margin-bottom: 6px; }
+  .reveal .formel { background: white; border: 2px solid var(--nmbu-green); padding: 24px 32px; margin: 20px auto; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+  .reveal .key-point { background: var(--nmbu-green-light); padding: 16px 22px; margin: 16px 0; border-radius: 8px; text-align: left; font-size: 0.95em; }
+  .reveal .key-point::before { content: "→ "; color: var(--nmbu-green); font-weight: 700; }
+  .reveal .tavle-marker { background: var(--tavle-bg); border: 2px dashed var(--accent-orange); padding: 18px 24px; margin: 24px 0; border-radius: 10px; text-align: left; }
+  .reveal .tavle-marker .tavle-label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #b45309; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.15em; margin-bottom: 8px; }
+  .reveal .norsk-eksempel { background: #fef9f0; border-left: 4px solid #d97706; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .norsk-eksempel .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #b45309; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal .folkelig { background: #fff7ed; border-left: 4px solid #ea580c; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .folkelig .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #c2410c; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal table { margin: 16px auto; border-collapse: collapse; font-size: 0.78em; }
+  .reveal table th { background: var(--nmbu-green); color: white; padding: 8px 12px; font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; }
+  .reveal table td { padding: 6px 12px; border: 1px solid #d4d4d4; text-align: center; }
+  .reveal .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; text-align: left; }
+  .reveal .caption { font-size: 0.7em; color: var(--text-muted); font-style: italic; margin-top: 8px; }
+  .reveal mjx-container { font-size: 1.0em !important; }
+  .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+  .reveal blockquote { background: var(--nmbu-green-light); border-left: 4px solid var(--nmbu-green); padding: 14px 22px; margin: 16px 0; font-style: italic; font-size: 0.95em; text-align: left; border-radius: 0 6px 6px 0; box-shadow: none; }
+</style>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }, svg: { fontCache: 'global' }, startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { if (window.Reveal) Reveal.layout(); }); } } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section class="title-slide">
+  <h1>Dividende</h1>
+  <div class="subtitle">Utbytte, tilbakekjøp og spørsmålet ledelsen alltid må svare på</div>
+  <div class="meta">BUS 220 — Finansiering og investering<br>Atle G. Guttormsen · Høst 2026<br>Pensum: HRWJ kapittel 16</div>
+</section>
+
+<section>
+  <h2>Læringsmål</h2>
+  <ul>
+    <li>Forklare forskjellen mellom <strong>kontantdividende</strong>, <strong>tilbakekjøp</strong> og <strong>aksjeutbytte</strong></li>
+    <li>Forstå <strong>kronologien</strong> rundt utbytteutbetaling (ex-dividend-dagen)</li>
+    <li>Anvende <strong>MM3</strong> — dividendens irrelevans i perfekte markeder</li>
+    <li>Forklare <strong>hjemmelaget dividende</strong></li>
+    <li>Diskutere <strong>skatt og klienteffekter</strong></li>
+    <li>Forstå <strong>signaleffekten</strong> av utbytteendringer</li>
+    <li>Forklare hvordan dividende kan redusere <strong>agentkostnader</strong></li>
+    <li>Anvende <strong>Lintner-modellen</strong> for å forklare utbyttestabilitet</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Repetisjon fra forelesning 16</h2>
+  <ul>
+    <li>Kapitalstruktur: hvordan eiendelene er finansiert (E vs D)</li>
+    <li>MM1 (uten skatt): kapitalstruktur er irrelevant</li>
+    <li>MM med skatt: skatteskjoldet skaper verdi</li>
+    <li>Trade-off: skattefordel vs krisekostnader → optimum</li>
+    <li>Pecking order: intern → gjeld → EK</li>
+  </ul>
+  <div class="key-point">I dag: parallelt spørsmål, men på <strong>egenkapitalsiden</strong>. Hva gjør selskapet med overskuddet?</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL A</div>
+  <h2>Hvorfor er dividende et tema?</h2>
+</section>
+
+<section>
+  <h2>Hovedspørsmålet ledelsen står overfor</h2>
+  <p style="text-align:left">Når selskapet genererer kontantstrøm, har det <strong>fire</strong> alternativer:</p>
+  <ol>
+    <li>Betale ut <strong>kontantdividende</strong> til aksjonærene</li>
+    <li><strong>Kjøpe tilbake</strong> egne aksjer</li>
+    <li>Beholde for å <strong>investere</strong> i nye prosjekter</li>
+    <li>Beholde for å <strong>nedbetale gjeld</strong> eller bygge kasse</li>
+  </ol>
+  <div class="folkelig">
+    <div class="label">Folkelig — hvorfor er valget vanskelig?</div>
+    Tenk på en bonus du får på jobben. Skal du bruke den nå (forbruk = utbytte), spare i bank (=tilbakeholdt overskudd), eller investere i noe nytt (=reinvestering)? Selskapet står overfor akkurat samme valg, bare med større beløp.
+  </div>
+</section>
+
+<section>
+  <h2>Equinor — utbytte til staten</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Norsk eksempel — Equinor</div>
+    Equinor er ca. 67 % statseid. I 2022–2023 fikk staten over 100 mrd kr i utbytte fra Equinor — penger som flyter rett inn på Statsbudsjettet.<br><br>
+    Spørsmålet: <em>burde Equinor heller beholdt pengene til havvind-investeringer?</em>
+  </div>
+  <p style="text-align:left">Dette er en konkret versjon av <strong>utbytte-spørsmålet</strong>:</p>
+  <ul>
+    <li>Betal ut nå → staten/aksjonærene bestemmer hvordan pengene brukes</li>
+    <li>Behold → ledelsen bestemmer (havvind, oppkjøp, ny olje?)</li>
+  </ul>
+  <div class="key-point">Det er ikke et regneproblem — det er et <strong>styringsproblem</strong>.</div>
+</section>
+
+<section>
+  <h2>Vanlige påstander om dividende</h2>
+  <div class="two-col">
+    <div style="background: var(--nmbu-green-light); padding: 12px; border-radius: 6px;">
+      <h3 style="font-size:0.95em">Argumenter <em>for</em></h3>
+      <ul style="font-size:0.85em">
+        <li>Høy dividende = signal om gode resultater</li>
+        <li>Stabil dividende = trygghet</li>
+        <li>Disiplinerer ledelsen</li>
+        <li>Tiltrekker visse investorgrupper</li>
+        <li>Garantert kontantstrøm</li>
+      </ul>
+    </div>
+    <div style="background: #fef3c7; padding: 12px; border-radius: 6px;">
+      <h3 style="font-size:0.95em">Argumenter <em>mot</em></h3>
+      <ul style="font-size:0.85em">
+        <li>Reduserer kapital til investering</li>
+        <li>Dobbeltbeskatning</li>
+        <li>Selskapet vet best</li>
+        <li>Vanskelig å kutte uten kursfall</li>
+        <li>Aksjonærer kan selge aksjer selv hvis de trenger penger</li>
+      </ul>
+    </div>
+  </div>
+  <div class="key-point">Alle argumentene har noe for seg. Det viktige er å <strong>forstå hvorfor</strong> de gjelder — og når.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL B</div>
+  <h2>Former for utbytte</h2>
+</section>
+
+<section>
+  <h2>Kontantdividende — hvordan fungerer det?</h2>
+  <div class="definisjon">
+    <div class="term">Kontantdividende</div>
+    Selskapet betaler et bestemt beløp per aksje til alle som er registrert som eiere på en bestemt dato.
+  </div>
+  <p style="text-align:left">I Norge er det vanlig med <strong>én</strong> utbetaling i året. I USA fire (kvartalsvis).</p>
+  <ul>
+    <li><strong>Styret foreslår</strong> utbyttet i januar/februar</li>
+    <li><strong>Generalforsamlingen vedtar</strong> i april/mai (kan ikke vedta mer enn styret foreslo)</li>
+    <li><strong>Aksjelovens § 8-1</strong> begrenser hvor mye som kan deles ut</li>
+    <li><strong>Utbetales</strong> typisk i mai/juni</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Kronologien rundt utbetaling</h2>
+  <div style="margin: 20px auto; text-align: center;">
+    <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg">
+      <line x1="50" y1="120" x2="650" y2="120" stroke="#1a1a1a" stroke-width="2"/>
+      <circle cx="120" cy="120" r="8" fill="#046530"/>
+      <circle cx="280" cy="120" r="8" fill="#d97706"/>
+      <circle cx="440" cy="120" r="8" fill="#046530"/>
+      <circle cx="600" cy="120" r="8" fill="#046530"/>
+      <text x="120" y="100" text-anchor="middle" font-family="Source Sans 3" font-size="12" font-weight="700" fill="#046530">Kunngjøring</text>
+      <text x="120" y="150" text-anchor="middle" font-family="Source Sans 3" font-size="10" fill="#4b5563">Styret melder</text>
+      <text x="120" y="165" text-anchor="middle" font-family="Source Sans 3" font-size="10" fill="#4b5563">beløpet</text>
+      <text x="280" y="100" text-anchor="middle" font-family="Source Sans 3" font-size="12" font-weight="700" fill="#d97706">Ex-dividende</text>
+      <text x="280" y="150" text-anchor="middle" font-family="Source Sans 3" font-size="10" fill="#4b5563">Aksjen handles</text>
+      <text x="280" y="165" text-anchor="middle" font-family="Source Sans 3" font-size="10" fill="#4b5563">«uten» utbytte</text>
+      <text x="440" y="100" text-anchor="middle" font-family="Source Sans 3" font-size="12" font-weight="700" fill="#046530">Registrering</text>
+      <text x="440" y="150" text-anchor="middle" font-family="Source Sans 3" font-size="10" fill="#4b5563">Eiere som mottar</text>
+      <text x="600" y="100" text-anchor="middle" font-family="Source Sans 3" font-size="12" font-weight="700" fill="#046530">Utbetaling</text>
+      <text x="600" y="150" text-anchor="middle" font-family="Source Sans 3" font-size="10" fill="#4b5563">Penger på konto</text>
+      <text x="200" y="185" text-anchor="middle" font-family="Source Sans 3" font-size="10" font-style="italic" fill="#6b7280">~2 mnd</text>
+      <text x="360" y="185" text-anchor="middle" font-family="Source Sans 3" font-size="10" font-style="italic" fill="#6b7280">2 dager</text>
+      <text x="520" y="185" text-anchor="middle" font-family="Source Sans 3" font-size="10" font-style="italic" fill="#6b7280">~2 uker</text>
+    </svg>
+  </div>
+  <div class="key-point">Dagen aksjen «går ex» faller kursen typisk med utbyttebeløpet. Dette er <strong>ikke</strong> tap — det er bare at verdien har flyttet fra «inni aksjen» til kontanter til eieren.</div>
+</section>
+
+<section>
+  <h2>Ex-dividende dagen — hvorfor faller kursen?</h2>
+  <div class="folkelig">
+    <div class="label">Folkelig — pizza-analogi del 2</div>
+    Anta en hel pizza koster 100 kr i butikken. Nå tar vi ut to skiver og legger dem på et fat ved siden av. Det vi har igjen er en mindre pizza — verdt mindre.<br><br>
+    Slik er det med aksjekursen før og etter utbytte: før ex-dividende dagen var utbyttet «inni aksjen», etter er det «ved siden av».
+  </div>
+  <div class="formel big-formula">
+    $$P_{\text{før}} = P_{\text{ex}} + \text{Div}$$
+  </div>
+  <div class="key-point">I perfekte markeder skal kursfallet være <strong>akkurat lik</strong> dividenden. Empirisk: kursfallet er ofte litt mindre enn dividenden — pga skatt.</div>
+</section>
+
+<section>
+  <h2>Eksempel: utbytte i perfekt marked</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Et selskap har eiendeler verdt 500 mill (hvorav 50 mill kontanter). Gjeld 200 mill. 10 mill aksjer.
+  </div>
+  <p style="text-align:left"><strong>1) Hva er aksjekursen i dag?</strong></p>
+  <div class="formel">
+    $E = V - D = 500 - 200 = 300$ mill<br>
+    $P_0 = 300/10 = 30$ kr per aksje
+  </div>
+  <p style="text-align:left"><strong>2) Selskapet betaler ut 50 mill (5 kr per aksje) i utbytte:</strong></p>
+  <div class="formel">
+    Eiendeler etter: $500 - 50 = 450$ mill<br>
+    $E = 450 - 200 = 250$ mill<br>
+    $P_{\text{ex}} = 250/10 = 25$ kr per aksje
+  </div>
+  <div class="key-point">Kursen falt 5 kr — akkurat lik utbyttet. Investorene er like rike — bare i annen form (25 kr aksjer + 5 kr kontanter = 30 kr).</div>
+</section>
+
+<section>
+  <h2>Tilbakekjøp av egne aksjer</h2>
+  <div class="definisjon">
+    <div class="term">Tilbakekjøp (share repurchase, share buyback)</div>
+    Selskapet kjøper tilbake noen av sine egne aksjer fra markedet. Aksjene slettes ofte — antall utestående aksjer reduseres.
+  </div>
+  <p style="text-align:left">I Norge: tilnærmet forbudt frem til 1999. Nå vanlig (særlig blant store selskaper).</p>
+  <p style="text-align:left">Tre måter å gjennomføre:</p>
+  <ul>
+    <li><strong>Åpent marked</strong> — kjøp aksjer gjennom børs over tid (mest vanlig)</li>
+    <li><strong>Tender offer</strong> — tilby fast pris til alle aksjonærer</li>
+    <li><strong>Rettet kjøp</strong> — henvende seg til utvalgte investorer</li>
+  </ul>
+  <div class="folkelig">
+    <div class="label">Folkelig — selektiv dividende</div>
+    Med utbytte får <em>alle</em> aksjonærer kontanter, om de vil eller ikke. Med tilbakekjøp får <em>de som selger</em> kontanter, andre beholder eierandelen. Mer fleksibelt.
+  </div>
+</section>
+
+<section>
+  <h2>Eksempel: tilbakekjøp</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Samme selskap som før: V=500 (50 kontanter), D=200, 10 mill aksjer, P=30 kr. Selskapet bruker hele 50 mill kontanter på tilbakekjøp.
+  </div>
+  <p style="text-align:left"><strong>Antall aksjer kjøpt tilbake:</strong></p>
+  <div class="formel">
+    $50/30 = 1{,}67$ mill aksjer
+  </div>
+  <p style="text-align:left"><strong>Etter tilbakekjøp:</strong></p>
+  <ul>
+    <li>Eiendeler: $500 - 50 = 450$ mill</li>
+    <li>Gjeld: 200 mill</li>
+    <li>Egenkapital: 250 mill</li>
+    <li>Antall aksjer: $10 - 1{,}67 = 8{,}33$ mill</li>
+    <li>Ny kurs: $250/8{,}33 = 30$ kr</li>
+  </ul>
+  <div class="key-point">Aksjekursen er <strong>uendret</strong> 30 kr! Forskjellen fra utbytte: med utbytte falt kursen til 25 kr, men du fikk 5 kr i hånden. Med tilbakekjøp beholdt du kurs på 30, men solgte eventuelt en del av aksjene.</div>
+</section>
+
+<section>
+  <h2>Sammenligning: dividende vs tilbakekjøp</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Et selskap vurderer å bruke 10 mill på enten dividende eller tilbakekjøp. Verdien av EK om ett år blir 150 mill i begge tilfeller. I dag: 1 mill aksjer.
+  </div>
+  <table>
+    <tr><th></th><th>Dividende</th><th>Tilbakekjøp</th></tr>
+    <tr><td>Antall aksjer etter</td><td>1 mill</td><td>0,9375 mill</td></tr>
+    <tr><td>EK om 1 år</td><td>150 mill</td><td>150 mill</td></tr>
+    <tr><td>Aksjekurs om 1 år</td><td>150 kr</td><td>160 kr</td></tr>
+    <tr><td>Dividende per aksje</td><td>10 kr</td><td>0</td></tr>
+    <tr><td>Total per aksje (kurs + div)</td><td>160 kr</td><td>160 kr</td></tr>
+  </table>
+  <div class="key-point">I et perfekt marked: <strong>akkurat samme</strong> total verdi til aksjonærene — bare i ulik form. Tilbakekjøp er som «dividende du må be om».</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL C</div>
+  <h2>MM3 — Dividendens irrelevans</h2>
+</section>
+
+<section>
+  <h2>Modigliani-Miller proposisjon 3</h2>
+  <blockquote>«For en gitt investeringsplan og under perfekte markeder er selskapets verdi <em>uavhengig</em> av dets dividendepolitikk.»<br>— Miller & Modigliani (1961)</blockquote>
+  <p style="text-align:left">Forutsetninger:</p>
+  <ol>
+    <li>Ingen skatter</li>
+    <li>Ingen transaksjonskostnader</li>
+    <li>Ingen informasjonsasymmetri</li>
+    <li>Fast investeringsplan (uavhengig av utbytte)</li>
+  </ol>
+  <div class="key-point">Dividendepolitikk er bare en valgfri «pakke»: tar du ut nå eller senere. Verdien bestemmes av <strong>kontantstrøm fra drift og investering</strong>, ikke av hvordan vi pakker det.</div>
+</section>
+
+<section>
+  <h2>Pizzaanalogien — versjon 3</h2>
+  <div class="folkelig">
+    <div class="label">Folkelig</div>
+    Tenk på selskapets fremtidige kontantstrøm som en pizza som blir produsert hvert år.<br><br>
+    Du kan velge: spise en stor del nå (=høyt utbytte) og mindre senere, eller mindre nå og mer senere. Totalmengden er den samme.<br><br>
+    Nåverdien av «alle skivene» er det samme — bare timingen er ulik.
+  </div>
+  <div class="formel big-formula">
+    $$V = \sum_{t=0}^{\infty} \frac{CF_t}{(1+r)^t}$$
+  </div>
+  <div class="key-point">Verdien er nåverdien av total kontantstrøm — uavhengig av om den deles ut tidlig eller sent. Det er <strong>investeringsbeslutninger</strong> og driftsoverskudd som skaper verdi, ikke dividendepolitikken.</div>
+</section>
+
+<section>
+  <h2>Hjemmelaget dividende</h2>
+  <p style="text-align:left">Hvis selskapet ikke betaler utbytte, kan investoren <strong>selv</strong> selge noen aksjer for å skaffe kontanter. Hvis selskapet betaler for høyt utbytte, kan investoren <strong>kjøpe</strong> flere aksjer for å reinvestere.</p>
+  <div class="folkelig">
+    <div class="label">Folkelig — investoren kan justere selv</div>
+    Pensjonist Per vil ha 50 000 kr i året i kontantstrøm fra aksjeporteføljen. Hvis selskapene ikke betaler utbytte, kan han selge aksjer for 50 000.<br><br>
+    Investor Inga vil derimot reinvestere alt. Hvis selskapene betaler høyt utbytte, kan hun kjøpe flere aksjer for utbyttet.<br><br>
+    Begge får akkurat det de vil — <em>uavhengig av</em> hvilken utbyttepolitikk selskapet velger.
+  </div>
+</section>
+
+<section>
+  <h2>Eksempel: hjemmelaget dividende</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Et selskap har V=500 mill (50 kontanter), D=200 mill, 10 mill aksjer. Kursen er 30 kr.<br>
+    Selskapet ønsker å betale ut <strong>100 mill</strong> i utbytte. Det finansieres med 50 mill kontanter pluss <strong>50 mill</strong> ny EK.
+  </div>
+  <p style="text-align:left"><strong>1) Hvor mange nye aksjer må utstedes?</strong></p>
+  <div class="formel">
+    $50/30 = 1{,}67$ mill nye aksjer
+  </div>
+  <p style="text-align:left"><strong>2) Etter utstedelse og utbytte:</strong></p>
+  <ul>
+    <li>Eiendeler: $500 + 50 - 100 = 450$ mill</li>
+    <li>EK: $250$ mill, antall aksjer: $11{,}67$ mill</li>
+    <li>Ny kurs: $250/11{,}67 = 21{,}43$ kr</li>
+  </ul>
+  <p style="text-align:left">Eksisterende aksjonær: hadde 10 aksjer × 30 = 300 kr. Nå: 10 aksjer × 21,43 + 10×(100/10) = 214 + 100 = 314 kr? <strong>Nei — sjekk:</strong> utbyttet ble fordelt på <em>alle</em> nye+gamle aksjer (11,67 mill), så per gammel aksje: $100/11{,}67 \approx 8{,}57$.</p>
+  <div class="key-point">Total verdi for gammel aksjonær: $10 \times 21{,}43 + 10 \times 8{,}57 = 300$ kr. <strong>Uendret</strong> — som MM3 forutsier.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL D</div>
+  <h2>Skatt og klienteffekter</h2>
+</section>
+
+<section>
+  <h2>Norsk skattevirkelighet 2026</h2>
+  <p style="text-align:left">I virkeligheten påvirker skatt utbytte-spørsmålet:</p>
+  <ul>
+    <li><strong>Selskapsskatt:</strong> 22 % på overskudd</li>
+    <li><strong>Utbytteskatt personlig:</strong> 22 % × 1,72 = 37,84 % (oppjustert sats 2026)</li>
+    <li><strong>Gevinstskatt personlig:</strong> Samme 37,84 % på realisert gevinst</li>
+    <li><strong>Skjermingsfradrag:</strong> Trekker fra risikofri avkastning før skatt på utbytte</li>
+    <li><strong>Aksjesparekonto (ASK):</strong> Utsetter gevinstskatt til uttak</li>
+  </ul>
+  <div class="folkelig">
+    <div class="label">Folkelig — norsk dobbeltbeskatning</div>
+    Et overskudd på 100 kr i selskapet betales først 22 kr i selskapsskatt → 78 kr igjen. Hvis det betales ut som utbytte, betaler aksjonæren 22 % × 1,72 = ~30 kr ekstra → 48 kr igjen. <strong>Halvparten</strong> går til skatt.
+  </div>
+</section>
+
+<section>
+  <h2>Klienteffekter (clientele effects)</h2>
+  <p style="text-align:left">Ulike investorgrupper har ulik skatte- og likviditetsposisjon. Hver gruppe foretrekker en bestemt utbyttepolitikk:</p>
+  <table>
+    <tr><th>Investorgruppe</th><th>Preferanse</th><th>Hvorfor</th></tr>
+    <tr><td>Pensjonist (lav skatt)</td><td>Høyt utbytte</td><td>Trenger kontantstrøm</td></tr>
+    <tr><td>Pensjonsfond (skattefritt)</td><td>Indifferent</td><td>Ikke skatt</td></tr>
+    <tr><td>Høyinntektsperson</td><td>Lavt utbytte</td><td>Unngå utbytteskatt</td></tr>
+    <tr><td>Holdingselskap</td><td>Høyt utbytte</td><td>Fritaksmetoden</td></tr>
+    <tr><td>Vekstinvestor</td><td>Lavt utbytte</td><td>Reinvestering = avkastning</td></tr>
+  </table>
+  <div class="key-point">Selskapene tilpasser ofte utbyttepolitikken til sin <strong>typiske aksjonær</strong>. Bedrifter med mange pensjonister som eiere (DNB, Telenor) betaler stabilt utbytte. Vekstaksjer betaler lite.</div>
+</section>
+
+<section>
+  <h2>Norske aksjesparekonto (ASK)</h2>
+  <div class="folkelig">
+    <div class="label">Folkelig — hvorfor er ASK et godt sparemiddel?</div>
+    På Aksjesparekonto kan du <strong>bytte aksjer</strong> uten å utløse skatt på gevinst — bare når du tar penger ut. Det betyr at du kan reinvestere utbytte og gevinster skattefritt.<br><br>
+    For aksjer med høy utbytte: ASK er fordelaktig (skatten utsettes).<br>
+    For aksjer med lav utbytte: ASK er mindre viktig.
+  </div>
+  <p style="text-align:left">Innført i 2017, sterkt promotert av norske banker (Nordnet, DNB, Pareto). Over 1 mill nordmenn har ASK i 2024.</p>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL E</div>
+  <h2>Signaleffekter</h2>
+</section>
+
+<section>
+  <h2>Utbytte som signal</h2>
+  <p style="text-align:left">Ledelsen vet mer om selskapets fremtid enn investorene. Endringer i utbytte er ofte et <strong>signal</strong> om hva ledelsen tror om fremtiden.</p>
+  <ul>
+    <li><strong>Økt utbytte</strong> → ledelsen er trygg på fremtidig kontantstrøm</li>
+    <li><strong>Redusert utbytte</strong> → ledelsen frykter problemer</li>
+    <li><strong>Ekstraordinært utbytte</strong> → engangsoverskudd, ikke gjentakelse</li>
+  </ul>
+  <div class="key-point">Empirisk: økt utbytte → aksjekursen stiger med 1–2 %. Kuttet utbytte → kursen faller 5–10 %. Asymmetrisk reaksjon — markedet er mer skeptisk til dårlige enn til gode nyheter.</div>
+</section>
+
+<section>
+  <h2>Hvorfor er utbyttekutt så ille?</h2>
+  <div class="folkelig">
+    <div class="label">Folkelig — Equinor kutter utbyttet i 2020</div>
+    Da oljeprisen kollapset i april 2020, kuttet Equinor utbyttet 67 % (fra 0,27 USD til 0,09 USD per kvartal). Aksjen falt 4 % på dagen — <strong>i tillegg til</strong> det generelle markedsfallet.<br><br>
+    Hvorfor så sterk reaksjon? Det er sjelden selskaper kutter utbyttet uten god grunn. Markedet tolket det som «ting er verre enn dere tror».
+  </div>
+  <p style="text-align:left">Empirisk regel («John Lintners observasjon»):</p>
+  <ul>
+    <li>Selskaper kutter <strong>kun</strong> utbyttet når det er absolutt nødvendig</li>
+    <li>De øker det <strong>sakte</strong> for å unngå å måtte kutte senere</li>
+    <li>De setter utbytte langt under maksimal kapasitet for å ha en buffer</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Tilbakekjøp som signal</h2>
+  <p style="text-align:left">Hvis ledelsen mener aksjen er <strong>undervurdert</strong>, er tilbakekjøp en god investering. Markedet vet dette — og tolker tilbakekjøp som signal om at ledelsen tror aksjen er billig.</p>
+  <div class="folkelig">
+    <div class="label">Folkelig — Warren Buffett og Berkshire</div>
+    Warren Buffett bruker sjelden utbytte, men har gjort store tilbakekjøp av Berkshire Hathaway-aksjer når han mener kursen er lav. Han har sagt: «I will only repurchase shares when I believe they trade well below intrinsic value.»<br>
+    Aksjekursen reagerer typisk positivt på slike kunngjøringer.
+  </div>
+  <div class="key-point">Tilbakekjøp signaliserer ledelsens tro på selskapet — uten å forplikte til faste fremtidige utbetalinger.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL F</div>
+  <h2>Agentproblemer og styring</h2>
+</section>
+
+<section>
+  <h2>Dividende som styringsmekanisme</h2>
+  <p style="text-align:left">Michael Jensen (1986): «Free cash flow problem» — overskuddslikviditet kan friste ledelsen til:</p>
+  <ul>
+    <li>Empire building — kjøpe opp andre selskaper for å bli større</li>
+    <li>Overinvestering i tvilsomme prosjekter</li>
+    <li>Luksuriøse hovedkvarter, jets, perks</li>
+    <li>Lette dager («the quiet life»)</li>
+  </ul>
+  <div class="folkelig">
+    <div class="label">Folkelig — penger brenner i lommen</div>
+    Tenk på en venn som arver 5 mill. Hvis pengene står på kontoen, frister det å kjøpe ting du ikke trenger. Hvis du putter dem på BSU eller boliglån-nedbetaling, er du «forpliktet» og bruker dem mer fornuftig.<br><br>
+    Slik er det med selskaper også. Stor kontantbeholdning kan friste ledelsen til ufornuftige investeringer.
+  </div>
+  <div class="key-point">Utbytte og tilbakekjøp er <strong>disiplinerende</strong> — de fjerner overskuddslikviditet og tvinger ledelsen til å fokusere.</div>
+</section>
+
+<section>
+  <h2>Gjeld + utbytte = styringsmekanisme</h2>
+  <p style="text-align:left">Når selskapet:</p>
+  <ul>
+    <li>Tar opp gjeld — må betjene rente og avdrag</li>
+    <li>Forplikter seg til utbytte — må generere kontantstrøm</li>
+  </ul>
+  <p style="text-align:left">… så blir ledelsen <strong>tvunget</strong> til å være effektiv. Mindre slakk = mindre rom for sløsing.</p>
+  <div class="norsk-eksempel">
+    <div class="label">Norsk eksempel</div>
+    Telenor og Equinor: Begge statseide. Begge betaler høyt utbytte. Begge har relativt mye gjeld. Dette tvinger fokus på lønnsomhet — staten som eier vil gjerne ha «sin del» av kontantstrømmen.
+  </div>
+  <div class="key-point">Dividende er en form for <strong>aksjonæroppfølging</strong> — ikke bare en utbetaling.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL G</div>
+  <h2>I praksis</h2>
+</section>
+
+<section>
+  <h2>Lintner-modellen — stabilitet</h2>
+  <p style="text-align:left">John Lintner (1956) intervjuet 28 amerikanske bedriftsledere. Konklusjonen:</p>
+  <ol>
+    <li>Bedrifter har et <strong>målsatt utbytteforhold</strong> (typisk 40–60 % av resultatet)</li>
+    <li>De justerer utbyttet <strong>sakte</strong> mot dette målet</li>
+    <li>De er <strong>svært motvillige</strong> til å kutte utbyttet</li>
+  </ol>
+  <div class="formel big-formula">
+    $$\text{DPS}_t = \text{DPS}_{t-1} + a \cdot (b \cdot \text{EPS}_t - \text{DPS}_{t-1})$$
+  </div>
+  <ul>
+    <li>$a$ — justeringsfaktor (typisk 0,3–0,5)</li>
+    <li>$b$ — målsatt utdelingsforhold</li>
+  </ul>
+  <div class="key-point">Resultatet: utbytte beveger seg <strong>tregere</strong> enn overskuddet. Stabile utbytter selv i magre år, langsom oppjustering i gode år.</div>
+</section>
+
+<section>
+  <h2>Lintner i praksis — Equinor</h2>
+  <table>
+    <tr><th>År</th><th>EPS (USD)</th><th>Utbytte (USD)</th><th>Payout</th></tr>
+    <tr><td>2018</td><td>2,29</td><td>1,00</td><td>44 %</td></tr>
+    <tr><td>2019</td><td>0,57</td><td>1,09</td><td>191 %</td></tr>
+    <tr><td>2020</td><td>−1,71</td><td>0,54</td><td>n/a (tap)</td></tr>
+    <tr><td>2021</td><td>2,57</td><td>0,72</td><td>28 %</td></tr>
+    <tr><td>2022</td><td>9,53</td><td>3,20</td><td>34 %</td></tr>
+    <tr><td>2023</td><td>3,55</td><td>3,60</td><td>101 %</td></tr>
+  </table>
+  <div class="key-point">Equinor beholdt høyt utbytte selv i 2019 (lav EPS) og 2020 (tap) — pga sterk styring og stort kontantbeholdning. Klassisk Lintner-mønster.</div>
+</section>
+
+<section>
+  <h2>Aksjesplitt — fortynning uten verdi</h2>
+  <div class="definisjon">
+    <div class="term">Aksjesplitt (stock split)</div>
+    Selskapet doblet (eller mer) antall aksjer, mens halverer (eller mer) kursen. Total verdi uendret.
+  </div>
+  <p style="text-align:left">Eksempel: Apple 4:1 split i 2020. Hver aksje à 500 USD ble til 4 aksjer à 125 USD. Du eide nå 4× så mange — total verdi like.</p>
+  <div class="folkelig">
+    <div class="label">Folkelig — hvorfor gjøres aksjesplitt?</div>
+    For å gjøre aksjen mer «tilgjengelig» for små investorer. Hvis en aksje koster 5000 kr, kjøper folk én. Hvis den koster 50 kr, kjøper de 100. Større omsetning kan øke likviditet.<br><br>
+    Aksjesplitt er kosmetisk — som å bytte en 500 kr-seddel mot 5 × 100 kr-sedler. Verdi: identisk.
+  </div>
+</section>
+
+<section>
+  <h2>Empiriske mønstre</h2>
+  <ul>
+    <li>~50 % av norske noterte selskaper betaler ingen utbytte (særlig vekst og oppstart)</li>
+    <li>Olje, bank, telekom: høyt og stabilt utbytte</li>
+    <li>Tech, biotech: lavt eller intet utbytte — gjerne tilbakekjøp i gode tider</li>
+    <li>Selskaper betaler aldri ut <em>høyere</em> utbytte enn de tror er bærekraftig</li>
+    <li>Antall børsnoterte selskaper med tilbakekjøp har <strong>doblet seg</strong> siden 2010</li>
+    <li>I USA: tilbakekjøp har vært større enn utbytte siden 2010</li>
+  </ul>
+  <div class="norsk-eksempel">
+    <div class="label">Norsk situasjon</div>
+    DNB og Equinor sammen sto for over 30 % av alt utbytte fra OSEBX i 2023. Konsentrasjonen er stor.
+  </div>
+</section>
+
+<section>
+  <h2>Når øker eller reduserer selskapene utbyttet?</h2>
+  <h3>Øker utbyttet når:</h3>
+  <ul>
+    <li>Stabilt høy kontantstrøm — mer enn investeringsmuligheter</li>
+    <li>Stor «free cash flow» (Jensen 1986)</li>
+    <li>Sterk EK-posisjon</li>
+    <li>Signal til investorer om fremtidsutsikter</li>
+  </ul>
+  <h3>Reduserer eller fjerner utbyttet når:</h3>
+  <ul>
+    <li>Likviditetsproblemer eller finansiell krise</li>
+    <li>Store nye investeringsmuligheter</li>
+    <li>Restrukturering / oppkjøp</li>
+    <li>Endring i strategi (vekst over kontantstrøm)</li>
+  </ul>
+  <div class="key-point">Modne selskaper betaler ofte ut mer, vekstselskaper holder tilbake. Som Lintner viste: endringer skjer sakte.</div>
+</section>
+
+<section>
+  <h2>Oppsummering forelesning 17</h2>
+  <ol style="font-size: 0.85em">
+    <li><strong>Fire alternativer</strong> for kontantstrømmen: utbytte, tilbakekjøp, investering, gjeldsnedbetaling</li>
+    <li><strong>Kontantdividende</strong>: alle får, kronologi med ex-dividende-dag</li>
+    <li><strong>Tilbakekjøp</strong>: selektiv, mer fleksibelt, økende popularitet</li>
+    <li><strong>MM3</strong>: i perfekte markeder spiller dividendepolitikken ingen rolle</li>
+    <li><strong>Hjemmelaget dividende</strong>: investoren kan justere selv</li>
+    <li><strong>Skatt</strong> skaper klienteffekter — ulike investorgrupper foretrekker ulik politikk</li>
+    <li><strong>Signaleffekter</strong>: økt utbytte → positivt, kutt → svært negativt</li>
+    <li><strong>Lintner-modellen</strong>: utbytter er stabile, justeres sakte</li>
+    <li>Dividende kan redusere <strong>agentkostnader</strong> ved «free cash flow»</li>
+    <li>I praksis: bransje, strategi og aksjonærtype styrer politikken</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Til selvstudium</h2>
+  <div class="definisjon">
+    <div class="term">Oppgaver</div>
+    <strong>Oppgavesett 8 — Kapitalstruktur og dividende</strong>, oppgavene 9–12 dekker dividende, tilbakekjøp og hjemmelaget dividende.
+  </div>
+  <div class="definisjon">
+    <div class="term">Pensum</div>
+    <strong>HRWJ kapittel 16</strong>. Lintner (1956) er klassikeren. Brav, Graham, Harvey & Michaely (2005) — «Payout policy in the 21st century» — fremragende empirisk studie.
+  </div>
+  <div class="definisjon">
+    <div class="term">Tenk over</div>
+    Hvis du var styreleder i et nytt teknologiselskap som nettopp gikk i overskudd: ville du innført utbytte? Hvilke argumenter taler for, hvilke imot? Hvordan ville du eventuelt strukturert det?
+  </div>
+  <p style="text-align:center; color: var(--nmbu-green); margin-top: 10px"><strong>Neste:</strong> Forelesning 18 — Opsjoner og opsjonsprising.</p>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script>const params = new URLSearchParams(window.location.search);
+const useSlides = params.get('view') === 'slides';
+Reveal.initialize({
+  hash: !useSlides,
+  slideNumber: useSlides ? 'c/t' : false,
+  width: 1280,
+  height: 800,
+  margin: 0.06,
+  controls: useSlides,
+  progress: useSlides,
+  center: useSlides,
+  transition: useSlides ? 'slide' : 'none',
+  view: useSlides ? undefined : 'scroll',
+  scrollProgress: !useSlides,
+  plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
+});</script>
+</body>
+</html>

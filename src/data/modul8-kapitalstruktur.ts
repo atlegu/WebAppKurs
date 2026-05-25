@@ -1,4 +1,4 @@
-import { Module, InteractiveModelContent } from '../types/course';
+import { Module, InteractiveModelContent, PresentationContent } from '../types/course';
 
 export const modul8KapitalstrukturModule: Module = {
   id: 'modul-9-kapitalstruktur',
@@ -13,6 +13,28 @@ export const modul8KapitalstrukturModule: Module = {
     'Forstå tilbakekjøp av aksjer som alternativ til dividende'
   ],
   sections: [
+    // ===================================
+    // SEKSJON: Forelesningsslides
+    // ===================================
+    {
+      id: 'kapitalstruktur-forelesningsslides',
+      title: 'Forelesningsslides',
+      icon: '🎓',
+      order: 0,
+      content: [
+        {
+          id: 'kapitalstruktur-pres',
+          type: 'presentation',
+          order: 1,
+          title: 'Forelesningsslides: Kapitalstruktur og dividende',
+          description: 'Slides fra klasseromsforelesningene om kapitalstruktur og dividendepolitikk. Dekker Modigliani-Miller, gjeldsnivå, og tilbakekjøp vs. dividende.',
+          slides: [
+            { title: 'Kapitalstruktur', filename: 'Forelesning16_Kapitalstruktur_2026.html' },
+            { title: 'Dividendepolitikk', filename: 'Forelesning17_Dividende_2026.html' }
+          ]
+        } as PresentationContent
+      ]
+    },
     {
       id: 'kapitalstruktur-8-1-grunnleggende',
       title: 'Grunnleggende om kapitalstruktur',

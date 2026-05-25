@@ -1,4 +1,4 @@
-import { Module, CalculatorContent } from '../types/course';
+import { Module, CalculatorContent, PresentationContent } from '../types/course';
 
 export const modul2TidverdiModule: Module = {
   id: 'modul-2-tidverdi',
@@ -13,6 +13,28 @@ export const modul2TidverdiModule: Module = {
     'Bruke tidsverdi-konsepter i personlige finansbeslutninger'
   ],
   sections: [
+    // ===================================
+    // SEKSJON: Forelesningsslides
+    // ===================================
+    {
+      id: 'tidverdi-forelesningsslides',
+      title: 'Forelesningsslides',
+      icon: '🎓',
+      order: 0,
+      content: [
+        {
+          id: 'tidverdi-pres',
+          type: 'presentation',
+          order: 1,
+          title: 'Forelesningsslides: Pengenes tidsverdi',
+          description: 'Slides fra klasseromsforelesningene om renteregning og pengenes tidsverdi. Scroll gjennom for en kompakt gjennomgang av nåverdi, fremtidsverdi, annuiteter og perpetuiteter.',
+          slides: [
+            { title: 'Renteregning del 1 — FV, PV, annuiteter', filename: 'Forelesning3_Renteregning_del1_2026.html' },
+            { title: 'Renteregning del 2 — Effektiv rente, lån, realverdi', filename: 'Forelesning4_Renteregning_del2_2026.html' }
+          ]
+        } as PresentationContent
+      ]
+    },
     // ===================================
     // SEKSJON 2.1: Hva er penger egentlig verdt?
     // ===================================

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BUS 220 – Forelesning 14: Risiko og avkastning (del 3)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css" id="theme">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap');
+  :root { --nmbu-green: #046530; --nmbu-green-light: #f0f7f2; --accent-orange: #f59e0b; --tavle-bg: #fef3c7; --text-dark: #1a1a1a; --text-muted: #4b5563; }
+  .reveal { font-family: 'Source Serif 4', Georgia, serif; font-size: 28px; color: var(--text-dark); }
+  .reveal h1, .reveal h2, .reveal h3 { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); text-transform: none; letter-spacing: 0; font-weight: 700; }
+  .reveal h1 { font-size: 1.8em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.5em; line-height: 1.2; margin-bottom: 0.5em; }
+  .reveal h3 { font-size: 1.2em; }
+  .reveal p { line-height: 1.5; }
+  .reveal ul, .reveal ol { display: block; margin-left: 1em; }
+  .reveal li { margin-bottom: 0.4em; line-height: 1.5; }
+  .reveal .title-slide { background: var(--nmbu-green); color: white; padding: 60px; }
+  .reveal .title-slide h1 { color: white; font-size: 2.4em; margin-bottom: 0.3em; }
+  .reveal .title-slide .subtitle { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 1.4em; color: rgba(255,255,255,0.95); margin-bottom: 1em; }
+  .reveal .title-slide .meta { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 0.85em; color: rgba(255,255,255,0.8); margin-top: 2em; }
+  .reveal .section-divider { background: var(--nmbu-green); color: white; }
+  .reveal .section-divider h2 { color: white; font-size: 2.2em; }
+  .reveal .section-divider .section-number { font-family: 'Source Sans 3', Arial, sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9em; letter-spacing: 0.2em; margin-bottom: 1em; }
+  .reveal .definisjon { background: var(--nmbu-green-light); border-left: 5px solid var(--nmbu-green); padding: 18px 24px; margin: 20px 0; text-align: left; border-radius: 0 8px 8px 0; }
+  .reveal .definisjon .term { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: var(--nmbu-green); margin-bottom: 6px; }
+  .reveal .formel { background: white; border: 2px solid var(--nmbu-green); padding: 24px 32px; margin: 20px auto; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+  .reveal .key-point { background: var(--nmbu-green-light); padding: 16px 22px; margin: 16px 0; border-radius: 8px; text-align: left; font-size: 0.95em; }
+  .reveal .key-point::before { content: "→ "; color: var(--nmbu-green); font-weight: 700; }
+  .reveal .tavle-marker { background: var(--tavle-bg); border: 2px dashed var(--accent-orange); padding: 18px 24px; margin: 24px 0; border-radius: 10px; text-align: left; }
+  .reveal .tavle-marker .tavle-label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #b45309; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.15em; margin-bottom: 8px; }
+  .reveal .norsk-eksempel { background: #fef9f0; border-left: 4px solid #d97706; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .norsk-eksempel .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #b45309; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal .interactive-model { background: #ede9fe; border-left: 4px solid #7c3aed; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .interactive-model .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #6d28d9; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal .interactive-model a { color: #6d28d9; text-decoration: underline; }
+  .reveal table { margin: 16px auto; border-collapse: collapse; font-size: 0.8em; }
+  .reveal table th { background: var(--nmbu-green); color: white; padding: 8px 12px; font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; }
+  .reveal table td { padding: 6px 12px; border: 1px solid #d4d4d4; text-align: center; }
+  .reveal .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; text-align: left; }
+  .reveal .caption { font-size: 0.7em; color: var(--text-muted); font-style: italic; margin-top: 8px; }
+  .reveal mjx-container { font-size: 1.0em !important; }
+  .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+  .reveal blockquote { background: var(--nmbu-green-light); border-left: 4px solid var(--nmbu-green); padding: 14px 22px; margin: 16px 0; font-style: italic; font-size: 0.95em; text-align: left; border-radius: 0 6px 6px 0; box-shadow: none; }
+</style>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }, svg: { fontCache: 'global' }, startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { if (window.Reveal) Reveal.layout(); }); } } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section class="title-slide">
+  <h1>Risiko og avkastning</h1>
+  <div class="subtitle">Del 3: CAPM, SML og ytelsesmål</div>
+  <div class="meta">BUS 220 — Finansiering og investering<br>Atle G. Guttormsen · Høst 2026<br>Pensum: HRWJ kapittel 13</div>
+</section>
+
+<section>
+  <h2>Læringsmål</h2>
+  <ul>
+    <li>Forklare overgangen fra <strong>Capital Allocation Line</strong> til <strong>Capital Market Line</strong></li>
+    <li>Beskrive tangent-/markedsporteføljen og separasjonsteoremet</li>
+    <li>Definere og beregne <strong>beta</strong> som mål på systematisk risiko</li>
+    <li>Anvende <strong>CAPM</strong> til å beregne avkastningskrav</li>
+    <li>Forstå og tegne <strong>Security Market Line (SML)</strong></li>
+    <li>Beregne porteføljens beta og avkastningskrav</li>
+    <li>Anvende ytelsesmålene <strong>Sharpe, Treynor og Jensens alfa</strong></li>
+    <li>Diskutere CAPMs forutsetninger og empiriske utfordringer</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Repetisjon fra del 1 og 2</h2>
+  <ul>
+    <li>Avkastning og risikomål (σ, E(R))</li>
+    <li>Porteføljevarians og kovariansleddet</li>
+    <li>Effisient frontier — best mulig E(R) for hvert risikonivå</li>
+    <li>Systematisk vs usystematisk risiko</li>
+    <li>Capital Allocation Line: lineær kombinasjon med risikofritt aktiva</li>
+  </ul>
+  <div class="key-point">I dag: Hvilken risikabel portefølje skal vi velge? Hvordan prises systematisk risiko? Hvordan måler vi prestasjon?</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL A</div>
+  <h2>Fra CAL til CML</h2>
+</section>
+
+<section>
+  <h2>Fra én risikabel portefølje til hele effisient frontier</h2>
+  <p style="text-align:left">I del 2: vi kombinerte <em>én</em> risikabel portefølje med risikofri. Nå spør vi: <strong>hvilken</strong> risikabel portefølje gir best CAL?</p>
+  <ul>
+    <li>Med flere risikable aktiva får vi en hel <strong>effisient frontier</strong></li>
+    <li>For hver portefølje på frontieren kan vi tegne én CAL</li>
+    <li>Den <strong>beste</strong> CAL er den som tangerer effisient frontier</li>
+  </ul>
+  <div class="key-point">Tangentpunktet definerer en spesiell portefølje — <strong>tangent-porteføljen T</strong>.</div>
+</section>
+
+<section>
+  <h2>Tangentporteføljen — visuelt</h2>
+  <div style="margin: 16px auto; text-align: center;">
+    <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+      <line x1="80" y1="280" x2="660" y2="280" stroke="#1a1a1a" stroke-width="1.5"/>
+      <line x1="80" y1="280" x2="80" y2="30" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="370" y="305" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563">Risiko (σ)</text>
+      <text x="40" y="155" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563" transform="rotate(-90, 40, 155)">E(R)</text>
+      <!-- Efficient frontier curve -->
+      <path d="M 200 240 Q 240 100 500 60" stroke="#046530" stroke-width="3" fill="none"/>
+      <!-- Inefficient part (dotted) -->
+      <path d="M 200 240 Q 230 280 320 290" stroke="#9ca3af" stroke-width="2" stroke-dasharray="4 3" fill="none"/>
+      <!-- Tangent line (best CAL = CML) -->
+      <line x1="80" y1="260" x2="620" y2="50" stroke="#f59e0b" stroke-width="3"/>
+      <!-- Dominated CAL -->
+      <line x1="80" y1="260" x2="500" y2="120" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <!-- rf point -->
+      <circle cx="80" cy="260" r="5" fill="#f59e0b"/>
+      <text x="50" y="255" text-anchor="end" font-family="Source Sans 3" font-size="12" fill="#b45309">$r_f$</text>
+      <!-- T point (tangent) -->
+      <circle cx="335" cy="155" r="6" fill="#046530"/>
+      <text x="350" y="150" font-family="Source Sans 3" font-size="13" fill="#046530"><tspan font-weight="700">T</tspan> (tangent)</text>
+      <!-- Other CAL example point -->
+      <circle cx="450" cy="135" r="4" fill="#9ca3af"/>
+      <text x="460" y="125" font-family="Source Sans 3" font-size="11" fill="#6b7280">dårligere</text>
+    </svg>
+  </div>
+  <p style="text-align:left">CAL gjennom T <strong>dominerer</strong> alle andre kombinasjoner — høyere E(R) for samme σ.</p>
+</section>
+
+<section>
+  <h2>Tobins separasjonsteorem</h2>
+  <div class="definisjon">
+    <div class="term">Two-fund separation (Tobin, 1958)</div>
+    Alle rasjonelle investorer bør holde <strong>samme</strong> risikable portefølje T. Det eneste som varierer mellom investorer er <em>hvor mye</em> som plasseres i T versus risikofri rente.
+  </div>
+  <ul>
+    <li>Forsiktig investor: lite i T, mye i $r_f$</li>
+    <li>Aggressiv investor: mye i T (kanskje > 100 % ved å låne)</li>
+    <li>Alle velger samme T — uavhengig av risikoaversjon</li>
+  </ul>
+  <div class="key-point">Et meget kraftig resultat: porteføljevalget reduseres til ett tall — vekt i T.</div>
+</section>
+
+<section>
+  <h2>Markedsporteføljen</h2>
+  <p style="text-align:left">Hvis alle investorer holder samme tangent-portefølje T, må T inneholde <strong>alle</strong> risikable aktiva — i samme proporsjon som markedsverdier:</p>
+  <div class="formel big-formula">
+    $$T = M = \text{markedsporteføljen}$$
+  </div>
+  <p style="text-align:left"><strong>Markedsporteføljen M</strong>: alle risikable aktiva vektet etter markedsverdi.</p>
+  <ul>
+    <li>I praksis approksimert med en bred markedsindeks (S&P 500, MSCI World, OSEBX)</li>
+    <li>Hvert aktivums vekt: $w_i = \dfrac{\text{markedsverdi}_i}{\text{total markedsverdi}}$</li>
+  </ul>
+  <div class="key-point">Indeksfond har sin teoretiske begrunnelse her — de speiler markedsporteføljen til lav kostnad.</div>
+</section>
+
+<section>
+  <h2>Capital Market Line (CML)</h2>
+  <div class="formel big-formula">
+    $$E(R_p) = r_f + \frac{E(R_M) - r_f}{\sigma_M} \cdot \sigma_p$$
+  </div>
+  <p style="text-align:left">CML er den <em>spesielle</em> CAL som går fra $r_f$ gjennom markedsporteføljen M.</p>
+  <ul>
+    <li>Stigningstall = $\dfrac{E(R_M) - r_f}{\sigma_M}$ = <strong>markedets Sharpe ratio</strong></li>
+    <li>Gjelder bare for <em>effisiente</em> porteføljer (kombinasjoner av M og $r_f$)</li>
+    <li>Enkeltaksjer ligger <em>under</em> CML — de har usystematisk risiko</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Eksempel — CML</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Anta: $r_f = 3\,\%$, $E(R_M) = 9\,\%$, $\sigma_M = 18\,\%$.<br>
+    Hva er markedets Sharpe ratio?
+    $$\text{Sharpe}_M = \frac{9\% - 3\%}{18\%} = 0{,}333$$
+    Hva blir E(R) for en effisient portefølje med $\sigma_p = 12\,\%$?
+    $$E(R_p) = 3\% + 0{,}333 \times 12\% = 3\% + 4\% = 7\,\%$$
+  </div>
+  <div class="key-point">Hvert prosentpoeng økning i σ gir 0,333 prosentpoeng mer i E(R) — markedets «pris på risiko».</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL B</div>
+  <h2>CAPM og beta</h2>
+</section>
+
+<section>
+  <h2>Fra portefølje til enkeltaksje</h2>
+  <p style="text-align:left">CML sier noe om <em>effisiente porteføljer</em> — men hva med en enkelt aksje?</p>
+  <ul>
+    <li>En enkeltaksje har både systematisk og usystematisk risiko</li>
+    <li>Den ligger <strong>under</strong> CML — total σ inkluderer «overflødig» risiko</li>
+    <li>Markedet betaler <strong>bare</strong> for systematisk risiko — usystematisk kan diversifiseres bort</li>
+  </ul>
+  <div class="key-point">Vi trenger et nytt risikomål som fanger <em>bare</em> det systematiske bidraget til en diversifisert portefølje.</div>
+</section>
+
+<section>
+  <h2>Beta — bidrag til markedsrisiko</h2>
+  <div class="definisjon">
+    <div class="term">Beta ($\beta_i$)</div>
+    Hvor mye et aktivums avkastning beveger seg når markedet beveger seg. Måler aktivums bidrag til den systematiske risikoen i en diversifisert portefølje.
+  </div>
+  <div class="formel big-formula">
+    $$\beta_i = \frac{\text{Cov}(R_i, R_M)}{\sigma_M^2} = \frac{\rho_{i,M}\, \sigma_i\, \sigma_M}{\sigma_M^2} = \frac{\rho_{i,M}\, \sigma_i}{\sigma_M}$$
+  </div>
+  <ul>
+    <li>$\beta_M = 1$ per definisjon (markedet selv)</li>
+    <li>$\beta_{r_f} = 0$ — risikofri rente</li>
+    <li>$\beta_i > 1$: forsterker markedsbevegelser (aggressiv)</li>
+    <li>$\beta_i < 1$: dempet markedsbevegelser (defensiv)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Beregne beta — eksempel</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Anta: $\text{Cov}(R_i, R_M) = 0{,}054$, $\sigma_M = 0{,}18$ (altså $\sigma_M^2 = 0{,}0324$).
+    $$\beta_i = \frac{0{,}054}{0{,}0324} = 1{,}67$$
+    Alternativt med korrelasjon: $\rho_{i,M} = 0{,}75$, $\sigma_i = 0{,}40$:
+    $$\beta_i = \frac{0{,}75 \times 0{,}40}{0{,}18} = 1{,}67$$
+  </div>
+  <div class="key-point">Beta = 1,67 betyr at aksjen i snitt beveger seg <strong>67 % mer</strong> enn markedet.</div>
+</section>
+
+<section>
+  <h2>Empiriske beta-verdier (illustrasjon)</h2>
+  <table>
+    <tr><th>Sektor/selskap</th><th>Typisk β</th><th>Karakter</th></tr>
+    <tr><td>Forsyning (Hafslund)</td><td>0,4 – 0,7</td><td>Defensiv</td></tr>
+    <tr><td>Dagligvare (Orkla)</td><td>0,7 – 0,9</td><td>Defensiv</td></tr>
+    <tr><td>Bank (DNB)</td><td>0,9 – 1,2</td><td>Markedsnær</td></tr>
+    <tr><td>Olje/gass (Equinor)</td><td>0,9 – 1,3</td><td>Markedsnær / syklisk</td></tr>
+    <tr><td>Sjømat (Mowi, SalMar)</td><td>0,8 – 1,2</td><td>Syklisk</td></tr>
+    <tr><td>Teknologi (Kahoot, Nel)</td><td>1,3 – 2,0+</td><td>Aggressiv</td></tr>
+    <tr><td>Gull-ETF</td><td>−0,1 – 0,2</td><td>Lav/negativ β</td></tr>
+  </table>
+  <p class="caption">Beta-verdier estimeres typisk fra 60 månedlige observasjoner. Bloomberg, Yahoo Finance og Refinitiv publiserer jevnlig oppdaterte tall.</p>
+</section>
+
+<section>
+  <h2>CAPM-formelen</h2>
+  <div class="definisjon">
+    <div class="term">Capital Asset Pricing Model (Sharpe 1964, Lintner 1965, Mossin 1966)</div>
+    Forventet avkastning på et aktivum bestemmes av risikofri rente pluss en risikopremie som er proporsjonal med beta:
+  </div>
+  <div class="formel big-formula">
+    $$E(R_i) = r_f + \beta_i \big( E(R_M) - r_f \big)$$
+  </div>
+  <ul>
+    <li>$r_f$ — tidsverdien av penger</li>
+    <li>$E(R_M) - r_f$ — markedets risikopremie (MRP)</li>
+    <li>$\beta_i$ — hvor mye av MRP som tilfaller dette aktivumet</li>
+  </ul>
+  <div class="key-point">Norsk William F. Sharpe (Stanford) fikk Nobelprisen 1990 — sammen med Markowitz og Miller.</div>
+</section>
+
+<section>
+  <h2>Eksempel — CAPM-beregning</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel — Equinor</div>
+    Anta: $r_f = 3\,\%$, $E(R_M) = 9\,\%$, $\beta_{\text{Equinor}} = 1{,}1$.<br>
+    Markedets risikopremie: $9\% - 3\% = 6\%$.
+    $$E(R_{\text{Equinor}}) = 3\% + 1{,}1 \times 6\% = 3\% + 6{,}6\% = 9{,}6\,\%$$
+    Med beta = 1,1 krever investorene altså <strong>9,6 %</strong> i forventet avkastning.
+  </div>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel — Hafslund</div>
+    Med $\beta = 0{,}5$: $E(R) = 3\% + 0{,}5 \times 6\% = 6\,\%$.
+  </div>
+  <div class="key-point">CAPM gir et <strong>avkastningskrav</strong>: hva må prosjektet/aksjen minst gi for å være verdt risikoen?</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL B (forts.)</div>
+  <h2>Security Market Line</h2>
+</section>
+
+<section>
+  <h2>Security Market Line (SML)</h2>
+  <p style="text-align:left">CAPM gir en lineær sammenheng mellom <strong>beta</strong> og forventet avkastning — denne kalles <strong>SML</strong>.</p>
+  <div style="margin: 16px auto; text-align: center;">
+    <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+      <line x1="80" y1="270" x2="660" y2="270" stroke="#1a1a1a" stroke-width="1.5"/>
+      <line x1="80" y1="270" x2="80" y2="30" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="370" y="295" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563">Beta (β)</text>
+      <text x="40" y="155" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563" transform="rotate(-90, 40, 155)">E(R)</text>
+      <!-- SML line -->
+      <line x1="80" y1="230" x2="640" y2="60" stroke="#046530" stroke-width="3"/>
+      <!-- rf point -->
+      <circle cx="80" cy="230" r="5" fill="#f59e0b"/>
+      <text x="50" y="225" text-anchor="end" font-family="Source Sans 3" font-size="12" fill="#b45309">$r_f$</text>
+      <text x="50" y="245" text-anchor="end" font-family="Source Sans 3" font-size="11" fill="#6b7280">(β=0)</text>
+      <!-- M point at beta=1 -->
+      <circle cx="305" cy="160" r="5" fill="#046530"/>
+      <text x="320" y="155" font-family="Source Sans 3" font-size="13" fill="#046530">M (β=1)</text>
+      <!-- Defensive stock -->
+      <circle cx="195" cy="195" r="4" fill="#9ca3af"/>
+      <text x="190" y="180" font-family="Source Sans 3" font-size="11" fill="#6b7280">Defensiv β=0,5</text>
+      <!-- Aggressive stock -->
+      <circle cx="470" cy="110" r="4" fill="#9ca3af"/>
+      <text x="465" y="95" font-family="Source Sans 3" font-size="11" fill="#6b7280">Aggressiv β=1,5</text>
+      <!-- x-axis labels -->
+      <text x="80" y="290" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#6b7280">0</text>
+      <text x="305" y="290" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#6b7280">1,0</text>
+      <text x="470" y="290" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#6b7280">1,5</text>
+    </svg>
+  </div>
+  <p style="text-align:left">Stigningstall = markedets risikopremie. Skjæringspunkt med y-aksen = $r_f$.</p>
+</section>
+
+<section>
+  <h2>CML vs SML — forskjellen</h2>
+  <div class="two-col">
+    <div>
+      <h3>CML</h3>
+      <ul>
+        <li>X-akse: <strong>σ</strong> (total risiko)</li>
+        <li>Gjelder for <strong>effisiente porteføljer</strong></li>
+        <li>Sharpe ratio = stigningstall</li>
+        <li>Bygger på Markowitz</li>
+      </ul>
+    </div>
+    <div>
+      <h3>SML</h3>
+      <ul>
+        <li>X-akse: <strong>β</strong> (systematisk risiko)</li>
+        <li>Gjelder for <strong>alle aktiva</strong> (effisiente eller ei)</li>
+        <li>MRP = stigningstall</li>
+        <li>Bygger på CAPM</li>
+      </ul>
+    </div>
+  </div>
+  <div class="key-point">SML er det mest brukte verktøyet i praksis — for verdsettelse, prosjektkrav og avkastningssammenligning.</div>
+</section>
+
+<section>
+  <h2>Over og under SML — feilprising</h2>
+  <ul>
+    <li>Aksje <strong>over SML</strong>: gir mer enn CAPM-krav — <em>undervurdert</em>, kjøp</li>
+    <li>Aksje <strong>under SML</strong>: gir mindre enn CAPM-krav — <em>overvurdert</em>, selg</li>
+    <li>I markedslikevekt skal alle aksjer ligge <em>på</em> SML</li>
+  </ul>
+  <div class="interactive-model">
+    <div class="label">Interaktiv modell — CAPM/SML</div>
+    Utforsk Security Market Line interaktivt:<br>
+    <a href="https://www.econmodels.online/model/capm-sml" target="_blank">econmodels.online/model/capm-sml</a><br>
+    Endre risikofri rente, markedsavkastning og beta — se hvordan E(R) og SML-posisjon endrer seg.
+  </div>
+</section>
+
+<section>
+  <h2>Beta for en portefølje</h2>
+  <p style="text-align:left">Portefølje-betaen er det <strong>vektede gjennomsnittet</strong> av enkeltbetaene:</p>
+  <div class="formel big-formula">
+    $$\beta_p = \sum_{i=1}^{n} w_i\, \beta_i$$
+  </div>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Portefølje med 40 % i Equinor ($\beta = 1{,}1$), 30 % i DNB ($\beta = 1{,}0$), 30 % i Hafslund ($\beta = 0{,}5$):
+    $$\beta_p = 0{,}4 \times 1{,}1 + 0{,}3 \times 1{,}0 + 0{,}3 \times 0{,}5 = 0{,}89$$
+    Med $r_f = 3\%$ og $E(R_M) = 9\%$:
+    $$E(R_p) = 3\% + 0{,}89 \times 6\% = 8{,}34\,\%$$
+  </div>
+  <div class="key-point">Beta «adderer» pent — derfor brukes den til både porteføljer og prosjekter.</div>
+</section>
+
+<section>
+  <h2>CAPM som hurdle rate</h2>
+  <p style="text-align:left">I praksis bruker bedrifter CAPM til å finne <strong>avkastningskravet</strong> for et prosjekt eller en investering:</p>
+  <ol>
+    <li>Estimer prosjektets <strong>asset beta</strong> (sammenlign med tilsvarende noterte selskaper)</li>
+    <li>Sett inn i CAPM: $r = r_f + \beta_{\text{asset}}(E(R_M) - r_f)$</li>
+    <li>Bruk dette som diskonteringsrente i NPV-beregningen</li>
+    <li>Aksepter prosjektet hvis NPV > 0 — dvs. forventet avkastning overstiger CAPM-kravet</li>
+  </ol>
+  <div class="key-point">Vi kommer tilbake til dette i forelesningene om <strong>kapitalkostnad og kapitalstruktur</strong> — der utvider vi til WACC.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL C</div>
+  <h2>Ytelsesmål</h2>
+</section>
+
+<section>
+  <h2>Hvordan måler vi prestasjon?</h2>
+  <p style="text-align:left">En porteføljeforvalter oppnår 15 % avkastning. Er det godt eller dårlig?</p>
+  <ul>
+    <li>Det avhenger av risikoen som ble tatt</li>
+    <li>15 % med liten risiko er mye bedre enn 15 % med stor risiko</li>
+    <li>Vi trenger <strong>risikojusterte</strong> ytelsesmål</li>
+  </ul>
+  <p style="text-align:left">Tre klassiske mål:</p>
+  <ol>
+    <li><strong>Sharpe ratio</strong> — meravkastning per enhet total risiko</li>
+    <li><strong>Treynor ratio</strong> — meravkastning per enhet systematisk risiko</li>
+    <li><strong>Jensens alfa</strong> — meravkastning utover CAPM-krav</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Sharpe ratio</h2>
+  <div class="definisjon">
+    <div class="term">Sharpe ratio</div>
+    Meravkastning utover risikofri rente per enhet <strong>total risiko</strong>.
+  </div>
+  <div class="formel big-formula">
+    $$S_p = \frac{R_p - r_f}{\sigma_p}$$
+  </div>
+  <ul>
+    <li>Brukes når porteføljen er <strong>investorens hele formue</strong></li>
+    <li>Måler hellingen til CAL gjennom porteføljen</li>
+    <li>Høyere er bedre — sammenlign med markedets Sharpe ratio</li>
+  </ul>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Fond A: $R = 12\,\%$, $\sigma = 18\,\%$, $r_f = 3\,\%$.
+    $$S_A = \frac{12\% - 3\%}{18\%} = 0{,}50$$
+  </div>
+</section>
+
+<section>
+  <h2>Treynor ratio</h2>
+  <div class="definisjon">
+    <div class="term">Treynor ratio</div>
+    Meravkastning utover risikofri rente per enhet <strong>systematisk risiko</strong> (beta).
+  </div>
+  <div class="formel big-formula">
+    $$T_p = \frac{R_p - r_f}{\beta_p}$$
+  </div>
+  <ul>
+    <li>Brukes når porteføljen er <strong>en del av en større portefølje</strong></li>
+    <li>Bare systematisk risiko teller — usystematisk er diversifisert bort</li>
+    <li>Stigningstall til linjen i $(\beta, E(R))$-diagrammet</li>
+  </ul>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Fond A: $R = 12\,\%$, $\beta = 1{,}2$, $r_f = 3\,\%$.
+    $$T_A = \frac{12\% - 3\%}{1{,}2} = 7{,}5\,\%$$
+  </div>
+</section>
+
+<section>
+  <h2>Jensens alfa</h2>
+  <div class="definisjon">
+    <div class="term">Jensens alfa ($\alpha$)</div>
+    Faktisk avkastning minus CAPM-krav — den «ekstra» avkastningen forvalteren har levert utover det risikoen tilsier.
+  </div>
+  <div class="formel big-formula">
+    $$\alpha_p = R_p - \big[ r_f + \beta_p (R_M - r_f) \big]$$
+  </div>
+  <ul>
+    <li>$\alpha > 0$: porteføljen har slått markedet (etter risiko)</li>
+    <li>$\alpha = 0$: porteføljen ligger akkurat på SML</li>
+    <li>$\alpha < 0$: porteføljen er underpresterende</li>
+  </ul>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    $R_p = 12\,\%$, $\beta_p = 1{,}2$, $r_f = 3\,\%$, $R_M = 9\,\%$.<br>
+    CAPM-krav: $3\% + 1{,}2 \times 6\% = 10{,}2\%$
+    $$\alpha_p = 12\% - 10{,}2\% = 1{,}8\,\%$$
+  </div>
+</section>
+
+<section>
+  <h2>Når brukes hvilket mål?</h2>
+  <table>
+    <tr><th>Situasjon</th><th>Mål</th><th>Risikomål</th></tr>
+    <tr><td>Hele formuen i én portefølje</td><td>Sharpe</td><td>σ (total)</td></tr>
+    <tr><td>Del av større portefølje</td><td>Treynor</td><td>β (systematisk)</td></tr>
+    <tr><td>Forvalters meravkastning vs SML</td><td>Jensens α</td><td>β (systematisk)</td></tr>
+  </table>
+  <div class="key-point">Sharpe og Treynor gir ofte <strong>samme rangering</strong> for veldiversifiserte porteføljer. For lite diversifiserte porteføljer kan rangeringene avvike — da er Sharpe mest forsiktig.</div>
+</section>
+
+<section>
+  <h2>Sammenligning — fond A og B</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Anta $r_f = 3\,\%$, $R_M = 9\,\%$.
+  </div>
+  <table>
+    <tr><th>Fond</th><th>R</th><th>σ</th><th>β</th><th>Sharpe</th><th>Treynor</th><th>Jensen α</th></tr>
+    <tr><td>A</td><td>12 %</td><td>18 %</td><td>1,2</td><td>0,50</td><td>7,5 %</td><td>1,8 %</td></tr>
+    <tr><td>B</td><td>10 %</td><td>12 %</td><td>0,8</td><td>0,58</td><td>8,75 %</td><td>2,2 %</td></tr>
+    <tr><td>Marked</td><td>9 %</td><td>15 %</td><td>1,0</td><td>0,40</td><td>6,0 %</td><td>0,0 %</td></tr>
+  </table>
+  <ul>
+    <li>Begge fond slår markedet på <em>alle</em> mål</li>
+    <li>Fond B har høyere risikojustert avkastning (alle tre mål)</li>
+    <li>Fond B leverer bedre per krone risikoeksponering</li>
+  </ul>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL D</div>
+  <h2>CAPM i praksis</h2>
+</section>
+
+<section>
+  <h2>CAPMs forutsetninger</h2>
+  <ol>
+    <li>Investorer er <strong>rasjonelle</strong> og <strong>risikoaverse</strong></li>
+    <li>Alle har <strong>samme forventninger</strong> (homogene forventninger)</li>
+    <li>Én-periodisk planleggingshorisont</li>
+    <li>Investorer er <strong>prismottakere</strong> (ingen påvirker prisen)</li>
+    <li>Risikofri rente lik for utlån og lån, ubegrenset låning</li>
+    <li>Ingen <strong>skatter eller transaksjonskostnader</strong></li>
+    <li>Alle aktiva kan kjøpes/selges i alle størrelser</li>
+    <li>Markedet er <strong>effisient</strong> — all info reflektert i prisene</li>
+  </ol>
+  <div class="key-point">Forutsetningene er åpenbart urealistiske — men gir likevel en nyttig <strong>referansemodell</strong>.</div>
+</section>
+
+<section>
+  <h2>Empirisk kritikk</h2>
+  <ul>
+    <li><strong>Rolls kritikk (1977):</strong> Den «sanne» markedsporteføljen kan ikke observeres — vi tester proxyer, ikke teorien</li>
+    <li><strong>Fama–French (1992):</strong> Beta forklarer langt mindre enn CAPM tilsier. Småselskap- og verdiaksjer leverer mer enn CAPM krever</li>
+    <li><strong>Momentum (Jegadeesh & Titman, 1993):</strong> Aksjer med god utvikling siste 6–12 mnd fortsetter ofte å levere</li>
+    <li><strong>Lav-volatilitet-anomalien:</strong> Lav-beta aksjer leverer historisk mer enn CAPM tilsier — motsatt av modellen</li>
+  </ul>
+  <div class="key-point">Likevel: CAPM brukes overalt i finansbransjen. Den enkle strukturen og intuitive logikken har holdt seg.</div>
+</section>
+
+<section>
+  <h2>Multifaktormodeller</h2>
+  <p style="text-align:left">Som svar på CAPMs svakheter er det utviklet utvidelser:</p>
+  <div class="formel">
+    Fama–French 3-faktormodell:<br>
+    $E(R_i) - r_f = \beta_M (R_M - r_f) + \beta_{SMB}\, \text{SMB} + \beta_{HML}\, \text{HML}$
+  </div>
+  <ul>
+    <li><strong>SMB</strong> (Small Minus Big): småselskaper - store selskaper</li>
+    <li><strong>HML</strong> (High Minus Low): verdi - vekst (P/B)</li>
+    <li>Senere utvidet med momentum (Carhart 4-faktor)</li>
+    <li>Fama–French 5-faktormodell (2015): legger til lønnsomhet og investering</li>
+  </ul>
+  <div class="key-point">CAPM forblir grunnlaget, men i praksis brukes ofte flere faktorer for prising og avkastningsanalyse.</div>
+</section>
+
+<section>
+  <h2>Oppsummering forelesning 14</h2>
+  <ol style="font-size: 0.88em">
+    <li><strong>CML</strong>: $E(R_p) = r_f + \frac{E(R_M)-r_f}{\sigma_M}\sigma_p$ — for effisiente porteføljer</li>
+    <li><strong>Markedsporteføljen</strong> = tangent-portefølje med alle risikable aktiva</li>
+    <li><strong>Beta</strong> = $\dfrac{\text{Cov}(R_i,R_M)}{\sigma_M^2}$ — bidrag til markedsrisiko</li>
+    <li><strong>CAPM</strong>: $E(R_i) = r_f + \beta_i(E(R_M) - r_f)$</li>
+    <li><strong>SML</strong>: lineær sammenheng β og E(R) for alle aktiva</li>
+    <li>Portefølje-beta = vektet snitt av enkeltbetaene</li>
+    <li><strong>Sharpe</strong> (σ), <strong>Treynor</strong> (β), <strong>Jensens α</strong> (vs CAPM)</li>
+    <li>CAPMs forutsetninger er strenge — empiriske anomalier eksisterer</li>
+    <li>Multifaktormodeller (Fama–French) utvider rammeverket</li>
+  </ol>
+  <div class="key-point">CAPM gir oss <strong>avkastningskravet</strong> — neste skritt: bruke dette til verdsetting og kapitalkostnad.</div>
+</section>
+
+<section>
+  <h2>Til selvstudium</h2>
+  <div class="definisjon">
+    <div class="term">Oppgaver</div>
+    <strong>Oppgavesett 5 — Risiko og avkastning</strong>. Oppgavene 11–15 dekker CAPM, beta og ytelsesmål.
+  </div>
+  <div class="definisjon">
+    <div class="term">Interaktive øvelser</div>
+    <a href="https://www.econmodels.online/model/portfolio-two-asset" target="_blank">econmodels.online/model/portfolio-two-asset</a> — porteføljevalg<br>
+    <a href="https://www.econmodels.online/model/capm-sml" target="_blank">econmodels.online/model/capm-sml</a> — CAPM/SML
+  </div>
+  <div class="definisjon">
+    <div class="term">Pensum</div>
+    <strong>HRWJ kapittel 13</strong>. Sharpes originalartikkel (1964) anbefales for spesielt interesserte. Fama–French (1992) for empirisk kritikk.
+  </div>
+  <p style="text-align:center; color: var(--nmbu-green); margin-top: 16px"><strong>Neste:</strong> Forelesning 15 — Kapitalkostnad og WACC.</p>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script>const params = new URLSearchParams(window.location.search);
+const useSlides = params.get('view') === 'slides';
+Reveal.initialize({
+  hash: !useSlides,
+  slideNumber: useSlides ? 'c/t' : false,
+  width: 1280,
+  height: 800,
+  margin: 0.06,
+  controls: useSlides,
+  progress: useSlides,
+  center: useSlides,
+  transition: useSlides ? 'slide' : 'none',
+  view: useSlides ? undefined : 'scroll',
+  scrollProgress: !useSlides,
+  plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
+});</script>
+</body>
+</html>

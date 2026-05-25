@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BUS 220 – Forelesning 6: Obligasjoner (del 2)</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css" id="theme">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap');
+
+  :root {
+    --nmbu-green: #046530;
+    --nmbu-green-light: #f0f7f2;
+    --accent-orange: #f59e0b;
+    --tavle-bg: #fef3c7;
+    --text-dark: #1a1a1a;
+    --text-muted: #4b5563;
+  }
+
+  .reveal { font-family: 'Source Serif 4', Georgia, serif; font-size: 28px; color: var(--text-dark); }
+  .reveal h1, .reveal h2, .reveal h3, .reveal h4 { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); text-transform: none; letter-spacing: 0; font-weight: 700; }
+  .reveal h1 { font-size: 1.8em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.5em; line-height: 1.2; margin-bottom: 0.5em; }
+  .reveal h3 { font-size: 1.2em; }
+  .reveal p { line-height: 1.5; }
+  .reveal ul, .reveal ol { display: block; margin-left: 1em; }
+  .reveal li { margin-bottom: 0.4em; line-height: 1.5; }
+
+  .reveal .title-slide { background: var(--nmbu-green); color: white; padding: 60px; }
+  .reveal .title-slide h1 { color: white; font-size: 2.4em; margin-bottom: 0.3em; }
+  .reveal .title-slide .subtitle { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 1.4em; color: rgba(255,255,255,0.95); margin-bottom: 1em; }
+  .reveal .title-slide .meta { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 0.85em; color: rgba(255,255,255,0.8); margin-top: 2em; }
+
+  .reveal .section-divider { background: var(--nmbu-green); color: white; }
+  .reveal .section-divider h2 { color: white; font-size: 2.2em; }
+  .reveal .section-divider .section-number { font-family: 'Source Sans 3', Arial, sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9em; letter-spacing: 0.2em; margin-bottom: 1em; }
+
+  .reveal .definisjon { background: var(--nmbu-green-light); border-left: 5px solid var(--nmbu-green); padding: 18px 24px; margin: 20px 0; text-align: left; border-radius: 0 8px 8px 0; }
+  .reveal .definisjon .term { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: var(--nmbu-green); margin-bottom: 6px; }
+
+  .reveal .formel { background: white; border: 2px solid var(--nmbu-green); padding: 24px 32px; margin: 20px auto; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+
+  .reveal .key-point { background: var(--nmbu-green-light); padding: 16px 22px; margin: 16px 0; border-radius: 8px; text-align: left; font-size: 0.95em; }
+  .reveal .key-point::before { content: "→ "; color: var(--nmbu-green); font-weight: 700; }
+
+  .reveal .tavle-marker { background: var(--tavle-bg); border: 2px dashed var(--accent-orange); padding: 18px 24px; margin: 24px 0; border-radius: 10px; text-align: left; }
+  .reveal .tavle-marker .tavle-label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #b45309; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.15em; margin-bottom: 8px; }
+
+  .reveal .norsk-eksempel { background: #fef9f0; border-left: 4px solid #d97706; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .norsk-eksempel .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #b45309; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  .reveal table { margin: 16px auto; border-collapse: collapse; font-size: 0.85em; }
+  .reveal table th { background: var(--nmbu-green); color: white; padding: 10px 16px; font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; }
+  .reveal table td { padding: 8px 16px; border: 1px solid #d4d4d4; text-align: center; }
+
+  .reveal .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; text-align: left; }
+  .reveal .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-items: start; text-align: left; }
+
+  .reveal .caption { font-size: 0.7em; color: var(--text-muted); font-style: italic; margin-top: 8px; }
+  .reveal .slide-number { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); background: transparent; }
+
+  .reveal .highlight { background: linear-gradient(120deg, rgba(245,158,11,0.18) 0%, rgba(245,158,11,0.18) 100%); padding: 0 4px; border-radius: 3px; }
+
+  .reveal blockquote { background: var(--nmbu-green-light); border-left: 4px solid var(--nmbu-green); padding: 16px 22px; margin: 20px 0; font-style: italic; color: var(--text-dark); font-size: 0.95em; text-align: left; border-radius: 0 6px 6px 0; box-shadow: none; }
+
+  .reveal .rule-card { background: white; border: 1px solid #d4d4d4; border-top: 4px solid var(--nmbu-green); padding: 14px 18px; margin: 12px 0; border-radius: 6px; text-align: left; font-size: 0.92em; }
+  .reveal .rule-card .rule-nr { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: var(--nmbu-green); font-size: 0.8em; text-transform: uppercase; margin-bottom: 4px; }
+
+  .reveal mjx-container { font-size: 1.0em !important; }
+  .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+</style>
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  svg: { fontCache: 'global' },
+  startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { if (window.Reveal) Reveal.layout(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ============ 1: TITLE ============ -->
+    <section class="title-slide">
+      <h1>Obligasjoner</h1>
+      <div class="subtitle">Del 2: Terminstruktur, forwardrenter og durasjon</div>
+      <div class="meta">
+        BUS 220 — Finansiering og investering<br>
+        Atle G. Guttormsen · Høst 2026<br>
+        Pensum: HRWJ kapittel 6
+      </div>
+    </section>
+
+    <!-- ============ 2: LÆRINGSMÅL ============ -->
+    <section>
+      <h2>Læringsmål</h2>
+      <p style="text-align:left">Etter denne forelesningen skal du kunne:</p>
+      <ul>
+        <li>Forklare hva <strong>rentens terminstruktur</strong> (yield-kurven) viser, og hvilke faktorer som driver formen</li>
+        <li>Finne <strong>spotrenter</strong> fra nullkupongobligasjoner</li>
+        <li>Beregne <strong>forwardrenter (terminrenter)</strong> fra spotrenter</li>
+        <li>Knytte teorier om rentekurvens form (<em>forventning, likviditetspremie, segmentering</em>) til empirien</li>
+        <li>Anvende seks regler for hvordan obligasjonsprisen reagerer på renteendringer</li>
+        <li>Beregne <strong>Macaulay-durasjon</strong> og <strong>modifisert durasjon</strong></li>
+        <li>Bruke durasjon til å forutsi prisendringer</li>
+        <li>Identifisere svakheter ved durasjon (konveksitet)</li>
+      </ul>
+    </section>
+
+    <!-- ============ 3: REPETISJON ============ -->
+    <section>
+      <h2>Repetisjon fra forelesning 5</h2>
+      <p style="text-align:left">Vi har følgende verktøy i sekken:</p>
+      <ul>
+        <li><strong>Prising:</strong> $B = K \cdot AF(r,T) + F/(1+r)^T$</li>
+        <li><strong>Nullkupong:</strong> $B = F/(1+r)^T$</li>
+        <li><strong>Konsoll:</strong> $B = K/r$</li>
+        <li><strong>Under/pari/overkurs:</strong> bestemmes av $r$ vs kupongrente</li>
+        <li><strong>Yield to maturity:</strong> internrenten — løser $B$-ligningen for $r$</li>
+        <li><strong>Tre risikofaktorer:</strong> kreditt, likviditet, rente</li>
+      </ul>
+      <p style="text-align:left; margin-top:20px">I dag: <strong>fordyper renterisiko</strong> og legger til verktøy for å håndtere den.</p>
+    </section>
+
+    <!-- ============ DIVIDER: TERMINSTRUKTUR ============ -->
+    <section class="section-divider">
+      <div class="section-number">DEL A</div>
+      <h2>Rentens terminstruktur</h2>
+    </section>
+
+    <!-- ============ 4: SPOTRENTER ============ -->
+    <section>
+      <h2>Spotrenter</h2>
+      <div class="definisjon">
+        <div class="term">Spotrente ($_0r_T$)</div>
+        Den effektive renten <em>i dag</em> (tid 0) for en plassering som <strong>løper fra i dag til tid $T$</strong>.
+      </div>
+      <p style="text-align:left">Spotrenten er YTM for en <strong>nullkupongobligasjon</strong> med forfall på tid $T$. Den kan «låses inn» i dag ved å ta posisjon i nullkupongobligasjonen.</p>
+      <div class="formel big-formula">
+        $$P_0 = \frac{F}{(1+ {}_0r_T)^T} \implies {}_0r_T = \left(\frac{F}{P_0}\right)^{1/T} - 1$$
+      </div>
+      <p style="text-align:left">Vi bruker subscripten foran $r$ for tid <em>nå</em>, og subscripten etter for tid til forfall: $_0r_T$ = «spotrente fra 0 til $T$».</p>
+    </section>
+
+    <!-- ============ 5: TERMINSTRUKTUR ============ -->
+    <section>
+      <h2>Rentens terminstruktur</h2>
+      <div class="definisjon">
+        <div class="term">Terminstruktur (yield-kurven)</div>
+        Sammenhengen mellom <strong>effektiv rente og løpetid</strong> for obligasjoner — vanligvis utledet fra nullkupong-statsobligasjoner.
+      </div>
+      <p style="text-align:left">Også kalt:</p>
+      <ul>
+        <li>Rentekurven</li>
+        <li>Yield-kurven</li>
+        <li>Avkastningskurven</li>
+      </ul>
+      <div class="key-point">Terminstrukturen er et <strong>øyeblikksbilde</strong> — den endrer seg dag for dag når markedet endrer forventninger.</div>
+    </section>
+
+    <!-- ============ 6: TRE FORMER ============ -->
+    <section>
+      <h2>Tre vanlige former</h2>
+      <div style="margin: 20px auto; text-align: center;">
+        <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg">
+          <!-- Three small plots side by side -->
+          <!-- Stigende -->
+          <g>
+            <line x1="40" y1="200" x2="220" y2="200" stroke="#1a1a1a" stroke-width="1.5"/>
+            <line x1="40" y1="200" x2="40" y2="40" stroke="#1a1a1a" stroke-width="1.5"/>
+            <path d="M 40 175 Q 100 145 160 110 Q 200 90 220 80" stroke="#046530" stroke-width="3" fill="none"/>
+            <text x="130" y="225" text-anchor="middle" font-family="Source Sans 3" font-size="13" font-weight="600">Stigende</text>
+            <text x="130" y="20" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-style="italic" fill="#4b5563">Normalt</text>
+          </g>
+          <!-- Flat -->
+          <g>
+            <line x1="280" y1="200" x2="460" y2="200" stroke="#1a1a1a" stroke-width="1.5"/>
+            <line x1="280" y1="200" x2="280" y2="40" stroke="#1a1a1a" stroke-width="1.5"/>
+            <path d="M 280 120 Q 370 118 460 120" stroke="#046530" stroke-width="3" fill="none"/>
+            <text x="370" y="225" text-anchor="middle" font-family="Source Sans 3" font-size="13" font-weight="600">Flat</text>
+            <text x="370" y="20" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-style="italic" fill="#4b5563">Markeds-skifte</text>
+          </g>
+          <!-- Fallende (invert) -->
+          <g>
+            <line x1="520" y1="200" x2="700" y2="200" stroke="#1a1a1a" stroke-width="1.5"/>
+            <line x1="520" y1="200" x2="520" y2="40" stroke="#1a1a1a" stroke-width="1.5"/>
+            <path d="M 520 80 Q 580 100 640 140 Q 680 170 700 180" stroke="#046530" stroke-width="3" fill="none"/>
+            <text x="610" y="225" text-anchor="middle" font-family="Source Sans 3" font-size="13" font-weight="600">Fallende (invert)</text>
+            <text x="610" y="20" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-style="italic" fill="#b91c1c">Resesjonssignal</text>
+          </g>
+        </svg>
+      </div>
+      <p style="text-align:left"><strong>Stigende</strong> er det vanligste (≈ 90 % av tiden historisk). <strong>Invert</strong> (fallende) yield-kurve har historisk vært en sterk indikator for resesjon innen 12–18 måneder.</p>
+    </section>
+
+    <!-- ============ 7: HVA BESTEMMER FORMEN ============ -->
+    <section>
+      <h2>Hva bestemmer formen?</h2>
+      <p style="text-align:left">Tre komponenter bygger opp nominell rente:</p>
+      <div class="definisjon">
+        <div class="term">Realrente</div>
+        Kompensasjon for utsatt forbruk. Ren tidsverdi av penger. Typisk 1–3 % over tid.
+      </div>
+      <div class="definisjon">
+        <div class="term">Inflasjonspremie</div>
+        Kompensasjon for forventet inflasjon over løpetiden. Norsk KPI-mål er 2 %.
+      </div>
+      <div class="definisjon">
+        <div class="term">Renterisikopremie</div>
+        Kompensasjon for usikkerhet om fremtidig renteutvikling. Stiger med løpetid.
+      </div>
+      <div class="key-point">Nominell rente = Realrente + Inflasjonspremie + Renterisikopremie. Lange obligasjoner har høyere risikopremie → terminstrukturen er normalt stigende.</div>
+    </section>
+
+    <!-- ============ 8: EKSEMPEL SPOTRENTER ============ -->
+    <section>
+      <h2>Eksempel: Spotrenter fra nullkupongobligasjoner</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Eksempel</div>
+        Du observerer fire nullkupongobligasjoner med pålydende 100. Maturiteter og priser:
+      </div>
+      <table>
+        <tr><th>Maturitet</th><th>Pris</th><th>Spotrente $_0r_T$</th></tr>
+        <tr><td>1 år</td><td>92,5926</td><td>8,00 %</td></tr>
+        <tr><td>2 år</td><td>84,9473</td><td>8,50 %</td></tr>
+        <tr><td>3 år</td><td>77,2248</td><td>9,00 %</td></tr>
+        <tr><td>4 år</td><td>69,5719</td><td>9,49 %</td></tr>
+      </table>
+      <div class="tavle-marker">
+        <div class="tavle-label">Beregning</div>
+        $$_0r_1 = \left(\frac{100}{92{,}5926}\right)^{1} - 1 = 0{,}0800$$
+        $$_0r_2 = \left(\frac{100}{84{,}9473}\right)^{1/2} - 1 = 0{,}0850$$
+        $$_0r_3 = \left(\frac{100}{77{,}2248}\right)^{1/3} - 1 = 0{,}0900$$
+      </div>
+      <p style="text-align:left">Spotkurven stiger — tegn på normalt rentemarked.</p>
+    </section>
+
+    <!-- ============ DIVIDER: FORWARDRENTER ============ -->
+    <section class="section-divider">
+      <div class="section-number">DEL B</div>
+      <h2>Forwardrenter<br>(terminrenter)</h2>
+    </section>
+
+    <!-- ============ 9: FORWARDRENTE ============ -->
+    <section>
+      <h2>Forwardrenter</h2>
+      <div class="definisjon">
+        <div class="term">Forwardrente ($_t f_{t+1}$)</div>
+        Renten som gjelder for en plassering som <strong>starter på et fremtidig tidspunkt $t$</strong> og varer til $t+1$ (én periode).
+      </div>
+      <p style="text-align:left"><strong>Notasjonen:</strong> <em>tallet før</em> $f$ er tiden plasseringen starter, <em>tallet etter</em> er tiden den slutter.</p>
+      <ul>
+        <li>$_0r_1$ = «1-årsrenten i dag»</li>
+        <li>$_1f_2$ = «1-årsrenten om ett år»</li>
+        <li>$_2f_3$ = «1-årsrenten om to år»</li>
+      </ul>
+      <div class="key-point">Forwardrenter kan beregnes fra spotrenter — vi trenger ikke å vente og se hva fremtidens rente blir.</div>
+    </section>
+
+    <!-- ============ 10: FORVENTNINGSTEORIEN ============ -->
+    <section>
+      <h2>Forventningsteorien</h2>
+      <p style="text-align:left">Hovedidéen: en investor skal være <strong>indifferent</strong> mellom to alternativer:</p>
+      <div class="two-col">
+        <div class="definisjon">
+          <div class="term">Alternativ A</div>
+          Plasser i en $T$-årig nullkupong:
+          <br>Vekstfaktor: $(1 + {}_0r_T)^T$
+        </div>
+        <div class="definisjon">
+          <div class="term">Alternativ B</div>
+          Rull over 1-årige plasseringer i $T$ år:
+          <br>Vekstfaktor: $(1+{}_0r_1)(1+{}_1f_2)\dots(1+{}_{T-1}f_T)$
+        </div>
+      </div>
+      <p style="text-align:left; margin-top: 20px">Likhet gir den sentrale relasjonen:</p>
+      <div class="formel big-formula">
+        $$(1 + {}_0r_T)^T = \prod_{t=1}^{T} (1 + {}_{t-1}f_t)$$
+      </div>
+    </section>
+
+    <!-- ============ 11: FORWARDRENTE-FORMEL ============ -->
+    <section>
+      <h2>Forwardrente-formelen</h2>
+      <p style="text-align:left">Fra forventningsteorien kan vi løse ut én forwardrente om gangen:</p>
+      <div class="formel big-formula">
+        $$1 + {}_{t-1}f_t = \frac{(1 + {}_0r_t)^t}{(1 + {}_0r_{t-1})^{t-1}}$$
+      </div>
+      <p style="text-align:left"><strong>Tolkning:</strong></p>
+      <ul>
+        <li>Telleren: hvor mye en $t$-årig plassering vokser til</li>
+        <li>Nevneren: hvor mye en $(t-1)$-årig plassering vokser til</li>
+        <li>Forholdet: hvor mye veksten <em>må</em> være det siste året for at de to skal være likeverdige</li>
+      </ul>
+    </section>
+
+    <!-- ============ 12: EKSEMPEL FORWARDRENTE ============ -->
+    <section>
+      <h2>Eksempel: Forwardrenter fra spotkurven</h2>
+      <p style="text-align:left">Med spotrentene fra slide 8 (8,00 %, 8,50 %, 9,00 %, 9,49 %):</p>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        <p>Forward år 2 (1-års rente om 1 år):</p>
+        $$1 + {}_1f_2 = \frac{(1{,}0850)^2}{1{,}0800} = \frac{1{,}1772}{1{,}0800} = 1{,}0900$$
+        <p>Forward år 3 (1-års rente om 2 år):</p>
+        $$1 + {}_2f_3 = \frac{(1{,}0900)^3}{(1{,}0850)^2} = \frac{1{,}2950}{1{,}1772} = 1{,}1000$$
+      </div>
+      <table>
+        <tr><th>Periode</th><th>Spotrente</th><th>Forwardrente</th></tr>
+        <tr><td>År 1</td><td>8,00 %</td><td>8,00 %</td></tr>
+        <tr><td>År 2</td><td>8,50 %</td><td>9,00 %</td></tr>
+        <tr><td>År 3</td><td>9,00 %</td><td>10,00 %</td></tr>
+        <tr><td>År 4</td><td>9,49 %</td><td>11,00 %</td></tr>
+      </table>
+    </section>
+
+    <!-- ============ 13: TRE TEORIER ============ -->
+    <section>
+      <h2>Tre teorier om yield-kurvens form</h2>
+      <div class="definisjon">
+        <div class="term">1 · Forventningsteorien</div>
+        Rentekurven gjenspeiler markedets forventninger om fremtidige renter. Stigende kurve = markedet venter rentestigning.
+      </div>
+      <div class="definisjon">
+        <div class="term">2 · Likviditetspremie-teorien</div>
+        Långivere må kompenseres for å binde pengene lenge. Lengre løpetid → høyere premie. Forklarer hvorfor stigende kurver er vanligere enn fallende.
+      </div>
+      <div class="definisjon">
+        <div class="term">3 · Markedssegmenteringsteorien</div>
+        Ulike aktører foretrekker ulike løpetider (pensjonsfond → lange, banker → korte). Tilbud og etterspørsel innen hvert segment bestemmer renten.
+      </div>
+      <div class="key-point">I praksis virker alle tre samtidig — særlig forventning og likviditetspremie kombineres ofte i moderne yield-kurve-modeller.</div>
+    </section>
+
+    <!-- ============ 14: HVORFOR STIGENDE ============ -->
+    <section>
+      <h2>Hvorfor er kurven oftest stigende?</h2>
+      <p style="text-align:left">Keynes (1936) identifiserte tre årsaker som bygger opp en stigende kurve:</p>
+      <ol>
+        <li><strong>Usikkerhet øker med tid:</strong> Du er sikrere på hva som skjer om 3 måneder enn om 10 år.</li>
+        <li><strong>Lengre kompensasjon for utsatt konsum:</strong> Långivere må gi avkall på forbruk i lengre tid.</li>
+        <li><strong>Kapitalbegrensninger:</strong> Hvis du binder kapitalen lenge, taper du opsjoner — andre gode investeringer kan dukke opp.</li>
+      </ol>
+      <p style="text-align:left; margin-top:20px"><strong>Empirisk:</strong> Hvis ren forventningsteori stemte, ville vi sett ca. like ofte stigende og fallende kurver. Faktisk er ~90 % stigende — det tyder på en konstant likviditetspremie som dytter lange renter opp.</p>
+    </section>
+
+    <!-- ============ 15: FISHER RELASJONEN ============ -->
+    <section>
+      <h2>Realrente, inflasjon og forventning</h2>
+      <p style="text-align:left">Fra forelesning 4: Fisher-relasjonen knytter nominell rente til real rente og inflasjon:</p>
+      <div class="formel big-formula">
+        $$(1 + r_N) = (1 + r_R)(1 + \pi)$$
+      </div>
+      <p style="text-align:left"><strong>Tolkning av yield-kurven:</strong> Når vi observerer fremtidige renter (forwardrenter), kan vi splitte dem i forventet realrente og forventet inflasjon.</p>
+      <div class="tavle-marker">
+        <div class="tavle-label">Eksempel</div>
+        <p>Du tror realrenten er 3 % de nærmeste årene. Du regner ut at 1-års rente om ett år er 5 %. Hvilken inflasjon forventer markedet i år to?</p>
+        $$(1{,}05) = (1{,}03)(1+\pi) \implies \pi = \frac{1{,}05}{1{,}03} - 1 = 1{,}94\,\%$$
+      </div>
+    </section>
+
+    <!-- ============ DIVIDER: RENTERISIKO ============ -->
+    <section class="section-divider">
+      <div class="section-number">DEL C</div>
+      <h2>Renterisiko —<br>seks regler</h2>
+    </section>
+
+    <!-- ============ 16: REGEL 1 ============ -->
+    <section>
+      <h2>Regel 1: Pris og rente — motsatt vei</h2>
+      <div class="rule-card">
+        <div class="rule-nr">Regel 1 av 6</div>
+        Obligasjonsprisen og markedsrenten beveger seg i <strong>motsatt retning</strong>. Når renten stiger, faller prisen — og omvendt.
+      </div>
+      <div class="norsk-eksempel">
+        <div class="label">Eksempel</div>
+        Obligasjon: $F=100$, kupong 5 (5 %), $T=10$ år.
+        <table style="margin-top: 10px">
+          <tr><th>Rente</th><th>Pris</th></tr>
+          <tr><td>5 %</td><td>100,00 (parikurs)</td></tr>
+          <tr><td>8 %</td><td>79,87</td></tr>
+        </table>
+      </div>
+      <p style="text-align:left">Når renten stiger fra 5 % til 8 %, faller prisen med over 20 %. Selv «sikre» statsobligasjoner kan tape betydelig markedsverdi.</p>
+    </section>
+
+    <!-- ============ 17: REGEL 2 ============ -->
+    <section>
+      <h2>Regel 2: Asymmetri (konveksitet)</h2>
+      <div class="rule-card">
+        <div class="rule-nr">Regel 2 av 6</div>
+        En <strong>økning</strong> i yield gir en <em>mindre</em> prisendring enn en tilsvarende <strong>reduksjon</strong> i yield. Sammenhengen mellom pris og rente er konveks.
+      </div>
+      <div class="norsk-eksempel">
+        <div class="label">Eksempel</div>
+        Obligasjon: $F=1000$, kupong 10 %, $T=30$ år, dagens rente 10 % (parikurs, pris 1000).
+        <ul style="margin-top: 8px">
+          <li>Rente faller til 9 % → pris stiger til <strong>1 102,74</strong> (+10,3 %)</li>
+          <li>Rente stiger til 11 % → pris faller til <strong>912,90</strong> (−8,7 %)</li>
+        </ul>
+      </div>
+      <p style="text-align:left">Asymmetrien er en direkte konsekvens av at pris-rente-kurven er konveks (krumning).</p>
+    </section>
+
+    <!-- ============ 18: REGEL 3 ============ -->
+    <section>
+      <h2>Regel 3: Lang løpetid = høyere risiko</h2>
+      <div class="rule-card">
+        <div class="rule-nr">Regel 3 av 6</div>
+        Obligasjoner med <strong>lengre løpetid</strong> er mer sensitive for renteendringer enn obligasjoner med kortere løpetid.
+      </div>
+      <div class="norsk-eksempel">
+        <div class="label">Eksempel</div>
+        Obligasjon: $F=1000$, kupong 10 %, dagens rente 10 % (parikurs).
+        <table style="margin-top: 8px">
+          <tr><th></th><th>Pris ved 5 %</th><th>Pris ved 10 %</th><th>Pris ved 15 %</th></tr>
+          <tr><td>1 år</td><td>1 047,62</td><td>1 000,00</td><td>956,52</td></tr>
+          <tr><td>30 år</td><td>1 768,62</td><td>1 000,00</td><td>671,70</td></tr>
+        </table>
+      </div>
+      <p style="text-align:left">Når renten faller fra 10 % til 5 % stiger 1-årsobligasjonen knappe 5 %, mens 30-årsobligasjonen stiger 77 %. Den motsatte effekten ved renteoppgang.</p>
+    </section>
+
+    <!-- ============ 19: REGEL 4 ============ -->
+    <section>
+      <h2>Regel 4: Avtagende sensitivitetsøkning</h2>
+      <div class="rule-card">
+        <div class="rule-nr">Regel 4 av 6</div>
+        Sensitiviteten øker med løpetid, men med <strong>avtagende rate</strong>. En 30-års obligasjon er <em>ikke</em> dobbelt så sensitiv som en 15-års obligasjon.
+      </div>
+      <p style="text-align:left">Dette betyr at hvis du forlenger en obligasjons løpetid fra 5 til 10 år, øker sensitiviteten mye. Men fra 25 til 30 år øker den lite.</p>
+      <div class="key-point">Implikasjon for porteføljeforvaltning: marginalt mer renterisiko får du <em>billig</em> ved å forlenge lange obligasjoner. Marginalt mindre risiko får du <em>dyrt</em> ved å forkorte korte obligasjoner.</div>
+    </section>
+
+    <!-- ============ 20: REGEL 5 ============ -->
+    <section>
+      <h2>Regel 5: Lav kupong = høyere risiko</h2>
+      <div class="rule-card">
+        <div class="rule-nr">Regel 5 av 6</div>
+        Renterisikoen er <strong>negativt korrelert</strong> med kupongraten. Lav-kupong-obligasjoner (særlig nullkupong) er mer sensitive enn høy-kupong-obligasjoner med samme løpetid.
+      </div>
+      <div class="norsk-eksempel">
+        <div class="label">Eksempel</div>
+        To 10-årige obligasjoner, $F=100$, $r=5\,\%$:
+        <ul style="margin-top: 8px">
+          <li>Kupong 5 (5 %): pris ved 9 % = 74,33 (−25,7 %)</li>
+          <li>Kupong 10 (10 %): pris ved 9 % = 106,42 (−13,5 %)</li>
+        </ul>
+      </div>
+      <p style="text-align:left">Intuisjon: Lav-kupong-obligasjoner får mest av sin verdi fra <em>pålydende ved forfall</em> — som ligger langt ute i tid og er mest sensitivt for diskonteringsrenten.</p>
+    </section>
+
+    <!-- ============ 21: REGEL 6 ============ -->
+    <section>
+      <h2>Regel 6: Lavt rentenivå = høyere risiko</h2>
+      <div class="rule-card">
+        <div class="rule-nr">Regel 6 av 6</div>
+        Sensitiviteten er <strong>negativt korrelert med yield-nivået</strong>. Obligasjoner som handles til lav yield er mer sensitive for renteendringer enn obligasjoner som handles til høy yield.
+      </div>
+      <div class="norsk-eksempel">
+        <div class="label">Eksempel</div>
+        $F=100$, $K=8$, $T=10$ år. Vi sammenligner to obligasjoner som handles til ulik yield:
+        <ul style="margin-top: 8px">
+          <li>$y = 3\,\%$ → ved $y$ ned/opp med 1 prosentpoeng: stor prisendring</li>
+          <li>$y = 13\,\%$ → ved $y$ ned/opp med 1 prosentpoeng: mindre prisendring</li>
+        </ul>
+      </div>
+      <p style="text-align:left"><strong>Praktisk implikasjon:</strong> Etter mange år med lave renter (2010–2021) ble obligasjonsporteføljer ekstra renterisikable. Renteoppgangen i 2022 ga store tap (norske pensjonskasser og banker rapporterte betydelige verdifall).</p>
+    </section>
+
+    <!-- ============ 22: SUMMARY ============ -->
+    <section>
+      <h2>Renterisiko-reglene — sammendrag</h2>
+      <table style="font-size: 0.82em">
+        <tr><th>Regel</th><th>Innhold</th></tr>
+        <tr><td>1</td><td>Pris og rente: motsatt vei</td></tr>
+        <tr><td>2</td><td>Konveksitet: prisstigning > prisfall ved like store renteendringer</td></tr>
+        <tr><td>3</td><td>Lengre løpetid → mer sensitiv</td></tr>
+        <tr><td>4</td><td>Sensitivitet øker med løpetid, men med avtagende rate</td></tr>
+        <tr><td>5</td><td>Lavere kupong → mer sensitiv</td></tr>
+        <tr><td>6</td><td>Lavere yield-nivå → mer sensitiv</td></tr>
+      </table>
+      <div class="key-point">Disse seks reglene gir <em>kvalitativ</em> innsikt. For <em>kvantitative</em> mål trenger vi <strong>durasjon</strong> — neste del.</div>
+    </section>
+
+    <!-- ============ DIVIDER: DURASJON ============ -->
+    <section class="section-divider">
+      <div class="section-number">DEL D</div>
+      <h2>Durasjon</h2>
+    </section>
+
+    <!-- ============ 23: HVORFOR DURASJON ============ -->
+    <section>
+      <h2>Hvorfor durasjon?</h2>
+      <p style="text-align:left">Vi vet at lengre løpetid gir mer renterisiko (regel 3). Men «løpetid til forfall» er et grovt mål — det ignorerer at obligasjonen har kontantstrømmer underveis.</p>
+      <p style="text-align:left">Vi trenger et <strong>mer presist mål på «effektiv løpetid»</strong> som tar hensyn til alle kontantstrømmene.</p>
+      <div class="definisjon">
+        <div class="term">Durasjon — to tolkninger</div>
+        <ol style="margin-top: 6px">
+          <li><strong>Vektet snitt av kontantstrømmenes tidspunkter</strong> (Macaulay)</li>
+          <li><strong>Den 1. deriverte av prisfunksjonen</strong> mht. yield (modifisert)</li>
+        </ol>
+        <em style="font-size: 0.85em">Vi fokuserer på første tolkning i dette kurset.</em>
+      </div>
+    </section>
+
+    <!-- ============ 24: MACAULAY ============ -->
+    <section>
+      <h2>Macaulay-durasjon</h2>
+      <p style="text-align:left">For hver kontantstrøm $C_t$ på tid $t$ regner vi en <em>vekt</em> = andelen av prisen den utgjør:</p>
+      <div class="formel">
+        $w_t = \dfrac{C_t / (1+y)^t}{B}$
+      </div>
+      <p style="text-align:left">Durasjon er vektet snitt av tidspunktene:</p>
+      <div class="formel big-formula">
+        $$D = \sum_{t=1}^{T} t \cdot w_t = \frac{1}{B} \sum_{t=1}^{T} \frac{t \cdot C_t}{(1+y)^t}$$
+      </div>
+      <p style="text-align:left"><strong>Enhet:</strong> år (samme enhet som tidspunktene $t$).</p>
+      <div class="key-point">For en nullkupongobligasjon er all CF konsentrert ved forfall — så $D = T$. For kupongobligasjoner er $D < T$ fordi noen CF kommer tidlig.</div>
+    </section>
+
+    <!-- ============ 25: EKSEMPEL DURASJON 1 ============ -->
+    <section>
+      <h2>Eksempel: Macaulay-durasjon</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Eksempel</div>
+        Obligasjon: $F=1000$, kupong 9 % ($K=90$), $T=5$ år, $y=10\,\%$.
+        Først regner vi prisen, deretter durasjonen.
+      </div>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        <p>Pris (sum av PV-er) = 962,09.</p>
+        <table style="margin-top:8px">
+          <tr><th>$t$</th><th>$C_t$</th><th>$PV(C_t)$</th><th>$w_t$</th><th>$t \cdot w_t$</th></tr>
+          <tr><td>1</td><td>90</td><td>81,82</td><td>0,0850</td><td>0,0850</td></tr>
+          <tr><td>2</td><td>90</td><td>74,38</td><td>0,0773</td><td>0,1546</td></tr>
+          <tr><td>3</td><td>90</td><td>67,62</td><td>0,0703</td><td>0,2108</td></tr>
+          <tr><td>4</td><td>90</td><td>61,47</td><td>0,0639</td><td>0,2555</td></tr>
+          <tr><td>5</td><td>1090</td><td>676,69</td><td>0,7034</td><td>3,5168</td></tr>
+          <tr><td colspan="4"><strong>Macaulay-durasjon</strong></td><td><strong>4,2234</strong></td></tr>
+        </table>
+      </div>
+      <p style="text-align:left">Durasjonen er 4,22 år — kortere enn forfallstiden på 5 år fordi kupongbetalingene trekker det «økonomiske tyngdepunktet» fremover.</p>
+    </section>
+
+    <!-- ============ 26: MODIFISERT DURASJON ============ -->
+    <section>
+      <h2>Modifisert durasjon</h2>
+      <p style="text-align:left">Modifisert durasjon er en justert versjon som direkte måler <strong>prosentvis prisendring</strong> ved en gitt renteendring:</p>
+      <div class="formel big-formula">
+        $$D^* = \frac{D}{1+y}$$
+      </div>
+      <p style="text-align:left">Sammenhengen mellom prisendring og renteendring:</p>
+      <div class="formel big-formula">
+        $$\frac{\Delta B}{B} \approx -D^* \cdot \Delta y$$
+      </div>
+      <p style="text-align:left"><strong>Tolkning:</strong> Modifisert durasjon på 4 betyr at ved 1 prosentpoeng renteoppgang faller prisen med ca. 4 %.</p>
+      <div class="key-point">Minustegnet i formelen reflekterer regel 1: rente og pris beveger seg motsatt.</div>
+    </section>
+
+    <!-- ============ 27: EKSEMPEL MODIFISERT ============ -->
+    <section>
+      <h2>Eksempel: Modifisert durasjon i bruk</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Eksempel (HRWJ)</div>
+        Obligasjon: 4 år til forfall, $F=100$, kupong 8 %, markedsrente 8 %.
+        <ul style="margin-top: 6px">
+          <li>Pris i dag: 100 (parikurs)</li>
+          <li>Macaulay-durasjon: $D = 3{,}58$ år</li>
+          <li>Modifisert: $D^* = 3{,}58 / 1{,}08 = 3{,}31$</li>
+        </ul>
+      </div>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        <p>Hvis renten stiger med 1 prosentpoeng (fra 8 % til 9 %):</p>
+        $$\frac{\Delta B}{B} \approx -3{,}31 \times 0{,}01 = -3{,}31\,\%$$
+        <p>Predikert ny pris: $100 \times (1 - 0{,}0331) = 96{,}69$</p>
+        <p>Faktisk ny pris ved $y=9\,\%$: $96{,}76$ (eksakt regning)</p>
+        <p>Differanse: 0,07 kr — god approksimasjon, særlig for små renteendringer.</p>
+      </div>
+    </section>
+
+    <!-- ============ 28: DURASJONSREGLER ============ -->
+    <section>
+      <h2>Fem regler for durasjon</h2>
+      <div class="rule-card">
+        <div class="rule-nr">Regel 1</div>
+        Durasjonen til en <strong>nullkupongobligasjon</strong> er lik maturiteten ($D = T$).
+      </div>
+      <div class="rule-card">
+        <div class="rule-nr">Regel 2</div>
+        Ved konstant løpetid er durasjonen <strong>høyere når kupongen er lavere</strong>.
+      </div>
+      <div class="rule-card">
+        <div class="rule-nr">Regel 3</div>
+        Durasjonen <strong>øker</strong> med tid til forfall (ved konstant kupongrate).
+      </div>
+      <div class="rule-card">
+        <div class="rule-nr">Regel 4</div>
+        Durasjonen er <strong>høyere når yield er lavere</strong> (gitt kupong &gt; 0).
+      </div>
+      <div class="rule-card">
+        <div class="rule-nr">Regel 5</div>
+        For en <strong>perpetuitet</strong> er durasjonen $D = (1+y)/y$.
+      </div>
+    </section>
+
+    <!-- ============ 29: DURASJON PERPETUITET ============ -->
+    <section>
+      <h2>Durasjon for perpetuitet</h2>
+      <p style="text-align:left">En perpetuitet betaler $K$ hvert år for evig. Kontantstrømmen er konstant, men diskonteringsfaktoren faller — så vektene tilfaller tidlige tidspunkter mest.</p>
+      <div class="formel big-formula">
+        $$D_\infty = \frac{1+y}{y}$$
+      </div>
+      <p style="text-align:left">Eksempel: $y = 5\,\%$:</p>
+      <div class="formel">
+        $D = 1{,}05/0{,}05 = 21$ år
+      </div>
+      <p style="text-align:left"><strong>Merknad:</strong> Selv om kontantstrømmen er evig, er den «effektive løpetiden» (durasjonen) endelig — fordi langt fremtidige betalinger har lav nåverdi.</p>
+      <div class="key-point">Durasjonen avhenger <em>ikke</em> av kupongnivået — bare av yield. Det er fordi alle CF er like, så vektene er rene diskonteringsfaktorer.</div>
+    </section>
+
+    <!-- ============ 30: HVORFOR VIKTIG ============ -->
+    <section>
+      <h2>Hvorfor er durasjon viktig?</h2>
+      <ol>
+        <li><strong>Sammenfattende mål</strong> — én enkelt statistikk for hele kontantstrømprofilen.</li>
+        <li><strong>Risikohåndtering</strong> — sikre porteføljen mot renteendringer ved å matche durasjon på eiendeler og forpliktelser.</li>
+        <li><strong>Sensitivitetsmål</strong> — modifisert durasjon gir umiddelbart svar på «hvor mye taper jeg hvis renten stiger 1 %?»</li>
+      </ol>
+      <div class="norsk-eksempel">
+        <div class="label">Norsk kontekst</div>
+        Norske <strong>livsforsikringsselskaper og pensjonskasser</strong> bruker durasjonsmatching mye. Deres forpliktelser har lang durasjon (15–30 år), og de prøver å investere i obligasjoner med tilsvarende durasjon for å beskytte solvensmarginen mot renteendringer.
+      </div>
+    </section>
+
+    <!-- ============ 31: SVAKHETER ============ -->
+    <section>
+      <h2>Svakheter ved durasjon</h2>
+      <div class="definisjon">
+        <div class="term">1 · Antagelse om flat yield-kurve</div>
+        Durasjon antar at hele yield-kurven flytter seg parallelt. I virkeligheten kan korte og lange renter bevege seg ulikt.
+      </div>
+      <div class="definisjon">
+        <div class="term">2 · Lineær approksimasjon</div>
+        Durasjon er en <strong>lineær</strong> tilnærming til en <strong>konveks</strong> funksjon. For større renteendringer underestimerer den prisendringer ved fall, og overestimerer ved oppgang.
+      </div>
+      <div class="definisjon">
+        <div class="term">3 · Embedded options</div>
+        Obligasjoner med innebygde opsjoner (call, put, convertibles) har komplekse kontantstrømmer som standard durasjonsformel ikke fanger.
+      </div>
+      <p style="text-align:left">Mer avansert teori (konveksitet, effektiv durasjon) håndterer disse svakhetene — men ligger utenfor dette kurset.</p>
+    </section>
+
+    <!-- ============ 32: OPPSUMMERING ============ -->
+    <section>
+      <h2>Oppsummering forelesning 6</h2>
+      <ol style="font-size: 0.9em">
+        <li><strong>Terminstruktur</strong> = yield som funksjon av løpetid. Bygges fra nullkupong spotrenter.</li>
+        <li><strong>Forwardrenter</strong> kan beregnes fra spotrenter: $(1+f) = (1+r_t)^t/(1+r_{t-1})^{t-1}$.</li>
+        <li>Tre teorier om formen: <strong>forventning, likviditetspremie, segmentering</strong>.</li>
+        <li><strong>Seks regler for renterisiko</strong> — kvalitative innsikter om sensitivitet.</li>
+        <li><strong>Macaulay-durasjon</strong>: vektet snitt av kontantstrøm-tidspunkter.</li>
+        <li><strong>Modifisert durasjon</strong> $D^* = D/(1+y)$: $\Delta B/B \approx -D^* \Delta y$.</li>
+        <li>Durasjon er lineær — virkeligheten er konveks. Vær varsom ved store renteendringer.</li>
+      </ol>
+      <div class="key-point">Med disse verktøyene kan du <em>kvantifisere</em> hvor utsatt en obligasjonsportefølje er for renteendringer.</div>
+    </section>
+
+    <!-- ============ 33: SELVSTUDIUM ============ -->
+    <section>
+      <h2>Til selvstudium</h2>
+      <div class="definisjon">
+        <div class="term">Oppgaver</div>
+        <strong>Oppgavesett 2 — Obligasjoner</strong> på Canvas. Inneholder oppgaver på pris, YTM, terminstruktur og durasjon.
+      </div>
+      <div class="definisjon">
+        <div class="term">Pensum</div>
+        <strong>HRWJ kapittel 6</strong> — særlig avsnittene om term structure, forward rates og duration.
+      </div>
+      <div class="definisjon">
+        <div class="term">Praktisk øvelse</div>
+        Søk opp Norges Banks rentestatistikk — finn dagens 1-, 5- og 10-års statsobligasjonsrenter. Beregn implisitte forwardrenter. Hva sier markedet om fremtidig renteutvikling?
+      </div>
+      <p style="text-align:center; color: var(--nmbu-green); margin-top:30px"><strong>Neste forelesning:</strong> Aksjeprising — Gordons vekstmodell og fundamentalanalyse.</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script>
+const params = new URLSearchParams(window.location.search);
+const useSlides = params.get('view') === 'slides';
+Reveal.initialize({
+  hash: !useSlides,
+  slideNumber: useSlides ? 'c/t' : false,
+  width: 1280,
+  height: 800,
+  margin: 0.06,
+  controls: useSlides,
+  progress: useSlides,
+  center: useSlides,
+  transition: useSlides ? 'slide' : 'none',
+  view: useSlides ? undefined : 'scroll',
+  scrollProgress: !useSlides,
+  plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
+});
+</script>
+</body>
+</html>

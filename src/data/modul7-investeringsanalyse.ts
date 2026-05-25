@@ -1,4 +1,4 @@
-import { Module, CalculatorContent, InteractiveModelContent } from '../types/course';
+import { Module, CalculatorContent, InteractiveModelContent, PresentationContent } from '../types/course';
 
 export const modul7InvesteringsanalyseModule: Module = {
   id: 'modul-7-investeringsanalyse',
@@ -13,6 +13,28 @@ export const modul7InvesteringsanalyseModule: Module = {
     'Forstå realopsjoner og strategisk verdi i investeringsbeslutninger'
   ],
   sections: [
+    // ===================================
+    // SEKSJON: Forelesningsslides
+    // ===================================
+    {
+      id: 'investeringsanalyse-forelesningsslides',
+      title: 'Forelesningsslides',
+      icon: '🎓',
+      order: 0,
+      content: [
+        {
+          id: 'investeringsanalyse-pres',
+          type: 'presentation',
+          order: 1,
+          title: 'Forelesningsslides: Investeringsanalyse',
+          description: 'Slides fra klasseromsforelesningene om investeringsanalyse. Del 1 dekker NPV og IRR, del 2 går videre med tilbakebetalingstid, sensitivitetsanalyse og realopsjoner.',
+          slides: [
+            { title: 'Investeringsanalyse del 1 — NPV og IRR', filename: 'Forelesning10_Investeringsanalyse_del1_2026.html' },
+            { title: 'Investeringsanalyse del 2 — Utvidelser', filename: 'Forelesning11_Investeringsanalyse_del2_2026.html' }
+          ]
+        } as PresentationContent
+      ]
+    },
     // SEKSJON 7.1: Grunnleggende investeringsbeslutninger
     {
       id: 'seksjon-7-1-grunnleggende',

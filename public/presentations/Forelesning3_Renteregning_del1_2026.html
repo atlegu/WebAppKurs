@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BUS 220 – Forelesning 3: Pengenes tidsverdi (del 1)</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css" id="theme">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap');
+
+  :root {
+    --nmbu-green: #046530;
+    --nmbu-green-light: #f0f7f2;
+    --accent-orange: #f59e0b;
+    --tavle-bg: #fef3c7;
+    --text-dark: #1a1a1a;
+    --text-muted: #4b5563;
+  }
+
+  .reveal {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 28px;
+    color: var(--text-dark);
+  }
+
+  .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    color: var(--nmbu-green);
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 700;
+  }
+
+  .reveal h1 { font-size: 1.8em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.5em; line-height: 1.2; margin-bottom: 0.5em; }
+  .reveal h3 { font-size: 1.2em; }
+
+  .reveal p { line-height: 1.5; }
+  .reveal ul, .reveal ol { display: block; margin-left: 1em; }
+  .reveal li { margin-bottom: 0.4em; line-height: 1.5; }
+
+  /* Title slide */
+  .reveal .title-slide {
+    background: var(--nmbu-green);
+    color: white;
+    padding: 60px;
+  }
+  .reveal .title-slide h1 {
+    color: white;
+    font-size: 2.4em;
+    margin-bottom: 0.3em;
+  }
+  .reveal .title-slide .subtitle {
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-size: 1.4em;
+    color: rgba(255,255,255,0.95);
+    margin-bottom: 1em;
+  }
+  .reveal .title-slide .meta {
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-size: 0.85em;
+    color: rgba(255,255,255,0.8);
+    margin-top: 2em;
+  }
+
+  /* Section dividers */
+  .reveal .section-divider {
+    background: var(--nmbu-green);
+    color: white;
+  }
+  .reveal .section-divider h2 {
+    color: white;
+    font-size: 2.2em;
+  }
+  .reveal .section-divider .section-number {
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9em;
+    letter-spacing: 0.2em;
+    margin-bottom: 1em;
+  }
+
+  /* Definitions */
+  .reveal .definisjon {
+    background: var(--nmbu-green-light);
+    border-left: 5px solid var(--nmbu-green);
+    padding: 18px 24px;
+    margin: 20px 0;
+    text-align: left;
+    border-radius: 0 8px 8px 0;
+  }
+  .reveal .definisjon .term {
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-weight: 700;
+    color: var(--nmbu-green);
+    margin-bottom: 6px;
+  }
+
+  /* Formula box */
+  .reveal .formel {
+    background: white;
+    border: 2px solid var(--nmbu-green);
+    padding: 24px 32px;
+    margin: 20px auto;
+    border-radius: 10px;
+    display: inline-block;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  }
+
+  /* Key point */
+  .reveal .key-point {
+    background: var(--nmbu-green-light);
+    padding: 16px 22px;
+    margin: 16px 0;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 0.95em;
+  }
+  .reveal .key-point::before {
+    content: "→ ";
+    color: var(--nmbu-green);
+    font-weight: 700;
+  }
+
+  /* Tavle indicator */
+  .reveal .tavle-marker {
+    background: var(--tavle-bg);
+    border: 2px dashed var(--accent-orange);
+    padding: 18px 24px;
+    margin: 24px 0;
+    border-radius: 10px;
+    text-align: left;
+  }
+  .reveal .tavle-marker .tavle-label {
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-weight: 700;
+    color: #b45309;
+    text-transform: uppercase;
+    font-size: 0.75em;
+    letter-spacing: 0.15em;
+    margin-bottom: 8px;
+  }
+
+  /* Norsk eksempel marker */
+  .reveal .norsk-eksempel {
+    background: #fef9f0;
+    border-left: 4px solid #d97706;
+    padding: 14px 20px;
+    margin: 16px 0;
+    text-align: left;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.92em;
+  }
+  .reveal .norsk-eksempel .label {
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-weight: 600;
+    color: #b45309;
+    font-size: 0.85em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Tables */
+  .reveal table {
+    margin: 16px auto;
+    border-collapse: collapse;
+    font-size: 0.85em;
+  }
+  .reveal table th {
+    background: var(--nmbu-green);
+    color: white;
+    padding: 10px 16px;
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-weight: 600;
+  }
+  .reveal table td {
+    padding: 8px 16px;
+    border: 1px solid #d4d4d4;
+    text-align: center;
+  }
+
+  /* Tidslinje (timeline) */
+  .reveal .tidslinje {
+    margin: 30px auto;
+    text-align: center;
+  }
+  .reveal .tidslinje svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Two columns */
+  .reveal .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: start;
+    text-align: left;
+  }
+
+  /* Small caption text */
+  .reveal .caption {
+    font-size: 0.7em;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 8px;
+  }
+
+  /* Slide number */
+  .reveal .slide-number {
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    color: var(--nmbu-green);
+    background: transparent;
+  }
+
+  /* Footer */
+  .reveal .footer {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    font-size: 0.5em;
+    color: var(--text-muted);
+  }
+
+  /* Highlight for important values */
+  .reveal .highlight {
+    background: linear-gradient(120deg, rgba(245,158,11,0.18) 0%, rgba(245,158,11,0.18) 100%);
+    padding: 0 4px;
+    border-radius: 3px;
+  }
+
+  /* Quote */
+  .reveal blockquote {
+    background: var(--nmbu-green-light);
+    border-left: 4px solid var(--nmbu-green);
+    padding: 16px 22px;
+    margin: 20px 0;
+    font-style: italic;
+    color: var(--text-dark);
+    font-size: 0.95em;
+    text-align: left;
+    border-radius: 0 6px 6px 0;
+    box-shadow: none;
+  }
+
+  /* MathJax adjustments */
+  .reveal mjx-container { font-size: 1.0em !important; }
+  .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+</style>
+
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']]
+  },
+  svg: { fontCache: 'global' },
+  startup: {
+    ready: () => {
+      MathJax.startup.defaultReady();
+      MathJax.startup.promise.then(() => {
+        if (window.Reveal) Reveal.layout();
+      });
+    }
+  }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ============ SLIDE 1: TITLE ============ -->
+    <section class="title-slide">
+      <h1>Pengenes tidsverdi</h1>
+      <div class="subtitle">Del 1: Grunnleggende renteregning</div>
+      <div class="meta">
+        BUS 220 — Finansiering og investering<br>
+        Atle G. Guttormsen · Høst 2026<br>
+        Pensum: HRWJ kapittel 4 og 5
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 2: LÆRINGSMÅL ============ -->
+    <section>
+      <h2>Læringsmål</h2>
+      <p style="text-align:left">Etter denne forelesningen skal du kunne:</p>
+      <ul>
+        <li>Forklare hvorfor penger har en tidsverdi</li>
+        <li>Tegne tidslinjer for kontantstrømmer</li>
+        <li>Beregne <strong>sluttverdi</strong> (FV) og <strong>nåverdi</strong> (PV) av enkeltbeløp</li>
+        <li>Bruke de tre reglene for tidsreise systematisk</li>
+        <li>Beregne nåverdi av flere kontantstrømmer (ujevne og jevne)</li>
+        <li>Anvende formlene for <strong>annuitet</strong>, <strong>perpetuitet</strong> og deres voksende varianter</li>
+        <li>Identifisere når de ulike formlene er gyldige</li>
+      </ul>
+      <div class="key-point">Renteregning er grunnlaget for alt vi gjør resten av semesteret.</div>
+    </section>
+
+    <!-- ============ SLIDE 3: MOTIVASJON ============ -->
+    <section>
+      <h2>Et lite tankeeksperiment</h2>
+      <p style="font-size:1.15em; margin-top:1em">Du har vunnet kr 100 000 i Norsk Tipping.</p>
+      <p style="font-size:1.15em">Velg én av to muligheter:</p>
+      <div class="two-col" style="margin-top:30px">
+        <div class="definisjon">
+          <div class="term">Alternativ A</div>
+          <p style="font-size:1.3em; margin:0">kr 100 000<br><strong>i dag</strong></p>
+        </div>
+        <div class="definisjon">
+          <div class="term">Alternativ B</div>
+          <p style="font-size:1.3em; margin:0">kr 100 000<br><strong>om ett år</strong></p>
+        </div>
+      </div>
+      <p style="margin-top:30px; font-size:1.1em; text-align:center; color: var(--nmbu-green)"><strong>Hva velger du? Hvorfor?</strong></p>
+    </section>
+
+    <!-- ============ SLIDE 4: TRE ÅRSAKER ============ -->
+    <section>
+      <h2>Hvorfor er penger i dag mer verdt?</h2>
+      <p style="text-align:left">Tre årsaker — alle viktige:</p>
+      <div class="definisjon">
+        <div class="term">1 · Investeringsmulighet</div>
+        Hvis du har kr 100 000 i dag, kan du sette dem i banken og tjene renter.
+        Med 4 % rente har du 104 000 om ett år.
+      </div>
+      <div class="definisjon">
+        <div class="term">2 · Inflasjon</div>
+        Prisene stiger over tid. Det du kan kjøpe for 100 000 i dag, koster mer om ett år.
+        I 2024 var KPI-veksten i Norge ca. 3,1 %.
+      </div>
+      <div class="definisjon">
+        <div class="term">3 · Risiko / usikkerhet</div>
+        Et løfte om penger om ett år er bare et løfte — kan det gå konkurs? Du i live?
+        Penger i hånden er sikre.
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 5: BEGREPSOVERSIKT ============ -->
+    <section>
+      <h2>Sentrale begreper og notasjon</h2>
+      <table style="margin:20px auto; font-size:0.9em">
+        <tr><th>Symbol</th><th>Norsk</th><th>Engelsk</th></tr>
+        <tr><td>$PV$</td><td>Nåverdi</td><td>Present Value</td></tr>
+        <tr><td>$FV$</td><td>Sluttverdi (framtidsverdi)</td><td>Future Value</td></tr>
+        <tr><td>$C$ eller $CF$</td><td>Kontantstrøm</td><td>Cash Flow</td></tr>
+        <tr><td>$r$</td><td>Rente / avkastningskrav</td><td>Interest rate / discount rate</td></tr>
+        <tr><td>$n$ eller $t$</td><td>Antall perioder</td><td>Number of periods</td></tr>
+        <tr><td>$g$</td><td>Vekstrate</td><td>Growth rate</td></tr>
+      </table>
+      <p class="caption">Vi bruker samme notasjon som læreboka HRWJ. Notasjonen kan variere i andre kilder.</p>
+    </section>
+
+    <!-- ============ SLIDE 6: TIDSLINJEN ============ -->
+    <section>
+      <h2>Tidslinjen — vårt viktigste verktøy</h2>
+      <p style="text-align:left">Alle problemer starter med en tidslinje. <strong>Tegn alltid tidslinjen først</strong>.</p>
+      <div class="tidslinje">
+        <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Time axis -->
+          <line x1="50" y1="120" x2="650" y2="120" stroke="#046530" stroke-width="2"/>
+          <!-- Period markers -->
+          <line x1="100" y1="115" x2="100" y2="125" stroke="#046530" stroke-width="2"/>
+          <line x1="240" y1="115" x2="240" y2="125" stroke="#046530" stroke-width="2"/>
+          <line x1="380" y1="115" x2="380" y2="125" stroke="#046530" stroke-width="2"/>
+          <line x1="520" y1="115" x2="520" y2="125" stroke="#046530" stroke-width="2"/>
+          <!-- Labels -->
+          <text x="100" y="145" text-anchor="middle" font-family="Source Sans 3" font-size="18" fill="#1a1a1a">0</text>
+          <text x="240" y="145" text-anchor="middle" font-family="Source Sans 3" font-size="18" fill="#1a1a1a">1</text>
+          <text x="380" y="145" text-anchor="middle" font-family="Source Sans 3" font-size="18" fill="#1a1a1a">2</text>
+          <text x="520" y="145" text-anchor="middle" font-family="Source Sans 3" font-size="18" fill="#1a1a1a">3</text>
+          <text x="100" y="170" text-anchor="middle" font-family="Source Sans 3" font-size="14" fill="#4b5563">i dag</text>
+          <text x="240" y="170" text-anchor="middle" font-family="Source Sans 3" font-size="14" fill="#4b5563">slutt år 1</text>
+          <text x="380" y="170" text-anchor="middle" font-family="Source Sans 3" font-size="14" fill="#4b5563">slutt år 2</text>
+          <text x="520" y="170" text-anchor="middle" font-family="Source Sans 3" font-size="14" fill="#4b5563">slutt år 3</text>
+          <!-- Period brackets -->
+          <text x="170" y="100" text-anchor="middle" font-family="Source Sans 3" font-size="14" fill="#046530">år 1</text>
+          <text x="310" y="100" text-anchor="middle" font-family="Source Sans 3" font-size="14" fill="#046530">år 2</text>
+          <text x="450" y="100" text-anchor="middle" font-family="Source Sans 3" font-size="14" fill="#046530">år 3</text>
+          <!-- Cash flow arrows -->
+          <path d="M 240 90 L 240 110" stroke="#046530" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+          <path d="M 380 90 L 380 110" stroke="#046530" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+          <text x="240" y="80" text-anchor="middle" font-family="Source Sans 3" font-size="16" fill="#046530">$C_1$</text>
+          <text x="380" y="80" text-anchor="middle" font-family="Source Sans 3" font-size="16" fill="#046530">$C_2$</text>
+          <defs>
+            <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+              <polygon points="0 0, 8 4, 0 8" fill="#046530"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
+      <ul style="font-size:0.9em">
+        <li>Tidspunkt <strong>0</strong> er alltid «i dag»</li>
+        <li><em>Slutten</em> av år 1 = <em>begynnelsen</em> av år 2 = tidspunkt 1</li>
+        <li>Piler oppover = penger inn, nedover = penger ut</li>
+      </ul>
+    </section>
+
+    <!-- ============ SLIDE 7: KONVENSJONER ============ -->
+    <section>
+      <h2>Tegnkonvensjoner</h2>
+      <div class="two-col">
+        <div>
+          <h3 style="color:#046530">Positive kontantstrømmer</h3>
+          <p>Penger som kommer <strong>inn</strong> til deg.</p>
+          <ul>
+            <li>Lønn, utbytte</li>
+            <li>Innfrielse av lån (kreditor)</li>
+            <li>Salg av aksje</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color:#b91c1c">Negative kontantstrømmer</h3>
+          <p>Penger som går <strong>ut</strong> fra deg.</p>
+          <ul>
+            <li>Investeringer</li>
+            <li>Avdrag på lån (debitor)</li>
+            <li>Kjøp av aksje</li>
+          </ul>
+        </div>
+      </div>
+      <div class="key-point" style="margin-top:30px">
+        Når du tegner tidslinjen for en konkret avtale, må du velge <strong>én part</strong> og være konsekvent. Det som er positivt for låntaker er negativt for långiver.
+      </div>
+    </section>
+
+    <!-- ============ SECTION DIVIDER ============ -->
+    <section class="section-divider">
+      <div class="section-number">DEL A</div>
+      <h2>Enkeltbeløp:<br>FV og PV</h2>
+    </section>
+
+    <!-- ============ SLIDE 8: TRE REGLER ============ -->
+    <section>
+      <h2>Tre regler for å flytte penger i tid</h2>
+      <div class="definisjon">
+        <div class="term">Regel 1 · Sammenligning</div>
+        Kontantstrømmer kan <strong>kun sammenlignes eller summeres når de er på samme tidspunkt</strong>.
+        Du kan ikke legge sammen «100 i dag» og «100 om ett år» — det er som å legge sammen kroner og dollar.
+      </div>
+      <div class="definisjon">
+        <div class="term">Regel 2 · Framover i tid: <em>renteregne (compound)</em></div>
+        For å flytte en kontantstrøm $n$ perioder framover:
+        $$FV = C \times (1+r)^n$$
+      </div>
+      <div class="definisjon">
+        <div class="term">Regel 3 · Bakover i tid: <em>diskontere</em></div>
+        For å flytte en kontantstrøm $n$ perioder bakover:
+        $$PV = \frac{C}{(1+r)^n}$$
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 9: FV-FORMELEN ============ -->
+    <section>
+      <h2>Sluttverdi (Future Value)</h2>
+      <div class="formel big-formula">
+        $$FV_n = PV \times (1+r)^n$$
+      </div>
+      <p style="text-align:left">Intuisjon: For hver periode multipliseres beløpet med $(1+r)$. Etter $n$ perioder har vi multiplisert med $(1+r)$ totalt $n$ ganger.</p>
+      <p style="text-align:left; margin-top:20px"><strong>To krefter virker samtidig:</strong></p>
+      <ul>
+        <li><strong>Rente på hovedstol</strong> — du tjener $r$ på det opprinnelige beløpet</li>
+        <li><strong>Rente på rente (compound interest)</strong> — du tjener $r$ også på rentene fra tidligere perioder</li>
+      </ul>
+      <blockquote>«Compound interest is the eighth wonder of the world. He who understands it, earns it; he who doesn't, pays it.» — Albert Einstein (tilskrevet)</blockquote>
+    </section>
+
+    <!-- ============ SLIDE 10: EKSEMPEL FV BSU ============ -->
+    <section>
+      <h2>Eksempel: BSU-sparing</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Norsk kontekst</div>
+        Tine er 22 år og har akkurat begynt på første jobb. Hun setter inn kr 27 500 i BSU
+        (maks årlig innskudd i 2026). BSU-renten i hennes bank er <strong>4,75 %</strong>.
+      </div>
+      <p style="text-align:left"><strong>Spørsmål:</strong> Hvor mye vil dette ene innskuddet ha vokst til om 10 år?</p>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        $$FV = 27\,500 \times (1{,}0475)^{10}$$
+        $$= 27\,500 \times 1{,}5917$$
+        $$= \text{kr } 43\,772$$
+      </div>
+      <p class="caption">Etter 10 år har 27 500 vokst til 43 772 — en gevinst på over 16 000 kr fra ett innskudd.</p>
+    </section>
+
+    <!-- ============ SLIDE 11: ENKEL VS SAMMENSATT ============ -->
+    <section>
+      <h2>Enkle vs. sammensatte renter</h2>
+      <div class="two-col">
+        <div class="definisjon">
+          <div class="term">Enkel rente</div>
+          Rente beregnes <strong>kun på hovedstolen</strong>.
+          $$FV = PV \times (1 + r \cdot n)$$
+          Lineær vekst.
+        </div>
+        <div class="definisjon">
+          <div class="term">Sammensatt rente</div>
+          Rente beregnes <strong>også på opptjent rente</strong>.
+          $$FV = PV \times (1+r)^n$$
+          Eksponentiell vekst.
+        </div>
+      </div>
+      <p style="text-align:left; margin-top:24px"><strong>Eksempel:</strong> 10 000 kr i 30 år, 6 %:</p>
+      <table>
+        <tr><th></th><th>Enkel rente</th><th>Sammensatt rente</th></tr>
+        <tr><td>FV</td><td>$10\,000 \times (1+0{,}06 \times 30) = 28\,000$</td><td>$10\,000 \times 1{,}06^{30} = 57\,435$</td></tr>
+      </table>
+      <p class="caption">Sammensatt rente gir over dobbel så stor sluttverdi som enkel rente over 30 år. Dette er hvorfor lang sparehorisont er så viktig.</p>
+    </section>
+
+    <!-- ============ SLIDE 12: GRAF KOMPOUNDING ============ -->
+    <section>
+      <h2>Pensjonssparingens kraft</h2>
+      <p style="text-align:left">10 000 kr investert med 7 % sammensatt rente:</p>
+      <div class="tidslinje">
+        <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+          <!-- Axes -->
+          <line x1="60" y1="280" x2="660" y2="280" stroke="#1a1a1a" stroke-width="1.5"/>
+          <line x1="60" y1="280" x2="60" y2="40" stroke="#1a1a1a" stroke-width="1.5"/>
+          <!-- X axis labels (years) -->
+          <text x="60" y="300" text-anchor="middle" font-family="Source Sans 3" font-size="12">0</text>
+          <text x="180" y="300" text-anchor="middle" font-family="Source Sans 3" font-size="12">10</text>
+          <text x="300" y="300" text-anchor="middle" font-family="Source Sans 3" font-size="12">20</text>
+          <text x="420" y="300" text-anchor="middle" font-family="Source Sans 3" font-size="12">30</text>
+          <text x="540" y="300" text-anchor="middle" font-family="Source Sans 3" font-size="12">40</text>
+          <text x="660" y="300" text-anchor="middle" font-family="Source Sans 3" font-size="12">50 år</text>
+          <!-- Y axis labels -->
+          <text x="50" y="285" text-anchor="end" font-family="Source Sans 3" font-size="12">0</text>
+          <text x="50" y="225" text-anchor="end" font-family="Source Sans 3" font-size="12">100k</text>
+          <text x="50" y="165" text-anchor="end" font-family="Source Sans 3" font-size="12">200k</text>
+          <text x="50" y="105" text-anchor="end" font-family="Source Sans 3" font-size="12">300k</text>
+          <text x="50" y="45" text-anchor="end" font-family="Source Sans 3" font-size="12">400k</text>
+          <!-- Linear (simple interest) curve -->
+          <path d="M 60 280 L 660 215" stroke="#9ca3af" stroke-width="2" stroke-dasharray="6 4" fill="none"/>
+          <text x="600" y="200" font-family="Source Sans 3" font-size="13" fill="#6b7280">Enkel rente</text>
+          <!-- Compound curve (7%) -->
+          <path d="M 60 280 Q 200 270 300 220 T 540 100 L 660 50" stroke="#046530" stroke-width="3" fill="none"/>
+          <text x="500" y="80" font-family="Source Sans 3" font-size="13" fill="#046530" font-weight="600">Sammensatt 7 %</text>
+          <!-- Title -->
+          <text x="360" y="25" text-anchor="middle" font-family="Source Sans 3" font-size="13" font-style="italic" fill="#4b5563">Verdi av 10 000 kr investert i dag (NOK)</text>
+        </svg>
+      </div>
+      <div class="key-point">Med 7 % rente <strong>dobles</strong> pengene hvert ~10. år (regel 72: $72/r$).</div>
+    </section>
+
+    <!-- ============ SLIDE 13: PV-FORMELEN ============ -->
+    <section>
+      <h2>Nåverdi (Present Value)</h2>
+      <div class="formel big-formula">
+        $$PV = \frac{FV_n}{(1+r)^n}$$
+      </div>
+      <p style="text-align:left">Vi <strong>diskonterer</strong> — det vil si: regner ut hva en framtidig kontantstrøm er verdt i dag.</p>
+      <p style="text-align:left; margin-top:20px"><strong>Intuisjon:</strong> Hvor mye må jeg sette i banken i dag, til rente $r$, for å ha $FV$ om $n$ år?</p>
+      <div class="key-point">PV-formelen er den mest brukte i hele kurset. Aksjer, obligasjoner, prosjekter, lån — alt verdsettes som nåverdi av framtidige kontantstrømmer.</div>
+    </section>
+
+    <!-- ============ SLIDE 14: EKSEMPEL PV ============ -->
+    <section>
+      <h2>Eksempel: Lover å motta i framtiden</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Norsk kontekst</div>
+        Din onkel skriver i testamentet at du vil arve kr 200 000 om <strong>10 år</strong>.
+        Bankrenten på en sikker plassering er 4 %.
+      </div>
+      <p style="text-align:left"><strong>Spørsmål:</strong> Hva er denne framtidige arven verdt i dag?</p>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        $$PV = \frac{200\,000}{(1{,}04)^{10}} = \frac{200\,000}{1{,}4802}$$
+        $$= \text{kr } 135\,113$$
+      </div>
+      <p style="text-align:left">Med andre ord: om noen tilbød deg <strong>kr 135 113 i dag i bytte mot arven</strong>, ville du være indifferent — så lenge du tror på 4 % renten.</p>
+    </section>
+
+    <!-- ============ SLIDE 15: LØSE FOR r ELLER n ============ -->
+    <section>
+      <h2>Algebraisk fleksibilitet</h2>
+      <p style="text-align:left">Den samme formelen $FV = PV(1+r)^n$ har <strong>fire variabler</strong>. Gitt tre, kan vi løse for den fjerde:</p>
+      <table>
+        <tr><th>Gitt</th><th>Finn</th><th>Løsning</th></tr>
+        <tr><td>$PV, r, n$</td><td>$FV$</td><td>$FV = PV(1+r)^n$</td></tr>
+        <tr><td>$FV, r, n$</td><td>$PV$</td><td>$PV = \dfrac{FV}{(1+r)^n}$</td></tr>
+        <tr><td>$PV, FV, n$</td><td>$r$</td><td>$r = \left(\dfrac{FV}{PV}\right)^{1/n} - 1$</td></tr>
+        <tr><td>$PV, FV, r$</td><td>$n$</td><td>$n = \dfrac{\ln(FV/PV)}{\ln(1+r)}$</td></tr>
+      </table>
+      <p class="caption">I praksis: Excel/kalkulator gjør jobben. Det er <em>oppsettet</em> som er vanskelig, ikke regningen.</p>
+    </section>
+
+    <!-- ============ SLIDE 16: EKSEMPEL HVOR LENGE ============ -->
+    <section>
+      <h2>Eksempel: Når er jeg millionær?</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Norsk kontekst</div>
+        Du setter kr 200 000 inn i et indeksfond i Nordnet. Historisk avkastning på Oslo Børs har vært
+        <strong>~8 % per år</strong>. Hvor lang tid tar det før du har én million?
+      </div>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        <p>Vi løser for $n$:</p>
+        $$1\,000\,000 = 200\,000 \times (1{,}08)^n$$
+        $$5 = 1{,}08^n$$
+        $$n = \frac{\ln 5}{\ln 1{,}08} = \frac{1{,}6094}{0{,}0770} \approx 20{,}9 \text{ år}$$
+      </div>
+      <p style="text-align:left">Hvis du er 25 år nå, har du én million på fondskontoen før du fyller 46.</p>
+    </section>
+
+    <!-- ============ SECTION DIVIDER ============ -->
+    <section class="section-divider">
+      <div class="section-number">DEL B</div>
+      <h2>Flere kontantstrømmer</h2>
+    </section>
+
+    <!-- ============ SLIDE 17: FLERE KONTANTSTRØMMER ============ -->
+    <section>
+      <h2>Når det er flere betalinger</h2>
+      <p style="text-align:left">Hvis vi har <em>flere</em> kontantstrømmer på <em>ulike tidspunkter</em>, kan vi <strong>ikke</strong> bare summere dem.</p>
+      <div class="key-point">Vi diskonterer <em>hver</em> kontantstrøm individuelt til samme tidspunkt (vanligvis tidspunkt 0), og <em>deretter</em> summerer vi.</div>
+      <div class="formel">
+        $$PV_{\text{total}} = \sum_{t=1}^{n} \frac{C_t}{(1+r)^t}$$
+      </div>
+      <p style="text-align:left">Dette er den <strong>grunnleggende verdsettingsformelen</strong>. Alt vi gjør resten av kurset er varianter av denne.</p>
+    </section>
+
+    <!-- ============ SLIDE 18: EKSEMPEL UJEVNE CF ============ -->
+    <section>
+      <h2>Eksempel: Ujevne kontantstrømmer</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Norsk kontekst</div>
+        Du vurderer å investere i en venns oppstartsbedrift. Han lover følgende utbetalinger:
+        år 1: 20 000, år 2: 50 000, år 3: 100 000. Du krever 12 % avkastning.
+      </div>
+      <p style="text-align:left"><strong>Spørsmål:</strong> Hva er disse utbetalingene verdt i dag?</p>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        $$PV = \frac{20\,000}{1{,}12} + \frac{50\,000}{1{,}12^2} + \frac{100\,000}{1{,}12^3}$$
+        $$= 17\,857 + 39\,860 + 71\,178$$
+        $$= \text{kr } 128\,895$$
+      </div>
+      <p style="text-align:left">Hvis vennen din krever <em>mer enn</em> 128 895 kr i dag for denne avtalen, bør du takke nei.</p>
+    </section>
+
+    <!-- ============ SLIDE 19: ANNUITET ============ -->
+    <section>
+      <h2>Annuiteten — jevn rekke betalinger</h2>
+      <div class="definisjon">
+        <div class="term">Annuitet</div>
+        En endelig rekke av <strong>like</strong> kontantstrømmer på regulære tidsintervaller.
+      </div>
+      <p style="text-align:left">Eksempler:</p>
+      <ul>
+        <li><strong>Boliglån</strong> i DNB — du betaler samme termin hver måned</li>
+        <li><strong>Husleie</strong> — fast månedlig inntekt for utleier</li>
+        <li><strong>Pensjonsutbetaling</strong> — kr X per måned i 20 år fra KLP</li>
+        <li><strong>Studielånsavdrag</strong> til Lånekassen</li>
+      </ul>
+      <p style="text-align:left">Du kunne diskontere hver betaling individuelt (slide 17), men det blir tungvint hvis det er 360 betalinger.</p>
+      <p style="text-align:left">→ Vi trenger en <strong>kortform</strong>.</p>
+    </section>
+
+    <!-- ============ SLIDE 20: ANNUITETSFORMEL ============ -->
+    <section>
+      <h2>Annuitetsformelen</h2>
+      <p style="text-align:left">Nåverdien av en annuitet med betaling $C$ i $n$ perioder, første betaling om ett år:</p>
+      <div class="formel big-formula">
+        $$PV = C \times \frac{1 - (1+r)^{-n}}{r}$$
+      </div>
+      <p style="text-align:left">Faktoren $\dfrac{1 - (1+r)^{-n}}{r}$ kalles <strong>annuitetsfaktoren</strong> og noteres ofte $AF(r, n)$.</p>
+      <p style="text-align:left">Den uttrykker: «verdien i dag av kr 1 mottatt hvert år i $n$ år».</p>
+      <table style="font-size:0.8em">
+        <tr><th>$n \backslash r$</th><th>4 %</th><th>6 %</th><th>8 %</th><th>10 %</th></tr>
+        <tr><td>5</td><td>4,452</td><td>4,212</td><td>3,993</td><td>3,791</td></tr>
+        <tr><td>10</td><td>8,111</td><td>7,360</td><td>6,710</td><td>6,145</td></tr>
+        <tr><td>20</td><td>13,590</td><td>11,470</td><td>9,818</td><td>8,514</td></tr>
+        <tr><td>30</td><td>17,292</td><td>13,765</td><td>11,258</td><td>9,427</td></tr>
+      </table>
+    </section>
+
+    <!-- ============ SLIDE 21: EKSEMPEL ANNUITET ============ -->
+    <section>
+      <h2>Eksempel: Lotteri-gevinst</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Norsk kontekst</div>
+        Du vinner i Lotto: kr 50 000 utbetalt hvert år i 20 år (totalt 1 mill.).
+        Alternativt: ta hele beløpet i dag som en engangssum. Bankrenten er 5 %.
+      </div>
+      <p style="text-align:left"><strong>Spørsmål:</strong> Hva er nåverdien av de 20 utbetalingene? Bør du foretrekke engangsutbetaling?</p>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        $$PV = 50\,000 \times \frac{1 - 1{,}05^{-20}}{0{,}05}$$
+        $$= 50\,000 \times 12{,}462 = \text{kr } 623\,111$$
+      </div>
+      <p style="text-align:left">De 20 utbetalingene à 50 000 (totalt 1 mill. kr) er verdt <strong>kun ~623 000 kr i dag</strong>.
+      Hvis lotteriet tilbyr deg en engangssum på 700 000 kr i dag, bør du ta den.</p>
+    </section>
+
+    <!-- ============ SLIDE 22: VOKSENDE ANNUITET ============ -->
+    <section>
+      <h2>Voksende annuitet</h2>
+      <p style="text-align:left">Mange kontantstrømmer er ikke konstante — de vokser. Lønn, husleie og dividender stiger typisk med inflasjon.</p>
+      <p style="text-align:left">Hvis kontantstrømmen vokser med rate $g$ per periode, og første betaling om ett år er $C_1$:</p>
+      <div class="formel big-formula">
+        $$PV = \frac{C_1}{r-g} \times \left[1 - \left(\frac{1+g}{1+r}\right)^n\right]$$
+      </div>
+      <p style="text-align:left">Krav: $r > g$ (ellers divergerer formelen).</p>
+      <div class="key-point">Når $g = 0$ reduserer denne seg til vanlig annuitetsformel.</div>
+    </section>
+
+    <!-- ============ SLIDE 23: EKSEMPEL VOKSENDE ============ -->
+    <section>
+      <h2>Eksempel: Karriere-lønnsverdien</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Norsk kontekst</div>
+        Du har akkurat fått en jobb med startlønn <strong>kr 550 000</strong>. Du forventer å jobbe i 35 år
+        og at lønnen vokser med <strong>3 %</strong> per år (over inflasjon noen ganger, under andre ganger).
+        Diskonteringsrente: 5 %.
+      </div>
+      <p style="text-align:left"><strong>Spørsmål:</strong> Hva er nåverdien av hele din framtidige lønnsstrøm?</p>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        $$PV = \frac{550\,000}{0{,}05 - 0{,}03} \times \left[1 - \left(\frac{1{,}03}{1{,}05}\right)^{35}\right]$$
+        $$= 27\,500\,000 \times [1 - 0{,}510]$$
+        $$= 27\,500\,000 \times 0{,}490 = \text{kr } 13{,}5 \text{ mill.}$$
+      </div>
+      <p style="text-align:left">Din <em>«humankapital»</em> — den økonomiske verdien av din framtidige arbeidsinntekt — er ca. 13,5 millioner kroner i dag.</p>
+    </section>
+
+    <!-- ============ SECTION DIVIDER ============ -->
+    <section class="section-divider">
+      <div class="section-number">DEL C</div>
+      <h2>Evigvarende rekker:<br>Perpetuiteter</h2>
+    </section>
+
+    <!-- ============ SLIDE 24: PERPETUITET ============ -->
+    <section>
+      <h2>Perpetuitet — evigvarende annuitet</h2>
+      <div class="definisjon">
+        <div class="term">Perpetuitet</div>
+        En <strong>evigvarende</strong> rekke av like store kontantstrømmer på regulære tidsintervaller.
+      </div>
+      <p style="text-align:left">Eksempler i praksis:</p>
+      <ul>
+        <li><strong>Britiske consols</strong> — statsobligasjoner uten forfall (ikke vanlig i Norge)</li>
+        <li><strong>Veldedighet</strong> — en fond som gir ut kr X hvert år for evig (Nobel-prisen!)</li>
+        <li><strong>Eiendom</strong> — leilighet som kan leies ut «for alltid»</li>
+        <li><strong>Aksje</strong> — selskap forventet å eksistere og dele ut utbytte i lang tid</li>
+      </ul>
+      <p style="text-align:left">En perpetuitet er bare en spesiell annuitet der $n \to \infty$.</p>
+    </section>
+
+    <!-- ============ SLIDE 25: PERPETUITETSFORMEL ============ -->
+    <section>
+      <h2>Perpetuitetsformelen</h2>
+      <p style="text-align:left">Når $n \to \infty$ i annuitetsformelen, blir $(1+r)^{-n} \to 0$, og vi får:</p>
+      <div class="formel big-formula">
+        $$PV = \frac{C}{r}$$
+      </div>
+      <p style="text-align:left"><strong>Intuisjon:</strong> Hvis du har $PV$ i banken til rente $r$, kan du ta ut $r \times PV$ <em>for evig</em> uten å redusere hovedstolen. Snu på det: for å motta $C$ for evig, må du sette inn $C/r$.</p>
+      <p style="text-align:left; margin-top:30px"><strong>Eksempel:</strong> kr 100 årlig for evig, 5 % rente:</p>
+      <div class="formel">
+        $PV = \dfrac{100}{0{,}05} = $ kr 2000
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 26: VOKSENDE PERPETUITET ============ -->
+    <section>
+      <h2>Voksende perpetuitet</h2>
+      <p style="text-align:left">Hvis perpetuiteten vokser med konstant rate $g$ (krav: $r > g$):</p>
+      <div class="formel big-formula">
+        $$PV = \frac{C_1}{r - g}$$
+      </div>
+      <p style="text-align:left">Dette er <strong>Gordons vekstmodell</strong> — fundamentet for aksjeprising. Vi kommer tilbake til den i forelesningen om aksjeprising.</p>
+      <div class="key-point">Krav: $r > g$. Hvis $g \geq r$, divergerer formelen og verdien er uendelig — en logisk umulighet som indikerer at antakelsene er urealistiske.</div>
+    </section>
+
+    <!-- ============ SLIDE 27: EKSEMPEL DIVIDENDE ============ -->
+    <section>
+      <h2>Eksempel: Aksjeverdsetting (forsmak)</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Norsk kontekst</div>
+        Equinor forventes å betale ut kr 12 per aksje i utbytte neste år. Utbyttet forventes
+        å vokse med 4 % per år «for evig» (i praksis: mange tiår). Avkastningskravet er 10 %.
+      </div>
+      <p style="text-align:left"><strong>Spørsmål:</strong> Hva er teoretisk verdi per aksje?</p>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        $$P_0 = \frac{D_1}{r - g} = \frac{12}{0{,}10 - 0{,}04} = \frac{12}{0{,}06}$$
+        $$= \text{kr } 200 \text{ per aksje}$$
+      </div>
+      <p style="text-align:left">Hvis Equinor-aksjen omsettes for mindre enn 200 kr, er den teoretisk underpriset
+      (gitt at antakelsene stemmer!).</p>
+    </section>
+
+    <!-- ============ SLIDE 28: CAVEATS ============ -->
+    <section>
+      <h2>Pass på!</h2>
+      <p style="text-align:left">Disse formlene fungerer bare under spesifikke antakelser:</p>
+      <div class="definisjon">
+        <div class="term">Tidspunkt for første betaling</div>
+        Standardformlene antar at <strong>første betaling er om én periode</strong> (etterskuddsvis).
+        Hvis første betaling er i dag (forskuddsvis): multipliser PV med $(1+r)$.
+      </div>
+      <div class="definisjon">
+        <div class="term">Konstant rente</div>
+        Vi antar at $r$ er konstant for alle perioder. I virkeligheten varierer renten — vi kommer tilbake til dette i del 2.
+      </div>
+      <div class="definisjon">
+        <div class="term">$r > g$ for evig vekst</div>
+        For voksende perpetuitet/annuitet kreves $r > g$. Hvis $g \geq r$: verdien er uendelig — ikke meningsfull.
+      </div>
+      <div class="definisjon">
+        <div class="term">Diskonteringsrente «passer» kontantstrømmen</div>
+        Bruk samme periodisering. Månedlig CF → månedlig rente. Årlig CF → årlig rente.
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 29: OPPSUMMERING ============ -->
+    <section>
+      <h2>Oppsummering forelesning 1</h2>
+      <ol>
+        <li>Penger har en <strong>tidsverdi</strong> — på grunn av investering, inflasjon og risiko.</li>
+        <li>Tidslinjer er ditt viktigste verktøy — <em>tegn alltid en før du regner</em>.</li>
+        <li><strong>FV-formelen:</strong> $FV = PV(1+r)^n$</li>
+        <li><strong>PV-formelen:</strong> $PV = FV/(1+r)^n$</li>
+        <li>Flere kontantstrømmer: diskonter hver, deretter summer.</li>
+        <li><strong>Annuitet:</strong> $PV = C \cdot \dfrac{1 - (1+r)^{-n}}{r}$</li>
+        <li><strong>Perpetuitet:</strong> $PV = C/r$</li>
+        <li><strong>Voksende perpetuitet:</strong> $PV = C_1/(r-g)$ med $r > g$</li>
+      </ol>
+      <div class="key-point">Disse fire formlene + tidslinjen dekker majoriteten av alle finansielle problemer i kurset.</div>
+    </section>
+
+    <!-- ============ SLIDE 30: SELVSTUDIUM ============ -->
+    <section>
+      <h2>Til selvstudium</h2>
+      <div class="definisjon">
+        <div class="term">Oppgaver</div>
+        <strong>Oppgavesett 0 — Renteregning</strong> (på Canvas).
+        Inneholder 13 oppgaver i økende vanskelighet, fra enkel FV/PV til annuiteter
+        og kombinerte problemer. Fasiten ligger ved siden av.
+      </div>
+      <div class="definisjon">
+        <div class="term">Pensum</div>
+        <strong>HRWJ kapittel 4 og 5</strong> (TVM-grunnlag og diskontering).
+        Boka har mange numeriske eksempler — gjør gjennomgangen aktiv ved å regne med.
+      </div>
+      <div class="definisjon">
+        <div class="term">Webappkurs</div>
+        Modul 2 «Pengenes tidsverdi» har video, podcast og interaktive eksempler.
+        Anbefalt som ekstra repetisjon.
+      </div>
+      <p style="text-align:center; color: var(--nmbu-green); margin-top:30px"><strong>Neste forelesning:</strong> Renteregning del 2 — effektiv rente, lånetyper, realverdi.</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const useSlides = params.get('view') === 'slides';
+Reveal.initialize({
+  hash: !useSlides,
+  slideNumber: useSlides ? 'c/t' : false,
+  width: 1280,
+  height: 800,
+  margin: 0.06,
+  controls: useSlides,
+  progress: useSlides,
+  center: useSlides,
+  transition: useSlides ? 'slide' : 'none',
+  view: useSlides ? undefined : 'scroll',
+  scrollProgress: !useSlides,
+  plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
+});
+</script>
+</body>
+</html>

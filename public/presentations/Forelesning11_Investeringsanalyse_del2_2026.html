@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BUS 220 – Forelesning 11: Investeringsanalyse (del 2)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css" id="theme">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap');
+  :root { --nmbu-green: #046530; --nmbu-green-light: #f0f7f2; --accent-orange: #f59e0b; --tavle-bg: #fef3c7; --text-dark: #1a1a1a; --text-muted: #4b5563; }
+  .reveal { font-family: 'Source Serif 4', Georgia, serif; font-size: 28px; color: var(--text-dark); }
+  .reveal h1, .reveal h2, .reveal h3, .reveal h4 { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); text-transform: none; letter-spacing: 0; font-weight: 700; }
+  .reveal h1 { font-size: 1.8em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.5em; line-height: 1.2; margin-bottom: 0.5em; }
+  .reveal h3 { font-size: 1.2em; }
+  .reveal p { line-height: 1.5; }
+  .reveal ul, .reveal ol { display: block; margin-left: 1em; }
+  .reveal li { margin-bottom: 0.4em; line-height: 1.5; }
+  .reveal .title-slide { background: var(--nmbu-green); color: white; padding: 60px; }
+  .reveal .title-slide h1 { color: white; font-size: 2.4em; margin-bottom: 0.3em; }
+  .reveal .title-slide .subtitle { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 1.4em; color: rgba(255,255,255,0.95); margin-bottom: 1em; }
+  .reveal .title-slide .meta { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 0.85em; color: rgba(255,255,255,0.8); margin-top: 2em; }
+  .reveal .section-divider { background: var(--nmbu-green); color: white; }
+  .reveal .section-divider h2 { color: white; font-size: 2.2em; }
+  .reveal .section-divider .section-number { font-family: 'Source Sans 3', Arial, sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9em; letter-spacing: 0.2em; margin-bottom: 1em; }
+  .reveal .definisjon { background: var(--nmbu-green-light); border-left: 5px solid var(--nmbu-green); padding: 18px 24px; margin: 20px 0; text-align: left; border-radius: 0 8px 8px 0; }
+  .reveal .definisjon .term { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: var(--nmbu-green); margin-bottom: 6px; }
+  .reveal .formel { background: white; border: 2px solid var(--nmbu-green); padding: 24px 32px; margin: 20px auto; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+  .reveal .key-point { background: var(--nmbu-green-light); padding: 16px 22px; margin: 16px 0; border-radius: 8px; text-align: left; font-size: 0.95em; }
+  .reveal .key-point::before { content: "→ "; color: var(--nmbu-green); font-weight: 700; }
+  .reveal .tavle-marker { background: var(--tavle-bg); border: 2px dashed var(--accent-orange); padding: 18px 24px; margin: 24px 0; border-radius: 10px; text-align: left; }
+  .reveal .tavle-marker .tavle-label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #b45309; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.15em; margin-bottom: 8px; }
+  .reveal .norsk-eksempel { background: #fef9f0; border-left: 4px solid #d97706; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .norsk-eksempel .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #b45309; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal table { margin: 16px auto; border-collapse: collapse; font-size: 0.8em; }
+  .reveal table th { background: var(--nmbu-green); color: white; padding: 8px 12px; font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; }
+  .reveal table td { padding: 6px 12px; border: 1px solid #d4d4d4; text-align: center; }
+  .reveal .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; text-align: left; }
+  .reveal .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-items: start; text-align: left; }
+  .reveal .caption { font-size: 0.7em; color: var(--text-muted); font-style: italic; margin-top: 8px; }
+  .reveal .slide-number { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); background: transparent; }
+  .reveal mjx-container { font-size: 1.0em !important; }
+  .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+  .reveal blockquote { background: var(--nmbu-green-light); border-left: 4px solid var(--nmbu-green); padding: 14px 22px; margin: 16px 0; font-style: italic; font-size: 0.95em; text-align: left; border-radius: 0 6px 6px 0; box-shadow: none; }
+</style>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }, svg: { fontCache: 'global' }, startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { if (window.Reveal) Reveal.layout(); }); } } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section class="title-slide">
+  <h1>Investeringsanalyse</h1>
+  <div class="subtitle">Del 2: Spesielle situasjoner og risikoanalyse</div>
+  <div class="meta">BUS 220 — Finansiering og investering<br>Atle G. Guttormsen · Høst 2026<br>Pensum: HRWJ kapittel 9–10</div>
+</section>
+
+<section>
+  <h2>Læringsmål</h2>
+  <p style="text-align:left">Etter denne forelesningen skal du kunne:</p>
+  <ul>
+    <li>Sammenligne prosjekter med <strong>ulik levetid</strong> ved bruk av ekvivalente annuiteter (EAA)</li>
+    <li>Håndtere <strong>kapitalrasjonering</strong> ved bruk av Profitability Index</li>
+    <li>Skille mellom <strong>nominelle og reelle</strong> kontantstrømmer og avkastningskrav</li>
+    <li>Utføre <strong>sensitivitetsanalyse</strong> — hvilke variabler er prosjektet sårbart for?</li>
+    <li>Utføre <strong>scenarioanalyse</strong> med best/forventet/verst case</li>
+    <li>Beregne <strong>break-even</strong> (regnskapsmessig og finansielt)</li>
+    <li>Forstå grunnprinsippene i <strong>simulering (Monte Carlo)</strong> og <strong>beslutningstrær</strong></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Repetisjon fra forelesning 10</h2>
+  <ul>
+    <li><strong>NPV</strong> = $-CF_0 + \sum CF_t/(1+r)^t$ — gullstandarden</li>
+    <li><strong>IRR</strong> = den $r$ som gir NPV = 0</li>
+    <li><strong>Payback</strong> og <strong>diskontert payback</strong> — likviditetsmål</li>
+    <li><strong>PI</strong> = NV av fremtidige CF / Investering — for rangering</li>
+    <li>Inkrementelle CF, etter skatt, uten finansieringskostnader</li>
+    <li>Sunk costs ignoreres, opportunity costs inkluderes</li>
+  </ul>
+  <p style="text-align:left; margin-top: 20px">I dag: <strong>spesielle situasjoner</strong> (ulik levetid, kapitalrasjonering, inflasjon) og <strong>risikoanalyse</strong> (sensitivitet, scenarier, break-even, simulering).</p>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL A</div>
+  <h2>Ulike levetider:<br>Ekvivalente annuiteter</h2>
+</section>
+
+<section>
+  <h2>Utfordringen: ulik levetid</h2>
+  <p style="text-align:left">To gjensidig utelukkende prosjekter med <em>ulik levetid</em> kan ikke sammenlignes direkte på NPV:</p>
+  <table>
+    <tr><th>Prosjekt</th><th>Investering</th><th>Levetid</th><th>NPV</th></tr>
+    <tr><td>A</td><td>15</td><td>4 år</td><td>2,82</td></tr>
+    <tr><td>B</td><td>20</td><td>3 år</td><td>2,78</td></tr>
+  </table>
+  <p style="text-align:left">«Prosjekt A har høyere NPV — velg A» — er feil! Hvis vi velger B kan vi gjenta investeringen etter 3 år, mens A bruker 4 år. Tidshorisonten må sammenlignes likt.</p>
+  <div class="key-point">Løsning: konverter hver NPV til en <strong>årlig ekvivalent annuitet (EAA)</strong> — det årlige beløpet som har samme NV som prosjektet over levetiden.</div>
+</section>
+
+<section>
+  <h2>Ekvivalent annuitet (EAA)</h2>
+  <div class="definisjon">
+    <div class="term">Ekvivalent annuitet (EAA / EAC)</div>
+    Det konstante årlige beløpet som har samme NV som prosjektets totale NV over prosjektets levetid.
+  </div>
+  <div class="formel big-formula">
+    $\text{EAA} = \dfrac{\text{NPV}}{\text{Annuitetsfaktor}(r, n)}$
+  </div>
+  <p style="text-align:left">der annuitetsfaktoren er:</p>
+  <div class="formel">
+    $\text{AF}(r, n) = \dfrac{1 - (1+r)^{-n}}{r}$
+  </div>
+  <p style="text-align:left">Beslutningsregel: ved <strong>kjedeinvesteringer</strong> (prosjekt gjentas), velg det med <strong>høyest EAA</strong>.</p>
+</section>
+
+<section>
+  <h2>EAA — eksempel</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel — Securus AS</div>
+    Avkastningskrav $r = 12\,\%$. To maskiner:
+    <table style="font-size: 0.9em; margin-top: 6px">
+      <tr><th>Prosjekt</th><th>Inv.</th><th>Årlig CF</th><th>Levetid</th><th>NPV</th></tr>
+      <tr><td>A (tysk)</td><td>90</td><td>20</td><td>8 år</td><td>9 353</td></tr>
+      <tr><td>B (svensk)</td><td>70</td><td>20</td><td>5 år</td><td>2 096</td></tr>
+    </table>
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    <p>AF(12 %, 8) = 4,9676. AF(12 %, 5) = 3,6048.</p>
+    $$\text{EAA}_A = 9\,353 / 4{,}9676 = 1\,883$$
+    $$\text{EAA}_B = 2\,096 / 3{,}6048 = 581$$
+    <p>Maskin A gir kr 1 883 i årlig ekvivalent verdi — vesentlig bedre enn B.</p>
+  </div>
+  <p style="text-align:left">Selv om A krever større investering, er årlig verdiskaping mye høyere over levetiden.</p>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL B</div>
+  <h2>Kapitalrasjonering</h2>
+</section>
+
+<section>
+  <h2>Hva er kapitalrasjonering?</h2>
+  <div class="definisjon">
+    <div class="term">Kapitalrasjonering</div>
+    Når bedriften har <strong>begrenset kapital</strong> til å gjennomføre alle prosjekter med positiv NPV.
+  </div>
+  <p style="text-align:left">To former:</p>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">Soft rasjonering</div>
+      Selvpålagt — ledelsen ønsker ikke å hente inn mer kapital (kontrollhensyn, gjeldsbeskyttelse).
+    </div>
+    <div class="definisjon">
+      <div class="term">Hard rasjonering</div>
+      Markedet vil ikke finansiere prosjektet — banken sier nei, aksjemarkedet er stengt.
+    </div>
+  </div>
+  <p style="text-align:left">Ved kapitalrasjonering kan ikke vi velge «alle prosjekter med positiv NPV». Vi må <strong>rangere</strong> og velge den kombinasjonen som gir høyest total NPV innenfor budsjettet.</p>
+</section>
+
+<section>
+  <h2>Profitability Index for rangering</h2>
+  <div class="definisjon">
+    <div class="term">Rangering ved PI</div>
+    Beregn $\text{PI} = \text{NPV}/\text{Investering}$ for hvert prosjekt. Rangér etter <strong>fallende PI</strong> og velg til kapitalbudsjettet er brukt opp.
+  </div>
+  <p style="text-align:left"><strong>Hvorfor PI og ikke NPV?</strong> Når kapital er knapp, vil vi maksimere <em>NPV per investert krone</em> — ikke total NPV.</p>
+  <div class="key-point">Metoden gir teoretisk korrekt svar når prosjekter er <strong>delbare</strong>. For udelbare prosjekter må man prøve seg fram med kombinasjoner.</div>
+</section>
+
+<section>
+  <h2>Eksempel: Kapitalrasjonering</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Investeringsbudsjett: 3 000 000 kr. Fem prosjekter:
+  </div>
+  <table>
+    <tr><th>Prosjekt</th><th>Investering</th><th>NPV</th><th>PI</th></tr>
+    <tr><td>A</td><td>1 000 000</td><td>450 000</td><td>0,450</td></tr>
+    <tr><td>B</td><td>2 000 000</td><td>430 000</td><td>0,215</td></tr>
+    <tr><td>C</td><td>750 000</td><td>380 000</td><td>0,507</td></tr>
+    <tr><td>D</td><td>1 500 000</td><td>210 000</td><td>0,140</td></tr>
+    <tr><td>E</td><td>500 000</td><td>300 000</td><td>0,600</td></tr>
+  </table>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    <p>Rangering etter PI: <strong>E (0,60), C (0,51), A (0,45), B (0,22), D (0,14)</strong></p>
+    <p>Velg E, C, A: total investering 2 250 000, total NPV 1 130 000.</p>
+    <p>Rest: 750 000 kan brukes på 37,5 % av B → NPV-bidrag: 161 250.</p>
+    <p class="final-answer" style="background: #fef3c7; padding: 8px; border-radius: 4px"><strong>Total NPV med delbare prosjekter: 1 291 250</strong></p>
+  </div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL C</div>
+  <h2>Inflasjon i<br>kontantstrømmer</h2>
+</section>
+
+<section>
+  <h2>Nominelle vs reelle priser</h2>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">Faste / reelle priser</div>
+      Priser i dagens (år 0) kjøpekraft. Inflasjon er ikke inkludert.
+    </div>
+    <div class="definisjon">
+      <div class="term">Nominelle / løpende priser</div>
+      Priser i fremtidige år, justert for inflasjon. Tallene «vokser» med prisstigningstakten.
+    </div>
+  </div>
+  <p style="text-align:left; margin-top: 20px"><strong>Begge er korrekte — bare ulike måter å presentere samme verdi på.</strong></p>
+  <div class="key-point">Kritisk regel: Bruk <strong>samme</strong> type tall gjennomgående:<br>
+  • Reelle CF → diskonter med <strong>realavkastningskrav</strong><br>
+  • Nominelle CF → diskonter med <strong>nominelt avkastningskrav</strong></div>
+</section>
+
+<section>
+  <h2>Eksempel: Faste og nominelle priser</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Inputdata</div>
+    <ul style="margin-top: 6px; font-size: 0.9em">
+      <li>Investering anleggsmidler: kr 600 000</li>
+      <li>Salgspris/enhet (år 0-priser): kr 100</li>
+      <li>Lønn/enhet (år 0): kr 20, Materialer/enhet: kr 15</li>
+      <li>Faste kostnader/år: kr 500 000</li>
+      <li>Solgte enheter: 10 000/år; Levetid: 5 år</li>
+      <li>Årlig prisstigning: 3,77 %</li>
+      <li>Realavkastningskrav: 6 %</li>
+    </ul>
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Reell kontantstrøm</div>
+    Salgsinntekt: $10\,000 \times 100 = 1\,000\,000$/år (samme i alle år)<br>
+    Lønnskostnad: $10\,000 \times 20 = 200\,000$<br>
+    Materialkostnad: $10\,000 \times 15 = 150\,000$<br>
+    <strong>Reell CF = 1 000 000 − 200 000 − 150 000 − 500 000 = 150 000/år</strong>
+  </div>
+</section>
+
+<section>
+  <h2>Real vs nominell — samme NPV</h2>
+  <p style="text-align:left">Nominelt avkastningskrav (Fisher):</p>
+  <div class="formel">
+    $(1 + r_n) = (1+r_r)(1+\pi) = 1{,}06 \times 1{,}0377 = 1{,}10$<br>
+    $r_n = 10\,\%$
+  </div>
+  <table style="font-size: 0.78em">
+    <tr><th>År</th><th>Reell CF</th><th>NV @ 6%</th><th>Nominell CF</th><th>NV @ 10%</th></tr>
+    <tr><td>0</td><td>−600 000</td><td>−600 000</td><td>−600 000</td><td>−600 000</td></tr>
+    <tr><td>1</td><td>150 000</td><td>141 509</td><td>155 660</td><td>141 509</td></tr>
+    <tr><td>2</td><td>150 000</td><td>133 499</td><td>161 534</td><td>133 500</td></tr>
+    <tr><td>3</td><td>150 000</td><td>125 943</td><td>167 630</td><td>125 943</td></tr>
+    <tr><td>4</td><td>150 000</td><td>118 814</td><td>173 956</td><td>118 814</td></tr>
+    <tr><td>5</td><td>150 000</td><td>112 089</td><td>180 520</td><td>112 089</td></tr>
+    <tr style="background:#fef3c7"><td><strong>NPV</strong></td><td></td><td><strong>31 855</strong></td><td></td><td><strong>31 855</strong></td></tr>
+  </table>
+  <div class="key-point">Identiske NPV-er — bekrefter at metodene er ekvivalente. Velg den som er enklere å jobbe med for ditt prosjekt.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL D</div>
+  <h2>Sensitivitetsanalyse</h2>
+</section>
+
+<section>
+  <h2>Hvorfor sensitivitetsanalyse?</h2>
+  <p style="text-align:left">NPV-beregningen avhenger av <strong>forutsetninger</strong>:</p>
+  <ul>
+    <li>Forventet kontantstrøm</li>
+    <li>Avkastningskravet</li>
+    <li>Prosjektets levetid</li>
+    <li>Restverdi</li>
+    <li>Markedsforhold (pris, volum, kostnader)</li>
+  </ul>
+  <p style="text-align:left"><strong>Spørsmålet:</strong> Hva skjer med NPV hvis forutsetningene er feil?</p>
+  <div class="definisjon">
+    <div class="term">Sensitivitetsanalyse</div>
+    Undersøker hvor mye NPV endrer seg når én variabel endres, mens alle andre holdes konstant («ceteris paribus»).
+  </div>
+  <div class="key-point">Identifiserer hvilke variabler som er <strong>kritiske</strong> for prosjektets lønnsomhet.</div>
+</section>
+
+<section>
+  <h2>Sensitivitetsanalyse — eksempel</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Baseline</div>
+    Investering 1 000 kr, årlig CF 300, levetid 5 år, $r = 10\,\%$<br>
+    <strong>NPV = 300 × 3,7908 − 1 000 = +137,24</strong>
+  </div>
+  <table>
+    <tr><th>Variabel</th><th>−10 %</th><th>Base</th><th>+10 %</th><th>Påvirkning</th></tr>
+    <tr><td>CF (300 → ±10 %)</td><td>23,51</td><td>137,24</td><td>250,96</td><td>+/− 113,73</td></tr>
+    <tr><td>$r$ (10 % → 8 %/12 %)</td><td>197,81</td><td>137,24</td><td>81,43</td><td>+60,57 / −55,81</td></tr>
+    <tr><td>n (5 → 4/6 år)</td><td>−49,04</td><td>137,24</td><td>306,58</td><td>−186,28 / +169,34</td></tr>
+  </table>
+  <div class="key-point">Levetiden er <strong>mest kritisk</strong>: NPV blir negativ hvis prosjektet bare varer 4 år. Kontantstrømmen er nest mest kritisk. Renten påvirker minst.</div>
+</section>
+
+<section>
+  <h2>Tornado-diagram</h2>
+  <p style="text-align:left">Visuell fremstilling — viser hver variabels NPV-sensitivitet:</p>
+  <div style="margin: 20px auto; text-align: center;">
+    <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg">
+      <line x1="350" y1="30" x2="350" y2="220" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="350" y="240" text-anchor="middle" font-family="Source Sans 3" font-size="12">Baseline NPV = 137</text>
+      <!-- Levetid bar (largest) -->
+      <rect x="50" y="50" width="300" height="30" fill="#b91c1c" opacity="0.8"/>
+      <rect x="350" y="50" width="270" height="30" fill="#046530" opacity="0.8"/>
+      <text x="40" y="68" text-anchor="end" font-family="Source Sans 3" font-size="13" font-weight="600">Levetid</text>
+      <text x="60" y="100" font-family="Source Sans 3" font-size="10" fill="#b91c1c">n = 4</text>
+      <text x="620" y="100" text-anchor="end" font-family="Source Sans 3" font-size="10" fill="#046530">n = 6</text>
+      <!-- CF bar -->
+      <rect x="170" y="100" width="180" height="30" fill="#b91c1c" opacity="0.8"/>
+      <rect x="350" y="100" width="180" height="30" fill="#046530" opacity="0.8"/>
+      <text x="40" y="118" text-anchor="end" font-family="Source Sans 3" font-size="13" font-weight="600">Kontantstrøm</text>
+      <!-- r bar (smallest) -->
+      <rect x="262" y="150" width="88" height="30" fill="#b91c1c" opacity="0.8"/>
+      <rect x="350" y="150" width="96" height="30" fill="#046530" opacity="0.8"/>
+      <text x="40" y="168" text-anchor="end" font-family="Source Sans 3" font-size="13" font-weight="600">Rente</text>
+      <text x="700" y="20" text-anchor="end" font-family="Source Sans 3" font-size="11" fill="#4b5563" font-style="italic">±10 %</text>
+    </svg>
+  </div>
+  <p style="text-align:left">De variablene som ligger <em>øverst</em> i diagrammet har størst påvirkning. Disse må kontrolleres nøye!</p>
+</section>
+
+<section>
+  <h2>Begrensninger ved sensitivitetsanalyse</h2>
+  <div class="definisjon">
+    <div class="term">1 · Ignorerer korrelasjon</div>
+    Endrer én variabel om gangen — men i virkeligheten henger flere variabler sammen. Hvis salgsvolum faller, kan også priser falle.
+  </div>
+  <div class="definisjon">
+    <div class="term">2 · Ingen sannsynligheter</div>
+    Viser «hvis CF synker 10 %, blir NPV X». Men er sannsynligheten 1 % eller 30 %?
+  </div>
+  <div class="definisjon">
+    <div class="term">3 · Subjektive intervaller</div>
+    Hva er «rimelig spennvidde» for hver variabel? Ofte vilkårlig valgt.
+  </div>
+  <div class="key-point">Sensitivitetsanalyse er et <em>første skritt</em>. Vi trenger også scenarioanalyse og simulering for et fullt bilde av risikoen.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL E</div>
+  <h2>Scenarioanalyse</h2>
+</section>
+
+<section>
+  <h2>Hva er scenarioanalyse?</h2>
+  <div class="definisjon">
+    <div class="term">Scenarioanalyse</div>
+    Vurderer NPV under <strong>sammenhengende sett av forutsetninger</strong> — typisk best case, expected case, worst case.
+  </div>
+  <p style="text-align:left">Forskjellen fra sensitivitetsanalyse: i scenarier endres <em>flere variabler samtidig</em>, basert på en koherent fortelling om fremtiden.</p>
+  <p style="text-align:left"><strong>Typiske scenarier:</strong></p>
+  <ul>
+    <li><strong>Best case</strong> — alt går veien: høyt volum, gode priser, lave kostnader</li>
+    <li><strong>Expected case</strong> — forventet utvikling</li>
+    <li><strong>Worst case</strong> — alt går galt: lavt volum, lave priser, høye kostnader</li>
+  </ul>
+  <div class="key-point">Scenariene bør være <strong>realistiske og sannsynlige</strong> — ikke ekstreme «verstefall» som er nær umulige.</div>
+</section>
+
+<section>
+  <h2>Scenarioanalyse — eksempel</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Investering kr 500 000, levetid 5 år, $r = 10\,\%$. Hva blir NPV under tre scenarier?
+  </div>
+  <table>
+    <tr><th>Scenario</th><th>Sannsynl.</th><th>Årlig CF</th><th>NPV (kr)</th></tr>
+    <tr><td>Best</td><td>0,25</td><td>200 000</td><td>+258 162</td></tr>
+    <tr><td>Forventet</td><td>0,50</td><td>150 000</td><td>+68 618</td></tr>
+    <tr><td>Verst</td><td>0,25</td><td>100 000</td><td>−120 925</td></tr>
+  </table>
+  <div class="tavle-marker">
+    <div class="tavle-label">Forventet NPV</div>
+    $$E[\text{NPV}] = 0{,}25 \times 258\,162 + 0{,}50 \times 68\,618 + 0{,}25 \times (-120\,925)$$
+    $$= 64\,541 + 34\,309 - 30\,231 = \text{kr } 68\,618$$
+  </div>
+  <p style="text-align:left"><strong>E[NPV] &gt; 0</strong> — men det er 25 % sannsynlighet for tap på over 120 000 kr. Avhengig av ledelsens risikotoleranse kan prosjektet være uakseptabelt.</p>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL F</div>
+  <h2>Break-even-analyse</h2>
+</section>
+
+<section>
+  <h2>Break-even-analyse</h2>
+  <div class="definisjon">
+    <div class="term">Break-even</div>
+    Hvor mange enheter må vi selge (eller hvilken pris må vi få) for at prosjektet skal være lønnsomt?
+  </div>
+  <p style="text-align:left">To varianter:</p>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">Regnskapsmessig break-even</div>
+      Nettoresultat = 0. Ignorerer pengenes tidsverdi.
+    </div>
+    <div class="definisjon">
+      <div class="term">Finansielt break-even</div>
+      NPV = 0. Tar hensyn til pengenes tidsverdi. Vanligvis høyere enn regnskapsmessig.
+    </div>
+  </div>
+  <div class="key-point">Finansielt break-even er det «riktige» målet — fordi det krever at prosjektet faktisk skaper verdi for eierne.</div>
+</section>
+
+<section>
+  <h2>Break-even — eksempel</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Investering: 100 000 kr (5 års levetid, lineær avskrivning til 0).<br>
+    Pris/enhet: 25 kr. Variabel kostnad/enhet: 15 kr. Faste kostnader: 30 000 kr/år.<br>
+    $r = 10\,\%$. Hvor mange enheter må vi selge per år?
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Regnskapsmessig break-even (NI = 0)</div>
+    <p>Bidrag per enhet = 25 − 15 = 10 kr<br>
+    Total dekning nødvendig: 30 000 (faste) + 20 000 (avskrivning) = 50 000<br>
+    <strong>Break-even = 50 000 / 10 = 5 000 enheter/år</strong></p>
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Finansielt break-even (NPV = 0)</div>
+    <p>Ekvivalent annuitet av investeringen = 100 000 / 3,7908 = 26 380<br>
+    Total CF nødvendig: 26 380 + 30 000 = 56 380<br>
+    <strong>Break-even = 56 380 / 10 = 5 638 enheter/år</strong></p>
+  </div>
+  <p style="text-align:left">Finansielt break-even er <strong>638 enheter høyere</strong> — fordi investeringen «koster» mer enn bare avskrivningene når vi krever 10 % avkastning.</p>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL G</div>
+  <h2>Simulering og<br>beslutningstrær</h2>
+</section>
+
+<section>
+  <h2>Monte Carlo-simulering</h2>
+  <div class="definisjon">
+    <div class="term">Simulering (Monte Carlo)</div>
+    En computermetode der mange usikre variabler kan endre seg samtidig — basert på <strong>sannsynlighetsfordelinger</strong> — og NPV beregnes for tusenvis av tilfeldige kombinasjoner.
+  </div>
+  <p style="text-align:left">Output: <strong>sannsynlighetsfordeling for NPV</strong> — ikke bare ett tall.</p>
+  <p style="text-align:left">Eksempel: «Det er 78 % sannsynlighet for at NPV &gt; 0. Forventet NPV er 250 000. Det er 5 % sannsynlighet for tap over 500 000.»</p>
+  <div class="norsk-eksempel">
+    <div class="label">Norsk kontekst</div>
+    Equinor og andre store norske selskaper bruker simulering aktivt — særlig for oljeprosjekter der oljeprisen, dollar-kursen og produksjonsvolumet er sterkt usikre. Excel har gratis-tillegg som @RISK eller Crystal Ball. Vi går ikke gjennom mekanikken i detalj i dette kurset.
+  </div>
+</section>
+
+<section>
+  <h2>Beslutningstrær</h2>
+  <div class="definisjon">
+    <div class="term">Beslutningstre</div>
+    En visuell metode for å håndtere <strong>sekvensielle beslutninger</strong> under usikkerhet — der hver beslutning åpner for nye beslutninger senere.
+  </div>
+  <p style="text-align:left"><strong>Typisk struktur:</strong></p>
+  <ul>
+    <li>Beslutningsnode (firkant): du velger</li>
+    <li>Sannsynlighetsnode (sirkel): tilfeldigheten velger</li>
+    <li>Endenode: utfall med NPV-verdi</li>
+  </ul>
+  <p style="text-align:left">Brukes for prosjekter med <strong>fasebeslutninger</strong>:</p>
+  <ul>
+    <li>FoU → Pilotprosjekt → Storskala produksjon</li>
+    <li>Letevirksomhet → Utbygging → Produksjon (olje)</li>
+    <li>Klinisk fase 1 → fase 2 → fase 3 → kommersialisering (medisin)</li>
+  </ul>
+  <div class="key-point">Beslutningstrær er forløperen til <strong>realopsjoner</strong> — som vi kommer tilbake til i forelesningen om opsjoner.</div>
+</section>
+
+<section>
+  <h2>Forelesning 11 — oversikt over verktøykassen</h2>
+  <table style="font-size: 0.78em">
+    <tr><th>Verktøy</th><th>Bruk</th><th>Kompleksitet</th></tr>
+    <tr><td><strong>Sensitivitetsanalyse</strong></td><td>Identifisere kritiske variabler</td><td>Lav</td></tr>
+    <tr><td><strong>Scenarioanalyse</strong></td><td>Vurdere koherente sammenhenger</td><td>Lav-Middels</td></tr>
+    <tr><td><strong>Break-even</strong></td><td>Hvor mye «slingringsmonn»?</td><td>Lav</td></tr>
+    <tr><td><strong>Monte Carlo</strong></td><td>Full sannsynlighetsfordeling</td><td>Høy (krever programvare)</td></tr>
+    <tr><td><strong>Beslutningstrær</strong></td><td>Sekvensielle valg</td><td>Middels-Høy</td></tr>
+    <tr><td><strong>Realopsjoner</strong></td><td>Verdsette fleksibilitet</td><td>Høy (egen forelesning)</td></tr>
+  </table>
+  <div class="key-point">I praksis: bedrifter bruker <strong>flere metoder samtidig</strong>. Sensitivitetsanalyse + scenarioanalyse er minstekrav for større investeringer.</div>
+</section>
+
+<section>
+  <h2>Praktisk i norske bedrifter</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Hvordan profesjonelle gjør investeringsanalyse</div>
+    Typisk struktur i en investeringsrapport:
+    <ol style="margin-top: 6px; font-size: 0.9em">
+      <li><strong>Strategisk rasjonale</strong> — hvorfor er dette interessant?</li>
+      <li><strong>Markedet</strong> — størrelse, vekst, konkurranse</li>
+      <li><strong>Kontantstrøm-prognoser</strong> — typisk 5–10 år eksplisitt + terminalverdi</li>
+      <li><strong>NPV og IRR</strong> — basisestimat</li>
+      <li><strong>Sensitivitetsanalyse</strong> — alle kritiske variabler</li>
+      <li><strong>Scenarioanalyse</strong> — best/expected/worst</li>
+      <li><strong>Risikoanalyse</strong> — kvalitativ + Monte Carlo for store prosjekter</li>
+      <li><strong>Anbefaling</strong> — beslutning med betingelser</li>
+    </ol>
+  </div>
+  <div class="key-point">For prosjekter over ~100 mill. kr forventer styret en strukturert analyse med alle disse elementene. Vi har nå sett alle verktøyene.</div>
+</section>
+
+<section>
+  <h2>Realopsjoner — kort smakebit</h2>
+  <p style="text-align:left">Standard NPV undervurderer ofte prosjektverdi, fordi den ignorerer <strong>fleksibilitet</strong>:</p>
+  <ul>
+    <li><strong>Opsjonen til å vente</strong> — utsette investering til bedre informasjon</li>
+    <li><strong>Opsjonen til å utvide</strong> — pilotprosjekt → fullskala hvis suksess</li>
+    <li><strong>Opsjonen til å avslutte</strong> — selge ut hvis ting ikke fungerer</li>
+    <li><strong>Opsjonen til å midlertidig stenge</strong> — pause drift når marginene er negative</li>
+  </ul>
+  <div class="norsk-eksempel">
+    <div class="label">Norsk eksempel</div>
+    Et oljefelt har stor verdi i muligheten til å <em>vente</em> med utbygging til oljeprisen er høyere — eller midlertidig <em>stenge</em> produksjon ved lave priser. Standard NPV med fast plan undervurderer dette.
+  </div>
+  <p style="text-align:left">Vi går dypere inn i realopsjoner i forelesningen om opsjoner (HRWJ ch 21).</p>
+</section>
+
+<section>
+  <h2>Oppsummering forelesning 11</h2>
+  <ol style="font-size: 0.9em">
+    <li><strong>Ekvivalente annuiteter (EAA)</strong>: sammenlign prosjekter med ulik levetid</li>
+    <li><strong>Kapitalrasjonering</strong>: bruk Profitability Index for rangering</li>
+    <li><strong>Real vs nominell</strong>: vær konsistent — match CF med riktig avkastningskrav</li>
+    <li><strong>Sensitivitetsanalyse</strong>: identifiserer kritiske variabler (ofte volum og levetid)</li>
+    <li><strong>Scenarioanalyse</strong>: sammenhengende best/forventet/worst case</li>
+    <li><strong>Break-even</strong>: finansielt break-even gir riktig handlingsterskel</li>
+    <li><strong>Simulering og beslutningstrær</strong>: mer avanserte verktøy for stor usikkerhet</li>
+    <li><strong>Realopsjoner</strong>: standard NPV undervurderer ofte fleksibilitet — kommer i egen forelesning</li>
+  </ol>
+  <div class="key-point">Investeringsanalyse er kjernen i bedriftsøkonomien. NPV alene er ikke nok — risikobildet må analyseres systematisk.</div>
+</section>
+
+<section>
+  <h2>Til selvstudium</h2>
+  <div class="definisjon">
+    <div class="term">Oppgaver</div>
+    <strong>Oppgavesett 4 — Investeringsanalyse</strong>. Oppgavene 4–6 dekker EAA og kjedeinvesteringer. Oppgave 10 dekker realopsjon-aspekter.
+  </div>
+  <div class="definisjon">
+    <div class="term">Pensum</div>
+    <strong>HRWJ kapittel 10</strong> — Project Analysis and Evaluation. Sensitivitet, scenarier, break-even.
+  </div>
+  <div class="definisjon">
+    <div class="term">Praktisk øvelse</div>
+    Bygg en Excel-modell for et investeringsprosjekt (kan være fra oppgavesettet). Lag en sensitivitetsanalyse: hvordan endrer NPV seg med ±10 %, ±20 % i CF, $r$, levetid? Lag et tornado-diagram.
+  </div>
+  <p style="text-align:center; color: var(--nmbu-green); margin-top: 20px"><strong>Neste forelesning:</strong> Risiko og avkastning — varians, standardavvik og porteføljeteori.</p>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script>const params = new URLSearchParams(window.location.search);
+const useSlides = params.get('view') === 'slides';
+Reveal.initialize({
+  hash: !useSlides,
+  slideNumber: useSlides ? 'c/t' : false,
+  width: 1280,
+  height: 800,
+  margin: 0.06,
+  controls: useSlides,
+  progress: useSlides,
+  center: useSlides,
+  transition: useSlides ? 'slide' : 'none',
+  view: useSlides ? undefined : 'scroll',
+  scrollProgress: !useSlides,
+  plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
+});</script>
+</body>
+</html>

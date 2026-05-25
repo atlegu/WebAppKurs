@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BUS 220 – Forelesning 15: Kapitalkostnad og WACC</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css" id="theme">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap');
+  :root { --nmbu-green: #046530; --nmbu-green-light: #f0f7f2; --accent-orange: #f59e0b; --tavle-bg: #fef3c7; --text-dark: #1a1a1a; --text-muted: #4b5563; }
+  .reveal { font-family: 'Source Serif 4', Georgia, serif; font-size: 28px; color: var(--text-dark); }
+  .reveal h1, .reveal h2, .reveal h3 { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); text-transform: none; letter-spacing: 0; font-weight: 700; }
+  .reveal h1 { font-size: 1.8em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.5em; line-height: 1.2; margin-bottom: 0.5em; }
+  .reveal h3 { font-size: 1.2em; }
+  .reveal p { line-height: 1.5; }
+  .reveal ul, .reveal ol { display: block; margin-left: 1em; }
+  .reveal li { margin-bottom: 0.4em; line-height: 1.5; }
+  .reveal .title-slide { background: var(--nmbu-green); color: white; padding: 60px; }
+  .reveal .title-slide h1 { color: white; font-size: 2.4em; margin-bottom: 0.3em; }
+  .reveal .title-slide .subtitle { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 1.4em; color: rgba(255,255,255,0.95); margin-bottom: 1em; }
+  .reveal .title-slide .meta { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 0.85em; color: rgba(255,255,255,0.8); margin-top: 2em; }
+  .reveal .section-divider { background: var(--nmbu-green); color: white; }
+  .reveal .section-divider h2 { color: white; font-size: 2.2em; }
+  .reveal .section-divider .section-number { font-family: 'Source Sans 3', Arial, sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9em; letter-spacing: 0.2em; margin-bottom: 1em; }
+  .reveal .definisjon { background: var(--nmbu-green-light); border-left: 5px solid var(--nmbu-green); padding: 18px 24px; margin: 20px 0; text-align: left; border-radius: 0 8px 8px 0; }
+  .reveal .definisjon .term { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: var(--nmbu-green); margin-bottom: 6px; }
+  .reveal .formel { background: white; border: 2px solid var(--nmbu-green); padding: 24px 32px; margin: 20px auto; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+  .reveal .key-point { background: var(--nmbu-green-light); padding: 16px 22px; margin: 16px 0; border-radius: 8px; text-align: left; font-size: 0.95em; }
+  .reveal .key-point::before { content: "→ "; color: var(--nmbu-green); font-weight: 700; }
+  .reveal .tavle-marker { background: var(--tavle-bg); border: 2px dashed var(--accent-orange); padding: 18px 24px; margin: 24px 0; border-radius: 10px; text-align: left; }
+  .reveal .tavle-marker .tavle-label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #b45309; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.15em; margin-bottom: 8px; }
+  .reveal .norsk-eksempel { background: #fef9f0; border-left: 4px solid #d97706; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .norsk-eksempel .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #b45309; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal .debate-box { background: #f0f9ff; border-left: 4px solid #0369a1; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .debate-box .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #075985; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal table { margin: 16px auto; border-collapse: collapse; font-size: 0.8em; }
+  .reveal table th { background: var(--nmbu-green); color: white; padding: 8px 12px; font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; }
+  .reveal table td { padding: 6px 12px; border: 1px solid #d4d4d4; text-align: center; }
+  .reveal .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; text-align: left; }
+  .reveal .caption { font-size: 0.7em; color: var(--text-muted); font-style: italic; margin-top: 8px; }
+  .reveal mjx-container { font-size: 1.0em !important; }
+  .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+  .reveal blockquote { background: var(--nmbu-green-light); border-left: 4px solid var(--nmbu-green); padding: 14px 22px; margin: 16px 0; font-style: italic; font-size: 0.95em; text-align: left; border-radius: 0 6px 6px 0; box-shadow: none; }
+</style>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }, svg: { fontCache: 'global' }, startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { if (window.Reveal) Reveal.layout(); }); } } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section class="title-slide">
+  <h1>Kapitalkostnad</h1>
+  <div class="subtitle">Avkastningskrav, egenkapitalkostnad, gjeldskostnad og WACC</div>
+  <div class="meta">BUS 220 — Finansiering og investering<br>Atle G. Guttormsen · Høst 2026<br>Pensum: HRWJ kapittel 13</div>
+</section>
+
+<section>
+  <h2>Læringsmål</h2>
+  <ul>
+    <li>Forklare hva et <strong>avkastningskrav</strong> er — og hvorfor det er sentralt i samfunnsdebatten</li>
+    <li>Forstå hvorfor <strong>all kapital koster</strong>, ikke bare lån</li>
+    <li>Beregne <strong>egenkapitalkostnad</strong> med dividendemodellen og CAPM</li>
+    <li>Beregne <strong>gjeldskostnad</strong> før og etter skatt</li>
+    <li>Sette sammen til <strong>WACC</strong> — selskapets vektede gjennomsnittlige kapitalkostnad</li>
+    <li>Vurdere praktiske utfordringer ved estimering og bruk</li>
+    <li>Forberede neste tema: <strong>kapitalstruktur</strong> — hvor mye gjeld bør selskapet ha?</li>
+  </ul>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL A</div>
+  <h2>Hva er et avkastningskrav?</h2>
+</section>
+
+<section>
+  <h2>Tre debatter — hva har de felles?</h2>
+  <div class="debate-box">
+    <div class="label">Debatt 1 — Kjernekraft</div>
+    Er kjernekraft lønnsomt? Bygges over 10 år, drives i 60+ år, og etterdriften strekker seg over hundretusenvis av år. Hva er «riktig» avkastningskrav?
+  </div>
+  <div class="debate-box">
+    <div class="label">Debatt 2 — Klima</div>
+    En klimakatastrofe om 100 år: hvor mye er det verdt å bruke i dag for å unngå den? Med 7 % rente: 1 mrd kr om 100 år = 1,15 mill kr i dag.
+  </div>
+  <div class="debate-box">
+    <div class="label">Debatt 3 — Solceller</div>
+    Lønner det seg å installere solceller på taket? Investering nå, betalt tilbake over 20+ år. Hvilken kalkulasjonsrente bruker du?
+  </div>
+  <div class="key-point">Alle tre debatter kan oppsummeres med ett spørsmål: <strong>hva er avkastningskravet?</strong></div>
+</section>
+
+<section>
+  <h2>Hvorfor er avkastningskravet så avgjørende?</h2>
+  <p style="text-align:left">NPV-formelen vi har brukt:</p>
+  <div class="formel big-formula">
+    $$NPV = -C_0 + \sum_{t=1}^{T} \frac{CF_t}{(1+r)^t}$$
+  </div>
+  <ul>
+    <li>$r$ — diskonteringsrenten — er <strong>helt avgjørende</strong> for resultatet</li>
+    <li>Liten endring i $r$ kan flippe NPV fra positiv til negativ</li>
+    <li>For lange prosjekter (kjernekraft, infrastruktur, klima) er $r$ <em>alfa og omega</em></li>
+  </ul>
+  <div class="tavle-marker">
+    <div class="tavle-label">Tavle</div>
+    Eksempel: kontantstrøm 1 mrd om 100 år. Med $r=3\%$ → 52 mill i dag. Med $r=7\%$ → 1,15 mill i dag. <strong>45× forskjell.</strong>
+  </div>
+</section>
+
+<section>
+  <h2>Kjernekraft og avkastningskravet</h2>
+  <p style="text-align:left">Sentralbankene, OECD og IEA bruker ulike avkastningskrav for energi-investeringer:</p>
+  <table>
+    <tr><th>r (WACC)</th><th>LCOE kjernekraft</th><th>Konklusjon</th></tr>
+    <tr><td>3 %</td><td>~50 EUR/MWh</td><td>Lønnsomt vs gass</td></tr>
+    <tr><td>7 %</td><td>~90 EUR/MWh</td><td>På grensen</td></tr>
+    <tr><td>10 %</td><td>~130 EUR/MWh</td><td>Ulønnsomt</td></tr>
+  </table>
+  <p style="text-align:left">Samme tekniske prosjekt — <strong>avkastningskravet</strong> avgjør om det er lønnsomt eller ikke.</p>
+  <div class="key-point">Politiske beslutninger om subsidier, garantier og kontrakter handler i bunn og grunn om å påvirke prosjektets <em>effektive</em> avkastningskrav.</div>
+</section>
+
+<section>
+  <h2>Klimakostnader: Stern-rapporten og r</h2>
+  <blockquote>«Med en sosial diskonteringsrate på 1,4 % er klimatiltak svært lønnsomme. Med 5 % er de marginalt lønnsomme.»<br>— Stern Review (2006), diskutert av Nordhaus (Nobelpris 2018)</blockquote>
+  <ul>
+    <li>Stern brukte $r = 1{,}4\,\%$ — kun ren tidspreferanse</li>
+    <li>Nordhaus argumenterte for $r = 4{-}5\,\%$ — markedsbasert</li>
+    <li>Forskjellen avgjør om man bør bruke 1 % eller 3 % av BNP på klimatiltak</li>
+  </ul>
+  <div class="key-point">Hele klimadebatten hviler på valget av diskonteringsrente. Det er ikke et teknisk spørsmål — det er normativt.</div>
+</section>
+
+<section>
+  <h2>Solceller på taket</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Konkret eksempel</div>
+    Investering: 80 000 kr for 6 kWp anlegg i Ås.<br>
+    Årlig sparing/inntekt: ~5 000 kr (strømpris 1,40 kr/kWh).<br>
+    Levetid: 25 år.
+  </div>
+  <table>
+    <tr><th>r (kalkulasjonsrente)</th><th>NPV</th><th>Lønnsomt?</th></tr>
+    <tr><td>2 %</td><td>+17 622</td><td>Ja</td></tr>
+    <tr><td>5 %</td><td>−9 530</td><td>Nei</td></tr>
+    <tr><td>8 %</td><td>−26 622</td><td>Nei</td></tr>
+  </table>
+  <div class="key-point">«Lønner det seg?» avhenger helt av hvilken $r$ du anser som relevant. Sammenligne med bank? Boliglån? Alternativ aksjeinvestering?</div>
+</section>
+
+<section>
+  <h2>Kapitalkostnad — definisjonen</h2>
+  <div class="definisjon">
+    <div class="term">Kapitalkostnad (avkastningskrav, diskonteringsrente)</div>
+    Den <strong>forventede avkastningen</strong> en investor må kunne forvente fra en investering med <em>tilsvarende risiko</em>. Eller: <strong>alternativkostnaden</strong> for kapital — hva pengene ville gitt et annet sted med samme risiko.
+  </div>
+  <p style="text-align:left">Tre likeverdige navn:</p>
+  <ul>
+    <li><strong>Kapitalkostnad</strong> — sett fra selskapet (hva må vi betale?)</li>
+    <li><strong>Avkastningskrav</strong> — sett fra investoren (hva krever vi?)</li>
+    <li><strong>Diskonteringsrente</strong> — sett fra analytikeren (hvilken r i NPV?)</li>
+  </ul>
+  <div class="key-point">Samme tall, tre perspektiver. Velg det som passer best i konteksten du diskuterer.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL B</div>
+  <h2>All kapital koster</h2>
+</section>
+
+<section>
+  <h2>To former for kapital</h2>
+  <div class="two-col">
+    <div>
+      <h3>Gjeld (D)</h3>
+      <ul>
+        <li>Faste rentebetalinger</li>
+        <li>Tilbakebetaling av hovedstol</li>
+        <li>Konkursprioritet høyere enn EK</li>
+        <li>Renten er <strong>åpenbart</strong> en kostnad</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Egenkapital (E)</h3>
+      <ul>
+        <li>Utbytte (frivillig)</li>
+        <li>Kursgevinst</li>
+        <li>Tar tap først hvis det går galt</li>
+        <li>Kostnaden er <strong>mindre åpenbar</strong></li>
+      </ul>
+    </div>
+  </div>
+  <div class="key-point">Mange tror EK er «gratis» fordi det ikke kreves faste betalinger. Det er en farlig misforståelse.</div>
+</section>
+
+<section>
+  <h2>Hvorfor er egenkapital ikke «gratis»?</h2>
+  <p style="text-align:left">Eierne har gitt fra seg <strong>noe annet</strong> ved å investere i bedriften:</p>
+  <ul>
+    <li>De kunne plassert pengene risikofritt i bank (~3 % i Norge i 2026)</li>
+    <li>De kunne kjøpt et indeksfond (~7–10 % forventet)</li>
+    <li>De kunne investert i en sammenlignbar bedrift med samme risiko</li>
+  </ul>
+  <div class="formel">
+    <strong>Alternativkostnad</strong>: hva pengene <em>kunne</em> gitt et annet sted med samme risiko
+  </div>
+  <div class="key-point">Hvis selskapet ikke leverer minst alternativkostnaden, taper eierne penger sammenlignet med beste alternativ. Da er prosjektet <strong>ulønnsomt</strong> selv om regnskapet viser overskudd.</div>
+</section>
+
+<section>
+  <h2>Eierens forventning som styringssignal</h2>
+  <blockquote>«Egenkapital er den dyreste finansieringen som finnes — fordi eierne tar all risiko og forventer kompensasjon for det.»</blockquote>
+  <ul>
+    <li>En aksjonær i Equinor forventer ~9–10 % avkastning</li>
+    <li>En aksjonær i Mowi forventer kanskje 11–13 % (mer syklisk)</li>
+    <li>En aksjonær i Hafslund forventer ~6 % (defensiv, lav risiko)</li>
+  </ul>
+  <div class="key-point">Ledelsen <em>skylder</em> aksjonærene minst denne avkastningen. Hvis nye prosjekter ikke kan levere dette, bør pengene heller deles ut som utbytte.</div>
+</section>
+
+<section>
+  <h2>Kapitalkostnad reflekterer risikoen</h2>
+  <div style="margin: 16px auto; text-align: center;">
+    <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+      <line x1="80" y1="240" x2="660" y2="240" stroke="#1a1a1a" stroke-width="1.5"/>
+      <line x1="80" y1="240" x2="80" y2="30" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="370" y="265" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563">Risiko</text>
+      <text x="40" y="135" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563" transform="rotate(-90, 40, 135)">Avkastningskrav (r)</text>
+      <line x1="80" y1="215" x2="640" y2="60" stroke="#046530" stroke-width="3"/>
+      <circle cx="80" cy="215" r="5" fill="#f59e0b"/>
+      <text x="55" y="210" text-anchor="end" font-family="Source Sans 3" font-size="11" fill="#b45309">Bankinnskudd</text>
+      <text x="55" y="225" text-anchor="end" font-family="Source Sans 3" font-size="11" fill="#b45309">~3 %</text>
+      <circle cx="190" cy="190" r="5" fill="#046530"/>
+      <text x="200" y="185" font-family="Source Sans 3" font-size="11" fill="#046530">Statsobligasjoner</text>
+      <text x="200" y="200" font-family="Source Sans 3" font-size="11" fill="#046530">~4 %</text>
+      <circle cx="320" cy="155" r="5" fill="#046530"/>
+      <text x="330" y="150" font-family="Source Sans 3" font-size="11" fill="#046530">Selskapsobligasjoner</text>
+      <text x="330" y="165" font-family="Source Sans 3" font-size="11" fill="#046530">~6 %</text>
+      <circle cx="450" cy="120" r="5" fill="#046530"/>
+      <text x="460" y="115" font-family="Source Sans 3" font-size="11" fill="#046530">Indeksfond</text>
+      <text x="460" y="130" font-family="Source Sans 3" font-size="11" fill="#046530">~9 %</text>
+      <circle cx="570" cy="85" r="5" fill="#046530"/>
+      <text x="585" y="80" font-family="Source Sans 3" font-size="11" fill="#046530">Vekstaksjer</text>
+      <text x="585" y="95" font-family="Source Sans 3" font-size="11" fill="#046530">~12 %+</text>
+    </svg>
+  </div>
+  <p style="text-align:left">Avkastningskravet er <strong>investorenes pris</strong> for å bære risiko. Høyere risiko → høyere krav. Dette er SML i et nytt språk.</p>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL C</div>
+  <h2>Egenkapitalkostnad ($r_E$)</h2>
+</section>
+
+<section>
+  <h2>To metoder å estimere $r_E$</h2>
+  <ol>
+    <li><strong>Dividende-vekstmodellen (DDM, Gordon)</strong><br>
+      Bruker faktisk markedspris og forventet utbyttevekst — direkte fra markedet.
+    </li>
+    <li><strong>CAPM (kapitalverdimodellen)</strong><br>
+      Bruker beta, risikofri rente og markedets risikopremie — fra risikoprofil.
+    </li>
+  </ol>
+  <div class="key-point">Begge metoder kan brukes — gjerne i kombinasjon for å «sjekke» hverandre. Ofte gir de like, men ikke identiske tall.</div>
+</section>
+
+<section>
+  <h2>DDM (Gordon-modellen)</h2>
+  <p style="text-align:left">Fra forelesning 8: aksjens pris er nåverdien av fremtidige utbytter.</p>
+  <div class="formel big-formula">
+    $$P_0 = \frac{D_1}{r_E - g} \quad\Rightarrow\quad r_E = \frac{D_1}{P_0} + g$$
+  </div>
+  <ul>
+    <li>$D_1$ — neste års utbytte</li>
+    <li>$P_0$ — dagens aksjepris</li>
+    <li>$g$ — forventet (konstant) vekstrate i utbytte</li>
+  </ul>
+  <div class="key-point">$r_E$ = direkteavkastning + forventet kursvekst. Enkelt og elegant — <em>hvis</em> forutsetningene holder.</div>
+</section>
+
+<section>
+  <h2>Eksempel: DDM</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Aksjen i et selskap omsettes for 60 kr. Selskapet betalte nylig utbytte på 4 kr, og utbyttet forventes å vokse med 6 % per år i mange år fremover.<br>
+    Hva er egenkapitalkostnaden?
+    $$D_1 = 4 \times 1{,}06 = 4{,}24$$
+    $$r_E = \frac{4{,}24}{60} + 0{,}06 = 0{,}0707 + 0{,}06 = 13{,}07\,\%$$
+  </div>
+  <div class="key-point">Eierne forventer 13,07 % i avkastning — det er hva ledelsen må «slå» med nye investeringer.</div>
+</section>
+
+<section>
+  <h2>Hvordan finne vekstraten g?</h2>
+  <p style="text-align:left">To vanlige metoder:</p>
+  <h3>1) Historiske utbytter</h3>
+  <table>
+    <tr><th>År</th><th>Utbytte (kr)</th><th>%-vis vekst</th></tr>
+    <tr><td>2022</td><td>1,10</td><td>—</td></tr>
+    <tr><td>2023</td><td>1,20</td><td>9,1 %</td></tr>
+    <tr><td>2024</td><td>1,35</td><td>12,5 %</td></tr>
+    <tr><td>2025</td><td>1,40</td><td>3,7 %</td></tr>
+    <tr><td>2026</td><td>1,55</td><td>10,7 %</td></tr>
+  </table>
+  <p style="text-align:left">Snitt: $g = (9{,}1 + 12{,}5 + 3{,}7 + 10{,}7)/4 \approx 9\,\%$</p>
+  <h3>2) Analytikerestimater</h3>
+  <p style="text-align:left">DNB Markets, Pareto og Bloomberg publiserer konsensus-prognoser for utbyttevekst.</p>
+</section>
+
+<section>
+  <h2>DDM — fordeler og ulemper</h2>
+  <div class="two-col">
+    <div>
+      <h3>Fordeler</h3>
+      <ul>
+        <li>Enkel å beregne</li>
+        <li>Bruker markedsdata direkte</li>
+        <li>Intuitivt: $r_E$ = «hva markedet priser inn»</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Ulemper</h3>
+      <ul>
+        <li>Krever utbyttebetaling (mange vekstselskaper betaler ikke)</li>
+        <li>Antar konstant g — urealistisk</li>
+        <li>Meget sensitiv til g-estimatet</li>
+        <li>Ignorerer risiko eksplisitt</li>
+      </ul>
+    </div>
+  </div>
+  <div class="key-point">DDM fungerer best for modne, stabile utbyttebetalere (Hafslund, Orkla, Telenor). Mindre nyttig for Kahoot, Nel, Autostore.</div>
+</section>
+
+<section>
+  <h2>CAPM (kort repetisjon)</h2>
+  <div class="formel big-formula">
+    $$r_E = r_f + \beta_E \cdot (E(R_M) - r_f)$$
+  </div>
+  <ul>
+    <li>$r_f$ — risikofri rente (norsk 10-årig statsrente)</li>
+    <li>$\beta_E$ — egenkapitalbeta (sensitivitet mot markedet)</li>
+    <li>$E(R_M) - r_f$ — markedets risikopremie (MRP), typisk 5–6 % i Norge</li>
+  </ul>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Selskap med $\beta_E = 1{,}5$, $r_f = 3\,\%$, $E(R_M) = 10\,\%$:
+    $$r_E = 3\,\% + 1{,}5 \times 7\,\% = 13{,}5\,\%$$
+  </div>
+</section>
+
+<section>
+  <h2>Eksempel: CAPM i bruk</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel — 100 % EK-finansiert selskap</div>
+    Et selskap er fullt egenkapitalfinansiert med $\beta = 1{,}24$.<br>
+    Markedets risikopremie er 7,5 % og risikofri rente er 2 %.
+    $$r_E = 2\,\% + 1{,}24 \times 7{,}5\,\% = 11{,}3\,\%$$
+  </div>
+  <p style="text-align:left">Selskapet vurderer tre prosjekter med samme risiko som selskapet (samme beta):</p>
+  <table>
+    <tr><th>Prosjekt</th><th>Kostnad</th><th>CF år 1</th><th>IRR</th><th>NPV (11,3 %)</th><th>Beslutning</th></tr>
+    <tr><td>A</td><td>100</td><td>140</td><td>40 %</td><td>+25,79</td><td>Accept</td></tr>
+    <tr><td>B</td><td>100</td><td>120</td><td>20 %</td><td>+7,82</td><td>Accept</td></tr>
+    <tr><td>C</td><td>100</td><td>110</td><td>10 %</td><td>−1,17</td><td>Reject</td></tr>
+  </table>
+  <div class="key-point">IRR &gt; $r_E$ = accept. C avvises fordi IRR (10 %) &lt; $r_E$ (11,3 %).</div>
+</section>
+
+<section>
+  <h2>DDM vs CAPM — sammenligning</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel — Tom Erik ASA</div>
+    Beta = 1,2, MRP = 8 %, $r_f$ = 6 %.<br>
+    Utbytte nylig betalt = 2 kr, forventet vekst 8 % uendelig.<br>
+    Aksjekurs i dag = 30 kr.
+  </div>
+  <p style="text-align:left"><strong>DDM:</strong></p>
+  <div class="formel">
+    $r_E = \dfrac{2 \times 1{,}08}{30} + 0{,}08 = 7{,}2\,\% + 8\,\% = 15{,}2\,\%$
+  </div>
+  <p style="text-align:left"><strong>CAPM:</strong></p>
+  <div class="formel">
+    $r_E = 6\,\% + 1{,}2 \times 8\,\% = 15{,}6\,\%$
+  </div>
+  <div class="key-point">Tallene er nære. Vi kan bruke snittet (15,4 %) eller velge én — gjerne CAPM når begge fungerer.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL D</div>
+  <h2>Gjeldskostnad ($r_D$)</h2>
+</section>
+
+<section>
+  <h2>Hva er gjeldskostnaden?</h2>
+  <div class="definisjon">
+    <div class="term">Gjeldskostnad ($r_D$)</div>
+    Avkastningen kreditorer (banker, obligasjonseiere) forventer på lånet. I praksis = effektiv lånerente bedriften betaler.
+  </div>
+  <p style="text-align:left">Tre måter å estimere $r_D$:</p>
+  <ol>
+    <li><strong>Yield to maturity (YTM)</strong> på selskapets utestående obligasjoner</li>
+    <li><strong>Effektiv rente</strong> på nye banklån</li>
+    <li><strong>CAPM på gjeld</strong> med gjeldsbeta (sjelden brukt — $\beta_D$ ofte antatt ≈ 0)</li>
+  </ol>
+  <div class="key-point">For norske selskaper bruker vi typisk siste bankrente eller obligasjonsrente. DNB, Nordea og lignende banker prises i markedet og YTM kan hentes fra Stamdata.</div>
+</section>
+
+<section>
+  <h2>Beta på gjeld?</h2>
+  <p style="text-align:left">Teoretisk kan vi bruke CAPM også på gjeld:</p>
+  <div class="formel">
+    $r_D = r_f + \beta_D \cdot (E(R_M) - r_f)$
+  </div>
+  <ul>
+    <li>For lavrisiko-gjeld (investment grade): $\beta_D \approx 0$ — dvs. $r_D \approx r_f$ pluss et kredittspread</li>
+    <li>For høyrisiko-gjeld (junk bonds): $\beta_D$ kan være 0,2–0,4</li>
+    <li>Empirisk: snittet for $\beta_D$ er ca 0,05–0,15</li>
+  </ul>
+  <div class="key-point">I praksis: bruk faktisk lånerente (effektiv lånerente eller YTM). CAPM på gjeld er mest en teoretisk øvelse.</div>
+</section>
+
+<section>
+  <h2>Skatteskjoldet — rentekostnader gir skatteforde l</h2>
+  <p style="text-align:left">Et viktig kjennetegn ved gjeld: rentekostnader er <strong>fradragsberettiget</strong> i Norge.</p>
+  <div class="formel big-formula">
+    $$r_D^{\text{etter skatt}} = r_D \cdot (1 - t_s)$$
+  </div>
+  <ul>
+    <li>$t_s$ — selskapsskattesats (22 % i Norge i 2026)</li>
+    <li>Eksempel: nominell rente 6 %, etter skatt: $6\,\% \times 0{,}78 = 4{,}68\,\%$</li>
+    <li>Staten «betaler» effektivt 22 % av rentekostnadene gjennom skattefradraget</li>
+  </ul>
+  <div class="key-point">Dette er grunnen til at gjeld er «billigere» finansiering enn EK — staten subsidierer renten gjennom skatteskjoldet. Vi kommer tilbake til dette i kapitalstruktur.</div>
+</section>
+
+<section>
+  <h2>Eksempel: gjeldskostnad etter skatt</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Et selskap har lån med 5,5 % nominell rente. Selskapsskatt 22 %.<br>
+    Hva er gjeldskostnaden etter skatt?
+    $$r_D^{\text{etter skatt}} = 5{,}5\,\% \times (1 - 0{,}22) = 4{,}29\,\%$$
+  </div>
+  <p style="text-align:left">Sammenlign med egenkapital som typisk koster 10–12 % i Norge — <strong>gjeld er &lt; halvparten</strong> så dyrt.</p>
+  <div class="key-point">Spørsmål som naturlig følger: <em>hvorfor finansierer ikke alle selskaper seg 100 % med gjeld?</em> Svaret kommer i kapitalstruktur-forelesningen.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL E</div>
+  <h2>WACC — å sy det sammen</h2>
+</section>
+
+<section>
+  <h2>Selskapets kapitalkostnad</h2>
+  <p style="text-align:left">De fleste selskaper finansierer seg med <strong>både</strong> egenkapital og gjeld. Vi trenger et vektet snitt:</p>
+  <div class="formel big-formula">
+    $$\text{WACC} = \frac{E}{V}\, r_E + \frac{D}{V}\, r_D \,(1 - t_s)$$
+  </div>
+  <ul>
+    <li>$V = E + D$ — total markedsverdi av selskapet</li>
+    <li>$E/V$ — andel egenkapital (markedsverdi)</li>
+    <li>$D/V$ — andel gjeld (markedsverdi)</li>
+    <li>$t_s$ — selskapsskattesats</li>
+  </ul>
+  <div class="key-point">WACC = «hva koster det selskapet i snitt å skaffe en krone kapital».</div>
+</section>
+
+<section>
+  <h2>Hvilke vekter? Markedsverdier — ikke bok!</h2>
+  <p style="text-align:left">Et vanlig nybegynner-mistak: bruke bokførte verdier fra balansen.</p>
+  <div class="two-col">
+    <div>
+      <h3>EK-verdi</h3>
+      <p>Markedsverdi = aksjekurs × antall aksjer</p>
+      <p><em>Ikke</em> bokført egenkapital fra balansen</p>
+    </div>
+    <div>
+      <h3>Gjeldsverdi</h3>
+      <p>Markedsverdi = nåverdi av fremtidige rentebetalinger og hovedstol</p>
+      <p>For nye lån ≈ bokført. For gamle: kan avvike</p>
+    </div>
+  </div>
+  <div class="key-point">Hvorfor markedsverdi? Fordi vi måler <em>hva investorene faktisk har plassert</em>. Bokført verdi er historisk, markedsverdi er nåtid.</div>
+</section>
+
+<section>
+  <h2>Eksempel: vekter</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Et selskap har egenkapital verdt 200 mill kr (markedsverdi) og gjeld verdt 50 mill kr. Total verdi 250 mill kr.
+    $$\frac{E}{V} = \frac{200}{250} = 80\,\%$$
+    $$\frac{D}{V} = \frac{50}{250} = 20\,\%$$
+    Selskapet er 80 % egenkapitalfinansiert og 20 % gjeldsfinansiert.
+  </div>
+</section>
+
+<section>
+  <h2>Eksempel: WACC-beregning</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel — komplett WACC</div>
+    Selskap med $r_f = 4\,\%$, MRP = 5,05 %, $\beta_E = 1{,}15$, lånerente 7,5 %, skattesats 28 %.<br>
+    Egenkapitalkostnad:
+    $$r_E = 4\,\% + 1{,}15 \times 5{,}05\,\% = 9{,}81\,\%$$
+  </div>
+  <table>
+    <tr><th>Gjeldsandel</th><th>EK-andel</th><th>WACC-beregning</th><th>WACC</th></tr>
+    <tr><td>0 %</td><td>100 %</td><td>$1{,}0 \times 9{,}81$</td><td>9,81 %</td></tr>
+    <tr><td>25 %</td><td>75 %</td><td>$0{,}75 \times 9{,}81 + 0{,}25 \times 7{,}5 \times 0{,}72$</td><td>8,71 %</td></tr>
+    <tr><td>50 %</td><td>50 %</td><td>$0{,}50 \times 9{,}81 + 0{,}50 \times 7{,}5 \times 0{,}72$</td><td>7,60 %</td></tr>
+  </table>
+  <div class="key-point">WACC <strong>faller</strong> med høyere gjeldsandel. Hvorfor? Gjeld er billigere enn EK, og skatteskjoldet forsterker effekten.</div>
+</section>
+
+<section>
+  <h2>Konsekvens for prosjektverdi</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel — same prosjekt, ulik WACC</div>
+    Investering: 100 mill. Kontantstrøm 45 mill i tre år. Selskapet bruker 50 % gjeld (WACC = 7,6 %).
+    $$NPV = -100 + \frac{45}{1{,}076} + \frac{45}{1{,}076^2} + \frac{45}{1{,}076^3} = 16{,}8 \text{ mill}$$
+  </div>
+  <p style="text-align:left">Med WACC = 9,81 % (100 % EK):</p>
+  <div class="formel">
+    $NPV = -100 + 45/1{,}0981 + 45/1{,}0981^2 + 45/1{,}0981^3 = 12{,}3$ mill
+  </div>
+  <div class="key-point">Lavere WACC → høyere NPV. Men: lavere WACC krever mer gjeld → høyere konkursrisiko. Trade-off!</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL F</div>
+  <h2>Praktisk bruk — og advarsler</h2>
+</section>
+
+<section>
+  <h2>WACC som hurdle rate</h2>
+  <p style="text-align:left">I praksis bruker bedrifter WACC som diskonteringsrente i NPV-beregninger:</p>
+  <ol>
+    <li>Estimer WACC for selskapet</li>
+    <li>Diskonter prosjektets kontantstrømmer med WACC</li>
+    <li>Aksepter hvis NPV &gt; 0 (eller IRR &gt; WACC)</li>
+  </ol>
+  <div class="key-point">WACC representerer «minimumsavkastningen» selskapet må kreve for å tilfredsstille både eiere og kreditorer.</div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Viktig</div>
+    Dette forutsetter at prosjektet har <strong>samme risiko</strong> som selskapet for øvrig. Hvis ikke: bruk prosjektspesifikk WACC.
+  </div>
+</section>
+
+<section>
+  <h2>Når prosjekt-risikoen avviker fra selskapets</h2>
+  <p style="text-align:left">Selskapets WACC er bare riktig hvis nytt prosjekt har samme risiko som eksisterende drift. Eksempler hvor det IKKE stemmer:</p>
+  <ul>
+    <li>Equinor som skal bygge havvind — vindprosjekt har annen risiko enn olje</li>
+    <li>Hafslund som vil starte tradingvirksomhet — mye høyere risiko</li>
+    <li>DNB som skal investere i fintech-startup — venturerisiko</li>
+  </ul>
+  <p style="text-align:left">Da må vi finne <strong>asset beta</strong> for sammenlignbare virksomheter («pure-play comparables»):</p>
+  <ol>
+    <li>Finn sammenlignbare børsnoterte selskaper (havvind: Ørsted, Vestas)</li>
+    <li>«Unlever» deres EK-beta til asset beta</li>
+    <li>«Relever» med eget selskaps gjeldsgrad</li>
+    <li>Beregn WACC for prosjektet</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Utfordringer ved estimering</h2>
+  <ul>
+    <li><strong>Beta varierer over tid</strong> — historikk er ikke nødvendigvis fremtid</li>
+    <li><strong>Estimeringsperiode</strong> — 60 mnd? 36? Daglig vs ukentlig vs månedlig data?</li>
+    <li><strong>MRP er svært usikker</strong> — anslag 4–8 % avhengig av kilde</li>
+    <li><strong>Risikofri rente</strong> — kort eller lang stat? Realrente eller nominell?</li>
+    <li><strong>Bok- vs markedsverdier</strong> — markedsverdier er volatile</li>
+    <li><strong>Gjeldssammensetning</strong> — fastrente, flytende, valuta?</li>
+  </ul>
+  <div class="key-point">I praksis er WACC et estimat med ±2–3 prosentpoeng usikkerhet. Sensitivitetsanalyse er nødvendig (kobles til F11).</div>
+</section>
+
+<section>
+  <h2>Hva bestemmer WACC?</h2>
+  <div class="two-col">
+    <div>
+      <h3>Industririsiko</h3>
+      <ul>
+        <li>Sykluser i inntekt</li>
+        <li>Grad av faste vs variable kostnader</li>
+        <li>Konkurranseintensitet</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Finansiell risiko</h3>
+      <ul>
+        <li>Gjeldsgrad / gearing</li>
+        <li>Renterisiko (flytende rente)</li>
+        <li>Valutarisiko</li>
+      </ul>
+    </div>
+  </div>
+  <div class="key-point">Olje (Equinor) og dagligvare (Orkla) har ulik industririsiko. Equinor med høy gjeldsgrad har dessuten høyere finansiell risiko enn Orkla med lavere gjeldsgrad.</div>
+</section>
+
+<section>
+  <h2>Tilbake til de tre debattene</h2>
+  <div class="debate-box">
+    <div class="label">Kjernekraft</div>
+    Hvilken WACC bør brukes? Statlig eid → lavere risiko → lavere WACC (3–5 %). Privat eid → høyere (8–10 %). Avgjør lønnsomheten.
+  </div>
+  <div class="debate-box">
+    <div class="label">Klima</div>
+    Stern brukte 1,4 % (sosial diskontering). Nordhaus 4–5 % (markedsbasert). Politisk avgjørelse.
+  </div>
+  <div class="debate-box">
+    <div class="label">Solceller</div>
+    Privatperson: sammenlign med boliglån (~5 %) eller alternativ aksjeinvestering (~7 %). Avgjør om det lønner seg.
+  </div>
+  <div class="key-point">Kapitalkostnad er ikke bare teori — det er sentralt verktøy i alle store finans-, energi- og samfunnsdebatter.</div>
+</section>
+
+<section>
+  <h2>Mot kapitalstruktur — neste tema</h2>
+  <p style="text-align:left">Vi har sett at:</p>
+  <ul>
+    <li>Gjeld er <strong>billigere</strong> enn egenkapital (skatteskjoldet)</li>
+    <li>WACC <strong>faller</strong> med mer gjeld (i hvert fall i utgangspunktet)</li>
+    <li>Lavere WACC → høyere NPV → mer verdiskapning</li>
+  </ul>
+  <blockquote>«Bør selskapet finansiere seg 100 % med gjeld for å minimere WACC?»</blockquote>
+  <div class="key-point">Spoiler: Nei. Men hvorfor ikke? Det er <strong>kapitalstruktur-problemet</strong> — Modigliani-Miller, finansiell vansker, optimal gjeldsgrad. Det tar vi i neste forelesning.</div>
+</section>
+
+<section>
+  <h2>Oppsummering</h2>
+  <ol style="font-size: 0.88em">
+    <li><strong>Avkastningskrav</strong> = forventet avkastning på investering med samme risiko</li>
+    <li>Alternative navn: <strong>kapitalkostnad</strong>, <strong>diskonteringsrente</strong></li>
+    <li><strong>All kapital koster</strong> — EK like mye som gjeld (gjerne mer)</li>
+    <li><strong>Egenkapitalkostnad ($r_E$)</strong>: estimeres med DDM eller CAPM</li>
+    <li><strong>Gjeldskostnad ($r_D$)</strong>: lånerente / YTM, multipliser med $(1-t_s)$ for etter skatt</li>
+    <li><strong>WACC</strong>: $\frac{E}{V}r_E + \frac{D}{V}r_D(1-t_s)$</li>
+    <li>Bruk <strong>markedsverdier</strong>, ikke bok</li>
+    <li>WACC = hurdle rate i NPV — men sjekk om prosjektet har samme risiko som selskapet</li>
+    <li>Sentralt i debatter om <strong>kjernekraft, klima, energiomstilling, infrastruktur</strong></li>
+  </ol>
+</section>
+
+<section>
+  <h2>Til selvstudium</h2>
+  <div class="definisjon">
+    <div class="term">Oppgaver</div>
+    <strong>Oppgavesett 7 — Kapitalkostnad og WACC</strong>. Dekker DDM, CAPM, gjeldskostnad og full WACC-beregning.
+  </div>
+  <div class="definisjon">
+    <div class="term">Pensum</div>
+    <strong>HRWJ kapittel 13</strong>. Anbefales også: Damodaran «Cost of Capital» (gratis online — Damodaran Online ved NYU Stern). PWC publiserer årlig «Risikopremien i det norske markedet» — viktig praktisk referanse.
+  </div>
+  <div class="definisjon">
+    <div class="term">Til debatt</div>
+    Hvilken diskonteringsrente bør brukes for klimatiltak med horisont 100+ år? Les Stern Review (sammendrag) og diskuter i grupper.
+  </div>
+  <p style="text-align:center; color: var(--nmbu-green); margin-top: 12px"><strong>Neste:</strong> Kapitalstruktur — Modigliani-Miller, skatt, finansielle vansker og optimal gjeldsgrad.</p>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script>const params = new URLSearchParams(window.location.search);
+const useSlides = params.get('view') === 'slides';
+Reveal.initialize({
+  hash: !useSlides,
+  slideNumber: useSlides ? 'c/t' : false,
+  width: 1280,
+  height: 800,
+  margin: 0.06,
+  controls: useSlides,
+  progress: useSlides,
+  center: useSlides,
+  transition: useSlides ? 'slide' : 'none',
+  view: useSlides ? undefined : 'scroll',
+  scrollProgress: !useSlides,
+  plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
+});</script>
+</body>
+</html>

@@ -18,6 +18,7 @@ import {
   CalculatorContent,
   InteractiveModelContent,
   ExerciseSetContent,
+  PresentationContent,
   ExerciseSet
 } from '../types/course';
 import { ExerciseSetHandler } from './ExerciseSetHandler';
@@ -86,6 +87,8 @@ export class ContentRenderer {
         return this.renderInteractiveModel(content as InteractiveModelContent);
       case 'exerciseset':
         return this.renderExerciseSet(content as ExerciseSetContent);
+      case 'presentation':
+        return this.renderPresentation(content as PresentationContent);
       default:
         return '';
     }
@@ -517,5 +520,67 @@ export class ContentRenderer {
       return '';
     }
     return ExerciseSetHandler.renderExerciseSetSection(exerciseSet);
+  }
+
+  private renderPresentation(content: PresentationContent): string {
+    const slidesHtml = content.slides.map((slide, index) => `
+      <div class="presentation-card" data-presentation-id="${content.id}-${index}">
+        <button class="presentation-toggle" data-target="${content.id}-${index}">
+          <div class="presentation-toggle-info">
+            <svg class="presentation-toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+            <span class="presentation-toggle-title">${slide.title}</span>
+          </div>
+          <svg class="presentation-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <div class="presentation-iframe-wrapper" id="pres-${content.id}-${index}" style="display: none;">
+          <div class="presentation-iframe-toolbar">
+            <a href="/presentations/${slide.filename}" target="_blank" class="presentation-fullscreen-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <polyline points="9 21 3 21 3 15"></polyline>
+                <line x1="21" y1="3" x2="14" y2="10"></line>
+                <line x1="3" y1="21" x2="10" y2="14"></line>
+              </svg>
+              Åpne i fullskjerm
+            </a>
+            <a href="/presentations/${slide.filename}?view=slides" target="_blank" class="presentation-slides-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+                <path d="M8 21h8"></path>
+                <path d="M12 17v4"></path>
+                <path d="M7 8l5 3-5 3z"></path>
+              </svg>
+              Presentasjonsmodus
+            </a>
+          </div>
+          <iframe class="presentation-iframe" data-src="/presentations/${slide.filename}" title="${slide.title}" sandbox="allow-scripts allow-same-origin"></iframe>
+        </div>
+      </div>
+    `).join('');
+
+    return `
+      <div class="presentation-section" id="${content.id}">
+        <div class="presentation-header">
+          <div class="presentation-header-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </div>
+          <div>
+            <h3 class="presentation-title">${content.title}</h3>
+            ${content.description ? `<p class="presentation-description">${content.description}</p>` : ''}
+          </div>
+        </div>
+        ${slidesHtml}
+      </div>
+    `;
   }
 }

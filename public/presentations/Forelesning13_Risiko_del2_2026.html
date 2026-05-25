@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BUS 220 – Forelesning 13: Risiko og avkastning (del 2)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css" id="theme">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap');
+  :root { --nmbu-green: #046530; --nmbu-green-light: #f0f7f2; --accent-orange: #f59e0b; --tavle-bg: #fef3c7; --text-dark: #1a1a1a; --text-muted: #4b5563; }
+  .reveal { font-family: 'Source Serif 4', Georgia, serif; font-size: 28px; color: var(--text-dark); }
+  .reveal h1, .reveal h2, .reveal h3 { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); text-transform: none; letter-spacing: 0; font-weight: 700; }
+  .reveal h1 { font-size: 1.8em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.5em; line-height: 1.2; margin-bottom: 0.5em; }
+  .reveal h3 { font-size: 1.2em; }
+  .reveal p { line-height: 1.5; }
+  .reveal ul, .reveal ol { display: block; margin-left: 1em; }
+  .reveal li { margin-bottom: 0.4em; line-height: 1.5; }
+  .reveal .title-slide { background: var(--nmbu-green); color: white; padding: 60px; }
+  .reveal .title-slide h1 { color: white; font-size: 2.4em; margin-bottom: 0.3em; }
+  .reveal .title-slide .subtitle { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 1.4em; color: rgba(255,255,255,0.95); margin-bottom: 1em; }
+  .reveal .title-slide .meta { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 0.85em; color: rgba(255,255,255,0.8); margin-top: 2em; }
+  .reveal .section-divider { background: var(--nmbu-green); color: white; }
+  .reveal .section-divider h2 { color: white; font-size: 2.2em; }
+  .reveal .section-divider .section-number { font-family: 'Source Sans 3', Arial, sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9em; letter-spacing: 0.2em; margin-bottom: 1em; }
+  .reveal .definisjon { background: var(--nmbu-green-light); border-left: 5px solid var(--nmbu-green); padding: 18px 24px; margin: 20px 0; text-align: left; border-radius: 0 8px 8px 0; }
+  .reveal .definisjon .term { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: var(--nmbu-green); margin-bottom: 6px; }
+  .reveal .formel { background: white; border: 2px solid var(--nmbu-green); padding: 24px 32px; margin: 20px auto; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+  .reveal .key-point { background: var(--nmbu-green-light); padding: 16px 22px; margin: 16px 0; border-radius: 8px; text-align: left; font-size: 0.95em; }
+  .reveal .key-point::before { content: "→ "; color: var(--nmbu-green); font-weight: 700; }
+  .reveal .tavle-marker { background: var(--tavle-bg); border: 2px dashed var(--accent-orange); padding: 18px 24px; margin: 24px 0; border-radius: 10px; text-align: left; }
+  .reveal .tavle-marker .tavle-label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #b45309; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.15em; margin-bottom: 8px; }
+  .reveal .norsk-eksempel { background: #fef9f0; border-left: 4px solid #d97706; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .norsk-eksempel .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #b45309; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal .interactive-model { background: #ede9fe; border-left: 4px solid #7c3aed; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .interactive-model .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #6d28d9; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal .interactive-model a { color: #6d28d9; text-decoration: underline; }
+  .reveal table { margin: 16px auto; border-collapse: collapse; font-size: 0.8em; }
+  .reveal table th { background: var(--nmbu-green); color: white; padding: 8px 12px; font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; }
+  .reveal table td { padding: 6px 12px; border: 1px solid #d4d4d4; text-align: center; }
+  .reveal .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; text-align: left; }
+  .reveal .caption { font-size: 0.7em; color: var(--text-muted); font-style: italic; margin-top: 8px; }
+  .reveal mjx-container { font-size: 1.0em !important; }
+  .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+  .reveal blockquote { background: var(--nmbu-green-light); border-left: 4px solid var(--nmbu-green); padding: 14px 22px; margin: 16px 0; font-style: italic; font-size: 0.95em; text-align: left; border-radius: 0 6px 6px 0; box-shadow: none; }
+</style>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }, svg: { fontCache: 'global' }, startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { if (window.Reveal) Reveal.layout(); }); } } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section class="title-slide">
+  <h1>Risiko og avkastning</h1>
+  <div class="subtitle">Del 2: Porteføljeteori og diversifisering</div>
+  <div class="meta">BUS 220 — Finansiering og investering<br>Atle G. Guttormsen · Høst 2026<br>Pensum: HRWJ kapittel 11–12</div>
+</section>
+
+<section>
+  <h2>Læringsmål</h2>
+  <ul>
+    <li>Beregne <strong>forventet avkastning og varians</strong> for to-aksjers portefølje</li>
+    <li>Anvende <strong>kovarians og korrelasjon</strong> i porteføljekontekst</li>
+    <li>Forstå <strong>diversifisering</strong> — finansens «gratis lunsj»</li>
+    <li>Tegne og tolke det <strong>effisiente settet (efficient frontier)</strong></li>
+    <li>Identifisere <strong>minimum varians-porteføljen</strong></li>
+    <li>Kombinere risikable porteføljer med et <strong>risikofritt alternativ</strong></li>
+    <li>Skille mellom <strong>systematisk og usystematisk</strong> risiko</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Repetisjon fra forelesning 12</h2>
+  <ul>
+    <li>Avkastning = direkteavkastning + kursavkastning</li>
+    <li>Aritmetisk vs geometrisk gjennomsnitt</li>
+    <li>$\sigma = $ standardavvik = primært risikomål</li>
+    <li>$E[R] = \sum p_i R_i$ — forventet avkastning fra fordeling</li>
+    <li>Normalfordeling, skjevhet, kurtose</li>
+  </ul>
+  <div class="key-point">I dag: enkeltinvesteringer er ikke nok — investorer holder <strong>porteføljer</strong>. Hvordan endrer det risikobildet?</div>
+</section>
+
+<section>
+  <h2>Hvorfor portefølje?</h2>
+  <blockquote>«Jeg fant ut at det ikke er lurt å legge alle eggene i én kurv.»<br>— Harry Markowitz, Nobelprisvinner 1990</blockquote>
+  <p style="text-align:left"><strong>Hovedmål i kapitalforvaltning:</strong> få høyest mulig avkastning med minst mulig risiko.</p>
+  <p style="text-align:left">Kan du oppnå <em>høyere avkastning</em> uten å øke risikoen? Ja — gjennom <strong>diversifisering</strong>. Den enkleste og beste måten å redusere risiko uten å gi opp avkastning.</p>
+  <div class="key-point">Diversifisering er «den eneste gratis lunsjen» i finansmarkedene.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL A</div>
+  <h2>To-aksjers portefølje</h2>
+</section>
+
+<section>
+  <h2>Forventet avkastning på porteføljen</h2>
+  <p style="text-align:left">Porteføljens forventede avkastning er det <strong>vektede gjennomsnittet</strong> av enkeltavkastningene:</p>
+  <div class="formel big-formula">
+    $$E(R_p) = w_A E(R_A) + w_B E(R_B)$$
+  </div>
+  <p style="text-align:left">der $w_A + w_B = 1$ (totalsum av vektene = 100 %).</p>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel — Coca-Cola og Reebok</div>
+    Du investerer 65 % i Coca-Cola (E(R) = 10 %) og 35 % i Reebok (E(R) = 20 %).
+    $$E(R_p) = 0{,}65 \times 10\,\% + 0{,}35 \times 20\,\% = 6{,}5\,\% + 7{,}0\,\% = 13{,}5\,\%$$
+  </div>
+  <div class="key-point">Forventet avkastning er <strong>enkelt</strong> — bare et vektet snitt. Risiko er der det blir interessant.</div>
+</section>
+
+<section>
+  <h2>Varians for to-aksjers portefølje</h2>
+  <p style="text-align:left">Variansen er <strong>ikke</strong> bare et vektet snitt — den avhenger av <em>samvariasjonen</em>:</p>
+  <div class="formel big-formula">
+    $$\sigma_p^2 = w_A^2 \sigma_A^2 + w_B^2 \sigma_B^2 + 2 w_A w_B \rho_{AB} \sigma_A \sigma_B$$
+  </div>
+  <p style="text-align:left">Tre ledd:</p>
+  <ul>
+    <li>$w_A^2 \sigma_A^2$ — bidrag fra aksje A alene</li>
+    <li>$w_B^2 \sigma_B^2$ — bidrag fra aksje B alene</li>
+    <li>$2 w_A w_B \rho_{AB} \sigma_A \sigma_B$ — <strong>samvariasjonsleddet</strong> (kryssleddet)</li>
+  </ul>
+  <div class="key-point">Det er kryssleddet som driver diversifikasjon. Lav (eller negativ) korrelasjon gir mindre porteføljerisiko.</div>
+</section>
+
+<section>
+  <h2>Kovarians og korrelasjon</h2>
+  <div class="definisjon">
+    <div class="term">Kovarians</div>
+    Måler hvor mye to avkastninger beveger seg sammen. Vanskelig å tolke direkte fordi enheten er %².
+  </div>
+  <div class="formel">
+    $\text{Cov}(R_A, R_B) = \sigma_{AB} = \sum_i p_i (R_{A,i} - E[R_A])(R_{B,i} - E[R_B])$
+  </div>
+  <div class="definisjon">
+    <div class="term">Korrelasjonskoeffisient</div>
+    Standardisert versjon av kovarians — alltid mellom −1 og +1, lettere å tolke.
+  </div>
+  <div class="formel big-formula">
+    $\rho_{AB} = \dfrac{\sigma_{AB}}{\sigma_A \sigma_B}$
+  </div>
+  <p style="text-align:left">Eller omvendt: $\sigma_{AB} = \rho_{AB} \sigma_A \sigma_B$.</p>
+</section>
+
+<section>
+  <h2>Korrelasjon — tre tilfeller</h2>
+  <div class="definisjon">
+    <div class="term">$\rho = +1$ — perfekt positiv samvariasjon</div>
+    A og B beveger seg <em>nøyaktig</em> i takt. Ingen diversifikasjon mulig.
+  </div>
+  <div class="definisjon">
+    <div class="term">$\rho = 0$ — ingen samvariasjon</div>
+    A og B beveger seg uavhengig. Betydelig diversifikasjonseffekt.
+  </div>
+  <div class="definisjon">
+    <div class="term">$\rho = -1$ — perfekt negativ samvariasjon</div>
+    A og B beveger seg <em>motsatt</em>. Risiko kan i prinsippet elimineres helt.
+  </div>
+  <p style="text-align:left">I virkeligheten:</p>
+  <ul>
+    <li>To aksjer i samme bransje: ρ ≈ 0,5–0,8</li>
+    <li>To aksjer i ulike bransjer: ρ ≈ 0,3–0,5</li>
+    <li>Aksjer vs statsobligasjoner: ρ ≈ −0,2 til 0,3 (varierer over tid)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Eksempel: diversifisering virker</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    To aksjer A og B med 50/50 vekt: $\sigma_A = 20\,\%$, $\sigma_B = 30\,\%$.<br>
+    Vektet gjennomsnitt av $\sigma$: $0{,}5 \times 20 + 0{,}5 \times 30 = 25\,\%$. Hva blir <em>faktisk</em> $\sigma_p$ ved ulike korrelasjoner?
+  </div>
+  <table>
+    <tr><th>$\rho$</th><th>$\sigma_p$</th><th>Diversifikasjonsgevinst</th></tr>
+    <tr><td>$+1{,}0$</td><td>25,00 %</td><td>0 pp</td></tr>
+    <tr><td>$+0{,}5$</td><td>21,79 %</td><td>3,21 pp</td></tr>
+    <tr><td>$+0{,}3$</td><td>20,37 %</td><td>4,63 pp</td></tr>
+    <tr><td>$\,\,\,\,0$</td><td>18,03 %</td><td>6,97 pp</td></tr>
+    <tr><td>$-0{,}5$</td><td>13,23 %</td><td>11,77 pp</td></tr>
+    <tr><td>$-1{,}0$</td><td>5,00 %</td><td>20,00 pp</td></tr>
+  </table>
+  <div class="key-point">Selv ved relativt høy korrelasjon (0,3) får vi 4,6 prosentpoeng lavere risiko — uten å gi opp forventet avkastning.</div>
+</section>
+
+<section>
+  <h2>Interaktiv modell: To-aksjers portefølje</h2>
+  <div class="interactive-model">
+    <div class="label">Online interaktiv modell</div>
+    <p>Eksperimenter selv med vektfordeling, forventede avkastninger, standardavvik og korrelasjon for to aksjer. Modellen viser hvordan porteføljens E(R) og σ endrer seg, samt visualiserer det effisiente settet.</p>
+    <p><strong>Lenke:</strong> <a href="https://www.econmodels.online/model/portfolio-two-asset" target="_blank">econmodels.online/model/portfolio-two-asset</a></p>
+  </div>
+  <p style="text-align:left"><strong>Forsøk dette:</strong></p>
+  <ul>
+    <li>Sett $\rho = 1$ — observer at det ikke er diversifikasjonsgevinst (rett linje)</li>
+    <li>Sett $\rho = -1$ — observer at porteføljen kan ha null risiko ved riktig vekt</li>
+    <li>Realistiske verdier: $\rho \approx 0{,}3$ — typisk forhold mellom to aksjer i ulike sektorer</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Eksempel: regn porteføljerisiko fra historikk</h2>
+  <p style="text-align:left">For aksje X og Y har du fire scenarier:</p>
+  <table>
+    <tr><th>Tilstand</th><th>Sannsynl.</th><th>R_X</th><th>R_Y</th></tr>
+    <tr><td>Oppgang</td><td>0,25</td><td>28 %</td><td>10 %</td></tr>
+    <tr><td>Normal</td><td>0,50</td><td>15 %</td><td>13 %</td></tr>
+    <tr><td>Nedgang</td><td>0,25</td><td>−2 %</td><td>10 %</td></tr>
+  </table>
+  <div class="tavle-marker">
+    <div class="tavle-label">Vi regner sammen</div>
+    <p>$E[R_X] = 0{,}25 \times 28 + 0{,}5 \times 15 + 0{,}25 \times (-2) = 14\,\%$</p>
+    <p>$E[R_Y] = 0{,}25 \times 10 + 0{,}5 \times 13 + 0{,}25 \times 10 = 11{,}5\,\%$</p>
+    <p>Kovarians:</p>
+    $$\sigma_{XY} = 0{,}25(28-14)(10-11{,}5) + 0{,}5(15-14)(13-11{,}5) + 0{,}25(-2-14)(10-11{,}5)$$
+    $$= -5{,}25 + 0{,}75 + 6 = 1{,}50$$
+    <p>Korrelasjon: $\rho_{XY} = 1{,}50 / (10{,}65 \times 1{,}52) = 0{,}09$</p>
+  </div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL B</div>
+  <h2>Effisient frontier</h2>
+</section>
+
+<section>
+  <h2>Mange aksjer — formeleksplosjon</h2>
+  <p style="text-align:left">Med <em>$n$</em> aksjer i porteføljen får vi:</p>
+  <div class="formel big-formula">
+    $$\sigma_p^2 = \sum_{i=1}^{n} \sum_{j=1}^{n} w_i w_j \sigma_{ij}$$
+  </div>
+  <p style="text-align:left">Det er $n$ varianser og $n(n-1)/2$ unike kovarianser:</p>
+  <table>
+    <tr><th>Antall aksjer</th><th>Antall varianser</th><th>Antall kovarianser</th><th>Totalt parametere</th></tr>
+    <tr><td>2</td><td>2</td><td>1</td><td>3</td></tr>
+    <tr><td>5</td><td>5</td><td>10</td><td>15</td></tr>
+    <tr><td>50</td><td>50</td><td>1 225</td><td>1 275</td></tr>
+    <tr><td>500</td><td>500</td><td>124 750</td><td>125 250</td></tr>
+  </table>
+  <div class="key-point">For å holde 500 aksjer trenger du ~125 000 estimater! I praksis bruker vi matrise-notasjon og statistisk programvare.</div>
+</section>
+
+<section>
+  <h2>Variansmatrisen — varianser + kovarianser</h2>
+  <p style="text-align:left">For en portefølje med 4 aksjer:</p>
+  <table>
+    <tr><th></th><th>Aksje 1</th><th>Aksje 2</th><th>Aksje 3</th><th>Aksje 4</th></tr>
+    <tr><th>Aksje 1</th><td style="background:#dcfce7">$\sigma_1^2$</td><td>$\sigma_{12}$</td><td>$\sigma_{13}$</td><td>$\sigma_{14}$</td></tr>
+    <tr><th>Aksje 2</th><td>$\sigma_{12}$</td><td style="background:#dcfce7">$\sigma_2^2$</td><td>$\sigma_{23}$</td><td>$\sigma_{24}$</td></tr>
+    <tr><th>Aksje 3</th><td>$\sigma_{13}$</td><td>$\sigma_{23}$</td><td style="background:#dcfce7">$\sigma_3^2$</td><td>$\sigma_{34}$</td></tr>
+    <tr><th>Aksje 4</th><td>$\sigma_{14}$</td><td>$\sigma_{24}$</td><td>$\sigma_{34}$</td><td style="background:#dcfce7">$\sigma_4^2$</td></tr>
+  </table>
+  <p style="text-align:left">Diagonalen (grønn): variansene.<br>Av-diagonalen: kovariansene (symmetrisk).</p>
+  <p style="text-align:left">Porteføljevarians: summer hver celle multiplisert med tilhørende vekter $w_i w_j$.</p>
+  <div class="key-point">I store porteføljer dominerer <strong>kovariansene</strong> over variansene — diversifisering reduserer den unike risikoen, men ikke samvariasjonen.</div>
+</section>
+
+<section>
+  <h2>Markowitz og «det effisiente settet»</h2>
+  <p style="text-align:left">Hovedidé (Harry Markowitz, 1952):</p>
+  <ul>
+    <li>For hvert nivå av risiko ($\sigma_p$), finn porteføljen med <em>høyest mulig</em> forventet avkastning.</li>
+    <li>Mengden av alle slike «beste» porteføljer kalles det <strong>effisiente settet</strong> (efficient frontier).</li>
+  </ul>
+  <div class="key-point">Porteføljer som ligger <em>under</em> det effisiente settet er <strong>ineffisiente</strong> — det finnes alltid en bedre portefølje med samme risiko og høyere avkastning.</div>
+</section>
+
+<section>
+  <h2>Effisient frontier — visualisering</h2>
+  <div style="margin: 20px auto; text-align: center;">
+    <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+      <line x1="80" y1="280" x2="660" y2="280" stroke="#1a1a1a" stroke-width="1.5"/>
+      <line x1="80" y1="280" x2="80" y2="40" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="370" y="305" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563">Risiko (standardavvik)</text>
+      <text x="40" y="160" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563" transform="rotate(-90, 40, 160)">Forventet avkastning</text>
+      <!-- Cloud of inefficient portfolios -->
+      <ellipse cx="350" cy="200" rx="180" ry="80" fill="rgba(156, 163, 175, 0.2)" stroke="none"/>
+      <circle cx="280" cy="220" r="3" fill="#9ca3af"/>
+      <circle cx="320" cy="210" r="3" fill="#9ca3af"/>
+      <circle cx="380" cy="230" r="3" fill="#9ca3af"/>
+      <circle cx="420" cy="250" r="3" fill="#9ca3af"/>
+      <circle cx="460" cy="240" r="3" fill="#9ca3af"/>
+      <circle cx="500" cy="265" r="3" fill="#9ca3af"/>
+      <!-- Efficient frontier curve -->
+      <path d="M 200 220 Q 250 180 320 140 Q 400 110 500 90 L 620 75" stroke="#046530" stroke-width="3" fill="none"/>
+      <!-- Min variance marker -->
+      <circle cx="200" cy="220" r="6" fill="#f59e0b" stroke="#b45309" stroke-width="2"/>
+      <text x="160" y="225" text-anchor="end" font-family="Source Sans 3" font-size="11" fill="#b45309">Min varians</text>
+      <text x="160" y="240" text-anchor="end" font-family="Source Sans 3" font-size="11" fill="#b45309">portefølje</text>
+      <!-- Labels -->
+      <text x="540" y="95" font-family="Source Sans 3" font-size="13" font-weight="600" fill="#046530">Effisient frontier</text>
+      <text x="350" y="200" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#6b7280">Ikke-effisient</text>
+      <text x="350" y="215" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#6b7280">(dominerte porteføljer)</text>
+    </svg>
+  </div>
+  <p style="text-align:left">Hver portefølje er et punkt i risiko-avkastning-diagrammet. Det effisiente settet er <strong>kurven</strong> som danner den øvre venstre grensen.</p>
+</section>
+
+<section>
+  <h2>Minimum varians-porteføljen</h2>
+  <div class="definisjon">
+    <div class="term">Minimum variance portfolio (MV)</div>
+    Porteføljen med lavest mulig standardavvik — uavhengig av forventet avkastning.
+  </div>
+  <p style="text-align:left">For to aksjer kan vektene beregnes analytisk:</p>
+  <div class="formel">
+    $w_A^* = \dfrac{\sigma_B^2 - \rho_{AB} \sigma_A \sigma_B}{\sigma_A^2 + \sigma_B^2 - 2\rho_{AB}\sigma_A\sigma_B}$
+  </div>
+  <p style="text-align:left">Den <em>nedre del</em> av kurven (under MV) er <strong>ikke effisient</strong> — for samme risiko får man høyere avkastning lengre opp.</p>
+  <div class="key-point">Bare punkter på kurven over MV er effisiente. Investorens valg langs denne kurven avhenger av risikotoleransen.</div>
+</section>
+
+<section>
+  <h2>Diversifikasjon — hvor mange aksjer trengs?</h2>
+  <div style="margin: 20px auto; text-align: center;">
+    <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+      <line x1="80" y1="240" x2="660" y2="240" stroke="#1a1a1a" stroke-width="1.5"/>
+      <line x1="80" y1="240" x2="80" y2="30" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="370" y="265" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563">Antall aksjer i porteføljen</text>
+      <text x="40" y="135" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563" transform="rotate(-90, 40, 135)">Porteføljerisiko (σ)</text>
+      <!-- Decreasing curve toward asymptote -->
+      <path d="M 80 60 Q 150 100 250 145 Q 350 175 500 195 L 660 200" stroke="#046530" stroke-width="3" fill="none"/>
+      <!-- Asymptote -->
+      <line x1="80" y1="200" x2="660" y2="200" stroke="#f59e0b" stroke-width="1" stroke-dasharray="6 4"/>
+      <text x="600" y="195" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#b45309">Markedsrisiko</text>
+      <!-- Labels for zones -->
+      <text x="200" y="100" font-family="Source Sans 3" font-size="11" fill="#046530" font-weight="600">Usystematisk risiko</text>
+      <text x="200" y="115" font-family="Source Sans 3" font-size="11" fill="#046530">(diversifiserbar)</text>
+      <text x="500" y="220" font-family="Source Sans 3" font-size="11" fill="#b45309" font-weight="600">Systematisk risiko</text>
+      <text x="500" y="235" font-family="Source Sans 3" font-size="11" fill="#b45309">(markedsrisiko)</text>
+      <!-- Tick marks -->
+      <text x="80" y="255" text-anchor="middle" font-family="Source Sans 3" font-size="11">1</text>
+      <text x="250" y="255" text-anchor="middle" font-family="Source Sans 3" font-size="11">10</text>
+      <text x="420" y="255" text-anchor="middle" font-family="Source Sans 3" font-size="11">20</text>
+      <text x="590" y="255" text-anchor="middle" font-family="Source Sans 3" font-size="11">30+</text>
+    </svg>
+  </div>
+  <p style="text-align:left">Empirisk: <strong>~20–30 aksjer</strong> er nok for å fjerne mesteparten av den unike risikoen.</p>
+  <div class="key-point">Markedsrisikoen kan ikke fjernes ved diversifisering — den er det «gulvet» som ligger igjen.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL C</div>
+  <h2>Systematisk og<br>usystematisk risiko</h2>
+</section>
+
+<section>
+  <h2>To typer risiko</h2>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">Systematisk risiko</div>
+      Markedsrisiko. Påvirker alle (eller mange) aksjer.<br>
+      Eksempler: konjunktur, renter, inflasjon, geopolitikk, pandemi.<br>
+      <strong>Kan ikke diversifiseres bort.</strong>
+    </div>
+    <div class="definisjon">
+      <div class="term">Usystematisk risiko</div>
+      Selskapsspesifikk / unik risiko.<br>
+      Eksempler: produktfeil, ledelsesendring, regulatorisk hendelse, en stor kontrakt.<br>
+      <strong>Kan diversifiseres bort.</strong>
+    </div>
+  </div>
+  <div class="formel" style="margin-top: 20px">
+    Total risiko = Systematisk risiko + Usystematisk risiko
+  </div>
+</section>
+
+<section>
+  <h2>Hvorfor får vi bare betalt for systematisk risiko?</h2>
+  <p style="text-align:left">Logikken er enkel:</p>
+  <ul>
+    <li>Usystematisk risiko kan elimineres <em>kostnadsfritt</em> ved diversifisering</li>
+    <li>Markedet betaler ikke for risiko du selv kan unngå</li>
+    <li>Forventet avkastning avhenger <em>kun</em> av systematisk risiko</li>
+  </ul>
+  <div class="key-point">Dette er kjernen i CAPM (kapitalverdimodellen) — som vi tar i del 3. Bare den systematiske risikoen, målt med <strong>beta</strong>, kvalifiserer for risikopremie.</div>
+  <p style="text-align:left; margin-top: 20px">For en enkeltaksje:</p>
+  <ul>
+    <li>Stor del av $\sigma_i$ er usystematisk → forsvinner i portefølje</li>
+    <li>Den delen som er igjen i porteføljen er bidrag til markedsrisiko</li>
+    <li>Det er <em>denne</em> som prises i markedet</li>
+  </ul>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL D</div>
+  <h2>Risikofri investering<br>i porteføljen</h2>
+</section>
+
+<section>
+  <h2>Kombinasjon med risikofri rente</h2>
+  <p style="text-align:left">Hva skjer hvis vi blander en risikofylt portefølje med et risikofritt aktivum (statsobligasjon)?</p>
+  <p style="text-align:left">Risikofritt aktivum: $r_f$ konstant, $\sigma_f = 0$, $\rho_{f, p} = 0$.</p>
+  <p style="text-align:left">For en kombinasjon av andel $w$ i risikabel portefølje P og $(1-w)$ i risikofri:</p>
+  <div class="formel big-formula">
+    $E(R_c) = w \cdot E(R_P) + (1-w) \cdot r_f$
+  </div>
+  <div class="formel big-formula">
+    $\sigma_c = w \cdot \sigma_P$
+  </div>
+  <p style="text-align:left">Sammenhengen er <strong>helt lineær</strong> mellom forventet avkastning og standardavvik!</p>
+</section>
+
+<section>
+  <h2>Eksempel: blanding</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Risikabel portefølje P: $E(R_P) = 12\,\%$, $\sigma_P = 20\,\%$.<br>
+    Risikofri rente: $r_f = 3\,\%$.<br>
+    Hva får vi med ulike fordelinger?
+  </div>
+  <table>
+    <tr><th>$w_P$</th><th>$w_f$</th><th>$E(R_c)$</th><th>$\sigma_c$</th></tr>
+    <tr><td>0 %</td><td>100 %</td><td>3,0 %</td><td>0,0 %</td></tr>
+    <tr><td>25 %</td><td>75 %</td><td>5,3 %</td><td>5,0 %</td></tr>
+    <tr><td>50 %</td><td>50 %</td><td>7,5 %</td><td>10,0 %</td></tr>
+    <tr><td>75 %</td><td>25 %</td><td>9,8 %</td><td>15,0 %</td></tr>
+    <tr><td>100 %</td><td>0 %</td><td>12,0 %</td><td>20,0 %</td></tr>
+  </table>
+  <p style="text-align:left">Hver prosentpoeng økning i $\sigma$ gir samme prosentpoeng økning i $E(R)$ — lineær sammenheng.</p>
+</section>
+
+<section>
+  <h2>Låne risikofritt — gå over 100 %</h2>
+  <p style="text-align:left">Vi kan også <em>låne</em> risikofritt og investere mer enn 100 % i den risikable porteføljen:</p>
+  <ul>
+    <li>$w_P = 150\,\%$, $w_f = -50\,\%$ — du låner 50 % av kapitalen din risikofritt</li>
+    <li>Forventet: $1{,}5 \times 12\% + (-0{,}5) \times 3\% = 18\% - 1{,}5\% = 16{,}5\,\%$</li>
+    <li>Risiko: $1{,}5 \times 20\% = 30\,\%$</li>
+  </ul>
+  <p style="text-align:left">Linjen i risiko-avkastning-diagrammet fortsetter «oppover» — du får høyere E(R) men også høyere σ.</p>
+  <div class="key-point">Antakelsen om at man kan låne ubegrenset til samme rate som man kan plassere er en idealisering. I virkeligheten er låne-rentene høyere.</div>
+</section>
+
+<section>
+  <h2>Capital Allocation Line (CAL)</h2>
+  <div style="margin: 20px auto; text-align: center;">
+    <svg viewBox="0 0 700 290" xmlns="http://www.w3.org/2000/svg">
+      <line x1="80" y1="250" x2="660" y2="250" stroke="#1a1a1a" stroke-width="1.5"/>
+      <line x1="80" y1="250" x2="80" y2="30" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="370" y="275" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563">Risiko (σ)</text>
+      <text x="40" y="140" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563" transform="rotate(-90, 40, 140)">E(R)</text>
+      <!-- CAL line -->
+      <line x1="80" y1="230" x2="620" y2="50" stroke="#046530" stroke-width="3"/>
+      <!-- rf point -->
+      <circle cx="80" cy="230" r="5" fill="#f59e0b"/>
+      <text x="50" y="225" text-anchor="end" font-family="Source Sans 3" font-size="12" fill="#b45309">$r_f$</text>
+      <!-- P point -->
+      <circle cx="350" cy="140" r="5" fill="#046530"/>
+      <text x="365" y="135" font-family="Source Sans 3" font-size="12" fill="#046530">P (100% risikabel)</text>
+      <!-- Boundary line at P -->
+      <line x1="350" y1="140" x2="350" y2="250" stroke="#9ca3af" stroke-width="1" stroke-dasharray="3 3"/>
+      <!-- Zone labels -->
+      <text x="200" y="195" font-family="Source Sans 3" font-size="11" fill="#4b5563">Plassere risikofritt</text>
+      <text x="490" y="85" font-family="Source Sans 3" font-size="11" fill="#4b5563">Låne risikofritt</text>
+    </svg>
+  </div>
+  <p style="text-align:left"><strong>CAL</strong> = den rette linjen fra $r_f$ gjennom porteføljen P. Stigningstallet = Sharpe ratio.</p>
+</section>
+
+<section>
+  <h2>Oppsummering forelesning 13</h2>
+  <ol style="font-size: 0.9em">
+    <li><strong>Porteføljens E(R)</strong> = vektet snitt av enkeltavkastninger</li>
+    <li><strong>Porteføljens varians</strong> har et kryssledd med kovarians/korrelasjon</li>
+    <li>$\rho < 1$ gir <strong>diversifikasjonsgevinst</strong> — risiko lavere enn vektet snitt av σ</li>
+    <li><strong>Effisient frontier</strong>: høyeste E(R) for hvert nivå av σ</li>
+    <li><strong>Minimum varians</strong>-porteføljen: lavest mulig σ</li>
+    <li>~20–30 aksjer fjerner mesteparten av usystematisk risiko</li>
+    <li><strong>Systematisk risiko</strong> = markedsrisiko (kan ikke fjernes)</li>
+    <li><strong>Usystematisk risiko</strong> = selskapsspesifikk (kan fjernes via diversifisering)</li>
+    <li>Kombinering med risikofri rente gir lineær CAL</li>
+  </ol>
+  <div class="key-point">I del 3 kombinerer vi det effisiente settet med risikofri rente — og kommer fram til CAPM.</div>
+</section>
+
+<section>
+  <h2>Til selvstudium</h2>
+  <div class="definisjon">
+    <div class="term">Oppgaver</div>
+    <strong>Oppgavesett 5 — Risiko og avkastning</strong>. Oppgavene 6–10 dekker porteføljerisiko, korrelasjon og diversifisering.
+  </div>
+  <div class="definisjon">
+    <div class="term">Interaktiv øvelse</div>
+    Bruk modellen på <a href="https://www.econmodels.online/model/portfolio-two-asset" target="_blank">econmodels.online/model/portfolio-two-asset</a>. Test korrelasjonens effekt — hva skjer når ρ går fra +1 til −1?
+  </div>
+  <div class="definisjon">
+    <div class="term">Pensum</div>
+    <strong>HRWJ kapittel 11–12</strong>. Markowitz' originalartikkel (1952) er ikke obligatorisk men anbefales — meget tilgjengelig.
+  </div>
+  <p style="text-align:center; color: var(--nmbu-green); margin-top: 20px"><strong>Neste:</strong> Del 3 — Capital Market Line, CAPM, beta og ytelsesmål.</p>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script>const params = new URLSearchParams(window.location.search);
+const useSlides = params.get('view') === 'slides';
+Reveal.initialize({
+  hash: !useSlides,
+  slideNumber: useSlides ? 'c/t' : false,
+  width: 1280,
+  height: 800,
+  margin: 0.06,
+  controls: useSlides,
+  progress: useSlides,
+  center: useSlides,
+  transition: useSlides ? 'slide' : 'none',
+  view: useSlides ? undefined : 'scroll',
+  scrollProgress: !useSlides,
+  plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
+});</script>
+</body>
+</html>

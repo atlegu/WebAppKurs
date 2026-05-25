@@ -1,4 +1,4 @@
-import { Module, InteractiveModelContent } from '../types/course';
+import { Module, InteractiveModelContent, PresentationContent } from '../types/course';
 
 export const modul5PortefoljeModule: Module = {
   id: 'modul-5-portefolje',
@@ -13,6 +13,29 @@ export const modul5PortefoljeModule: Module = {
     'Forstå når og hvordan man rebalanserer en portefølje'
   ],
   sections: [
+    // ===================================
+    // SEKSJON: Forelesningsslides
+    // ===================================
+    {
+      id: 'portefolje-forelesningsslides',
+      title: 'Forelesningsslides',
+      icon: '🎓',
+      order: 0,
+      content: [
+        {
+          id: 'portefolje-pres',
+          type: 'presentation',
+          order: 1,
+          title: 'Forelesningsslides: Risiko og avkastning',
+          description: 'Slides fra klasseromsforelesningene om risiko og porteføljeteori. Tre deler som dekker avkastningsmål og varians, porteføljeteori og diversifisering, og CAPM med beta.',
+          slides: [
+            { title: 'Risiko del 1 — Avkastningsmål og varians', filename: 'Forelesning12_Risiko_del1_2026.html' },
+            { title: 'Risiko del 2 — Porteføljeteori', filename: 'Forelesning13_Risiko_del2_2026.html' },
+            { title: 'Risiko del 3 — CAPM og beta', filename: 'Forelesning14_Risiko_del3_2026.html' }
+          ]
+        } as PresentationContent
+      ]
+    },
     // ===================================
     // SEKSJON 5.1: Hvorfor ikke legge alle egg i én kurv?
     // ===================================

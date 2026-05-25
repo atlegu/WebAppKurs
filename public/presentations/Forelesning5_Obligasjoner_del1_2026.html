@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BUS 220 – Forelesning 5: Obligasjoner (del 1)</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css" id="theme">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap');
+
+  :root {
+    --nmbu-green: #046530;
+    --nmbu-green-light: #f0f7f2;
+    --accent-orange: #f59e0b;
+    --tavle-bg: #fef3c7;
+    --text-dark: #1a1a1a;
+    --text-muted: #4b5563;
+  }
+
+  .reveal { font-family: 'Source Serif 4', Georgia, serif; font-size: 28px; color: var(--text-dark); }
+  .reveal h1, .reveal h2, .reveal h3, .reveal h4 { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); text-transform: none; letter-spacing: 0; font-weight: 700; }
+  .reveal h1 { font-size: 1.8em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.5em; line-height: 1.2; margin-bottom: 0.5em; }
+  .reveal h3 { font-size: 1.2em; }
+  .reveal p { line-height: 1.5; }
+  .reveal ul, .reveal ol { display: block; margin-left: 1em; }
+  .reveal li { margin-bottom: 0.4em; line-height: 1.5; }
+
+  .reveal .title-slide { background: var(--nmbu-green); color: white; padding: 60px; }
+  .reveal .title-slide h1 { color: white; font-size: 2.4em; margin-bottom: 0.3em; }
+  .reveal .title-slide .subtitle { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 1.4em; color: rgba(255,255,255,0.95); margin-bottom: 1em; }
+  .reveal .title-slide .meta { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 0.85em; color: rgba(255,255,255,0.8); margin-top: 2em; }
+
+  .reveal .section-divider { background: var(--nmbu-green); color: white; }
+  .reveal .section-divider h2 { color: white; font-size: 2.2em; }
+  .reveal .section-divider .section-number { font-family: 'Source Sans 3', Arial, sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9em; letter-spacing: 0.2em; margin-bottom: 1em; }
+
+  .reveal .definisjon { background: var(--nmbu-green-light); border-left: 5px solid var(--nmbu-green); padding: 18px 24px; margin: 20px 0; text-align: left; border-radius: 0 8px 8px 0; }
+  .reveal .definisjon .term { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: var(--nmbu-green); margin-bottom: 6px; }
+
+  .reveal .formel { background: white; border: 2px solid var(--nmbu-green); padding: 24px 32px; margin: 20px auto; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+
+  .reveal .key-point { background: var(--nmbu-green-light); padding: 16px 22px; margin: 16px 0; border-radius: 8px; text-align: left; font-size: 0.95em; }
+  .reveal .key-point::before { content: "→ "; color: var(--nmbu-green); font-weight: 700; }
+
+  .reveal .tavle-marker { background: var(--tavle-bg); border: 2px dashed var(--accent-orange); padding: 18px 24px; margin: 24px 0; border-radius: 10px; text-align: left; }
+  .reveal .tavle-marker .tavle-label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #b45309; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.15em; margin-bottom: 8px; }
+
+  .reveal .norsk-eksempel { background: #fef9f0; border-left: 4px solid #d97706; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .norsk-eksempel .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #b45309; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  .reveal table { margin: 16px auto; border-collapse: collapse; font-size: 0.85em; }
+  .reveal table th { background: var(--nmbu-green); color: white; padding: 10px 16px; font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; }
+  .reveal table td { padding: 8px 16px; border: 1px solid #d4d4d4; text-align: center; }
+
+  .reveal .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; text-align: left; }
+  .reveal .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-items: start; text-align: left; }
+
+  .reveal .caption { font-size: 0.7em; color: var(--text-muted); font-style: italic; margin-top: 8px; }
+  .reveal .slide-number { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); background: transparent; }
+
+  .reveal .highlight { background: linear-gradient(120deg, rgba(245,158,11,0.18) 0%, rgba(245,158,11,0.18) 100%); padding: 0 4px; border-radius: 3px; }
+
+  .reveal blockquote { background: var(--nmbu-green-light); border-left: 4px solid var(--nmbu-green); padding: 16px 22px; margin: 20px 0; font-style: italic; color: var(--text-dark); font-size: 0.95em; text-align: left; border-radius: 0 6px 6px 0; box-shadow: none; }
+
+  .reveal mjx-container { font-size: 1.0em !important; }
+  .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+</style>
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  svg: { fontCache: 'global' },
+  startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { if (window.Reveal) Reveal.layout(); }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ============ 1: TITLE ============ -->
+    <section class="title-slide">
+      <h1>Obligasjoner</h1>
+      <div class="subtitle">Del 1: Prising og grunnleggende renterisiko</div>
+      <div class="meta">
+        BUS 220 — Finansiering og investering<br>
+        Atle G. Guttormsen · Høst 2026<br>
+        Pensum: HRWJ kapittel 6
+      </div>
+    </section>
+
+    <!-- ============ 2: LÆRINGSMÅL ============ -->
+    <section>
+      <h2>Læringsmål</h2>
+      <p style="text-align:left">Etter denne forelesningen skal du kunne:</p>
+      <ul>
+        <li>Forklare hva en obligasjon er, og hvilken rolle obligasjonsmarkedet spiller</li>
+        <li>Beherske sentral terminologi: <strong>pålydende</strong>, <strong>kupong</strong>, <strong>løpetid</strong>, <strong>diskonteringsrente</strong></li>
+        <li>Skille mellom tre hovedtyper obligasjoner: <strong>vanlig (kupong), nullkupong, konsoll</strong></li>
+        <li>Beregne <strong>obligasjonsprisen</strong> ved bruk av annuitets- og enkeltbeløp-formler</li>
+        <li>Forklare og bruke begrepene <strong>parikurs, underkurs og overkurs</strong></li>
+        <li>Finne en obligasjons <strong>yield to maturity</strong> (YTM)</li>
+        <li>Beskrive de tre risikofaktorene: <strong>kreditt-, likviditets- og renterisiko</strong></li>
+        <li>Tolke en kredittrating fra Moody's / S&amp;P / Fitch</li>
+      </ul>
+    </section>
+
+    <!-- ============ 3: HVA ER EN OBLIGASJON ============ -->
+    <section>
+      <h2>Hva er en obligasjon?</h2>
+      <div class="definisjon">
+        <div class="term">Obligasjon</div>
+        Et <strong>gjeldsinstrument</strong> som forplikter utstederen (låntakeren) til å betale tilbake lånebeløpet pluss renter til investor (långiveren) over en spesifisert periode.
+      </div>
+      <p style="text-align:left">Når et selskap eller en stat trenger å låne penger over flere år, utsteder de obligasjoner. Investorene betaler en pris i dag og mottar avtalte betalinger på faste datoer fremover.</p>
+      <p style="text-align:left">En obligasjon er — i finansens språk — bare en <strong>kontantstrøm i fremtiden</strong>. Det vi gjorde i forelesning 3 og 4 brukes direkte her.</p>
+    </section>
+
+    <!-- ============ 4: OBLIGASJONSMARKEDET ============ -->
+    <section>
+      <h2>Obligasjonsmarkedet — størrelse og rolle</h2>
+      <p style="text-align:left">Internasjonalt er <strong>obligasjonsmarkedet større enn aksjemarkedet</strong>. Globalt ca. USD 130 billioner i utestående obligasjoner (2024) mot ~110 billioner i aksjer.</p>
+      <div class="norsk-eksempel">
+        <div class="label">Norsk kontekst</div>
+        På Oslo Børs omsettes mange typer obligasjoner. Den norske staten har ca. 700 milliarder kr i statsobligasjonsgjeld (2024). I tillegg utsteder norske selskaper som <strong>Equinor, DNB, Telenor, Statkraft</strong> og kommuner store mengder obligasjoner. Oljefondet har ca. 25 % i obligasjoner globalt — et enormt obligasjonsbeløp.
+      </div>
+      <p style="text-align:left; margin-top:12px"><strong>Tre roller:</strong></p>
+      <ol>
+        <li><strong>Finansiering</strong> — staten, kommuner og bedrifter henter inn kapital</li>
+        <li><strong>«Domstol»</strong> — markedsprisene reflekterer markedets vurdering av risiko</li>
+        <li><strong>Risikofri rente</strong> — statsobligasjoner gir referanserente til alle andre verdsettinger</li>
+      </ol>
+    </section>
+
+    <!-- ============ 5: HVA PÅVIRKER PRISEN ============ -->
+    <section>
+      <h2>Hva bestemmer obligasjonsprisen?</h2>
+      <p style="text-align:left">Obligasjoner er <strong>mindre informasjonssensitive</strong> enn aksjer — kontantstrømmen er normalt kontraktsmessig fastsatt. Tre faktorer driver prisendringer:</p>
+      <div class="definisjon">
+        <div class="term">Kredittrisiko</div>
+        Risikoen for at utstederen ikke kan betale tilbake renter eller pålydende.
+      </div>
+      <div class="definisjon">
+        <div class="term">Likviditetsrisiko</div>
+        Risikoen for at det er vanskelig å selge obligasjonen til markedspris.
+      </div>
+      <div class="definisjon">
+        <div class="term">Renterisiko</div>
+        Risikoen for at markedsrenter endres slik at obligasjonens verdi faller.
+      </div>
+      <div class="key-point">Prisen på en obligasjon er <strong>nåverdien av kontantstrømmene</strong> — slik vi har lært i del 1.</div>
+    </section>
+
+    <!-- ============ 6: SENTRALE BEGREPER ============ -->
+    <section>
+      <h2>Sentrale begreper</h2>
+      <table style="font-size: 0.85em">
+        <tr><th>Begrep</th><th>Forklaring</th></tr>
+        <tr><td><strong>Pålydende</strong> (face value, $F$)</td><td>Lånebeløpet som tilbakebetales ved forfall</td></tr>
+        <tr><td><strong>Kupong</strong> ($K$)</td><td>Periodisk rentebetaling i kroner</td></tr>
+        <tr><td><strong>Kupongrente</strong></td><td>Kupong / pålydende (årlig prosent)</td></tr>
+        <tr><td><strong>Løpetid</strong> ($T$ eller $n$)</td><td>Antall år/perioder til forfall</td></tr>
+        <tr><td><strong>Diskonteringsrente</strong> ($r$)</td><td>Markedets avkastningskrav for obligasjonen</td></tr>
+        <tr><td><strong>Yield to maturity</strong> ($y$)</td><td>Internrenten — effektiv avkastning hvis holdt til forfall</td></tr>
+        <tr><td><strong>Markedspris</strong> ($B$)</td><td>Det obligasjonen omsettes for i dag</td></tr>
+      </table>
+      <div class="key-point">Norske obligasjoner har ofte pålydende kr 1 000 eller kr 100 000. Norske statsobligasjoner har pålydende kr 1 000 000 — beregnet på profesjonelle aktører.</div>
+    </section>
+
+    <!-- ============ 7: TRE TYPER ============ -->
+    <section>
+      <h2>Tre typer obligasjoner</h2>
+      <div class="three-col">
+        <div class="definisjon">
+          <div class="term">Vanlig (kupong)</div>
+          Betaler periodisk kupong<br>
+          Tilbakebetaler pålydende ved forfall<br>
+          <em>De fleste obligasjoner.</em>
+        </div>
+        <div class="definisjon">
+          <div class="term">Nullkupong</div>
+          Betaler <strong>ingen</strong> kupong<br>
+          Selges <em>under pålydende</em><br>
+          All avkastning ved forfall<br>
+          <em>F.eks. statskasseveksler.</em>
+        </div>
+        <div class="definisjon">
+          <div class="term">Konsoll</div>
+          Betaler kupong <strong>i evighet</strong><br>
+          Ingen forfall<br>
+          <em>Britiske consols (innfridd 2015); ikke vanlig i Norge.</em>
+        </div>
+      </div>
+      <p style="text-align:left; margin-top:20px">Vi skal kunne prise alle tre — og bruker formelene fra forelesning 3 (annuitet, perpetuitet, enkeltbeløp).</p>
+    </section>
+
+    <!-- ============ 8: STATSOBLIGASJONER NORGE ============ -->
+    <section>
+      <h2>Norske statsobligasjoner</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Norsk kontekst</div>
+        Staten er den største <em>enkeltaktøren</em> på obligasjonsmarkedet i Norge. Statsobligasjoner gir en <strong>tilnærmet risikofri kontantstrøm</strong> — fundamentet for alle andre verdsettinger i kurset.
+      </div>
+      <table style="font-size: 0.85em">
+        <tr><th>Type</th><th>Løpetid</th><th>Bruk</th></tr>
+        <tr><td>Statskasseveksler</td><td>3–12 måneder</td><td>Kortsiktige plasseringer, pengemarked</td></tr>
+        <tr><td>Statsobligasjoner</td><td>3–10 år</td><td>Standard referanse, yield-kurve</td></tr>
+        <tr><td>Lange statsobligasjoner</td><td>10+ år</td><td>Pensjons- og forsikringsselskaper</td></tr>
+      </table>
+      <p style="text-align:left">Norske statsobligasjoner utstedes via auksjoner på Oslo Børs. Renten på 10-årig statsobligasjon brukes som referanse for risikofri lang rente i Norge.</p>
+    </section>
+
+    <!-- ============ DIVIDER: PRISING ============ -->
+    <section class="section-divider">
+      <div class="section-number">DEL B</div>
+      <h2>Prising av<br>obligasjoner</h2>
+    </section>
+
+    <!-- ============ 10: TIDSLINJE OBLIGASJON ============ -->
+    <section>
+      <h2>Tidslinjen for en obligasjon</h2>
+      <p style="text-align:left">En vanlig kupongobligasjon har en velkjent kontantstrømprofil:</p>
+      <div style="margin: 30px auto; text-align: center;">
+        <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg">
+          <line x1="50" y1="130" x2="670" y2="130" stroke="#046530" stroke-width="2"/>
+          <!-- tick marks -->
+          <line x1="100" y1="125" x2="100" y2="135" stroke="#046530" stroke-width="2"/>
+          <line x1="220" y1="125" x2="220" y2="135" stroke="#046530" stroke-width="2"/>
+          <line x1="340" y1="125" x2="340" y2="135" stroke="#046530" stroke-width="2"/>
+          <line x1="470" y1="125" x2="470" y2="135" stroke="#046530" stroke-width="2"/>
+          <line x1="590" y1="125" x2="590" y2="135" stroke="#046530" stroke-width="2"/>
+          <!-- labels above -->
+          <text x="100" y="155" text-anchor="middle" font-family="Source Sans 3" font-size="16">0</text>
+          <text x="220" y="155" text-anchor="middle" font-family="Source Sans 3" font-size="16">1</text>
+          <text x="340" y="155" text-anchor="middle" font-family="Source Sans 3" font-size="16">2</text>
+          <text x="425" y="155" text-anchor="middle" font-family="Source Sans 3" font-size="16">...</text>
+          <text x="590" y="155" text-anchor="middle" font-family="Source Sans 3" font-size="16">T</text>
+          <!-- cash flows -->
+          <text x="100" y="185" text-anchor="middle" font-family="Source Sans 3" font-size="15" fill="#b91c1c">−B</text>
+          <text x="220" y="105" text-anchor="middle" font-family="Source Sans 3" font-size="15" fill="#046530">K</text>
+          <text x="340" y="105" text-anchor="middle" font-family="Source Sans 3" font-size="15" fill="#046530">K</text>
+          <text x="470" y="105" text-anchor="middle" font-family="Source Sans 3" font-size="15" fill="#046530">K</text>
+          <text x="590" y="105" text-anchor="middle" font-family="Source Sans 3" font-size="15" fill="#046530">K + F</text>
+          <!-- arrows -->
+          <path d="M 100 120 L 100 175" stroke="#b91c1c" stroke-width="2" fill="none" marker-end="url(#arr-d)"/>
+          <path d="M 220 115 L 220 95" stroke="#046530" stroke-width="2" fill="none" marker-end="url(#arr-u)"/>
+          <path d="M 340 115 L 340 95" stroke="#046530" stroke-width="2" fill="none" marker-end="url(#arr-u)"/>
+          <path d="M 470 115 L 470 95" stroke="#046530" stroke-width="2" fill="none" marker-end="url(#arr-u)"/>
+          <path d="M 590 115 L 590 95" stroke="#046530" stroke-width="2" fill="none" marker-end="url(#arr-u)"/>
+          <defs>
+            <marker id="arr-u" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><polygon points="0 0, 8 4, 0 8" fill="#046530"/></marker>
+            <marker id="arr-d" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><polygon points="0 0, 8 4, 0 8" fill="#b91c1c"/></marker>
+          </defs>
+        </svg>
+      </div>
+      <p style="text-align:left">Investor betaler markedsprisen $B$ i dag og mottar kupong $K$ hvert år i $T$ år, pluss pålydende $F$ ved forfall.</p>
+    </section>
+
+    <!-- ============ 11: PRISINGSPRINSIPP ============ -->
+    <section>
+      <h2>Prising-prinsippet</h2>
+      <div class="key-point">Som «alt annet» i finans: <strong>obligasjonsprisen er nåverdien av fremtidige kontantstrømmer</strong>.</div>
+      <p style="text-align:left; margin-top:20px">For en vanlig kupongobligasjon:</p>
+      <div class="formel big-formula">
+        $$B = \underbrace{\sum_{t=1}^{T} \frac{K}{(1+r)^t}}_{\text{NV av kuponger}} + \underbrace{\frac{F}{(1+r)^T}}_{\text{NV av pålydende}}$$
+      </div>
+      <p style="text-align:left">Dette er to ting vi har sett før — en annuitet (kupongene) pluss et enkeltbeløp (pålydende).</p>
+    </section>
+
+    <!-- ============ 12: PRISFORMEL ANNUITET ============ -->
+    <section>
+      <h2>Prising med annuitetsformelen</h2>
+      <p style="text-align:left">Siden kupongene er konstante, kan vi bruke annuitetsformelen:</p>
+      <div class="formel big-formula">
+        $$B = K \cdot \frac{1 - (1+r)^{-T}}{r} + \frac{F}{(1+r)^T}$$
+      </div>
+      <p style="text-align:left; margin-top:16px"><strong>Notasjon:</strong></p>
+      <ul style="font-size:0.95em">
+        <li>$B$ = markedspris (obligasjonens nåverdi i dag)</li>
+        <li>$K$ = kuponger i kroner per periode</li>
+        <li>$F$ = pålydende (face value)</li>
+        <li>$T$ = antall perioder til forfall</li>
+        <li>$r$ = diskonteringsrente = markedets effektive rente (= YTM)</li>
+      </ul>
+    </section>
+
+    <!-- ============ 13: FLERE TERMINER PER ÅR ============ -->
+    <section>
+      <h2>Flere terminer per år</h2>
+      <p style="text-align:left">Mange obligasjoner betaler kupong oftere enn årlig — typisk halvårlig (US-statsobligasjoner) eller årlig (norske).</p>
+      <p style="text-align:left">Hvis det er $n$ terminer per år og samlet løpetid er $T$ år, blir det $n \cdot T$ terminer totalt, og vi diskonterer med periodisk rente $r/n$ per termin:</p>
+      <div class="formel big-formula">
+        $$B = \frac{K/n}{(1+r/n)} + \frac{K/n}{(1+r/n)^2} + \dots + \frac{K/n}{(1+r/n)^{nT}} + \frac{F}{(1+r/n)^{nT}}$$
+      </div>
+      <p style="text-align:left">Eller på annuitetsform:</p>
+      <div class="formel">
+        $B = \dfrac{K}{n} \cdot \dfrac{1 - (1+r/n)^{-nT}}{r/n} + \dfrac{F}{(1+r/n)^{nT}}$
+      </div>
+      <div class="key-point">Husk å konvertere mellom årlig effektiv rente og terminrente (se forelesning 4).</div>
+    </section>
+
+    <!-- ============ 14: EKSEMPEL UNDERKURS ============ -->
+    <section>
+      <h2>Eksempel 1: Underkurs</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Eksempel</div>
+        En obligasjon har <strong>kupongrente 10 %</strong>, pålydende <strong>kr 1 000</strong> (årlig kupong kr 100) og 5 års løpetid. Markedsrenten (YTM) er <strong>11 %</strong>. Hva er obligasjonens pris?
+      </div>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        $$B = 100 \cdot \frac{1 - 1{,}11^{-5}}{0{,}11} + \frac{1\,000}{1{,}11^5}$$
+        $$= 100 \cdot 3{,}6959 + 1\,000 \cdot 0{,}5935$$
+        $$= 369{,}59 + 593{,}45$$
+        $$= \text{kr } 963$$
+      </div>
+      <p style="text-align:left">Markedsprisen er <em>under</em> pålydende — obligasjonen omsettes til <strong>underkurs</strong>.</p>
+    </section>
+
+    <!-- ============ 15: EKSEMPEL OVERKURS ============ -->
+    <section>
+      <h2>Eksempel 2: Overkurs</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Samme obligasjon, ulik markedsrente</div>
+        Hva blir prisen hvis markedsrenten er <strong>9 %</strong> i stedet for 11 %?
+      </div>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        $$B = 100 \cdot \frac{1 - 1{,}09^{-5}}{0{,}09} + \frac{1\,000}{1{,}09^5}$$
+        $$= 100 \cdot 3{,}8897 + 1\,000 \cdot 0{,}6499$$
+        $$= 388{,}97 + 649{,}93$$
+        $$= \text{kr } 1\,039$$
+      </div>
+      <p style="text-align:left">Markedsprisen er <em>over</em> pålydende — <strong>overkurs</strong>.</p>
+    </section>
+
+    <!-- ============ 16: EKSEMPEL PARIKURS ============ -->
+    <section>
+      <h2>Eksempel 3: Parikurs</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Spesielt tilfelle</div>
+        Hva hvis markedsrenten er nøyaktig <strong>lik kupongrenten</strong> (10 %)?
+      </div>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        $$B = 100 \cdot \frac{1 - 1{,}10^{-5}}{0{,}10} + \frac{1\,000}{1{,}10^5}$$
+        $$= 100 \cdot 3{,}7908 + 1\,000 \cdot 0{,}6209$$
+        $$= 379{,}08 + 620{,}92$$
+        $$= \text{kr } 1\,000$$
+      </div>
+      <p style="text-align:left">Prisen er nøyaktig pålydende — obligasjonen omsettes til <strong>parikurs</strong>.</p>
+    </section>
+
+    <!-- ============ 17: UNDER/PARI/OVER ============ -->
+    <section>
+      <h2>Forhold mellom kupong og markedsrente</h2>
+      <table>
+        <tr><th>Hvis</th><th>Da</th><th>Norsk navn</th><th>Marked-engelsk</th></tr>
+        <tr><td>$r > $ kupongrente</td><td>$B < F$</td><td><strong>Underkurs</strong></td><td>Discount</td></tr>
+        <tr><td>$r = $ kupongrente</td><td>$B = F$</td><td><strong>Parikurs</strong></td><td>At par</td></tr>
+        <tr><td>$r < $ kupongrente</td><td>$B > F$</td><td><strong>Overkurs</strong></td><td>Premium</td></tr>
+      </table>
+      <p style="text-align:left; margin-top:24px"><strong>Intuisjon:</strong> Hvis kupongene er «for små» sammenlignet med markedsrenten, må prisen være lavere enn pålydende for å gi investor markedsavkastning. Og motsatt: ekstra høye kuponger må prises opp.</p>
+      <div class="key-point">Når en obligasjon nærmer seg forfall, vil prisen alltid konvergere mot pålydende — uavhengig av om den startet i over- eller underkurs.</div>
+    </section>
+
+    <!-- ============ DIVIDER: SPESIELLE TYPER ============ -->
+    <section class="section-divider">
+      <div class="section-number">DEL C</div>
+      <h2>Nullkupong og<br>konsoll</h2>
+    </section>
+
+    <!-- ============ 18: NULLKUPONG ============ -->
+    <section>
+      <h2>Nullkupongobligasjoner</h2>
+      <div class="definisjon">
+        <div class="term">Nullkupongobligasjon</div>
+        En obligasjon som <strong>ikke betaler kupong</strong> — all avkastning kommer av at den selges til <em>underkurs</em> og innfris til pålydende.
+      </div>
+      <p style="text-align:left">Prisformelen forenkles til ett enkeltbeløp:</p>
+      <div class="formel big-formula">
+        $$B = \frac{F}{(1+r)^T}$$
+      </div>
+      <p style="text-align:left">Investor «får» renten ved at pris under pålydende vokser opp til pålydende over tid.</p>
+      <div class="norsk-eksempel">
+        <div class="label">Norsk kontekst</div>
+        Norske <strong>statskasseveksler</strong> (3, 6, 9, 12 mnd) er nullkupong-papirer. De omsettes i pengemarkedet og brukes som referanse for korte renter.
+      </div>
+    </section>
+
+    <!-- ============ 19: EKSEMPEL NULLKUPONG ============ -->
+    <section>
+      <h2>Eksempel: Nullkupong</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Eksempel</div>
+        En 4-årig nullkupongobligasjon har pålydende kr 200 000. Avkastningskravet er 6 %. Hva er prisen i dag?
+      </div>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        $$B = \frac{200\,000}{(1{,}06)^4} = \frac{200\,000}{1{,}2625}$$
+        $$= \text{kr } 158\,419$$
+      </div>
+      <p style="text-align:left">Investor betaler kr 158 419 i dag og får kr 200 000 om 4 år. Verdiøkningen på kr 41 581 representerer rentekompensasjonen.</p>
+    </section>
+
+    <!-- ============ 20: KONSOLL ============ -->
+    <section>
+      <h2>Konsoll (evigvarende obligasjon)</h2>
+      <div class="definisjon">
+        <div class="term">Konsoll</div>
+        Obligasjon som betaler kupong <strong>i evighet</strong> — ingen pålydende-tilbakebetaling. Sjelden i dag, men teoretisk viktig.
+      </div>
+      <p style="text-align:left">Dette er en ren perpetuitet (forelesning 3):</p>
+      <div class="formel big-formula">
+        $$B = \frac{K}{r}$$
+      </div>
+      <p style="text-align:left"><strong>Eksempel:</strong> En konsoll som betaler kr 50 per år, med markedsrente 5 %:</p>
+      <div class="formel">
+        $B = 50/0{,}05 = $ kr 1 000
+      </div>
+      <p style="text-align:left">Britiske «consols» (først utstedt 1751) ble innfridd i 2015. Ikke vanlig i Norge, men konseptet er nyttig — særlig som modell for evigvarende preferanseaksjer.</p>
+    </section>
+
+    <!-- ============ DIVIDER: YTM ============ -->
+    <section class="section-divider">
+      <div class="section-number">DEL D</div>
+      <h2>Yield to Maturity<br>(avkastning til forfall)</h2>
+    </section>
+
+    <!-- ============ 21: YTM DEFINISJON ============ -->
+    <section>
+      <h2>Yield to Maturity (YTM)</h2>
+      <div class="definisjon">
+        <div class="term">Yield to Maturity ($y$)</div>
+        Den effektive renten en investor får hvis obligasjonen <strong>kjøpes til markedspris</strong> og holdes til forfall.
+      </div>
+      <p style="text-align:left">YTM er identisk med <strong>internrenten (IRR)</strong> for obligasjonen — den renten som setter nåverdi lik dagens markedspris:</p>
+      <div class="formel big-formula">
+        $$B = \sum_{t=1}^{T} \frac{K}{(1+y)^t} + \frac{F}{(1+y)^T}$$
+      </div>
+      <p style="text-align:left">Vi har én ligning, én ukjent. Vanligvis må vi løse iterativt (prøve og feile, eller Excel <code>YIELD</code>/<code>IRR</code>).</p>
+      <div class="key-point">For nullkupong er det enkelt: $y = (F/B)^{1/T} - 1$.</div>
+    </section>
+
+    <!-- ============ 22: EKSEMPEL YTM ============ -->
+    <section>
+      <h2>Eksempel: Finne YTM</h2>
+      <div class="norsk-eksempel">
+        <div class="label">Eksempel</div>
+        Du har sett en 6-årig obligasjon med kupongrente 8 %, pålydende 1 000 og markedspris <strong>955,14</strong>. Hva er YTM?
+      </div>
+      <div class="tavle-marker">
+        <div class="tavle-label">Vi regner sammen</div>
+        <p>Vi løser: $955{,}14 = 80 \cdot \dfrac{1 - (1+y)^{-6}}{y} + \dfrac{1\,000}{(1+y)^6}$</p>
+        <p>Siden prisen er under pålydende, vet vi at $y > 8\,\%$ (underkurs).</p>
+        <p>Prøv $y = 10\,\%$: $B = 80 \cdot 4{,}3553 + 1\,000 \cdot 0{,}5645 = 348{,}42 + 564{,}47 = 912{,}89$ (for lav)</p>
+        <p>Prøv $y = 9\,\%$: $B = 80 \cdot 4{,}4859 + 1\,000 \cdot 0{,}5963 = 358{,}87 + 596{,}27 = 955{,}14$ ✓</p>
+      </div>
+      <p style="text-align:left">YTM er nøyaktig <strong>9 %</strong>. I praksis bruker vi Excel-funksjonen <code>=YIELD()</code> eller <code>=RATE()</code>.</p>
+    </section>
+
+    <!-- ============ DIVIDER: RISIKO ============ -->
+    <section class="section-divider">
+      <div class="section-number">DEL E</div>
+      <h2>Tre risikofaktorer</h2>
+    </section>
+
+    <!-- ============ 23: KREDITTRISIKO ============ -->
+    <section>
+      <h2>Kredittrisiko</h2>
+      <p style="text-align:left">Risikoen for at <strong>kupong eller pålydende ikke blir betalt</strong> i tide — eller i det hele tatt.</p>
+      <p style="text-align:left">Måling: <strong>kredittrating</strong> fra uavhengige byråer:</p>
+      <ul>
+        <li><strong>Moody's</strong> — skala Aaa, Aa, A, Baa, Ba, B, Caa, Ca, C</li>
+        <li><strong>Standard &amp; Poor's</strong> — skala AAA, AA, A, BBB, BB, B, CCC, CC, C, D</li>
+        <li><strong>Fitch Ratings</strong> — tilsvarende S&amp;P-skala</li>
+      </ul>
+      <div class="norsk-eksempel">
+        <div class="label">Norsk kontekst — eksempler 2024</div>
+        <ul style="margin-top: 8px">
+          <li><strong>Norge (stat)</strong>: AAA / Aaa (høyeste rating)</li>
+          <li><strong>DNB</strong>: AA-</li>
+          <li><strong>Equinor</strong>: AA- / Aa2 (oljerelatert, men sterk balanse)</li>
+          <li><strong>Yara</strong>: BBB (investment grade, men nær gren)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ 24: RATINGSKALAEN ============ -->
+    <section>
+      <h2>Ratingskalaen</h2>
+      <table style="font-size: 0.82em">
+        <tr><th>S&amp;P/Fitch</th><th>Moody's</th><th>Karakteristikk</th><th>Klasse</th></tr>
+        <tr><td>AAA</td><td>Aaa</td><td>Ekstremt sterk evne til å betale</td><td rowspan="4" style="background:#dcfce7; color:#166534"><strong>Investment grade</strong></td></tr>
+        <tr><td>AA</td><td>Aa</td><td>Veldig sterk evne</td></tr>
+        <tr><td>A</td><td>A</td><td>Sterk, men noe påvirkelig</td></tr>
+        <tr><td>BBB</td><td>Baa</td><td>Adekvat — sårbar for negative endringer</td></tr>
+        <tr><td>BB</td><td>Ba</td><td>Spekulativ</td><td rowspan="4" style="background:#fee2e2; color:#991b1b"><strong>Spekulativ / High Yield («junk»)</strong></td></tr>
+        <tr><td>B</td><td>B</td><td>Høy spekulativ risiko</td></tr>
+        <tr><td>CCC/CC</td><td>Caa/Ca</td><td>Svært spekulativt, nær mislighold</td></tr>
+        <tr><td>C/D</td><td>C</td><td>I mislighold</td></tr>
+      </table>
+      <p style="text-align:left; margin-top:16px"><strong>Grensen er kritisk:</strong> Mange institusjonelle investorer (forsikringsselskap, pensjonsfond) kan kun holde investment grade. En nedgradering fra BBB til BB tvinger ofte salg, som dytter prisen ytterligere ned («fallen angels»).</p>
+    </section>
+
+    <!-- ============ 25: LIKVIDITETSRISIKO ============ -->
+    <section>
+      <h2>Likviditetsrisiko</h2>
+      <p style="text-align:left">Risikoen for at det er <strong>vanskelig å selge</strong> obligasjonen til markedspris.</p>
+      <div class="definisjon">
+        <div class="term">Måling: bid–ask spread</div>
+        Avviket mellom kjøperens høyeste bud og selgerens laveste salgspris.
+        <ul style="margin-top: 8px">
+          <li><strong>Lav spread</strong> = høy likviditet (lett å handle)</li>
+          <li><strong>Høy spread</strong> = lav likviditet (du må gi rabatt for å selge)</li>
+        </ul>
+      </div>
+      <div class="norsk-eksempel">
+        <div class="label">Norsk kontekst</div>
+        Norske statsobligasjoner og obligasjoner fra de største utstederne (DNB, Equinor) har lav spread — typisk under 5 basispunkter. Mindre kommunale obligasjoner kan ha spread på 30–50 punkter.
+      </div>
+      <div class="key-point">«On-the-run»-obligasjoner (sist utstedte) er mest likvide. «Off-the-run» blir sjelden omsatt og har høyere spread.</div>
+    </section>
+
+    <!-- ============ 26: RENTERISIKO INTRO ============ -->
+    <section>
+      <h2>Renterisiko — forsmaker</h2>
+      <p style="text-align:left">Selv om en obligasjon ikke har kredittrisiko (f.eks. statsobligasjoner), kan markedsprisen <strong>fluktuere når renten endrer seg</strong>.</p>
+      <p style="text-align:left">Vi har sett dette i eksemplene 14–16:</p>
+      <ul>
+        <li>Samme obligasjon (kupong 10 %, 5 år, $F$=1000)</li>
+        <li>$r = 9\,\%$ → pris kr 1 039</li>
+        <li>$r = 10\,\%$ → pris kr 1 000</li>
+        <li>$r = 11\,\%$ → pris kr 963</li>
+      </ul>
+      <div class="key-point"><strong>Pris og rente beveger seg motsatt vei.</strong> Hvis du eier obligasjoner og rentene stiger, faller verdien på porteføljen din.</div>
+      <p style="text-align:left">Vi dyper ned i renterisiko i forelesning 6 — inkludert seks regler for hvordan kupong, løpetid og rente påvirker sensitivitet.</p>
+    </section>
+
+    <!-- ============ 27: PRIS VS RENTE GRAF ============ -->
+    <section>
+      <h2>Pris som funksjon av rente</h2>
+      <p style="text-align:left">Sammenhengen er <em>monotont fallende</em> og <em>konveks</em>:</p>
+      <div style="margin: 20px auto; text-align: center;">
+        <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+          <line x1="80" y1="280" x2="660" y2="280" stroke="#1a1a1a" stroke-width="1.5"/>
+          <line x1="80" y1="280" x2="80" y2="40" stroke="#1a1a1a" stroke-width="1.5"/>
+          <!-- X labels (rate %) -->
+          <text x="80" y="300" text-anchor="middle" font-family="Source Sans 3" font-size="12">2 %</text>
+          <text x="220" y="300" text-anchor="middle" font-family="Source Sans 3" font-size="12">5 %</text>
+          <text x="360" y="300" text-anchor="middle" font-family="Source Sans 3" font-size="12">8 %</text>
+          <text x="430" y="300" text-anchor="middle" font-family="Source Sans 3" font-size="12">10 %</text>
+          <text x="500" y="300" text-anchor="middle" font-family="Source Sans 3" font-size="12">12 %</text>
+          <text x="660" y="300" text-anchor="middle" font-family="Source Sans 3" font-size="12">20 %</text>
+          <text x="360" y="318" text-anchor="middle" font-family="Source Sans 3" font-size="13" font-style="italic" fill="#4b5563">Markedsrente (YTM)</text>
+          <!-- Y labels -->
+          <text x="70" y="285" text-anchor="end" font-family="Source Sans 3" font-size="12">500</text>
+          <text x="70" y="220" text-anchor="end" font-family="Source Sans 3" font-size="12">800</text>
+          <text x="70" y="155" text-anchor="end" font-family="Source Sans 3" font-size="12">1000</text>
+          <text x="70" y="90" text-anchor="end" font-family="Source Sans 3" font-size="12">1500</text>
+          <text x="70" y="50" text-anchor="end" font-family="Source Sans 3" font-size="12">2000</text>
+          <!-- Curve: bond price falling with rate (convex) -->
+          <path d="M 80 65 Q 200 95 280 140 Q 360 165 430 195 Q 500 220 580 245 L 660 260" stroke="#046530" stroke-width="3" fill="none"/>
+          <!-- Markers at coupon rate -->
+          <circle cx="430" cy="155" r="5" fill="#f59e0b"/>
+          <text x="455" y="148" font-family="Source Sans 3" font-size="13" fill="#b45309">Parikurs<br/> (r = kupong)</text>
+          <text x="455" y="172" font-family="Source Sans 3" font-size="13" fill="#b45309">Pris = 1000</text>
+          <!-- Dashed line at par -->
+          <line x1="80" y1="155" x2="430" y2="155" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4 4"/>
+        </svg>
+      </div>
+      <p style="text-align:left">Krumningen i kurven gir <strong>konveksitet</strong> — vi kommer tilbake til dette i forelesning 6.</p>
+    </section>
+
+    <!-- ============ 28: OPPSUMMERING ============ -->
+    <section>
+      <h2>Oppsummering forelesning 5</h2>
+      <ol style="font-size:0.92em">
+        <li>En <strong>obligasjon</strong> er et gjeldsinstrument — utsteder lover å betale rente og pålydende på avtalte tidspunkter.</li>
+        <li>Tre typer: <strong>vanlig, nullkupong, konsoll</strong>.</li>
+        <li><strong>Pris = nåverdi av kontantstrøm:</strong></li>
+      </ol>
+      <div class="formel" style="font-size:0.85em">
+        $B = K \cdot \dfrac{1 - (1+r)^{-T}}{r} + \dfrac{F}{(1+r)^T}$
+      </div>
+      <ol start="4" style="font-size:0.92em">
+        <li><strong>Underkurs / parikurs / overkurs</strong>: bestemmes av $r$ vs kupongrente.</li>
+        <li><strong>YTM</strong> = internrente — den effektive avkastningen ved kjøp til markedspris og hold til forfall.</li>
+        <li><strong>Tre risikofaktorer</strong>: kreditt, likviditet, rente. Kredittratings gir oversikt over kredittrisiko.</li>
+      </ol>
+      <div class="key-point">Vi har nå pris-mekanikken. I forelesning 6 ser vi <em>hvor sensitive</em> obligasjoner er for renteendringer — og hvordan vi måler det.</div>
+    </section>
+
+    <!-- ============ 29: SELVSTUDIUM ============ -->
+    <section>
+      <h2>Til selvstudium</h2>
+      <div class="definisjon">
+        <div class="term">Oppgaver</div>
+        <strong>Oppgavesett 2 — Obligasjoner</strong> på Canvas.
+      </div>
+      <div class="definisjon">
+        <div class="term">Pensum</div>
+        <strong>HRWJ kapittel 6</strong>: Bond Valuation. Les særlig avsnittene om YTM og under-/parikurs.
+      </div>
+      <div class="definisjon">
+        <div class="term">Praktisk øvelse</div>
+        Søk opp en konkret norsk obligasjon på Oslo Børs (Stamdata.no eller Nordnet). Finn pålydende, kupong, løpetid og siste pris. Regn ut YTM og sammenlign med kupongrenten.
+      </div>
+      <p style="text-align:center; color: var(--nmbu-green); margin-top:30px"><strong>Neste forelesning:</strong> Obligasjoner del 2 — terminstruktur, forwardrenter, renterisiko-regler og durasjon.</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script>
+const params = new URLSearchParams(window.location.search);
+const useSlides = params.get('view') === 'slides';
+Reveal.initialize({
+  hash: !useSlides,
+  slideNumber: useSlides ? 'c/t' : false,
+  width: 1280,
+  height: 800,
+  margin: 0.06,
+  controls: useSlides,
+  progress: useSlides,
+  center: useSlides,
+  transition: useSlides ? 'slide' : 'none',
+  view: useSlides ? undefined : 'scroll',
+  scrollProgress: !useSlides,
+  plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
+});
+</script>
+</body>
+</html>

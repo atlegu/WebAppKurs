@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BUS 220 – Forelesning 16: Kapitalstruktur</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css" id="theme">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap');
+  :root { --nmbu-green: #046530; --nmbu-green-light: #f0f7f2; --accent-orange: #f59e0b; --tavle-bg: #fef3c7; --text-dark: #1a1a1a; --text-muted: #4b5563; }
+  .reveal { font-family: 'Source Serif 4', Georgia, serif; font-size: 28px; color: var(--text-dark); }
+  .reveal h1, .reveal h2, .reveal h3 { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); text-transform: none; letter-spacing: 0; font-weight: 700; }
+  .reveal h1 { font-size: 1.8em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.5em; line-height: 1.2; margin-bottom: 0.5em; }
+  .reveal h3 { font-size: 1.2em; }
+  .reveal p { line-height: 1.5; }
+  .reveal ul, .reveal ol { display: block; margin-left: 1em; }
+  .reveal li { margin-bottom: 0.4em; line-height: 1.5; }
+  .reveal .title-slide { background: var(--nmbu-green); color: white; padding: 60px; }
+  .reveal .title-slide h1 { color: white; font-size: 2.4em; margin-bottom: 0.3em; }
+  .reveal .title-slide .subtitle { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 1.4em; color: rgba(255,255,255,0.95); margin-bottom: 1em; }
+  .reveal .title-slide .meta { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 0.85em; color: rgba(255,255,255,0.8); margin-top: 2em; }
+  .reveal .section-divider { background: var(--nmbu-green); color: white; }
+  .reveal .section-divider h2 { color: white; font-size: 2.2em; }
+  .reveal .section-divider .section-number { font-family: 'Source Sans 3', Arial, sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9em; letter-spacing: 0.2em; margin-bottom: 1em; }
+  .reveal .definisjon { background: var(--nmbu-green-light); border-left: 5px solid var(--nmbu-green); padding: 18px 24px; margin: 20px 0; text-align: left; border-radius: 0 8px 8px 0; }
+  .reveal .definisjon .term { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: var(--nmbu-green); margin-bottom: 6px; }
+  .reveal .formel { background: white; border: 2px solid var(--nmbu-green); padding: 24px 32px; margin: 20px auto; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+  .reveal .key-point { background: var(--nmbu-green-light); padding: 16px 22px; margin: 16px 0; border-radius: 8px; text-align: left; font-size: 0.95em; }
+  .reveal .key-point::before { content: "→ "; color: var(--nmbu-green); font-weight: 700; }
+  .reveal .tavle-marker { background: var(--tavle-bg); border: 2px dashed var(--accent-orange); padding: 18px 24px; margin: 24px 0; border-radius: 10px; text-align: left; }
+  .reveal .tavle-marker .tavle-label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #b45309; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.15em; margin-bottom: 8px; }
+  .reveal .norsk-eksempel { background: #fef9f0; border-left: 4px solid #d97706; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .norsk-eksempel .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #b45309; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal .folkelig { background: #fff7ed; border-left: 4px solid #ea580c; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .folkelig .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #c2410c; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal table { margin: 16px auto; border-collapse: collapse; font-size: 0.78em; }
+  .reveal table th { background: var(--nmbu-green); color: white; padding: 8px 12px; font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; }
+  .reveal table td { padding: 6px 12px; border: 1px solid #d4d4d4; text-align: center; }
+  .reveal .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; text-align: left; }
+  .reveal .caption { font-size: 0.7em; color: var(--text-muted); font-style: italic; margin-top: 8px; }
+  .reveal mjx-container { font-size: 1.0em !important; }
+  .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+  .reveal blockquote { background: var(--nmbu-green-light); border-left: 4px solid var(--nmbu-green); padding: 14px 22px; margin: 16px 0; font-style: italic; font-size: 0.95em; text-align: left; border-radius: 0 6px 6px 0; box-shadow: none; }
+</style>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }, svg: { fontCache: 'global' }, startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { if (window.Reveal) Reveal.layout(); }); } } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section class="title-slide">
+  <h1>Kapitalstruktur</h1>
+  <div class="subtitle">Hvor mye gjeld bør et selskap ha?</div>
+  <div class="meta">BUS 220 — Finansiering og investering<br>Atle G. Guttormsen · Høst 2026<br>Pensum: HRWJ kapittel 15</div>
+</section>
+
+<section>
+  <h2>Læringsmål</h2>
+  <ul>
+    <li>Forstå hva kapitalstruktur er og hvorfor den er kontroversiell</li>
+    <li>Vise hvordan <strong>giring</strong> påvirker EPS, ROE og risiko</li>
+    <li>Anvende <strong>Modigliani-Miller proposisjon 1 og 2</strong> uten skatt</li>
+    <li>Forstå <strong>hjemmelaget gjeld</strong> (homemade leverage)</li>
+    <li>Inkludere <strong>selskapsskatt</strong> — skatteskjoldet skaper verdi</li>
+    <li>Diskutere <strong>kostnader ved finansiell krise</strong></li>
+    <li>Forstå <strong>trade-off-teorien</strong> for optimal kapitalstruktur</li>
+    <li>Forklare <strong>agentkostnader</strong>, signaleffekter og <strong>pecking order</strong></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Repetisjon fra forelesning 15</h2>
+  <ul>
+    <li>Avkastningskrav = kapitalkostnad = diskonteringsrente</li>
+    <li>Egenkapitalkostnad: $r_E = r_f + \beta_E(E(R_M) - r_f)$</li>
+    <li>Gjeldskostnad etter skatt: $r_D(1 - t_s)$</li>
+    <li>WACC: $\dfrac{E}{V} r_E + \dfrac{D}{V} r_D(1-t_s)$</li>
+  </ul>
+  <div class="key-point">Vi avsluttet med et provokativt spørsmål: <em>«Hvis gjeld senker WACC og hever NPV — hvorfor ikke 100 % gjeld?»</em></div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Dagens hovedspørsmål</div>
+    Finnes det en <strong>optimal</strong> gjeldsgrad — og hvor mye gjeld bør et selskap ha?
+  </div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL A</div>
+  <h2>Hva er kapitalstruktur?</h2>
+</section>
+
+<section>
+  <h2>Den store debatten</h2>
+  <p style="text-align:left">Hvor mye gjeld bør et selskap ha? Sammenlign tre selskaper:</p>
+  <table>
+    <tr><th>Selskap</th><th>Bransje</th><th>D/V (gjeldsandel)</th><th>Hvorfor?</th></tr>
+    <tr><td>DNB</td><td>Bank</td><td>~92 %</td><td>Forretningsmodell — innskudd = gjeld</td></tr>
+    <tr><td>Equinor</td><td>Olje/gass</td><td>~25 %</td><td>Volatil inntekt, lang tidshorisont</td></tr>
+    <tr><td>Mowi</td><td>Sjømat</td><td>~30 %</td><td>Sykluser i lakseprisen</td></tr>
+    <tr><td>Photocure</td><td>Legemiddel</td><td>~5 %</td><td>FoU-intensiv, usikker inntekt</td></tr>
+    <tr><td>Norwegian (2019)</td><td>Luftfart</td><td>~85 %</td><td>For mye gjeld — krise i 2020</td></tr>
+  </table>
+  <div class="key-point">Bransjen forklarer mye, men ikke alt. Innenfor samme bransje varierer kapitalstruktur betydelig. Hvorfor?</div>
+</section>
+
+<section>
+  <h2>Balansen — to sider av samme mynt</h2>
+  <div class="two-col" style="font-size:0.95em">
+    <div style="border: 2px solid var(--nmbu-green); padding: 16px; border-radius: 8px;">
+      <h3>Eiendeler (debet)</h3>
+      <ul>
+        <li>Anleggsmidler (fabrikker, skip)</li>
+        <li>Omløpsmidler (varelager, kunder)</li>
+        <li>Kontanter</li>
+        <li>Immaterielle (patenter, merkevare)</li>
+      </ul>
+      <p><em>Hva vi har anvendt midlene til</em></p>
+    </div>
+    <div style="border: 2px solid var(--nmbu-green); padding: 16px; border-radius: 8px;">
+      <h3>Finansiering (kredit)</h3>
+      <ul>
+        <li>Egenkapital (E)
+          <ul><li>Aksjekapital</li><li>Tilbakeholdt overskudd</li></ul>
+        </li>
+        <li>Gjeld (D)
+          <ul><li>Banklån</li><li>Obligasjoner</li></ul>
+        </li>
+      </ul>
+      <p><em>Hvordan eiendelene er finansiert</em></p>
+    </div>
+  </div>
+  <div class="formel big-formula">
+    $$V = E + D$$
+  </div>
+</section>
+
+<section>
+  <h2>Den folkelige analogien — pizzaen</h2>
+  <div class="folkelig">
+    <div class="label">Folkelig — pizzaanalogien</div>
+    Tenk på selskapet som en pizza. Hele pizzaen = selskapets verdi (V).
+    Du kan dele pizzaen i to: én del til aksjonærene (E) og én del til kreditorene (D).
+    <br><br>
+    <strong>Det viktige spørsmålet:</strong> Blir pizzaen større av at vi deler den annerledes?
+  </div>
+  <div style="margin: 16px auto; text-align: center;">
+    <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg">
+      <text x="120" y="25" text-anchor="middle" font-family="Source Sans 3" font-size="14" font-weight="700" fill="#046530">100 % EK</text>
+      <circle cx="120" cy="115" r="70" fill="#046530" stroke="#1a1a1a" stroke-width="2"/>
+      <text x="120" y="120" text-anchor="middle" font-family="Source Sans 3" font-size="14" fill="white">E</text>
+      <text x="350" y="25" text-anchor="middle" font-family="Source Sans 3" font-size="14" font-weight="700" fill="#046530">50/50</text>
+      <circle cx="350" cy="115" r="70" fill="#f59e0b" stroke="#1a1a1a" stroke-width="2"/>
+      <path d="M 350 45 A 70 70 0 0 1 350 185 L 350 115 Z" fill="#046530"/>
+      <text x="385" y="120" font-family="Source Sans 3" font-size="14" fill="white">E</text>
+      <text x="315" y="120" text-anchor="end" font-family="Source Sans 3" font-size="14" fill="#1a1a1a">D</text>
+      <text x="580" y="25" text-anchor="middle" font-family="Source Sans 3" font-size="14" font-weight="700" fill="#046530">90 % gjeld</text>
+      <circle cx="580" cy="115" r="70" fill="#f59e0b" stroke="#1a1a1a" stroke-width="2"/>
+      <path d="M 580 45 A 70 70 0 0 1 643 130 L 580 115 Z" fill="#046530"/>
+      <text x="608" y="80" font-family="Source Sans 3" font-size="12" fill="white">E</text>
+      <text x="545" y="125" text-anchor="end" font-family="Source Sans 3" font-size="14" fill="#1a1a1a">D</text>
+    </svg>
+  </div>
+  <p style="text-align:left">Modigliani & Miller (1958) sa et provokativt svar: <strong>nei</strong> — under visse forutsetninger.</p>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL B</div>
+  <h2>Giring og risiko</h2>
+</section>
+
+<section>
+  <h2>Giring (leverage) — hva er det?</h2>
+  <div class="definisjon">
+    <div class="term">Finansiell giring (leverage, gearing)</div>
+    Bruk av <strong>gjeld</strong> til å finansiere eiendeler i tillegg til egenkapital. Måles ofte som $D/E$ eller $D/V$.
+  </div>
+  <div class="folkelig">
+    <div class="label">Folkelig — boligkjøp som giring</div>
+    Du kjøper en bolig til 5 mill med 1 mill EK og 4 mill lån. Det er <strong>5× giring</strong>.<br>
+    Boligen stiger 10 % (500 000 kr) — EK-avkastning: 50 %. Boligen faller 10 % — EK-tap: 50 %.<br>
+    Lånet forsterker både opp- og nedside. Akkurat samme prinsipp for bedrifter.
+  </div>
+</section>
+
+<section>
+  <h2>Eksempel: Industri AS</h2>
+  <p style="text-align:left">Selskapet vurderer en kapitalstrukturendring:</p>
+  <table>
+    <tr><th></th><th>Nåværende (100 % EK)</th><th>Foreslått (50 % gjeld)</th></tr>
+    <tr><td>Eiendeler</td><td>8 000</td><td>8 000</td></tr>
+    <tr><td>Gjeld</td><td>0</td><td>4 000</td></tr>
+    <tr><td>Egenkapital</td><td>8 000</td><td>4 000</td></tr>
+    <tr><td>Rente</td><td>10 %</td><td>10 %</td></tr>
+    <tr><td>Aksjekurs</td><td>20</td><td>20</td></tr>
+    <tr><td>Antall aksjer</td><td>400</td><td>200</td></tr>
+  </table>
+  <div class="key-point">Hva skjer med EPS og ROE i tre scenarier — resesjon, normal, ekspansjon?</div>
+</section>
+
+<section>
+  <h2>EPS og ROE — nåværende vs foreslått</h2>
+  <p style="text-align:left"><strong>Nåværende (100 % EK):</strong></p>
+  <table>
+    <tr><th></th><th>Resesjon</th><th>Forventet</th><th>Ekspansjon</th></tr>
+    <tr><td>ROA</td><td>5 %</td><td>15 %</td><td>25 %</td></tr>
+    <tr><td>Resultat</td><td>400</td><td>1 200</td><td>2 000</td></tr>
+    <tr><td>ROE</td><td>5 %</td><td>15 %</td><td>25 %</td></tr>
+    <tr><td>EPS</td><td>1</td><td>3</td><td>5</td></tr>
+  </table>
+  <p style="text-align:left"><strong>Foreslått (giret — 50 % gjeld):</strong></p>
+  <table>
+    <tr><th></th><th>Resesjon</th><th>Forventet</th><th>Ekspansjon</th></tr>
+    <tr><td>Resultat før renter</td><td>400</td><td>1 200</td><td>2 000</td></tr>
+    <tr><td>Renter</td><td>−400</td><td>−400</td><td>−400</td></tr>
+    <tr><td>Resultat etter renter</td><td>0</td><td>800</td><td>1 600</td></tr>
+    <tr><td>ROE</td><td>0 %</td><td>20 %</td><td>40 %</td></tr>
+    <tr><td>EPS</td><td>0</td><td>4</td><td>8</td></tr>
+  </table>
+  <div class="key-point">Giring <strong>forsterker</strong>: høyere oppside (EPS 8 vs 5), men også lavere nedside (EPS 0 vs 1). Volatiliteten dobles.</div>
+</section>
+
+<section>
+  <h2>Visualisering — leverage-effekten</h2>
+  <div style="margin: 16px auto; text-align: center;">
+    <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+      <line x1="80" y1="240" x2="660" y2="240" stroke="#1a1a1a" stroke-width="1.5"/>
+      <line x1="80" y1="240" x2="80" y2="30" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="370" y="265" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563">ROA (avkastning totalkapital)</text>
+      <text x="40" y="135" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563" transform="rotate(-90, 40, 135)">ROE/EPS</text>
+      <!-- 100% EK line (flatere) -->
+      <line x1="80" y1="220" x2="600" y2="50" stroke="#046530" stroke-width="3"/>
+      <text x="615" y="55" font-family="Source Sans 3" font-size="12" font-weight="700" fill="#046530">100 % EK</text>
+      <!-- 50% gjeld line (brattere) -->
+      <line x1="160" y1="240" x2="600" y2="20" stroke="#d97706" stroke-width="3"/>
+      <text x="615" y="25" font-family="Source Sans 3" font-size="12" font-weight="700" fill="#d97706">50 % gjeld</text>
+      <!-- Break-even point -->
+      <circle cx="265" cy="170" r="5" fill="#1a1a1a"/>
+      <text x="220" y="155" font-family="Source Sans 3" font-size="11" fill="#1a1a1a">Break-even</text>
+      <text x="220" y="170" font-family="Source Sans 3" font-size="11" fill="#1a1a1a">(ROA = rente)</text>
+      <!-- X-axis labels -->
+      <text x="265" y="258" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#6b7280">10 %</text>
+    </svg>
+  </div>
+  <p style="text-align:left">Den giret-linjen er <strong>brattere</strong> — gevinst og tap forsterkes. Skjæringspunktet er ROA = rentesats. <strong>Over</strong> er giring lønnsomt, <strong>under</strong> ulønnsomt.</p>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL C</div>
+  <h2>Modigliani-Miller (uten skatt)</h2>
+</section>
+
+<section>
+  <h2>Modigliani & Miller — MM1 (uten skatt)</h2>
+  <blockquote>«Et selskap kan ikke endre totalverdien sin ved å endre kapitalstrukturen.»<br>— Franco Modigliani og Merton Miller (1958)</blockquote>
+  <div class="formel big-formula">
+    $$V_U = V_L$$
+  </div>
+  <p style="text-align:left">$V_U$ = verdien av ugiret selskap. $V_L$ = verdien av giret (levered) selskap. <strong>De er like!</strong></p>
+  <div class="key-point">Modigliani fikk Nobel 1985. Miller fikk Nobel 1990. Modellen var revolusjonerende — den vendte tankegangen om verdiskaping fra finansiering til realøkonomi.</div>
+</section>
+
+<section>
+  <h2>Pizzaanalogien — versjon 2</h2>
+  <div class="folkelig">
+    <div class="label">Folkelig</div>
+    Tenk på en pizza. Du kan dele den i to like store stykker, eller fire mindre, eller åtte enda mindre.<br>
+    <strong>Pizzaen forblir like stor.</strong> Du kan ikke skape mer pizza ved å skjære annerledes.<br>
+    Slik er det med selskapet — kontantstrømmen til <em>aksjonærer + kreditorer</em> bestemmes av eiendelene, ikke av hvordan vi finansierer dem.
+  </div>
+  <p style="text-align:left">Hvis Industri AS produserer 1200 kr i resultat før renter — så er det 1200 til fordeling, uansett om aksjonærene tar alt (100 % EK) eller om kreditorene tar 400 og aksjonærene 800 (50/50).</p>
+  <div class="key-point">Selskapsverdien bestemmes av <strong>operasjonell drift</strong> (eiendelene), ikke av finansiering.</div>
+</section>
+
+<section>
+  <h2>MM1 — forutsetninger</h2>
+  <p style="text-align:left">For at MM1 skal holde, antas:</p>
+  <ol>
+    <li><strong>Ingen skatter</strong> (verken på selskap eller person)</li>
+    <li><strong>Ingen transaksjonskostnader</strong></li>
+    <li><strong>Ingen konkurskostnader</strong></li>
+    <li><strong>Perfekt informasjon</strong> — homogene forventninger</li>
+    <li><strong>Alle kan låne</strong> til samme rente for samme risiko</li>
+    <li><strong>Ingen agentkostnader</strong> mellom ulike interessenter</li>
+  </ol>
+  <div class="key-point">Forutsetningene er åpenbart urealistiske. Men det er <em>poenget</em> — ved å vise hva som <em>må</em> være sant for at kapitalstruktur skal være irrelevant, identifiserer vi <em>hvorfor</em> det IKKE er irrelevant i virkeligheten.</div>
+</section>
+
+<section>
+  <h2>Hjemmelaget gjeld — MM1-beviset</h2>
+  <div class="folkelig">
+    <div class="label">Folkelig — du kan lage din egen giring</div>
+    Anta du vil ha eksponering som et 50 % giret selskap. Selskapet er ugiret. Du kan likevel «girne» selv på din egen konto:
+    <br><br>
+    1) Lån penger personlig til samme rente,<br>
+    2) Bruk lånet til å kjøpe flere aksjer.<br>
+    Resultatet er den samme avkastningsprofilen som om selskapet hadde vært giret.
+  </div>
+  <div class="key-point">Hvis du kan replikere giring selv, kan ikke selskapet skape verdi ved å gjøre det for deg. Dette er <strong>arbitrasje-argumentet</strong> som driver MM1.</div>
+</section>
+
+<section>
+  <h2>Eksempel: hjemmelaget giring (Industri AS)</h2>
+  <p style="text-align:left">Strategi A: Kjøp 100 aksjer av giret selskap (à 20 kr) — total kostnad 2000 kr.</p>
+  <p style="text-align:left">Strategi B: Hjemmelaget — kjøp 200 aksjer av ugiret + lån 2000 kr til 10 %:</p>
+  <table>
+    <tr><th></th><th>Resesjon</th><th>Forventet</th><th>Ekspansjon</th></tr>
+    <tr><td><strong>Strategi A</strong> (100 aksjer giret)</td><td colspan="3"></td></tr>
+    <tr><td>EPS</td><td>0</td><td>4</td><td>8</td></tr>
+    <tr><td>Inntekt × 100</td><td>0</td><td>400</td><td>800</td></tr>
+    <tr><td><strong>Strategi B</strong> (200 aksjer ugiret + lån 2000)</td><td colspan="3"></td></tr>
+    <tr><td>EPS</td><td>1</td><td>3</td><td>5</td></tr>
+    <tr><td>Inntekt × 200</td><td>200</td><td>600</td><td>1000</td></tr>
+    <tr><td>Renter 10 % av 2000</td><td>−200</td><td>−200</td><td>−200</td></tr>
+    <tr><td><strong>Netto</strong></td><td>0</td><td>400</td><td>800</td></tr>
+  </table>
+  <div class="key-point">Identisk avkastningsprofil! Investorer kan «lage» giring selv → selskapet kan ikke skape verdi ved å gjøre det for dem.</div>
+</section>
+
+<section>
+  <h2>MM2 — egenkapitalkostnaden stiger med gjeld</h2>
+  <div class="definisjon">
+    <div class="term">MM Proposisjon 2 (uten skatt)</div>
+    Når selskapet tar opp mer gjeld, blir egenkapitalen <strong>mer risikofylt</strong>. Aksjonærene krever derfor høyere avkastning.
+  </div>
+  <div class="formel big-formula">
+    $$r_E = r_A + \frac{D}{E}(r_A - r_D)$$
+  </div>
+  <ul>
+    <li>$r_A$ — avkastning på totalkapital (assets)</li>
+    <li>$r_D$ — gjeldskostnad</li>
+    <li>$D/E$ — gjeldsgrad</li>
+  </ul>
+  <div class="key-point">Lineær sammenheng mellom $r_E$ og $D/E$. Stigningstall = $(r_A - r_D)$ = «risikopremie for gjeld».</div>
+</section>
+
+<section>
+  <h2>WACC under MM (uten skatt)</h2>
+  <div style="margin: 16px auto; text-align: center;">
+    <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+      <line x1="80" y1="240" x2="660" y2="240" stroke="#1a1a1a" stroke-width="1.5"/>
+      <line x1="80" y1="240" x2="80" y2="30" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="370" y="265" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563">D/E (gjeldsgrad)</text>
+      <text x="40" y="135" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563" transform="rotate(-90, 40, 135)">Avkastning</text>
+      <!-- rE line (rising) -->
+      <line x1="80" y1="160" x2="640" y2="50" stroke="#046530" stroke-width="3"/>
+      <text x="650" y="55" font-family="Source Sans 3" font-size="12" font-weight="700" fill="#046530">$r_E$</text>
+      <!-- WACC = rA flat line -->
+      <line x1="80" y1="130" x2="640" y2="130" stroke="#d97706" stroke-width="3" stroke-dasharray="6 3"/>
+      <text x="650" y="135" font-family="Source Sans 3" font-size="12" font-weight="700" fill="#d97706">WACC = $r_A$</text>
+      <!-- rD flat line -->
+      <line x1="80" y1="200" x2="640" y2="200" stroke="#6b7280" stroke-width="2"/>
+      <text x="650" y="205" font-family="Source Sans 3" font-size="12" font-weight="700" fill="#6b7280">$r_D$</text>
+    </svg>
+  </div>
+  <p style="text-align:left">$r_E$ stiger lineært, men WACC = $r_A$ er <strong>konstant</strong> — fordi billigere gjeld eksakt motvirkes av høyere $r_E$. Kapitalstruktur er irrelevant for WACC og verdi.</p>
+</section>
+
+<section>
+  <h2>Eksempel — MM2 i bruk</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Et selskap har WACC = 12 %, 80 % EK og lånerente 8 %.<br>
+    Hva er $r_E$?
+  </div>
+  <p style="text-align:left">Vi har $12\% = 0{,}8 r_E + 0{,}2 \times 8\%$. Løs for $r_E$:</p>
+  <div class="formel">
+    $r_E = (12\% - 0{,}2 \times 8\%)/0{,}8 = (12\% - 1{,}6\%)/0{,}8 = 13\%$
+  </div>
+  <p style="text-align:left">Hvis selskapet endrer til 50 % gjeld:</p>
+  <div class="formel">
+    $r_E = 12\% + (0{,}5/0{,}5)(12\% - 8\%) = 12\% + 4\% = 16\%$
+  </div>
+  <p style="text-align:left">Sjekk: WACC = $0{,}5 \times 16\% + 0{,}5 \times 8\% = 12\%$ ✓</p>
+  <div class="key-point">WACC forblir 12 % uansett kapitalstruktur — selskapsverdien er uendret.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL D</div>
+  <h2>MM med skatt</h2>
+</section>
+
+<section>
+  <h2>Skatteskjoldet — verdien av rentefradraget</h2>
+  <p style="text-align:left">I virkeligheten finnes selskapsskatt (22 % i Norge). Rentekostnader er <strong>fradragsberettiget</strong> — det skaper «skatteskjold» som ikke EK har.</p>
+  <div class="folkelig">
+    <div class="label">Folkelig — staten betaler en del av renten</div>
+    Hvis du betaler 1 mill i rente og har 22 % selskapsskatt, sparer du 220 000 i skatt. Staten subsidierer effektivt rentekostnaden med 22 %.<br>
+    For utbytte og tilbakeholdt overskudd får du ikke samme fradrag. Gjeld blir derfor «skattegunstig».
+  </div>
+  <div class="formel">
+    Årlig skattebesparelse = $t_s \times r_D \times D$
+  </div>
+</section>
+
+<section>
+  <h2>Nåverdien av skatteskjoldet</h2>
+  <p style="text-align:left">Hvis selskapet har evigvarende gjeld:</p>
+  <div class="formel big-formula">
+    $$PV(\text{skatteskjold}) = \frac{t_s \times r_D \times D}{r_D} = t_s \times D$$
+  </div>
+  <p style="text-align:left">Verdien av det giret selskapet blir da:</p>
+  <div class="formel big-formula">
+    $$V_L = V_U + t_s \times D$$
+  </div>
+  <div class="key-point">Hver krone gjeld øker selskapsverdien med $t_s$ kroner. Med 22 % skatt: hver mill gjeld → 220 000 kr i ekstra selskapsverdi.</div>
+</section>
+
+<section>
+  <h2>Eksempel: MM med skatt</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Eksempel</div>
+    Et fullt EK-finansiert selskap forventes å ha EBIT på 153,85 i evigheten. Skatt 35 %. Totalkapitalkostnad $r_U = 20\%$. Overskudd betales ut som utbytte.<br>
+    Selskapet vurderer å ta opp 200 i gjeld med 10 % rente. Hva blir verdien?
+  </div>
+  <p style="text-align:left"><strong>Ugiret verdi:</strong></p>
+  <div class="formel">
+    $V_U = \dfrac{\text{EBIT}(1 - t_s)}{r_U} = \dfrac{153{,}85 \times 0{,}65}{0{,}20} = 500$
+  </div>
+  <p style="text-align:left"><strong>Giret verdi:</strong></p>
+  <div class="formel">
+    $V_L = V_U + t_s \times D = 500 + 0{,}35 \times 200 = 570$
+  </div>
+  <div class="key-point">Selskapsverdien øker med 70 — dette er nåverdien av skatteskjoldet. Med 35 % skatt og 200 i gjeld: 35 % × 200 = 70.</div>
+</section>
+
+<section>
+  <h2>MM2 med skatt</h2>
+  <p style="text-align:left">Med skatt blir $r_E$-formelen justert:</p>
+  <div class="formel big-formula">
+    $$r_E = r_U + \frac{D}{E}(1 - t_s)(r_U - r_D)$$
+  </div>
+  <p style="text-align:left">Skatteskjoldet demper $r_E$-økningen.</p>
+  <p style="text-align:left">For eksempelet over: $V_L = 570$, $D = 200$, $E = 370$.</p>
+  <div class="formel">
+    $r_E = 20\% + (200/370)(1 - 0{,}35)(20\% - 10\%) = 20\% + 3{,}51\% = 23{,}51\%$
+  </div>
+  <p style="text-align:left">WACC:</p>
+  <div class="formel">
+    $\text{WACC} = (370/570) \times 23{,}51\% + (200/570) \times 10\% \times 0{,}65 = 17{,}54\%$
+  </div>
+  <div class="key-point">WACC <strong>faller</strong> fra 20 % til 17,54 % når selskapet tar opp gjeld. Lavere WACC → høyere selskapsverdi.</div>
+</section>
+
+<section>
+  <h2>MM med skatt — implikasjon</h2>
+  <div style="margin: 16px auto; text-align: center;">
+    <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg">
+      <line x1="80" y1="210" x2="660" y2="210" stroke="#1a1a1a" stroke-width="1.5"/>
+      <line x1="80" y1="210" x2="80" y2="30" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="370" y="235" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563">Gjeld (D)</text>
+      <text x="40" y="120" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563" transform="rotate(-90, 40, 120)">Selskapsverdi $V_L$</text>
+      <line x1="80" y1="160" x2="640" y2="50" stroke="#046530" stroke-width="3"/>
+      <line x1="80" y1="160" x2="640" y2="160" stroke="#d97706" stroke-width="2" stroke-dasharray="6 3"/>
+      <text x="650" y="55" font-family="Source Sans 3" font-size="12" font-weight="700" fill="#046530">$V_L = V_U + t_s D$</text>
+      <text x="650" y="165" font-family="Source Sans 3" font-size="12" font-weight="700" fill="#d97706">$V_U$</text>
+      <path d="M 80 160 L 80 80 M 80 160 L 100 160" stroke="#1a1a1a" stroke-width="0"/>
+      <text x="200" y="120" font-family="Source Sans 3" font-size="11" fill="#046530" font-style="italic">$t_s \cdot D$ (skatteskjold)</text>
+    </svg>
+  </div>
+  <p style="text-align:left">Modellen tilsier <strong>100 % gjeld</strong> som optimum. Men det skjer ikke i virkeligheten. Hvorfor?</p>
+  <div class="key-point">Vi har glemt en viktig kostnad: <strong>finansiell krise og konkurs</strong>.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL E</div>
+  <h2>Krise- og konkurskostnader</h2>
+</section>
+
+<section>
+  <h2>Når blir gjeld farlig?</h2>
+  <p style="text-align:left">Gjeld krever <strong>faste betalinger</strong> — renter og avdrag — som må betales uavhengig av om bedriften går bra eller dårlig.</p>
+  <div class="folkelig">
+    <div class="label">Folkelig — Norwegian Air Shuttle 2020</div>
+    Norwegian hadde ~85 % gjeldsfinansiering før korona. Når flytrafikken nesten stoppet i 2020, falt inntektene mens rentene fortsatte å løpe. Selskapet måtte gjennom flere restruktureringer for ikke å gå konkurs.<br>
+    SAS hadde ikke mindre gjeld og gikk gjennom <em>Chapter 11</em>-konkurs i 2022.
+  </div>
+  <div class="key-point">Høyere gjeld → høyere sannsynlighet for finansiell krise → høyere forventet kostnad ved krise.</div>
+</section>
+
+<section>
+  <h2>To typer kostnader</h2>
+  <div class="two-col">
+    <div>
+      <h3>Direkte kostnader</h3>
+      <ul>
+        <li>Advokat- og konkursforvalterhonorarer</li>
+        <li>Rettsgebyr og revisjon</li>
+        <li>Tid og oppmerksomhet fra ledelsen</li>
+      </ul>
+      <p>Typisk 3–10 % av selskapsverdi</p>
+    </div>
+    <div>
+      <h3>Indirekte kostnader</h3>
+      <ul>
+        <li>Tap av kunder («Vil de overleve?»)</li>
+        <li>Tap av leverandører</li>
+        <li>Ansatte slutter</li>
+        <li>Forsterket «brann-salgs»-effekt</li>
+        <li>Konflikter mellom interessenter</li>
+      </ul>
+      <p>Typisk 10–25 % av selskapsverdi</p>
+    </div>
+  </div>
+  <div class="key-point">Indirekte kostnader er ofte mye større — og de oppstår <em>før</em> selve konkursen. Allerede ryktet om finansiell krise kan koste mye.</div>
+</section>
+
+<section>
+  <h2>Trade-off-teorien — optimal kapitalstruktur</h2>
+  <div style="margin: 16px auto; text-align: center;">
+    <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+      <line x1="80" y1="240" x2="660" y2="240" stroke="#1a1a1a" stroke-width="1.5"/>
+      <line x1="80" y1="240" x2="80" y2="30" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="370" y="265" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563">Gjeld (D)</text>
+      <text x="40" y="135" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="#4b5563" transform="rotate(-90, 40, 135)">Selskapsverdi $V_L$</text>
+      <!-- VU horizontal -->
+      <line x1="80" y1="195" x2="640" y2="195" stroke="#6b7280" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="650" y="200" font-family="Source Sans 3" font-size="11" fill="#6b7280">$V_U$</text>
+      <!-- Tax shield (linear up) -->
+      <line x1="80" y1="195" x2="640" y2="40" stroke="#d97706" stroke-width="2" stroke-dasharray="3 3"/>
+      <text x="650" y="45" font-family="Source Sans 3" font-size="11" fill="#d97706">$V_U + t_s D$ (uten krisekostn.)</text>
+      <!-- Actual VL (inverted U) -->
+      <path d="M 80 195 Q 280 100 380 110 Q 480 130 640 220" stroke="#046530" stroke-width="3" fill="none"/>
+      <text x="240" y="145" font-family="Source Sans 3" font-size="12" font-weight="700" fill="#046530">Faktisk $V_L$</text>
+      <!-- Optimal point -->
+      <circle cx="370" cy="110" r="6" fill="#046530"/>
+      <line x1="370" y1="110" x2="370" y2="240" stroke="#046530" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="370" y="258" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-weight="700" fill="#046530">$D^*$ optimum</text>
+    </svg>
+  </div>
+  <p style="text-align:left">Faktisk verdi = $V_U + t_s D - PV(\text{krisekostnader})$. Optimum der marginal skattefordel = marginal krisekostnad.</p>
+</section>
+
+<section>
+  <h2>Hvilke selskaper har høy gjeldskapasitet?</h2>
+  <p style="text-align:left">Trade-off-teorien forutsier at gjeldskapasiteten er høyere for selskaper som har:</p>
+  <ul>
+    <li><strong>Stabile, forutsigbare kontantstrømmer</strong> (Telenor, dagligvare)</li>
+    <li><strong>Materielle eiendeler</strong> som kan brukes som pant (fast eiendom, fabrikker)</li>
+    <li><strong>Lite vekstmuligheter</strong> som vil bli skadelidende ved underinvestering</li>
+    <li><strong>Høy lønnsomhet</strong> som kan utnytte skatteskjoldet</li>
+  </ul>
+  <div class="norsk-eksempel">
+    <div class="label">Norske eksempler</div>
+    Olav Thon Eiendomsselskap (fast eiendom, stabile leieinntekter) tåler mye gjeld. PhotoCure (FoU, immaterielle eiendeler, høy risiko) bør ha lite gjeld.
+  </div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL F</div>
+  <h2>Agentkostnader</h2>
+</section>
+
+<section>
+  <h2>Konflikt: aksjonærer vs kreditorer</h2>
+  <p style="text-align:left">Når et selskap har gjeld, kan det oppstå interessekonflikt. Aksjonærene har <strong>begrenset ansvar</strong> — de kan tape mest sin investering, ikke mer.</p>
+  <div class="folkelig">
+    <div class="label">Folkelig — «Heads I win, tails you lose»</div>
+    Tenk på et selskap nær konkurs. Aksjonærene har lite igjen å tape, men mye å vinne hvis et risikabelt prosjekt går bra. Kreditorene har derimot mest å tape — for de står først i køen til de eksisterende eiendelene.
+  </div>
+  <p style="text-align:left">Tre <strong>egoistiske strategier</strong> aksjonærene kan friste til:</p>
+  <ol>
+    <li><strong>Asset substitution</strong> — bytte til høyere risiko</li>
+    <li><strong>Underinvestering</strong> — droppe positive NPV-prosjekter</li>
+    <li><strong>Tapping</strong> («milking the property») — ta ut store utbytter når selskapet er i krise</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Asset substitution — bytte til høyere risiko</h2>
+  <table>
+    <tr><th></th><th colspan="3">Lavrisikoprosjekt</th></tr>
+    <tr><th></th><th>P</th><th>Aksjer (E)</th><th>Obligasjoner (D)</th></tr>
+    <tr><td>Lav konjunktur</td><td>0,5</td><td>0</td><td>100</td></tr>
+    <tr><td>Høy konjunktur</td><td>0,5</td><td>100</td><td>100</td></tr>
+    <tr><td><strong>Forventet</strong></td><td></td><td><strong>50</strong></td><td><strong>100</strong></td></tr>
+  </table>
+  <table>
+    <tr><th></th><th colspan="3">Høyrisikoprosjekt</th></tr>
+    <tr><th></th><th>P</th><th>Aksjer (E)</th><th>Obligasjoner (D)</th></tr>
+    <tr><td>Lav konjunktur</td><td>0,5</td><td>0</td><td>50</td></tr>
+    <tr><td>Høy konjunktur</td><td>0,5</td><td>140</td><td>100</td></tr>
+    <tr><td><strong>Forventet</strong></td><td></td><td><strong>70</strong></td><td><strong>75</strong></td></tr>
+  </table>
+  <div class="key-point">Aksjonærene foretrekker høyrisiko (70 vs 50). Kreditorene mister (75 vs 100). <strong>Total verdi faller</strong> — men aksjonærene vinner på kreditorenes bekostning.</div>
+</section>
+
+<section>
+  <h2>Hvordan reduseres agentkostnader?</h2>
+  <h3>Protective covenants — kontraktsbetingelser i låneavtalen</h3>
+  <p style="text-align:left"><strong>Negative betingelser:</strong></p>
+  <ul>
+    <li>Forbud mot sammenslåinger uten godkjenning</li>
+    <li>Forbud mot å pantsette eiendeler til andre långivere</li>
+    <li>Begrensninger på utbytte</li>
+    <li>Forbud mot mer langsiktig gjeld</li>
+  </ul>
+  <p style="text-align:left"><strong>Positive betingelser:</strong></p>
+  <ul>
+    <li>Minimumskrav til likviditet og soliditet</li>
+    <li>Regelmessig regnskapsrapportering</li>
+    <li>Krav til revisjon</li>
+  </ul>
+  <div class="key-point">Covenants reduserer agentkostnader, men har en pris — de begrenser fleksibiliteten.</div>
+</section>
+
+<section>
+  <h2>Egenkapital har OGSÅ agentkostnader</h2>
+  <div class="folkelig">
+    <div class="label">Folkelig — du jobber hardere når du eier 100 %</div>
+    En person jobber hardere for et selskap hvis hun er <strong>eneeier</strong> enn om hun bare er ansatt. Og hardere jo høyere andel hun eier.
+  </div>
+  <p style="text-align:left">Eksempel: du eier 100 %, selskapet er verdt 1 mill, du trenger 2 mill ekstra.</p>
+  <table>
+    <tr><th></th><th colspan="3">Gjeldsfinansiering</th><th colspan="3">EK-finansiering (du eier 33 %)</th></tr>
+    <tr><th>Innsats</th><th>CF</th><th>Rente</th><th>Til deg</th><th>CF</th><th>Til EK</th><th>Til deg</th></tr>
+    <tr><td>6 timer</td><td>300</td><td>−240</td><td><strong>60</strong></td><td>300</td><td>300</td><td><strong>100</strong></td></tr>
+    <tr><td>10 timer</td><td>400</td><td>−240</td><td><strong>160</strong></td><td>400</td><td>400</td><td><strong>133</strong></td></tr>
+    <tr><td>Forskjell</td><td colspan="3">+100 ved hardere innsats</td><td colspan="3">+33 ved hardere innsats</td></tr>
+  </table>
+  <div class="key-point">Med gjeld får du mer ut av ekstra innsats — du beholder restbeløpet. Med EK deler du med andre eiere. Derfor lønner det seg å bruke gjeld for å beholde insentivene.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL G</div>
+  <h2>Signaling og Pecking Order</h2>
+</section>
+
+<section>
+  <h2>Gjeld som signal</h2>
+  <p style="text-align:left">Ledelsen vet mer om selskapets fremtid enn investorene (asymmetrisk informasjon). Kapitalstruktur-valg kan derfor være et signal.</p>
+  <ul>
+    <li>Selskaper med god utvikling tør å ta opp gjeld — de er trygge på kontantstrømmen</li>
+    <li>Selskaper med dårlig utvikling unngår gjeld — de frykter å havne i krise</li>
+    <li>Investorer tolker derfor utstedelse av gjeld som et <strong>positivt signal</strong></li>
+  </ul>
+  <div class="key-point">Empirisk: aksjekursen <em>stiger</em> ofte når selskaper øker gjeldsandelen (særlig ved tilbakekjøp finansiert med gjeld). Det motsatte skjer ved aksjeutstedelse — kursen <em>faller</em>.</div>
+</section>
+
+<section>
+  <h2>Pecking order theory (Myers & Majluf 1984)</h2>
+  <p style="text-align:left">Asymmetrisk informasjon mellom ledelse og investorer skaper et «hakkeranking»:</p>
+  <ol>
+    <li><strong>Internfinansiering</strong> (tilbakeholdt overskudd) — ingen signal til markedet</li>
+    <li><strong>Sikker gjeld</strong> — liten frykt for feilprising</li>
+    <li><strong>Risikabel gjeld og konvertibler</strong></li>
+    <li><strong>Egenkapital</strong> — siste utvei (mest sensitiv til feilprising)</li>
+  </ol>
+  <div class="folkelig">
+    <div class="label">Folkelig — hvorfor utsteder ingen aksjer hvis de kan unngå det?</div>
+    Hvis ledelsen vet aksjene er <em>overvurdert</em>, vil de gjerne utstede. Investorene vet dette, så de tolker utstedelse som «overvurdert» og presser kursen ned. Resultat: bare overvurderte selskaper utsteder. Sunne selskaper unngår aksjeutstedelse.
+  </div>
+</section>
+
+<section>
+  <h2>Trade-off vs Pecking Order</h2>
+  <table>
+    <tr><th></th><th>Trade-off-teorien</th><th>Pecking order</th></tr>
+    <tr><td>Drivkraft</td><td>Skatteskjold vs krisekostnader</td><td>Asymmetrisk informasjon</td></tr>
+    <tr><td>Optimal gjeldsgrad?</td><td>Ja — bestemt nivå</td><td>Nei — ingen target</td></tr>
+    <tr><td>Lønnsomme selskaper</td><td>Mer gjeld (mer å skattebeskytte)</td><td>Mindre gjeld (mer intern finansiering)</td></tr>
+    <tr><td>Empirisk støtte</td><td>Delvis</td><td>Sterk</td></tr>
+  </table>
+  <div class="key-point">Begge teoriene har empirisk støtte. Trade-off forklarer bransjeforskjeller. Pecking order forklarer tidsmønstre. I praksis: en blanding.</div>
+</section>
+
+<section>
+  <h2>Kapitalstruktur i den virkelige verden</h2>
+  <p style="text-align:left">Empiriske observasjoner som passer godt med teorien:</p>
+  <ul>
+    <li>Bransjer med <strong>stabile kontantstrømmer</strong> og <strong>materielle eiendeler</strong> har høyere gjeld (bank, eiendom, forsyning)</li>
+    <li>Bransjer med <strong>FoU og immaterielle</strong> har lavere gjeld (legemiddel, tech)</li>
+    <li>Selskaper bruker primært <strong>internfinansiering</strong> når det er tilgjengelig</li>
+    <li>Selskaper unngår aksjeutstedelse hvis mulig</li>
+    <li><strong>Skatte- og konkurslovgivning</strong> varierer mellom land og påvirker kapitalstruktur</li>
+  </ul>
+  <div class="norsk-eksempel">
+    <div class="label">Norske spesifikke forhold</div>
+    Aksjelovens § 8-1 begrenser utbytte. Skjermingsfradraget reduserer skatteforskjellen mellom utbytte og gevinst. Sterk bankmarked gjør gjeldsfinansiering relativt rimelig.
+  </div>
+</section>
+
+<section>
+  <h2>Oppsummering forelesning 16</h2>
+  <ol style="font-size: 0.85em">
+    <li><strong>MM1 (uten skatt):</strong> $V_U = V_L$ — kapitalstruktur er irrelevant</li>
+    <li>Forutsetter at investorer kan lage <strong>hjemmelaget giring</strong></li>
+    <li><strong>MM2 (uten skatt):</strong> $r_E = r_A + (D/E)(r_A - r_D)$ — EK-kost stiger med gjeld</li>
+    <li>WACC = $r_A$ konstant — billigere gjeld nøytraliseres av høyere $r_E$</li>
+    <li><strong>Med skatt:</strong> $V_L = V_U + t_s D$ — skatteskjoldet skaper verdi</li>
+    <li>Modellen tilsier 100 % gjeld → ikke realistisk pga <strong>krise-/konkurskostnader</strong></li>
+    <li><strong>Trade-off:</strong> skatteskjold + agentfordeler vs krisekostnader → optimum</li>
+    <li><strong>Agentkostnader:</strong> asset substitution, underinvestering, milking</li>
+    <li><strong>Pecking order:</strong> internfinansiering → gjeld → EK</li>
+    <li>I praksis: bransjeforskjeller, ledelses-preferanser og makro-forhold styrer</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Til selvstudium</h2>
+  <div class="definisjon">
+    <div class="term">Oppgaver</div>
+    <strong>Oppgavesett 8 — Kapitalstruktur og dividende</strong>, oppgavene 1–8 dekker kapitalstruktur (Industri AS, Tindra AS, Stang AS, etc.)
+  </div>
+  <div class="definisjon">
+    <div class="term">Pensum</div>
+    <strong>HRWJ kapittel 15</strong>. Modigliani & Miller (1958) er klassikeren. Myers «Capital Structure» (Journal of Economic Perspectives 2001) anbefales for en pedagogisk oversikt.
+  </div>
+  <div class="definisjon">
+    <div class="term">Tenk over</div>
+    Hvilken kapitalstruktur ville du valgt for: (1) ny restaurant i Oslo? (2) Lakseoppdrettsselskap? (3) FoU-startup innen kreftmedisin? (4) Eiendomsselskap med stabile leieinntekter?
+  </div>
+  <p style="text-align:center; color: var(--nmbu-green); margin-top: 10px"><strong>Neste:</strong> Forelesning 17 — Dividendepolitikk. Hvor mye av overskuddet bør betales ut?</p>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script>const params = new URLSearchParams(window.location.search);
+const useSlides = params.get('view') === 'slides';
+Reveal.initialize({
+  hash: !useSlides,
+  slideNumber: useSlides ? 'c/t' : false,
+  width: 1280,
+  height: 800,
+  margin: 0.06,
+  controls: useSlides,
+  progress: useSlides,
+  center: useSlides,
+  transition: useSlides ? 'slide' : 'none',
+  view: useSlides ? undefined : 'scroll',
+  scrollProgress: !useSlides,
+  plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
+});</script>
+</body>
+</html>

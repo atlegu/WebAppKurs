@@ -58,7 +58,8 @@ export type ContentType =
   | 'draggame'
   | 'calculator'
   | 'interactive-model'
-  | 'exerciseset';
+  | 'exerciseset'
+  | 'presentation';
 
 export interface BaseContent {
   id: string;
@@ -217,6 +218,18 @@ export interface ExerciseSetContent extends BaseContent {
   exerciseSetId: string;  // Reference to the ExerciseSet by ID
 }
 
+export interface PresentationSlide {
+  title: string;
+  filename: string;
+}
+
+export interface PresentationContent extends BaseContent {
+  type: 'presentation';
+  title: string;
+  description?: string;
+  slides: PresentationSlide[];
+}
+
 export type Content =
   | TextContent
   | HeadingContent
@@ -235,7 +248,8 @@ export type Content =
   | DragGameContent
   | CalculatorContent
   | InteractiveModelContent
-  | ExerciseSetContent;
+  | ExerciseSetContent
+  | PresentationContent;
 
 export interface UserProgress {
   moduleId: string;
