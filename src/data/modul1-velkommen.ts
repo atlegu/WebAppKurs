@@ -582,7 +582,7 @@ export const modul1VelkommenModule: Module = {
         {
           id: 'intro-1-5',
           type: 'text',
-          text: 'Forskning viser at studenter som setter eksplisitte mål, lærer mer og fullf,ører oftere. Ta deg tid til å tenke gjennom hva du vil oppnå.',
+          text: 'Forskning viser at studenter som setter eksplisitte mål, lærer mer og fullfører oftere. Ta deg tid til å tenke gjennom hva du vil oppnå.',
           order: 2
         },
         // Mål-kategorier

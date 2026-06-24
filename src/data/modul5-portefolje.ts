@@ -1624,7 +1624,7 @@ export const modul5PortefoljeModule: Module = {
       },
       {
         id: 'q6-28',
-        question: 'Hvorfor faller korrelasjon ofte under kriser?',
+        question: 'Hvorfor øker korrelasjon ofte under kriser?',
         options: [
           'Fordi alle aktiva stiger sammen',
           'Fordi korrelasjon øker - aktiva faller sammen når panikk sprer seg',

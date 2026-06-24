@@ -2,7 +2,7 @@ import { ExerciseSet } from '../../types/course';
 
 export const oppgavesettKapitalstruktur: ExerciseSet = {
   id: 'oppgavesett-kapitalstruktur',
-  moduleId: 'modul-8-kapitalstruktur',
+  moduleId: 'modul-9-kapitalstruktur',
   title: 'Oppgavesett 7: Kapitalkostnad og Kapitalstruktur',
   description: 'Oppgaver om WACC, egenkapitalkostnad, kapitalstruktur og Modigliani-Miller-teoremet',
   exercises: [
