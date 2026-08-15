@@ -5,16 +5,19 @@ export class LoginPage {
   private authService: AuthService;
   private onSuccess: () => void;
   private onApply: () => void;
+  private onRegister: () => void;
 
   constructor(
     container: HTMLElement,
     onSuccess: () => void,
-    onApply: () => void
+    onApply: () => void,
+    onRegister: () => void
   ) {
     this.container = container;
     this.authService = AuthService.getInstance();
     this.onSuccess = onSuccess;
     this.onApply = onApply;
+    this.onRegister = onRegister;
   }
 
   render(): void {
@@ -74,12 +77,16 @@ export class LoginPage {
           </div>
 
           <div class="auth-divider">
-            <span>Ny bruker?</span>
+            <span>Ny student?</span>
           </div>
 
-          <button class="auth-btn auth-btn-secondary" id="apply-btn">
-            Søk om tilgang til kurset
+          <button class="auth-btn auth-btn-primary" id="register-btn">
+            Registrer deg
           </button>
+
+          <div class="auth-links" style="margin-top: 0.75rem;">
+            <a href="#" id="apply-link">Ikke oppmeldt i kurset? Søk om tilgang</a>
+          </div>
         </div>
       </div>
     `;
@@ -89,7 +96,8 @@ export class LoginPage {
 
   private attachEventListeners(): void {
     const form = this.container.querySelector('#login-form') as HTMLFormElement;
-    const applyBtn = this.container.querySelector('#apply-btn');
+    const registerBtn = this.container.querySelector('#register-btn');
+    const applyLink = this.container.querySelector('#apply-link');
     const forgotLink = this.container.querySelector('#forgot-password-link');
 
     form?.addEventListener('submit', async (e) => {
@@ -97,7 +105,12 @@ export class LoginPage {
       await this.handleLogin(form);
     });
 
-    applyBtn?.addEventListener('click', () => {
+    registerBtn?.addEventListener('click', () => {
+      this.onRegister();
+    });
+
+    applyLink?.addEventListener('click', (e) => {
+      e.preventDefault();
       this.onApply();
     });
 

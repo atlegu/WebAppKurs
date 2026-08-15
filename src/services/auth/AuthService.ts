@@ -179,6 +179,47 @@ export class AuthService {
     await supabase.auth.signOut();
   }
 
+  /**
+   * Check whether an email is on the course roster (approved_emails).
+   * Uses a SECURITY DEFINER RPC that only returns a boolean — the list itself
+   * is never exposed to the client.
+   */
+  async isEmailApproved(email: string): Promise<boolean> {
+    const { data, error } = await supabase.rpc('is_email_approved', {
+      check_email: email,
+    });
+    if (error) {
+      console.error('AUTH: isEmailApproved error:', error);
+      return false;
+    }
+    return data === true;
+  }
+
+  /**
+   * Self-registration for roster students. The database trigger
+   * (handle_new_user) gates on the roster and auto-creates the student profile.
+   * Returns needsConfirmation=true when email confirmation is enabled and no
+   * session was returned (user must click the confirmation link before logging in).
+   */
+  async signUp(
+    email: string,
+    password: string,
+    fullName: string
+  ): Promise<{ error?: string; needsConfirmation?: boolean }> {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: fullName },
+        emailRedirectTo: window.location.origin,
+      },
+    });
+    if (error) {
+      return { error: error.message };
+    }
+    return { needsConfirmation: !data.session };
+  }
+
   async resetPassword(email: string): Promise<{ error?: string }> {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reset-password`,

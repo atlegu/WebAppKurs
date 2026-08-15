@@ -14,6 +14,7 @@ import { ProgressTracker } from './services/ProgressTracker';
 import { AuthService } from './services/auth/AuthService';
 import { LoginPage } from './components/auth/LoginPage';
 import { ApplicationForm } from './components/auth/ApplicationForm';
+import { RegistrationForm } from './components/auth/RegistrationForm';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { SignupCompletionPage } from './components/auth/SignupCompletionPage';
 import { LandingPage } from './components/LandingPage';
@@ -669,10 +670,11 @@ class AppRouter {
   private courseApp: SustainableFinanceApp | null = null;
   private loginPage: LoginPage | null = null;
   private applicationForm: ApplicationForm | null = null;
+  private registrationForm: RegistrationForm | null = null;
   private adminDashboard: AdminDashboard | null = null;
   private signupCompletionPage: SignupCompletionPage | null = null;
   private landingPage: LandingPage | null = null;
-  private currentView: 'loading' | 'landing' | 'login' | 'apply' | 'course' | 'admin' | 'complete-signup' = 'loading';
+  private currentView: 'loading' | 'landing' | 'login' | 'apply' | 'register' | 'course' | 'admin' | 'complete-signup' = 'loading';
 
   constructor() {
     this.app = document.querySelector<HTMLDivElement>('#app')!;
@@ -724,6 +726,8 @@ class AppRouter {
     const hash = window.location.hash;
     if (hash === '#login') {
       this.showLogin();
+    } else if (hash === '#register') {
+      this.showRegistrationForm();
     } else if (hash === '#apply') {
       this.showApplicationForm();
     } else {
@@ -779,6 +783,9 @@ class AppRouter {
       },
       () => {
         window.location.hash = '#apply';
+      },
+      () => {
+        window.location.hash = '#register';
       }
     );
     this.loginPage.render();
@@ -796,6 +803,26 @@ class AppRouter {
       }
     );
     this.applicationForm.render();
+  }
+
+  private showRegistrationForm(): void {
+    if (this.currentView === 'register') return;
+    this.currentView = 'register';
+    this.app.classList.add('auth-active');
+
+    this.registrationForm = new RegistrationForm(
+      this.app,
+      () => {
+        // Success with an active session - auth state change routes into the course
+      },
+      () => {
+        window.location.hash = '#login';
+      },
+      () => {
+        window.location.hash = '#apply';
+      }
+    );
+    this.registrationForm.render();
   }
 
   private showCourse(): void {
