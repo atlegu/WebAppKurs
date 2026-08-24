@@ -427,7 +427,7 @@ export const modul6BaerekraftModule: Module = {
           headers: ['Ratingbyrå', 'Skala', 'Fokus'],
           rows: [
             ['MSCI ESG', 'AAA til CCC', 'Bransjerelevante ESG-risikoer og hvordan selskapet håndterer dem'],
-            ['Sustainalytics', '0-100 (lavere er bedre)', 'Umanaged ESG risk - risiko som ikke er håndtert av selskapet'],
+            ['Sustainalytics', '0-100 (lavere er bedre)', 'Unmanaged ESG risk - uhåndtert risiko som selskapet ikke har tatt grep om'],
             ['ISS ESG', 'A+ til D-', 'Absolutt bærekraftsperformance sammenlignet med globale standarder'],
             ['Refinitiv', '0-100 (høyere er bedre)', 'Kombinasjon av ESG-performance og kontrovers-screening']
           ]

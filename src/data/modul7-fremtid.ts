@@ -464,7 +464,7 @@ export const modul7FremtidModule: Module = {
           items: [
             'Bufferkonto: 3-6 måneders utgifter i likvide midler (høyrentekonto)',
             'Dyr gjeld: Betal ned kredittkort og forbrukslån (rente > 10%)',
-            'Utnyt skattefordeler: BSU (inntil 27 000 kr/år), pensjonssparing hos arbeidsgiver',
+            'Utnytt skattefordeler: BSU (inntil 27 500 kr/år), pensjonssparing hos arbeidsgiver',
             'Langsiktig sparing: Indeksfond, aksjesparekonto, gradvis øke eksponering',
             'Ekstra nedbetaling: Vurder boliglån når bufferen er på plass'
           ]
@@ -690,7 +690,7 @@ export const modul7FremtidModule: Module = {
           order: 18,
           title: 'Oppgave: Din karriere og kompetanse',
           description: '1. Estimer din humankapital: Hvis du forventer en startlønn på X og 3% årlig lønnsvekst i 40 år, hva er nåverdien med 4% diskonteringsrente?\n\n2. Identifiser tre kompetanseområder du vil utvikle de neste 3 årene. Hvordan kan de øke din humankapital?\n\n3. Undersøk en konkret jobb du er interessert i. Hva er markedslønn, og hvilke kvalifikasjoner etterspørres?',
-          hint: 'Bruk nåverdiformelen for annuitet, eller regneark.'
+          hint: 'Dette er en VOKSENDE annuitet (lønnen vokser 3%/år). Nåverdi: PV = C₁/(r−g) × [1 − ((1+g)/(1+r))ⁿ], der C₁ er startlønnen. Med r=4% og g=3% blir (r−g) liten, så nåverdien blir høy. Bruk gjerne regneark.'
         },
         {
           id: '7-4-reflection-1',
