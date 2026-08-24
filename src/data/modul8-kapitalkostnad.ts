@@ -219,7 +219,7 @@ export const modul8KapitalkostnadModule: Module = {
           id: '8-2-formula-1',
           type: 'formula',
           order: 5,
-          formula: 'rE = rf + β × (rM - rf)',
+          formula: '$$r_E = r_f + \\beta \\times (r_M - r_f)$$',
           description: 'Hvor rE = egenkapitalkostnad, rf = risikofri rente, β = aksjens beta (systematisk risiko), og (rM - rf) = markedets risikopremie.'
         },
         {
@@ -318,7 +318,7 @@ export const modul8KapitalkostnadModule: Module = {
           id: '8-2-formula-2',
           type: 'formula',
           order: 18,
-          formula: 'rE = D₁/P₀ + g',
+          formula: '$$r_E = \\dfrac{D_1}{P_0} + g$$',
           description: 'Hvor D₁ = forventet utbytte neste år, P₀ = dagens aksjekurs, og g = forventet årlig vekstrate i utbytte.'
         },
         {
@@ -488,7 +488,7 @@ export const modul8KapitalkostnadModule: Module = {
           id: '8-3-formula-1',
           type: 'formula',
           order: 8,
-          formula: 'rD,etter skatt = rD × (1 - Tc)',
+          formula: '$$r_{D,\\text{etter skatt}} = r_D \\times (1 - T_c)$$',
           description: 'Hvor rD = gjeldskostnad før skatt (rentesats), og Tc = selskapsskattesats. I Norge er Tc = 22%.'
         },
         {
@@ -641,7 +641,7 @@ export const modul8KapitalkostnadModule: Module = {
           id: '8-4-formula-1',
           type: 'formula',
           order: 4,
-          formula: 'WACC = (E/V) × rE + (D/V) × rD × (1 - Tc)',
+          formula: '$$WACC = \\dfrac{E}{V} \\times r_E + \\dfrac{D}{V} \\times r_D \\times (1 - T_c)$$',
           description: 'Hvor E = markedsverdi egenkapital, D = markedsverdi gjeld, V = E + D = total verdi, rE = egenkapitalkostnad, rD = gjeldskostnad før skatt, Tc = skattesats.'
         },
         {
@@ -756,7 +756,7 @@ export const modul8KapitalkostnadModule: Module = {
             { key: 'costDebt', label: 'Gjeldskostnad før skatt', type: 'percentage', default: 5, min: 0, max: 20, step: 0.25, helpText: 'Renten på gjelden' },
             { key: 'taxRate', label: 'Skattesats', type: 'percentage', default: 22, min: 0, max: 50, step: 1, helpText: 'Norsk selskapsskatt er 22%' }
           ],
-          formula: 'WACC = (E/V) × rE + (D/V) × rD × (1 - Tc)',
+          formula: '$$WACC = \\dfrac{E}{V} \\times r_E + \\dfrac{D}{V} \\times r_D \\times (1 - T_c)$$',
           resultLabel: 'WACC',
           resultUnit: '%',
           explanation: 'Prøv å endre kapitalstrukturen og se hvordan WACC endrer seg!'
@@ -1598,8 +1598,8 @@ export const modul8KapitalkostnadModule: Module = {
           '10,8%',
           '7,2%'
         ],
-        correctAnswer: 1,
-        explanation: 'Risikopremie = 9% - 3% = 6%. rE = 3% + 1,2 × 6% = 3% + 7,2% = 10,2%. Men vent: 3% + 1,2 × 6% = 3% + 7,2% = 10,2%. La meg sjekke: rE = rf + β(rM - rf) = 3% + 1,2(9% - 3%) = 3% + 1,2(6%) = 3% + 7,2% = 10,2%. Svaret er A.'
+        correctAnswer: 0,
+        explanation: 'Markedets risikopremie = 9% − 3% = 6%. rE = rf + β × (rM − rf) = 3% + 1,2 × 6% = 3% + 7,2% = 10,2%.'
       },
       {
         id: 'kk-q37',

@@ -91,21 +91,21 @@ export const modul8KapitalstrukturModule: Module = {
           id: 'kapitalstruktur-8-1-formula-gjeldsgrad',
           type: 'formula',
           order: 8,
-          formula: 'Gjeldsgrad = Gjeld / Egenkapital',
+          formula: '$$\\text{Gjeldsgrad} = \\dfrac{\\text{Gjeld}}{\\text{Egenkapital}}$$',
           description: 'Viser hvor mange kroner gjeld det er per krone egenkapital. En gjeldsgrad på 1 betyr like mye gjeld som egenkapital.'
         },
         {
           id: 'kapitalstruktur-8-1-formula-gjeldsandel',
           type: 'formula',
           order: 9,
-          formula: 'Gjeldsandel = Gjeld / Totalkapital',
+          formula: '$$\\text{Gjeldsandel} = \\dfrac{\\text{Gjeld}}{\\text{Totalkapital}}$$',
           description: 'Andelen av totalkapitalen som er finansiert med gjeld. Ofte uttrykt i prosent.'
         },
         {
           id: 'kapitalstruktur-8-1-formula-egenkapitalandel',
           type: 'formula',
           order: 10,
-          formula: 'Egenkapitalandel = Egenkapital / Totalkapital',
+          formula: '$$\\text{Egenkapitalandel} = \\dfrac{\\text{Egenkapital}}{\\text{Totalkapital}}$$',
           description: 'Andelen av totalkapitalen som er finansiert med egenkapital. Viser bedriftens finansielle soliditet.'
         },
         {
@@ -234,7 +234,7 @@ export const modul8KapitalstrukturModule: Module = {
           id: 'kapitalstruktur-8-2-formula-re',
           type: 'formula',
           order: 8,
-          formula: 'rE = rA + (rA - rD) × (D/E)',
+          formula: '$$r_E = r_A + (r_A - r_D) \\times \\dfrac{D}{E}$$',
           description: 'rE = avkastningskrav egenkapital, rA = avkastningskrav totalkapital, rD = gjeldsrente, D/E = gjeldsgrad'
         },
         {
@@ -269,7 +269,7 @@ export const modul8KapitalstrukturModule: Module = {
           id: 'kapitalstruktur-8-2-formula-skatteskjold',
           type: 'formula',
           order: 13,
-          formula: 'VL = VU + TC × D',
+          formula: '$$V_L = V_U + T_C \\times D$$',
           description: 'VL = verdi med gjeld, VU = verdi uten gjeld, TC = selskapsskattesats, D = gjeld. Skatteskjoldets verdi er TC × D.'
         },
         {
@@ -356,7 +356,7 @@ export const modul8KapitalstrukturModule: Module = {
           id: 'kapitalstruktur-8-3-formula-wacc',
           type: 'formula',
           order: 4,
-          formula: 'WACC = (E/V) × rE + (D/V) × rD × (1 - TC)',
+          formula: '$$WACC = \\dfrac{E}{V} \\times r_E + \\dfrac{D}{V} \\times r_D \\times (1 - T_C)$$',
           description: 'E = egenkapital, D = gjeld, V = totalverdi (E+D), rE = egenkapitalkostnad, rD = gjeldskostnad, TC = skattesats'
         },
         {
@@ -390,7 +390,7 @@ export const modul8KapitalstrukturModule: Module = {
           id: 'kapitalstruktur-8-3-formula-capm',
           type: 'formula',
           order: 9,
-          formula: 'rE = rf + β × (rm - rf)',
+          formula: '$$r_E = r_f + \\beta \\times (r_m - r_f)$$',
           description: 'rf = risikofri rente, β = aksjens beta, rm = forventet markedsavkastning, (rm - rf) = markedets risikopremie'
         },
         {
@@ -425,7 +425,7 @@ export const modul8KapitalstrukturModule: Module = {
           id: 'kapitalstruktur-8-3-formula-gjeldskost',
           type: 'formula',
           order: 14,
-          formula: 'Gjeldskostnad etter skatt = rD × (1 - TC)',
+          formula: '$$r_{D,\\text{etter skatt}} = r_D \\times (1 - T_C)$$',
           description: 'rD = gjeldskostnad før skatt, TC = selskapsskattesats. Skattefradraget reduserer den effektive kostnaden.'
         },
         {
@@ -552,14 +552,14 @@ export const modul8KapitalstrukturModule: Module = {
           id: 'kapitalstruktur-8-4-formula-utbytteandel',
           type: 'formula',
           order: 6,
-          formula: 'Utbytteandel = Dividende per aksje / Resultat per aksje',
+          formula: '$$\\text{Utbytteandel} = \\dfrac{\\text{Dividende per aksje}}{\\text{Resultat per aksje}}$$',
           description: 'Viser hvor stor andel av overskuddet som utbetales som dividende. Også kalt payout ratio.'
         },
         {
           id: 'kapitalstruktur-8-4-formula-direkteavkast',
           type: 'formula',
           order: 7,
-          formula: 'Direkteavkastning = Dividende per aksje / Aksjekurs',
+          formula: '$$\\text{Direkteavkastning} = \\dfrac{\\text{Dividende per aksje}}{\\text{Aksjekurs}}$$',
           description: 'Viser dividenden som prosent av aksjekursen. Også kalt dividend yield.'
         },
         {
