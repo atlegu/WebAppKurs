@@ -116,6 +116,8 @@ export class InteractiveModelHandler {
         return this.calculateCapitalStructure(state);
       case 'yield-curve':
         return this.calculateYieldCurve(state);
+      case 'compound-growth':
+        return this.calculateCompoundGrowth(state);
       default:
         return {};
     }
@@ -471,6 +473,24 @@ export class InteractiveModelHandler {
     };
   }
 
+  // ============== COMPOUND GROWTH (SIMPLE VS COMPOUND) ==============
+  private calculateCompoundGrowth(state: StateRecord): StateRecord {
+    const { principal, rate, years } = state;
+    const r = rate / 100;
+    const simpleValue = principal * (1 + r * years);
+    const compoundValue = principal * Math.pow(1 + r, years);
+    const compoundExtra = compoundValue - simpleValue;
+    const totalGrowth = compoundValue - principal;
+    const interestShare = compoundValue > 0 ? (totalGrowth / compoundValue) * 100 : 0;
+    return {
+      simpleValue,
+      compoundValue,
+      compoundExtra,
+      totalGrowth,
+      interestShare
+    };
+  }
+
   // ============== SENSITIVITY SPIDER (TORNADO DIAGRAM) ==============
   private calculateSensitivitySpider(state: StateRecord): StateRecord {
     const { investment, annualCashFlow, discountRate, years, priceChange, volumeChange, costChange } = state;
@@ -699,6 +719,8 @@ export class InteractiveModelHandler {
         return this.generateCapitalStructureChartData(state);
       case 'yield-curve':
         return this.generateYieldCurveChartData(state);
+      case 'compound-growth':
+        return this.generateCompoundGrowthChartData(state);
       default:
         return [];
     }
@@ -954,6 +976,21 @@ export class InteractiveModelHandler {
     return data;
   }
 
+  private generateCompoundGrowthChartData(state: StateRecord): ChartDataPoint[] {
+    const { principal, rate, years } = state;
+    const r = rate / 100;
+    const data: ChartDataPoint[] = [];
+    const maxYear = Math.min(years, 60);
+    for (let year = 0; year <= maxYear; year++) {
+      data.push({
+        year,
+        simpleValue: principal * (1 + r * year),
+        compoundValue: principal * Math.pow(1 + r, year)
+      });
+    }
+    return data;
+  }
+
   private generateSensitivityChartData(state: StateRecord): ChartDataPoint[] {
     const { investment, annualCashFlow, discountRate, years } = state;
     const data: ChartDataPoint[] = [];
@@ -1180,6 +1217,13 @@ export class InteractiveModelHandler {
       xMax = data.length > 0 ? Math.max(...data.map(d => d.year)) : 30;
       yMin = 0;
       yMax = data.length > 0 ? Math.max(...data.map(d => d.nominalValue)) * 1.1 : 100;
+    } else if (modelType === 'compound-growth') {
+      xLabel = 'År';
+      yLabel = 'Verdi (kr)';
+      xMin = 0;
+      xMax = data.length > 0 ? Math.max(...data.map(d => d.year)) : 30;
+      yMin = 0;
+      yMax = data.length > 0 ? Math.max(...data.map(d => d.compoundValue)) * 1.05 : 100;
     } else if (modelType === 'sensitivity-spider') {
       xLabel = 'NPV (kr)';
       yLabel = '';
@@ -1225,6 +1269,11 @@ export class InteractiveModelHandler {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('width', width.toString());
     svg.setAttribute('height', height.toString());
+    // viewBox + responsive sizing so charts scale (not clip) on mobile
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    svg.style.maxWidth = '100%';
+    svg.style.height = 'auto';
     svg.style.fontFamily = 'Inter, system-ui, sans-serif';
 
     // Add grid lines
@@ -1512,6 +1561,50 @@ export class InteractiveModelHandler {
       realLegend.setAttribute('font-size', '10');
       realLegend.textContent = '— Kjøpekraft';
       svg.appendChild(realLegend);
+    } else if (modelType === 'compound-growth') {
+      // Shaded area between the curves = the compounding bonus
+      const areaPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const areaPoints =
+        data.map((d, i) => `${i === 0 ? 'M' : 'L'} ${scaleX(d.year)} ${scaleY(d.compoundValue)}`).join(' ') +
+        data.slice().reverse().map((d) => `L ${scaleX(d.year)} ${scaleY(d.simpleValue)}`).join(' ') + ' Z';
+      areaPath.setAttribute('d', areaPoints);
+      areaPath.setAttribute('fill', 'rgba(4, 101, 48, 0.15)');
+      svg.appendChild(areaPath);
+
+      // Simple interest — linear, dashed grey
+      const simplePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      simplePath.setAttribute('d', data.map((d, i) => `${i === 0 ? 'M' : 'L'} ${scaleX(d.year)} ${scaleY(d.simpleValue)}`).join(' '));
+      simplePath.setAttribute('fill', 'none');
+      simplePath.setAttribute('stroke', '#6b7280');
+      simplePath.setAttribute('stroke-width', '2');
+      simplePath.setAttribute('stroke-dasharray', '5,5');
+      svg.appendChild(simplePath);
+
+      // Compound interest — exponential, solid green
+      const compoundPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      compoundPath.setAttribute('d', data.map((d, i) => `${i === 0 ? 'M' : 'L'} ${scaleX(d.year)} ${scaleY(d.compoundValue)}`).join(' '));
+      compoundPath.setAttribute('fill', 'none');
+      compoundPath.setAttribute('stroke', '#046530');
+      compoundPath.setAttribute('stroke-width', '2.5');
+      svg.appendChild(compoundPath);
+
+      // Legend
+      const legendY = margin.top + 10;
+      const simpleLegend = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      simpleLegend.setAttribute('x', (margin.left + 10).toString());
+      simpleLegend.setAttribute('y', legendY.toString());
+      simpleLegend.setAttribute('fill', '#6b7280');
+      simpleLegend.setAttribute('font-size', '10');
+      simpleLegend.textContent = '- - Enkel rente';
+      svg.appendChild(simpleLegend);
+
+      const compoundLegend = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      compoundLegend.setAttribute('x', (margin.left + 110).toString());
+      compoundLegend.setAttribute('y', legendY.toString());
+      compoundLegend.setAttribute('fill', '#046530');
+      compoundLegend.setAttribute('font-size', '10');
+      compoundLegend.textContent = '— Renters rente';
+      svg.appendChild(compoundLegend);
     } else if (modelType === 'sensitivity-spider') {
       // Tornado diagram (horizontal bars)
       const barHeight = chartHeight / (data.length + 1);

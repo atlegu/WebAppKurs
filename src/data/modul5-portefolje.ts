@@ -152,7 +152,7 @@ export const modul5PortefoljeModule: Module = {
           order: 14,
           title: 'Case: Enron-konkursen 2001',
           content: 'Enron var USAs 7. største selskap. Ansatte ble oppfordret til å ha pensjonsmidlene i Enron-aksjer.',
-          calculation: '**Desember 2000:** Enron-aksjen på $90\n**Desember 2001:** Enron erklærer konkurs, aksjen verdiløs\n\n**Ansatt A (100% i Enron):**\nPensjonsverdi: $500 000 → $0\nTapt: ALT\n\n**Ansatt B (5% i Enron, 95% diversifisert):**\nEnron-tap: $25 000 → $0\nRest av porteføljen: $475 000 × 0,95 = $451 250\n**Totalt tap: ca 10%**\n\nForskjellen mellom total ruin og en håndterbar nedgang.'
+          calculation: '**Desember 2000:** Enron-aksjen på USD 90\n**Desember 2001:** Enron erklærer konkurs, aksjen verdiløs\n\n**Ansatt A (100% i Enron):**\nPensjonsverdi: USD 500 000 → USD 0\nTapt: ALT\n\n**Ansatt B (5% i Enron, 95% diversifisert):**\nEnron-tap: USD 25 000 → USD 0\nRest av porteføljen: USD 475 000 × 0,95 = USD 451 250\n**Totalt tap: ca 10%**\n\nForskjellen mellom total ruin og en håndterbar nedgang.'
         },
         {
           id: '5-1-heading-typer',

@@ -22,6 +22,7 @@ import {
   ExerciseSet
 } from '../types/course';
 import { ExerciseSetHandler } from './ExerciseSetHandler';
+import { renderLatex } from '../utils/latex';
 
 export class ContentRenderer {
   private container: HTMLElement;
@@ -127,9 +128,15 @@ export class ContentRenderer {
   }
 
   private renderFormula(content: FormulaContent): string {
+    // Formulas that use $-delimiters are rendered with KaTeX; plain Unicode
+    // formulas keep the legacy monospace display until they're migrated.
+    const hasLatex = content.formula.includes('$');
+    const body = hasLatex
+      ? `<div class="formula-katex">${renderLatex(content.formula)}</div>`
+      : `<div class="formula-display">${content.formula}</div>`;
     return `
       <div class="content-formula">
-        <div class="formula-display">${content.formula}</div>
+        ${body}
         ${content.description ? `<div class="formula-description">${this.formatText(content.description)}</div>` : ''}
       </div>
     `;
@@ -498,17 +505,21 @@ export class ContentRenderer {
   }
 
   private formatText(text: string): string {
-    // Convert line breaks to <br> tags
-    let formatted = text.replace(/\n/g, '<br>');
+    // Render LaTeX math first so the markdown/newline passes below never touch
+    // the generated KaTeX HTML. (Regexes exclude '<' for the same reason.)
+    let formatted = renderLatex(text);
 
     // Convert **bold** to <strong>
-    formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    formatted = formatted.replace(/\*\*([^*<]+)\*\*/g, '<strong>$1</strong>');
 
     // Convert *italic* to <em>
-    formatted = formatted.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    formatted = formatted.replace(/\*([^*<\n]+?)\*/g, '<em>$1</em>');
 
     // Convert `code` to <code>
-    formatted = formatted.replace(/`(.*?)`/g, '<code>$1</code>');
+    formatted = formatted.replace(/`([^`]+?)`/g, '<code>$1</code>');
+
+    // Convert line breaks to <br> tags
+    formatted = formatted.replace(/\n/g, '<br>');
 
     return formatted;
   }

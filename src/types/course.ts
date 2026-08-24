@@ -270,7 +270,8 @@ export type InteractiveModelType =
   | 'inflation-visualizer'
   | 'sensitivity-spider'
   | 'capital-structure'
-  | 'yield-curve';
+  | 'yield-curve'
+  | 'compound-growth';
 
 export interface ModelControl {
   key: string;

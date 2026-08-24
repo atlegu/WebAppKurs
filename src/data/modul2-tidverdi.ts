@@ -134,9 +134,9 @@ export const modul2TidverdiModule: Module = {
           id: '2-1-example',
           type: 'example',
           order: 12,
-          title: 'Emmas valg: Leilighet nå eller vente?',
-          content: 'Emma (28) har spart opp 500 000 kr til egenkapital. Hun vurderer å kjøpe leilighet nå eller vente 2 år til hun har spart opp 700 000 kr.\n\n**Scenario A: Kjøpe nå**\n- Egenkapital: 500 000 kr\n- Leilighetspris: 3 000 000 kr\n- Lån: 2 500 000 kr\n- Om 2 år: Leiligheten kan ha steget i verdi, og hun har begynt å betale ned lånet\n\n**Scenario B: Vente 2 år**\n- Sparepenger vokser til 700 000 kr\n- Men: Leilighetsprisen kan ha steget til 3 300 000 kr\n- Lån: 2 600 000 kr (mer enn før!)\n- I tillegg: 2 år med husleie "tapt"',
-          calculation: 'Hvis Emma betaler 12 000 kr/mnd i husleie i 2 år:\n12 000 × 24 = 288 000 kr i "tapt" husleie\n\nHvis leilighetsprisen stiger 5% per år:\n3 000 000 × 1.05² = 3 307 500 kr\n\n**Konklusjon:** Ved å vente "sparer" Emma 200 000 kr i egenkapital, men "taper" 288 000 kr i husleie og må betale 307 500 kr mer for leiligheten. Totalt tap: ca 395 500 kr.'
+          title: 'Pengene som lå under madrassen',
+          content: 'To søsken arver 100 000 kr hver i 2015.\n\n**Anna** setter pengene i et bredt indeksfond.\n**Ola** legger dem i en skoeske «for sikkerhets skyld».\n\nTi år senere, i 2025, teller de opp.',
+          calculation: 'Med 7% årlig avkastning har Annas penger vokst til:\n100 000 × 1,07¹⁰ = **196 715 kr**\n\nOlas skoeske inneholder fortsatt **100 000 kr** – men med ~3% årlig inflasjon tilsvarer kjøpekraften bare ca **74 000 kr** i 2015-kroner.\n\n**Anna er nesten dobbelt så rik som Ola** – uten å ha løftet en finger. Forskjellen er ren tidsverdi: penger som står i arbeid vokser, mens penger som ligger stille taper kjøpekraft. Det er nettopp dette resten av modulen handler om.'
         },
         {
           id: '2-1-quiz',
@@ -205,7 +205,7 @@ export const modul2TidverdiModule: Module = {
           id: '2-2-formula-enkel',
           type: 'formula',
           order: 4,
-          formula: 'Enkel rente = Hovedstol × Rente × Tid',
+          formula: '$$\\text{Enkel rente} = \\text{Hovedstol} \\times \\text{rente} \\times \\text{tid}$$',
           description: 'Hvis du investerer 10 000 kr til 5% enkel rente i 3 år: 10 000 × 0.05 × 3 = 1 500 kr i rente. Total: 11 500 kr.'
         },
         {
@@ -219,7 +219,7 @@ export const modul2TidverdiModule: Module = {
           id: '2-2-formula-compound',
           type: 'formula',
           order: 6,
-          formula: 'FV = PV × (1 + r)^n',
+          formula: '$$FV = PV \\cdot (1+r)^n$$',
           description: 'FV = Fremtidsverdi, PV = Nåverdi (startbeløp), r = rente per periode, n = antall perioder.\n\nSamme eksempel med renters rente: 10 000 × (1.05)³ = 11 576 kr. Du tjener 76 kr mer!'
         },
         {
@@ -257,6 +257,36 @@ export const modul2TidverdiModule: Module = {
           emphasis: 'important'
         },
         {
+          id: '2-2-model-growth',
+          type: 'interactive-model',
+          order: 10.5,
+          modelType: 'compound-growth',
+          title: 'Enkel vs. renters rente – se kurven bli brattere',
+          description: 'Dra i skyveknappene og se forskjellen mellom enkel rente (grå, rett linje) og renters rente (grønn, buet linje). Det grønne området er «renters rente-effekten» – rentene som selv gir renter.',
+          controls: [
+            { key: 'principal', label: 'Startbeløp', type: 'slider', min: 10000, max: 1000000, step: 10000, default: 100000, unit: ' kr', helpText: 'Beløpet du starter med' },
+            { key: 'rate', label: 'Årlig rente', type: 'slider', min: 1, max: 15, step: 0.5, default: 7, unit: '%', helpText: 'Historisk aksjeavkastning ligger rundt 7%' },
+            { key: 'years', label: 'Antall år', type: 'slider', min: 1, max: 50, step: 1, default: 30, unit: ' år', helpText: 'Tidshorisont' }
+          ],
+          outputs: [
+            { key: 'compoundValue', label: 'Med renters rente', unit: ' kr', precision: 0, highlight: true },
+            { key: 'simpleValue', label: 'Med enkel rente', unit: ' kr', precision: 0 },
+            { key: 'compoundExtra', label: 'Renters rente-effekten (ekstra)', unit: ' kr', precision: 0 },
+            { key: 'interestShare', label: 'Andel av sluttbeløp som er renter', unit: '%', precision: 0 }
+          ],
+          charts: [{
+            type: 'line',
+            title: 'Vekst over tid',
+            xAxis: { key: 'year', label: 'År' },
+            yAxis: { key: 'value', label: 'Verdi (kr)' },
+            series: [
+              { key: 'simple', name: 'Enkel rente', color: '#6b7280' },
+              { key: 'compound', name: 'Renters rente', color: '#046530' }
+            ]
+          }],
+          explanation: 'Den grå stiplede linjen er **enkel rente** – du får samme rentebeløp hvert år, så den vokser rett (lineært). Den grønne linjen er **renters rente** – rentene legges til hovedstolen og gir selv renter, så veksten akselererer (eksponentielt).\n\nDet grønne området mellom kurvene er ren renters rente-effekt. Legg merke til hvordan det nesten ikke er synlig de første årene, men eksploderer mot slutten. Derfor er tid din viktigste allierte: jo lengre horisont, jo større blir gapet.'
+        },
+        {
           id: '2-2-heading-regel72',
           type: 'heading',
           order: 11,
@@ -274,7 +304,7 @@ export const modul2TidverdiModule: Module = {
           id: '2-2-formula-72',
           type: 'formula',
           order: 13,
-          formula: 'Antall år for dobling ≈ 72 ÷ rente(%)',
+          formula: '$$n_{\\text{dobling}} \\approx \\dfrac{72}{r\\,(\\%)}$$',
           description: 'Med 6% rente: 72 ÷ 6 = 12 år for å doble pengene.\nMed 8% rente: 72 ÷ 8 = 9 år for å doble pengene.\nMed 3% rente: 72 ÷ 3 = 24 år for å doble pengene.'
         },
         {
@@ -323,7 +353,7 @@ export const modul2TidverdiModule: Module = {
               helpText: 'Hvor lenge pengene skal stå'
             }
           ],
-          formula: 'FV = PV × (1 + r)^n',
+          formula: '$$FV = PV \\cdot (1+r)^n$$',
           resultLabel: 'Fremtidsverdi',
           resultUnit: 'kr',
           explanation: 'Se hvordan tid og rente påvirker sluttsummen'
@@ -415,7 +445,7 @@ export const modul2TidverdiModule: Module = {
           id: '2-3-formula-fv',
           type: 'formula',
           order: 5,
-          formula: 'FV = PV × (1 + r)^n',
+          formula: '$$FV = PV \\cdot (1+r)^n$$',
           description: 'FV = Fremtidsverdi\nPV = Nåverdi (dagens beløp)\nr = rente per periode (som desimaltall)\nn = antall perioder'
         },
         {
@@ -444,7 +474,7 @@ export const modul2TidverdiModule: Module = {
           id: '2-3-formula-pv',
           type: 'formula',
           order: 9,
-          formula: 'PV = FV ÷ (1 + r)^n',
+          formula: '$$PV = \\dfrac{FV}{(1+r)^n}$$',
           description: 'Denne formelen er bare fremtidsverdi-formelen snudd på hodet. Vi "diskonterer" det fremtidige beløpet tilbake til i dag.'
         },
         {
@@ -533,7 +563,7 @@ export const modul2TidverdiModule: Module = {
               helpText: 'År til du mottar beløpet'
             }
           ],
-          formula: 'PV = FV ÷ (1 + r)^n',
+          formula: '$$PV = \\dfrac{FV}{(1+r)^n}$$',
           resultLabel: 'Nåverdi',
           resultUnit: 'kr',
           explanation: 'Se hvordan tidshorisonten og renten påvirker nåverdien'
@@ -619,7 +649,7 @@ export const modul2TidverdiModule: Module = {
           id: '2-4-formula-fv-annuitet',
           type: 'formula',
           order: 6,
-          formula: 'FV = PMT × [(1 + r)^n - 1] ÷ r',
+          formula: '$$FV = PMT \\cdot \\dfrac{(1+r)^n - 1}{r}$$',
           description: 'FV = Fremtidsverdi\nPMT = Periodisk innbetaling\nr = rente per periode\nn = antall perioder\n\nDenne formelen brukes for å beregne verdien av regelmessig sparing.'
         },
         {
@@ -668,7 +698,7 @@ export const modul2TidverdiModule: Module = {
               helpText: 'Hvor lenge du sparer'
             }
           ],
-          formula: 'FV = PMT × [(1+r)^n - 1] ÷ r',
+          formula: '$$FV = PMT \\cdot \\dfrac{(1+r)^n - 1}{r}$$',
           resultLabel: 'Total oppsparing',
           resultUnit: 'kr',
           explanation: 'Se effekten av tid og avkastning på sparingen din'
@@ -684,7 +714,7 @@ export const modul2TidverdiModule: Module = {
           id: '2-4-formula-laan',
           type: 'formula',
           order: 10,
-          formula: 'PMT = PV × [r × (1 + r)^n] ÷ [(1 + r)^n - 1]',
+          formula: '$$PMT = PV \\cdot \\dfrac{r\\,(1+r)^n}{(1+r)^n - 1}$$',
           description: 'PMT = Månedlig betaling\nPV = Lånebeløp\nr = månedlig rente\nn = antall månedlige betalinger\n\nDette er annuitetsformelen for å beregne månedlige låneavdrag.'
         },
         {
@@ -733,7 +763,7 @@ export const modul2TidverdiModule: Module = {
               helpText: 'Antall år på lånet'
             }
           ],
-          formula: 'PMT = PV × [r(1+r)^n] ÷ [(1+r)^n-1]',
+          formula: '$$PMT = PV \\cdot \\dfrac{r\\,(1+r)^n}{(1+r)^n - 1}$$',
           resultLabel: 'Månedlig betaling',
           resultUnit: 'kr',
           explanation: 'Se hvordan rente og løpetid påvirker kostnaden'
@@ -814,12 +844,234 @@ export const modul2TidverdiModule: Module = {
     },
 
     // ===================================
-    // SEKSJON 2.5: Inflasjonens skjulte kostnad
+    // SEKSJON 2.5: Perpetuiteter, effektiv rente og NPV
+    // ===================================
+    {
+      id: 'seksjon-perpetuitet-effektiv-npv',
+      title: 'Perpetuiteter, effektiv rente og NPV',
+      icon: '♾️',
+      order: 5,
+      content: [
+        {
+          id: '2-6-laeringsmal',
+          type: 'keypoint',
+          order: 1,
+          points: [
+            'Verdsette evigvarende kontantstrømmer (perpetuiteter), også med vekst',
+            'Skille nominell og effektiv rente – og regne om mellom dem',
+            'Beregne nåverdien (NPV) av et helt prosjekt',
+            'Justere for forskuddsvise betalinger og løse for tid'
+          ]
+        },
+        {
+          id: '2-6-heading-perp',
+          type: 'heading',
+          order: 2,
+          text: 'Perpetuitet – en evig kontantstrøm',
+          level: 2
+        },
+        {
+          id: '2-6-perp-hook',
+          type: 'text',
+          order: 3,
+          text: 'Noen kontantstrømmer tar aldri slutt. Den britiske staten utstedte «consols» som betalte en fast kupong for alltid, og en aksje med stabilt utbytte kan tilnærmes på samme måte. Hvordan kan noe som varer evig ha en *endelig* verdi? Fordi kroner langt inn i fremtiden er nesten verdiløse i dag.',
+          emphasis: 'important'
+        },
+        {
+          id: '2-6-perp-def',
+          type: 'definition',
+          order: 4,
+          term: 'Perpetuitet',
+          definition: 'En serie like store betalinger som fortsetter i det uendelige. Nåverdien er overraskende enkel: du deler betalingen på renten.'
+        },
+        {
+          id: '2-6-perp-formula',
+          type: 'formula',
+          order: 5,
+          formula: '$$PV = \\dfrac{C}{r}$$',
+          description: 'C = fast betaling per periode, r = avkastningskrav per periode. Forutsetter at første betaling kommer om én periode (etterskuddsvis).'
+        },
+        {
+          id: '2-6-perp-example',
+          type: 'example',
+          order: 6,
+          title: 'Evig premie (fra Oppgavesett 0, oppgave 11)',
+          content: 'En tv-premie gir deg **10 300 kr hvert år til evig tid**. Hva er den verdt i dag?',
+          calculation: '**Ved 12% avkastningskrav:**\nPV = 10 300 / 0,12 = **85 833 kr**\n\n**Ved 5% avkastningskrav:**\nPV = 10 300 / 0,05 = **206 000 kr**\n\nLavere rente → hver fremtidig krone diskonteres mindre → mye høyere verdi.\n\n**Merk:** Kommer første betaling allerede i dag (forskuddsvis), legger du til én ekstra betaling: $PV = C + C/r$. Ved 12%: 10 300 + 85 833 = 96 133 kr.'
+        },
+        {
+          id: '2-6-heading-gperp',
+          type: 'heading',
+          order: 7,
+          text: 'Voksende perpetuitet',
+          level: 2
+        },
+        {
+          id: '2-6-gperp-text',
+          type: 'text',
+          order: 8,
+          text: 'Ofte vokser betalingene over tid – for eksempel et utbytte som øker med inflasjonen. Da bruker vi en litt utvidet formel, kjent som **Gordons vekstformel**. Den dukker opp igjen når vi verdsetter aksjer i modul 5.'
+        },
+        {
+          id: '2-6-gperp-formula',
+          type: 'formula',
+          order: 9,
+          formula: '$$PV = \\dfrac{C_1}{r - g}$$',
+          description: 'C₁ = betalingen om ett år (den første), g = konstant vekstrate. Formelen krever r > g – ellers vokser strømmen fortere enn den diskonteres, og verdien blir uendelig.'
+        },
+        {
+          id: '2-6-gperp-example',
+          type: 'example',
+          order: 10,
+          title: 'Voksende premie (Oppgavesett 0, oppgave 11)',
+          content: 'En premie gir **7 000 kr neste år**, som deretter **øker med 4% hvert år** for alltid.',
+          calculation: '**Ved 12% avkastningskrav:**\nPV = 7 000 / (0,12 − 0,04) = 7 000 / 0,08 = **87 500 kr**\n\n**Ved 5% avkastningskrav:**\nPV = 7 000 / (0,05 − 0,04) = 7 000 / 0,01 = **700 000 kr**\n\nLegg merke til hvor eksplosivt verdien øker når renten nærmer seg vekstraten (r − g blir liten). Det er både kraften og faren i formelen.'
+        },
+        {
+          id: '2-6-gperp-quiz',
+          type: 'quiz',
+          order: 11,
+          question: 'Hvorfor krever formelen for voksende perpetuitet at r > g?',
+          options: [
+            'Fordi renten alltid må være positiv',
+            'Fordi verdien blir uendelig hvis veksten er lik eller større enn renten',
+            'Fordi g må være mindre enn 1',
+            'Det er ikke noe slikt krav'
+          ],
+          correctAnswer: 1,
+          explanation: 'Hvis g ≥ r vokser de fremtidige betalingene minst like fort som de diskonteres. Da konvergerer ikke summen, og nåverdien blir uendelig stor – matematisk meningsløst.'
+        },
+        {
+          id: '2-6-heading-eff',
+          type: 'heading',
+          order: 12,
+          text: 'Effektiv rente – når renten forrentes oftere enn årlig',
+          level: 2
+        },
+        {
+          id: '2-6-eff-hook',
+          type: 'text',
+          order: 13,
+          text: 'Et kredittkort lokker med «bare 2% i måneden». Høres billig ut? Regn om til årlig rente, så ser du sannheten. Når renter legges til flere ganger i året, blir den *effektive* årsrenten høyere enn den *nominelle*.',
+          emphasis: 'warning'
+        },
+        {
+          id: '2-6-eff-def',
+          type: 'definition',
+          order: 14,
+          term: 'Nominell vs. effektiv rente',
+          definition: 'Nominell årsrente er den oppgitte renten uten hensyn til hvor ofte renten beregnes. Effektiv årsrente tar hensyn til renter-på-renter innad i året, og viser den reelle årlige kostnaden eller avkastningen.'
+        },
+        {
+          id: '2-6-eff-formula',
+          type: 'formula',
+          order: 15,
+          formula: '$$r_{\\text{eff}} = \\left(1 + \\dfrac{r_{\\text{nom}}}{m}\\right)^{m} - 1$$',
+          description: 'r_nom = nominell årsrente, m = antall renteperioder per år (12 for månedlig, 4 for kvartalsvis, 365 for daglig).'
+        },
+        {
+          id: '2-6-eff-example',
+          type: 'example',
+          order: 16,
+          title: 'Kredittkortet som ikke var billig',
+          content: 'Kortet tar **2% per måned**. Hva er den effektive årsrenten?',
+          calculation: 'Nominell årsrente er 12 × 2% = 24%, med månedlig renteberegning (m = 12):\n\n$r_{eff} = (1 + 0{,}02)^{12} - 1 = 1{,}268 - 1 = $ **26,8%**\n\nDen «lille» månedsrenten tilsvarer nesten 27% i året. Til sammenligning gir en sparekonto med 12% nominell rente og månedlig kapitalisering $(1 + 0{,}12/12)^{12} - 1 = $ **12,68%** effektivt.'
+        },
+        {
+          id: '2-6-eff-quiz',
+          type: 'quiz',
+          order: 17,
+          question: 'To banker tilbyr 6% nominell årsrente. Bank A kapitaliserer årlig, bank B månedlig. Hvilken gir høyest effektiv rente?',
+          options: [
+            'Bank A (årlig)',
+            'Bank B (månedlig)',
+            'De er helt like',
+            'Umulig å si'
+          ],
+          correctAnswer: 1,
+          explanation: 'Jo oftere rentene legges til, jo mer renter-på-renter. Bank B: (1 + 0,06/12)¹² − 1 ≈ 6,17%, mot bank A sine 6,00%. Hyppigere kapitalisering gir alltid høyere effektiv rente.'
+        },
+        {
+          id: '2-6-heading-npv',
+          type: 'heading',
+          order: 18,
+          text: 'Nåverdimetoden (NPV) – å verdsette et helt prosjekt',
+          level: 2
+        },
+        {
+          id: '2-6-npv-text',
+          type: 'text',
+          order: 19,
+          text: 'Alt vi har lært samles nå i ett verktøy. **Netto nåverdi (NPV)** er summen av nåverdiene til alle inn- og utbetalinger i et prosjekt – inkludert investeringen du gjør i dag. Det er selve grunnsteinen i investeringsanalyse (modul 7), men prinsippet er ren tidsverdi.'
+        },
+        {
+          id: '2-6-npv-formula',
+          type: 'formula',
+          order: 20,
+          formula: '$$NPV = -I_0 + \\sum_{t=1}^{n} \\dfrac{CF_t}{(1+r)^t}$$',
+          description: 'I₀ = investeringen i dag, CF_t = kontantstrømmen i år t, r = avkastningskravet. Er NPV > 0, skaper prosjektet verdi.'
+        },
+        {
+          id: '2-6-npv-example',
+          type: 'example',
+          order: 21,
+          title: 'Er investeringen lønnsom?',
+          content: 'Du investerer **100 000 kr i dag** og får **45 000 kr per år i 3 år**. Avkastningskravet er 10%.',
+          calculation: 'Nåverdien av innbetalingene (annuitet):\nPV = 45 000 × [1 − 1,10⁻³] / 0,10 = 45 000 × 2,4869 = 111 908 kr\n\nNPV = −100 000 + 111 908 = **+11 908 kr**\n\nSiden NPV > 0, skaper prosjektet verdi utover avkastningskravet på 10% – du bør gjennomføre det.'
+        },
+        {
+          id: '2-6-npv-keypoint',
+          type: 'keypoint',
+          order: 22,
+          points: [
+            'NPV > 0: prosjektet er lønnsomt (skaper verdi)',
+            'NPV = 0: akkurat på avkastningskravet',
+            'NPV < 0: avslå – pengene gir bedre avkastning et annet sted',
+            'Vi går mye dypere inn i NPV, IRR og investeringsvalg i modul 7'
+          ]
+        },
+        {
+          id: '2-6-heading-detaljer',
+          type: 'heading',
+          order: 23,
+          text: 'To nyttige detaljer: forskuddsvis betaling og å løse for tid',
+          level: 2
+        },
+        {
+          id: '2-6-forskudd-text',
+          type: 'text',
+          order: 24,
+          text: '**Forskuddsvis vs. etterskuddsvis:** Standardformlene antar at første betaling kommer om én periode (etterskuddsvis). Kommer betalingen allerede i dag (forskuddsvis), er hver betaling ett år nærmere – da ganger du hele nåverdien med (1 + r).'
+        },
+        {
+          id: '2-6-loesetid-text',
+          type: 'text',
+          order: 25,
+          text: '**Løse for tid:** Noen ganger vet du start- og sluttbeløp og vil finne *antall år*. Da løser du fremtidsverdi-formelen for n med logaritmer:'
+        },
+        {
+          id: '2-6-loesetid-formula',
+          type: 'formula',
+          order: 26,
+          formula: '$$n = \\dfrac{\\ln(FV / PV)}{\\ln(1 + r)}$$',
+          description: 'Eksempel (Oppgavesett 0, oppgave 4): Hvor lenge før 92 000 kr vokser til 150 000 kr ved 5%? n = ln(150000/92000) / ln(1,05) ≈ 10 år.'
+        },
+        {
+          id: '2-6-refleksjon',
+          type: 'reflection',
+          order: 27,
+          question: 'Et lodd gir deg valget mellom 200 000 kr i dag, eller 25 000 kr i året for alltid (perpetuitet, første utbetaling neste år). Ved hvilket avkastningskrav er de to like mye verdt? Hva sier det deg om hvordan renten påvirker verdien av evige kontantstrømmer?'
+        }
+      ]
+    },
+
+    // ===================================
+    // SEKSJON 2.6: Inflasjonens skjulte kostnad
     // ===================================
     {
       id: 'seksjon-2-5-inflasjon',
       title: 'Inflasjonens skjulte kostnad',
-      order: 5,
+      order: 6,
       content: [
         {
           id: '2-5-intro-hook',
@@ -886,7 +1138,7 @@ export const modul2TidverdiModule: Module = {
           id: '2-5-formula-reell',
           type: 'formula',
           order: 10,
-          formula: 'Reell avkastning ≈ Nominell avkastning - Inflasjon',
+          formula: '$$r_{\\text{reell}} \\approx r_{\\text{nominell}} - \\text{inflasjon}$$',
           description: 'En enkel tilnærming som fungerer godt for lave renter.\n\nEksempel: 5% nominell avkastning - 2.5% inflasjon = 2.5% reell avkastning.\n\nMer presis formel: (1 + nominell) ÷ (1 + inflasjon) - 1'
         },
         {
@@ -1549,12 +1801,12 @@ export const modul2TidverdiModule: Module = {
         question: 'Med 7% årlig avkastning, hvor lang tid tar det omtrent å tredoble pengene?',
         options: [
           'Ca 8 år',
-          'Ca 16 år (to doblinger)',
+          'Ca 16 år',
           'Ca 21 år',
           'Ca 30 år'
         ],
         correctAnswer: 1,
-        explanation: '72-regelen: Én dobling tar 72÷7 ≈ 10 år. For å tredoble (2 til 4 = 2 doblinger) tar det ca 2 × 10 = 20 år. Alternativt: ca 16-17 år for nøyaktig tredobling.'
+        explanation: 'Akkurat som 72-regelen gir doblingstid, gir «114-regelen» tredoblingstid: 114 ÷ 7 ≈ 16 år. (Nøyaktig: ln 3 ÷ ln 1,07 ≈ 16,2 år.) Til sammenligning tar én dobling bare ca 72 ÷ 7 ≈ 10 år.'
       }
     ]
   }
