@@ -457,14 +457,14 @@ export const modul3ObligasjonerModule: Module = {
           id: '3-3-formula',
           type: 'formula',
           order: 8,
-          formula: 'Pris = C/(1+r)¹ + C/(1+r)² + ... + C/(1+r)ⁿ + F/(1+r)ⁿ',
+          formula: '$$P = \\dfrac{C}{(1+r)^1} + \\dfrac{C}{(1+r)^2} + \\cdots + \\dfrac{C}{(1+r)^n} + \\dfrac{F}{(1+r)^n}$$',
           description: 'Hvor:\n• C = Kupongbetaling per periode\n• r = Markedsrente per periode (diskonteringsrente)\n• n = Antall perioder til forfall\n• F = Pålydende (face value)'
         },
         {
           id: '3-3-formula-annuitet',
           type: 'formula',
           order: 9,
-          formula: 'Pris = C × [1 - (1+r)^(-n)] / r + F/(1+r)ⁿ',
+          formula: '$$P = C \\cdot \\dfrac{1 - (1+r)^{-n}}{r} + \\dfrac{F}{(1+r)^n}$$',
           description: 'Forenklet formel der første ledd er nåverdien av kupongene (annuitet) og andre ledd er nåverdien av pålydende.'
         },
         {
@@ -523,7 +523,7 @@ export const modul3ObligasjonerModule: Module = {
               helpText: 'Antall år til obligasjonen forfaller'
             }
           ],
-          formula: 'Pris = Σ C/(1+r)^t + F/(1+r)^n',
+          formula: '$$P = \\sum_{t=1}^{n} \\dfrac{C}{(1+r)^t} + \\dfrac{F}{(1+r)^n}$$',
           resultLabel: 'Obligasjonspris',
           resultUnit: 'kr',
           explanation: 'Se hvordan rente og løpetid påvirker prisen'
@@ -699,14 +699,14 @@ export const modul3ObligasjonerModule: Module = {
           id: '3-4-formula',
           type: 'formula',
           order: 9,
-          formula: 'Pris = C/(1+YTM)¹ + C/(1+YTM)² + ... + (C+F)/(1+YTM)ⁿ',
+          formula: '$$P = \\dfrac{C}{(1+YTM)^1} + \\dfrac{C}{(1+YTM)^2} + \\cdots + \\dfrac{C+F}{(1+YTM)^n}$$',
           description: 'YTM er den renten som gjør at nåverdien av alle fremtidige kontantstrømmer blir lik dagens pris. Denne ligningen må løses numerisk (prøving og feiling, eller med kalkulator/Excel).'
         },
         {
           id: '3-4-formula-approx',
           type: 'formula',
           order: 10,
-          formula: 'YTM ≈ [C + (F - P) / n] / [(F + P) / 2]',
+          formula: '$$YTM \\approx \\dfrac{C + (F - P)/n}{(F + P)/2}$$',
           description: 'Tilnærmet formel:\n• C = Årlig kupongbetaling\n• F = Pålydende (Face value)\n• P = Pris\n• n = År til forfall\n\nDenne gir et godt estimat uten kompleks matematikk.'
         },
         {
@@ -715,7 +715,7 @@ export const modul3ObligasjonerModule: Module = {
           order: 11,
           title: 'Beregne YTM steg for steg',
           content: 'Du finner en obligasjon med:\n• Pålydende: 1 000 kr\n• Kupongrente: 5% (kupong = 50 kr/år)\n• Løpetid: 3 år\n• Pris: 960 kr (underkurs)',
-          calculation: '**Med tilnærmet formel:**\n\nYTM ≈ [50 + (1000 - 960) / 3] / [(1000 + 960) / 2]\nYTM ≈ [50 + 13,33] / 980\nYTM ≈ 63,33 / 980\nYTM ≈ **6,46%**\n\n**Med Excel/kalkulator (nøyaktig):**\nYTM = 6,76%\n\n**Tolkning:** Selv om kupongrenten bare er 5%, blir din faktiske avkastning 6,76% fordi du kjøper med 4% rabatt og får tilbake fulle 1 000 kr ved forfall.'
+          calculation: '**Med tilnærmet formel:**\n\nYTM ≈ [50 + (1000 - 960) / 3] / [(1000 + 960) / 2]\nYTM ≈ [50 + 13,33] / 980\nYTM ≈ 63,33 / 980\nYTM ≈ **6,46%**\n\n**Med Excel/kalkulator (nøyaktig):**\nYTM = 6,51%\n\n**Tolkning:** Selv om kupongrenten bare er 5%, blir din faktiske avkastning 6,51% fordi du kjøper med 4% rabatt og får tilbake fulle 1 000 kr ved forfall.'
         },
         {
           id: '3-4-example-overkurs',
@@ -864,7 +864,7 @@ export const modul3ObligasjonerModule: Module = {
           id: '3-5-formula-modifisert',
           type: 'formula',
           order: 7,
-          formula: 'Modifisert durasjon = Macaulay-durasjon / (1 + r)',
+          formula: '$$D_{\\text{mod}} = \\dfrac{D_{\\text{Macaulay}}}{1 + r}$$',
           description: 'Der r = markedsrente per periode.\n\nPrisendring ≈ -Modifisert durasjon × Renteendring\n\nEksempel: Med modifisert durasjon 5 og renteøkning på 1%:\nPrisendring ≈ -5 × 1% = -5%'
         },
         {
