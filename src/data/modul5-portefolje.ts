@@ -326,7 +326,7 @@ export const modul5PortefoljeModule: Module = {
           id: '5-2-formula-portefolje',
           type: 'formula',
           order: 10,
-          formula: 'σ_p² = w₁²σ₁² + w₂²σ₂² + 2w₁w₂σ₁σ₂ρ₁₂',
+          formula: '$$\\sigma_p^2 = w_1^2\\sigma_1^2 + w_2^2\\sigma_2^2 + 2\\,w_1 w_2\\, \\sigma_1 \\sigma_2\\, \\rho_{12}$$',
           description: 'For en portefølje med to aktiva:\n• σ_p = porteføljens risiko (standardavvik)\n• w = vekt i porteføljen\n• σ = standardavvik (risiko) for hver aktiva\n• ρ = korrelasjon mellom aktivaene\n\nNøkkelinnsikt: Lavere ρ → lavere porteføljerisiko!'
         },
         {
@@ -438,6 +438,164 @@ export const modul5PortefoljeModule: Module = {
           type: 'reflection',
           order: 22,
           question: 'Mange nordmenn har mye av formuen i bolig og norske aksjer. Hva tror du korrelasjonen er mellom norsk boligpris og Oslo Børs? Er dette god diversifisering?'
+        }
+      ]
+    },
+
+    // ===================================
+    // SEKSJON 5.2b: Regne på avkastning og risiko
+    // ===================================
+    {
+      id: 'seksjon-5-2b-regne-risiko',
+      title: 'Regne på avkastning og risiko',
+      icon: '🧮',
+      order: 2.5,
+      content: [
+        {
+          id: '5-2b-laeringsmal',
+          type: 'keypoint',
+          order: 1,
+          points: [
+            'Dele avkastning i direkteavkastning og kursgevinst',
+            'Beregne forventet avkastning og risiko fra en sannsynlighetsfordeling',
+            'Skille aritmetisk og geometrisk gjennomsnitt',
+            'Regne porteføljeavkastning og -risiko for to aktiva',
+            'Beregne og tolke Sharpe-raten'
+          ]
+        },
+        {
+          id: '5-2b-heading-avk',
+          type: 'heading',
+          order: 2,
+          level: 2,
+          text: 'Avkastning: direkteavkastning + kursgevinst'
+        },
+        {
+          id: '5-2b-formula-return',
+          type: 'formula',
+          order: 3,
+          formula: '$$R = \\frac{Div_1 + (P_1 - P_0)}{P_0} = \\underbrace{\\frac{Div_1}{P_0}}_{\\text{direkteavkastning}} + \\underbrace{\\frac{P_1 - P_0}{P_0}}_{\\text{kursgevinst}}$$',
+          description: 'Totalavkastningen på en aksje er summen av utbytte og kursendring, målt i forhold til det du betalte.'
+        },
+        {
+          id: '5-2b-example-return',
+          type: 'example',
+          order: 4,
+          title: 'Eksempel (Oppgavesett 5, oppgave 1)',
+          content: 'Little John-aksjen ble kjøpt for kr 1,90, solgt for kr 2,50, og betalte kr 0,20 i utbytte underveis.',
+          calculation: '**Direkteavkastning:** 0,20 / 1,90 = **10,5%**\n**Kursgevinst:** (2,50 − 1,90) / 1,90 = 0,60 / 1,90 = **31,6%**\n**Totalavkastning:** 0,80 / 1,90 = **42,1%** (= 10,5% + 31,6%)'
+        },
+        {
+          id: '5-2b-heading-fordeling',
+          type: 'heading',
+          order: 5,
+          level: 2,
+          text: 'Forventet avkastning og risiko fra sannsynligheter'
+        },
+        {
+          id: '5-2b-formula-expected',
+          type: 'formula',
+          order: 6,
+          formula: '$$E(R) = \\sum_i p_i R_i \\qquad \\sigma^2 = \\sum_i p_i\\,\\bigl(R_i - E(R)\\bigr)^2 \\qquad \\sigma = \\sqrt{\\sigma^2}$$',
+          description: 'pᵢ = sannsynlighet for utfall i, Rᵢ = avkastning i utfall i. Variansen måler hvor mye utfallene spres rundt forventningen; standardavviket σ er kvadratroten og har samme enhet som avkastningen.'
+        },
+        {
+          id: '5-2b-example-fordeling',
+          type: 'example',
+          order: 7,
+          title: 'Eksempel (Oppgavesett 5, oppgave 2)',
+          content: 'Et spill koster 100 kr. Netto gevinst: +400 (sanns. 0,10), 0 (0,50), −100 (0,40).',
+          calculation: '**Forventet gevinst:** 0,10×400 + 0,50×0 + 0,40×(−100) = 40 − 40 = **0 kr**\n\n**Varians:** 0,10×(400)² + 0,50×(0)² + 0,40×(−100)²\n= 16 000 + 0 + 4 000 = **20 000**\n\n**Standardavvik:** √20 000 ≈ **141 kr**\n\nForventet gevinst er 0, men risikoen (spredningen) er stor – derfor er det et «spill».'
+        },
+        {
+          id: '5-2b-heading-geo',
+          type: 'heading',
+          order: 8,
+          level: 2,
+          text: 'Aritmetisk vs. geometrisk gjennomsnitt'
+        },
+        {
+          id: '5-2b-text-geo',
+          type: 'text',
+          order: 9,
+          text: 'Det **aritmetiske** gjennomsnittet er bare summen delt på antall år. Det **geometriske** tar hensyn til renters rente og gir den faktiske årlige veksten en investering hadde. For svingende avkastning er det geometriske alltid lavere – og det er dette du «sitter igjen med».'
+        },
+        {
+          id: '5-2b-formula-geo',
+          type: 'formula',
+          order: 10,
+          formula: '$$R_{\\text{geo}} = \\left(\\prod_{i=1}^{n}(1 + R_i)\\right)^{1/n} - 1$$',
+          description: 'Eksempel: +50% ett år og −50% neste gir aritmetisk snitt 0%, men geometrisk (1,5 × 0,5)^(1/2) − 1 = −13,4% – du har faktisk tapt penger.'
+        },
+        {
+          id: '5-2b-heading-portefolje',
+          type: 'heading',
+          order: 11,
+          level: 2,
+          text: 'Porteføljeavkastning og -risiko (to aktiva)'
+        },
+        {
+          id: '5-2b-formula-portreturn',
+          type: 'formula',
+          order: 12,
+          formula: '$$E(R_p) = w_1 E(R_1) + w_2 E(R_2)$$',
+          description: 'Porteføljens forventede avkastning er bare et vektet snitt. Risikoen derimot (fra forrige seksjon) avhenger av korrelasjonen:'
+        },
+        {
+          id: '5-2b-formula-corr',
+          type: 'formula',
+          order: 13,
+          formula: '$$\\sigma_p^2 = w_1^2\\sigma_1^2 + w_2^2\\sigma_2^2 + 2\\,w_1 w_2\\,\\sigma_1\\sigma_2\\,\\rho_{12} \\qquad \\rho_{12} = \\frac{\\text{Cov}(R_1, R_2)}{\\sigma_1 \\sigma_2}$$',
+          description: 'Korrelasjonen ρ ligger mellom −1 og +1. Kovariansen måler hvordan to aktiva beveger seg sammen; korrelasjonen er den standardiserte versjonen.'
+        },
+        {
+          id: '5-2b-example-div',
+          type: 'example',
+          order: 14,
+          title: 'Diversifisering i tall (Oppgavesett 5, oppgave 8)',
+          content: 'Aksje A: E(R)=16%, σ=28%. Aksje B: E(R)=21%, σ=36%. Likevektet portefølje (50/50). Forventet avkastning: E(Rp) = 0,5×16 + 0,5×21 = **18,5%** uansett korrelasjon. Men risikoen avhenger sterkt av ρ:',
+          calculation: '**ρ = +1,0 (ingen diversifisering):**\nσp = 0,5×28 + 0,5×36 = **32,0%**\n\n**ρ = +0,5:**\nσp² = 0,25×784 + 0,25×1296 + 2×0,25×28×36×0,5 = 772 → σp = **27,8%**\n\n**ρ = −0,5:**\nσp² = 196 + 324 − 252 = 268 → σp = **16,4%**\n\nSamme forventede avkastning (18,5%), men risikoen faller fra 32% til 16,4% når korrelasjonen synker. Det er diversifiseringens magi – gratis risikoreduksjon.'
+        },
+        {
+          id: '5-2b-heading-sharpe',
+          type: 'heading',
+          order: 15,
+          level: 2,
+          text: 'Sharpe-raten: avkastning per risikoenhet'
+        },
+        {
+          id: '5-2b-def-sharpe',
+          type: 'definition',
+          order: 16,
+          term: 'Sharpe-rate',
+          definition: 'Meravkastning utover risikofri rente, per enhet risiko (standardavvik). Lar deg sammenligne investeringer med ulik risiko: høyere Sharpe = bedre betalt for risikoen du tar.'
+        },
+        {
+          id: '5-2b-formula-sharpe',
+          type: 'formula',
+          order: 17,
+          formula: '$$\\text{Sharpe} = \\frac{E(R_p) - R_f}{\\sigma_p}$$',
+          description: 'Eksempel: portefølje med 18,5% forventet avkastning og 27,8% risiko, risikofri rente 3%: Sharpe = (18,5 − 3)/27,8 = 15,5/27,8 ≈ 0,56.'
+        },
+        {
+          id: '5-2b-quiz',
+          type: 'quiz',
+          order: 18,
+          question: 'To porteføljer har samme forventede avkastning, men A har lavere standardavvik enn B. Hva sier Sharpe-raten?',
+          options: [
+            'B er best fordi høyere risiko gir høyere avkastning',
+            'A er best – den gir samme avkastning for mindre risiko (høyere Sharpe)',
+            'De er like gode',
+            'Sharpe kan ikke sammenligne porteføljer'
+          ],
+          correctAnswer: 1,
+          explanation: 'Med lik forventet avkastning og lavere σ har A høyere Sharpe-rate ((E(R)−Rf)/σ). Du får samme avkastning for mindre risiko – klart å foretrekke.'
+        },
+        {
+          id: '5-2b-reflection',
+          type: 'reflection',
+          order: 19,
+          question: 'Hvorfor gir en portefølje av to aksjer med korrelasjon under 1 alltid lavere risiko enn et vektet snitt av de to standardavvikene? Hva skjer i grensetilfellet ρ = −1?'
         }
       ]
     },
@@ -791,6 +949,119 @@ export const modul5PortefoljeModule: Module = {
           ],
           explanation: 'Den **lilla kurven** er den effektive fronten – alle mulige kombinasjoner av de to aktivaene. Den **oransje stiplete linjen** er kapitalmarkedslinjen (CML), som viser kombinasjoner av risikofritt aktiva og tangentporteføljen.\n\n**Prøv dette:**\n• Sett korrelasjon til -1 og se hvor mye risikoen kan reduseres\n• Sammenlign Sharpe-ratioen for din portefølje med tangentporteføljen\n• Finn minimum-variansporteføljen ved å justere vektene'
         } as InteractiveModelContent
+      ]
+    },
+
+    // ===================================
+    // SEKSJON 5.3b: CAPM – prising av systematisk risiko
+    // ===================================
+    {
+      id: 'seksjon-5-3b-capm',
+      title: 'CAPM: prising av systematisk risiko',
+      icon: '📐',
+      order: 3.5,
+      content: [
+        {
+          id: '5-3b-laeringsmal',
+          type: 'keypoint',
+          order: 1,
+          points: [
+            'Skille systematisk (markeds-) risiko fra usystematisk (selskaps-) risiko',
+            'Forstå beta som mål på systematisk risiko',
+            'Bruke kapitalverdimodellen (CAPM) til å finne avkastningskravet',
+            'Tolke verdipapirmarkedslinjen (SML) og alpha'
+          ]
+        },
+        {
+          id: '5-3b-heading-systematisk',
+          type: 'heading',
+          order: 2,
+          level: 2,
+          text: 'Bare systematisk risiko blir belønnet'
+        },
+        {
+          id: '5-3b-text-systematisk',
+          type: 'text',
+          order: 3,
+          text: 'Vi så at diversifisering fjerner den **usystematiske** risikoen (selskapsspesifikke hendelser). Igjen står den **systematiske** risikoen – markedsrisiko som rammer alle. Siden usystematisk risiko kan fjernes gratis ved diversifisering, betaler markedet deg *ikke* for å bære den. Du får kun betalt for systematisk risiko. Spørsmålet blir da: hvor mye systematisk risiko har en aksje? Svaret er **beta**.'
+        },
+        {
+          id: '5-3b-def-beta',
+          type: 'definition',
+          order: 4,
+          term: 'Beta (β)',
+          definition: 'Måler hvor mye en aksje svinger i takt med markedet. β = 1 beveger seg som markedet, β > 1 svinger kraftigere (aggressiv), β < 1 svinger mindre (defensiv). Beta er stigningstallet i en regresjon av aksjens avkastning mot markedets.'
+        },
+        {
+          id: '5-3b-formula-capm',
+          type: 'formula',
+          order: 5,
+          formula: '$$E(r) = r_f + \\beta\\,(r_m - r_f)$$',
+          description: 'r_f = risikofri rente, r_m = forventet markedsavkastning, (r_m − r_f) = markedets risikopremie. Jo høyere beta, jo høyere avkastning krever investorene.'
+        },
+        {
+          id: '5-3b-example-capm',
+          type: 'example',
+          order: 6,
+          title: 'Eksempel: CAPM i bruk',
+          content: 'Risikofri rente er 3%, aksjens beta er 1,2, og forventet markedsavkastning er 9%. Hva er avkastningskravet?',
+          calculation: 'Markedets risikopremie: 9% − 3% = 6%\n\n$E(r) = 3\\% + 1{,}2 \\times 6\\% = 3\\% + 7{,}2\\% = $ **10,2%**\n\nEn aksje som svinger 20% mer enn markedet (β = 1,2) må gi 10,2% i forventet avkastning for å kompensere for den ekstra systematiske risikoen.'
+        },
+        {
+          id: '5-3b-interactive-capm',
+          type: 'interactive-model',
+          order: 7,
+          modelType: 'capm-sml',
+          title: 'Interaktiv CAPM og verdipapirmarkedslinjen (SML)',
+          description: 'Juster risikofri rente, markedsavkastning og beta, og se hvordan avkastningskravet endrer seg langs SML. Sammenlign en aksjes faktiske avkastning med SML for å finne alpha.',
+          controls: [
+            { key: 'riskFreeRate', label: 'Risikofri rente', type: 'slider', min: 0, max: 10, step: 0.25, default: 3, unit: '%', helpText: 'Renten på statsobligasjoner' },
+            { key: 'marketReturn', label: 'Markedsavkastning', type: 'slider', min: 0, max: 20, step: 0.5, default: 9, unit: '%', helpText: 'Forventet avkastning på markedsporteføljen' },
+            { key: 'beta', label: 'Aksjens beta', type: 'slider', min: -0.5, max: 2.5, step: 0.1, default: 1.2, helpText: 'Aksjens følsomhet for markedsbevegelser' },
+            { key: 'assetReturn', label: 'Faktisk avkastning', type: 'slider', min: 0, max: 25, step: 0.5, default: 12, unit: '%', helpText: 'Aksjens faktiske oppnådde avkastning' }
+          ],
+          outputs: [
+            { key: 'expectedReturn', label: 'Forventet avkastning (CAPM)', unit: '%', precision: 2, highlight: true },
+            { key: 'alpha', label: 'Alpha (meravkastning)', unit: '%', precision: 2 },
+            { key: 'marketPremium', label: 'Markedspremie', unit: '%', precision: 2 },
+            { key: 'sharpeRatio', label: 'Sharpe-ratio (marked)', precision: 2 }
+          ],
+          charts: [{
+            type: 'line',
+            title: 'Verdipapirmarkedslinjen (SML)',
+            xAxis: { key: 'beta', label: 'Beta', unit: '' },
+            yAxis: { key: 'smlReturn', label: 'Forventet avkastning (%)', unit: '%' },
+            series: [{ key: 'smlReturn', name: 'SML', color: '#3b82f6' }]
+          }],
+          explanation: 'SML viser sammenhengen mellom systematisk risiko (beta) og forventet avkastning. Ligger aksjens faktiske avkastning **over** linjen har den positiv alpha (billig/underpriset); ligger den **under**, er alphaen negativ (dyr). Prøv å endre beta og se hvordan avkastningskravet flytter seg langs linjen.'
+        } as InteractiveModelContent,
+        {
+          id: '5-3b-def-cml',
+          type: 'definition',
+          order: 8,
+          term: 'Kapitalmarkedslinjen (CML)',
+          definition: 'Viser beste mulige kombinasjon av risikofri plassering og markedsporteføljen. Mens SML gjelder enkeltaksjer (risiko målt med beta), gjelder CML effisiente porteføljer (risiko målt med totalt standardavvik).'
+        },
+        {
+          id: '5-3b-quiz',
+          type: 'quiz',
+          order: 9,
+          question: 'En aksje har beta 0,8. Risikofri rente er 3% og markedsavkastningen 8%. Hva er CAPM-avkastningskravet?',
+          options: [
+            '6,4%',
+            '7,0%',
+            '8,0%',
+            '11,0%'
+          ],
+          correctAnswer: 1,
+          explanation: 'E(r) = 3% + 0,8 × (8% − 3%) = 3% + 0,8 × 5% = 3% + 4% = 7,0%. Beta under 1 gir lavere avkastningskrav enn markedet fordi aksjen er mindre følsom for markedssvingninger.'
+        },
+        {
+          id: '5-3b-reflection',
+          type: 'reflection',
+          order: 10,
+          question: 'Et gruveselskap og en dagligvarekjede har samme forventede resultat, men gruveselskapet har mye høyere beta. Hvorfor vil markedet likevel prise gruveselskapet lavere (kreve høyere avkastning)?'
+        }
       ]
     },
 
