@@ -314,7 +314,7 @@ export const modul4AksjerModule: Module = {
           id: '4-2-formula-pe',
           type: 'formula',
           order: 10,
-          formula: 'P/E = Aksjekurs / EPS = Markedsverdi / Årsresultat',
+          formula: '$$\\text{P/E} = \\dfrac{\\text{Aksjekurs}}{\\text{EPS}} = \\dfrac{\\text{Markedsverdi}}{\\text{Årsresultat}}$$',
           description: 'Eksempel: Aksjekurs 100 kr, EPS 5 kr → P/E = 100/5 = 20.\nDu betaler 20 kr for hver krone selskapet tjener.'
         },
         {
@@ -341,7 +341,7 @@ export const modul4AksjerModule: Module = {
           id: '4-2-formula-pb',
           type: 'formula',
           order: 13,
-          formula: 'P/B = Aksjekurs / (Egenkapital / Antall aksjer)',
+          formula: '$$\\text{P/B} = \\dfrac{\\text{Aksjekurs}}{\\text{Egenkapital per aksje}}$$',
           description: 'P/B under 1 betyr at aksjen handles under bokført verdi – kan indikere et godt kjøp (eller at markedet forventer tap).'
         },
         {
@@ -355,8 +355,15 @@ export const modul4AksjerModule: Module = {
           id: '4-2-formula-yield',
           type: 'formula',
           order: 15,
-          formula: 'Direkteavkastning = Utbytte per aksje / Aksjekurs × 100%',
+          formula: '$$\\text{Direkteavkastning} = \\dfrac{\\text{Utbytte per aksje}}{\\text{Aksjekurs}} \\times 100\\%$$',
           description: 'Eksempel: Utbytte 10 kr, kurs 200 kr → Direkteavkastning = 10/200 = 5%'
+        },
+        {
+          id: '4-2-def-ev-ebitda',
+          type: 'definition',
+          order: 15.5,
+          term: 'EV/EBITDA',
+          definition: 'Enterprise Value (markedsverdi av egenkapital + netto gjeld) delt på EBITDA (driftsresultat før av- og nedskrivninger). Viser hvor mange års driftsresultat som kreves for å kjøpe HELE selskapet inkludert gjeld. I motsetning til P/E – som bare gjelder egenkapitalen – kan EV/EBITDA sammenligne selskaper med ulik gjeldsgrad.'
         },
         {
           id: '4-2-heading-dcf',
@@ -376,7 +383,7 @@ export const modul4AksjerModule: Module = {
           id: '4-2-formula-dcf',
           type: 'formula',
           order: 18,
-          formula: 'Verdi = Σ (FCF_t / (1+r)^t) + Terminalverdi / (1+r)^n',
+          formula: '$$\\text{Verdi} = \\sum_{t=1}^{n} \\dfrac{FCF_t}{(1+r)^t} + \\dfrac{\\text{Terminalverdi}}{(1+r)^n}$$',
           description: 'FCF = Fri kontantstrøm i år t\nr = Avkastningskrav (diskonteringsrente)\nTerminalverdi = Verdi av alle kontantstrømmer etter prognoseperioden'
         },
         {
@@ -386,12 +393,29 @@ export const modul4AksjerModule: Module = {
           text: 'DCF er samme konsept som obligasjonsprising (nåverdi av fremtidige betalinger), men for aksjer må du *estimere* fremtidige kontantstrømmer – som er langt mer usikkert enn faste kupongbetalinger.'
         },
         {
-          id: '4-2-example-sammenligning',
-          type: 'example',
+          id: '4-2-text-multipler-intro',
+          type: 'text',
           order: 20,
-          title: 'Sammenligning av norske aksjer',
-          content: 'Her er multipler for noen norske selskaper (eksempeltall):',
-          calculation: '| Selskap | P/E | P/B | Dir.avk. |\n|---------|-----|-----|----------|\n| Equinor | 8 | 1,8 | 4,5% |\n| DNB | 9 | 1,1 | 6,0% |\n| Telenor | 15 | 2,5 | 5,5% |\n| Mowi | 12 | 2,0 | 4,0% |\n| Kahoot | 45 | 3,5 | 0% |\n\n**Tolkning:**\n• Equinor/DNB: Lavt P/E, høyt utbytte – verdiaksjer\n• Kahoot: Høyt P/E, null utbytte – vekstaksje\n• Telenor: Midt i mellom'
+          text: 'Her er multipler for noen norske selskaper (eksempeltall):'
+        },
+        {
+          id: '4-2-table-multipler',
+          type: 'table',
+          order: 20.3,
+          headers: ['Selskap', 'P/E', 'P/B', 'Dir.avk.'],
+          rows: [
+            ['Equinor', '8', '1,8', '4,5%'],
+            ['DNB', '9', '1,1', '6,0%'],
+            ['Telenor', '15', '2,5', '5,5%'],
+            ['Mowi', '12', '2,0', '4,0%'],
+            ['Kahoot', '45', '3,5', '0%']
+          ]
+        },
+        {
+          id: '4-2-text-multipler-tolk',
+          type: 'text',
+          order: 20.6,
+          text: '**Tolkning:** Equinor og DNB har lavt P/E og høyt utbytte – typiske *verdiaksjer*. Kahoot har høyt P/E og null utbytte – en *vekstaksje* der markedet priser inn kraftig fremtidig vekst. Telenor ligger midt imellom.'
         },
         {
           id: '4-2-quiz-1',
@@ -451,6 +475,265 @@ export const modul4AksjerModule: Module = {
     },
 
     // ===================================
+    // SEKSJON 4.2b: Dividendemodellen, ROE og PVGO
+    // ===================================
+    {
+      id: 'seksjon-4-2b-dividendemodellen',
+      title: 'Dividendemodellen, ROE og PVGO',
+      icon: '💰',
+      order: 2.5,
+      content: [
+        {
+          id: '4-2b-laeringsmal',
+          type: 'keypoint',
+          order: 1,
+          points: [
+            'Forstå at en aksjes pris = nåverdien av alle fremtidige utbytter',
+            'Bruke Gordon-modellen til å verdsette aksjer med konstant vekst',
+            'Håndtere supernormal (to-stegs) vekst',
+            'Knytte utbytte, EPS, ROE og vekst sammen',
+            'Beregne og tolke PVGO – verdien av vekstmuligheter'
+          ]
+        },
+        {
+          id: '4-2b-heading-nv',
+          type: 'heading',
+          order: 2,
+          level: 2,
+          text: 'Aksjeprisen er nåverdien av fremtidige utbytter'
+        },
+        {
+          id: '4-2b-text-nv',
+          type: 'text',
+          order: 3,
+          text: 'Når du eier en aksje, får du to typer kontantstrømmer: **utbytte** så lenge du eier den, og en **salgspris** når du selger. Prisen du er villig til å betale i dag er nåverdien av disse:'
+        },
+        {
+          id: '4-2b-formula-general',
+          type: 'formula',
+          order: 4,
+          formula: '$$P_0 = \\sum_{t=1}^{T} \\dfrac{Div_t}{(1+r)^t} + \\dfrac{P_T}{(1+r)^T}$$',
+          description: 'P₀ = pris i dag, Div_t = utbytte i år t, P_T = salgspris om T år, r = avkastningskravet.'
+        },
+        {
+          id: '4-2b-text-collapse',
+          type: 'text',
+          order: 5,
+          text: 'Men den som kjøper aksjen av deg om T år betaler også nåverdien av *sine* fremtidige utbytter. Kjeden kollapser: uansett hvor lenge du planlegger å eie aksjen, er prisen i dag lik nåverdien av **alle** fremtidige utbytter. Når $T \\to \\infty$ forsvinner salgsprisleddet:'
+        },
+        {
+          id: '4-2b-formula-infinite',
+          type: 'formula',
+          order: 6,
+          formula: '$$P_0 = \\sum_{t=1}^{\\infty} \\dfrac{Div_t}{(1+r)^t}$$',
+          description: 'Aksjeprisen er nåverdien av alle fremtidige utbytter. Punktum.'
+        },
+        {
+          id: '4-2b-example-1periode',
+          type: 'example',
+          order: 7,
+          title: 'Eksempel: én periode (Starten AS)',
+          content: 'Du forventer et utbytte på kr 2 om ett år, og at aksjekursen da vil være kr 14. Avkastningskravet ditt er 20%. Hva er det maksimale du bør betale i dag?',
+          calculation: '$P_0 = \\dfrac{Div_1 + P_1}{1+r} = \\dfrac{2 + 14}{1{,}20} = \\dfrac{16}{1{,}20} = $ **kr 13,33**\n\nOmsettes aksjen for mindre enn 13,33 kr – kjøp. Mer – la være. (Beholder du aksjen i 2 eller 3 år i stedet, får du nøyaktig samme pris i dag – salgsprisen er jo også bare nåverdi av utbytter.)'
+        },
+        {
+          id: '4-2b-heading-gordon',
+          type: 'heading',
+          order: 8,
+          level: 2,
+          text: 'Gordon-modellen: konstant vekst'
+        },
+        {
+          id: '4-2b-def-gordon',
+          type: 'definition',
+          order: 9,
+          term: 'Gordon-modellen (konstant vekst)',
+          definition: 'Antar at utbyttet vokser med en fast rate g i all evighet. Da forenkles den uendelige summen (en voksende perpetuitet) til én enkel brøk. Dette er kursets viktigste formel for aksjeprising.'
+        },
+        {
+          id: '4-2b-formula-gordon',
+          type: 'formula',
+          order: 10,
+          formula: '$$P_0 = \\dfrac{Div_1}{r - g}$$',
+          description: 'Div₁ = utbytte om ett år (= Div₀·(1+g)), r = avkastningskrav, g = konstant vekstrate. Krever r > g, ellers blir prisen uendelig.'
+        },
+        {
+          id: '4-2b-example-gordon',
+          type: 'example',
+          order: 11,
+          title: 'Eksempel: Gordon i bruk',
+          content: 'Et selskap forventes å betale kr 4 i utbytte om ett år, deretter vokse 6% årlig. Avkastningskravet er 16%.',
+          calculation: '**a) Pris i dag:**\n$P_0 = \\dfrac{Div_1}{r-g} = \\dfrac{4}{0{,}16 - 0{,}06} = \\dfrac{4}{0{,}10} = $ **kr 40**\n\n**b) Forventet pris om 4 år:**\n$P_4 = \\dfrac{Div_1(1+g)^4}{r-g} = \\dfrac{4 \\times 1{,}06^4}{0{,}10} = \\dfrac{5{,}05}{0{,}10} = $ **kr 50,50**\n\nPrisen vokser med samme rate som utbyttet (6% per år).'
+        },
+        {
+          id: '4-2b-example-equinor',
+          type: 'example',
+          order: 12,
+          title: 'Norsk eksempel: Equinor',
+          content: 'Equinor betalte ~kr 19 per aksje i utbytte (2023). Anta 4% langsiktig vekst og et avkastningskrav på 10% (CAPM-basert).',
+          calculation: '$P_0 = \\dfrac{19 \\times 1{,}04}{0{,}10 - 0{,}04} = \\dfrac{19{,}76}{0{,}06} \\approx $ **kr 329**\n\nFaktisk Equinor-kurs (2024) lå på ~270–320 kr – samme størrelsesorden. Men modellen er *svært* sensitiv for g og r: en liten endring gir stort utslag. Gordon gir en **plausibel** pris, ikke den «riktige» – bruk den som sanity-check mot markedet.'
+        },
+        {
+          id: '4-2b-quiz-gordon',
+          type: 'quiz',
+          order: 13,
+          question: 'En aksje har Div₁ = 10 kr, avkastningskrav 12% og konstant vekst 12%. Hva sier Gordon-modellen?',
+          options: [
+            'Prisen er kr 83,33',
+            'Prisen er kr 100',
+            'Modellen gjelder ikke – prisen blir uendelig når g = r',
+            'Prisen er kr 0'
+          ],
+          correctAnswer: 2,
+          explanation: 'Gordon krever r > g. Når g = r blir nevneren (r − g) = 0 og prisen uendelig – meningsløst. For selskaper som vokser fortere enn avkastningskravet må vi bruke supernormal (to-stegs) vekst.'
+        },
+        {
+          id: '4-2b-heading-supernormal',
+          type: 'heading',
+          order: 14,
+          level: 2,
+          text: 'Supernormal vekst (to-stegs)'
+        },
+        {
+          id: '4-2b-text-supernormal',
+          type: 'text',
+          order: 15,
+          text: 'Mange selskaper vokser uregelmessig en periode før de «modnes» til stabil vekst. Da gjør vi det i to steg: (1) diskonter utbyttene i den uregelmessige perioden hver for seg, og (2) bruk Gordon på det første «normale» året for å finne en **terminalverdi**, som du så diskonterer tilbake.'
+        },
+        {
+          id: '4-2b-example-supernormal',
+          type: 'example',
+          order: 16,
+          title: 'Eksempel: to-stegs vekst (Oppgavesett 4, oppgave 4)',
+          content: 'Alfa AS betaler kr 80 i utbytte hvert år de neste 5 årene. Deretter vokser utbyttet 4% årlig i all evighet. Avkastningskravet er 13%. Hva er aksjen verdt i dag?',
+          calculation: '**Steg 1 – nåverdi av de 5 første utbyttene (annuitet):**\nPV = 80 × [1 − 1,13⁻⁵] / 0,13 = 80 × 3,517 = **281,4 kr**\n\n**Steg 2 – terminalverdi ved slutten av år 5** (Gordon på Div₆ = 80 × 1,04 = 83,2):\n$TV_5 = \\dfrac{83{,}2}{0{,}13 - 0{,}04} = \\dfrac{83{,}2}{0{,}09} = 924{,}4$ kr\n\nNåverdi av terminalverdien: 924,4 / 1,13⁵ = 924,4 / 1,842 = **501,8 kr**\n\n**Pris i dag:** 281,4 + 501,8 = **kr 783**'
+        },
+        {
+          id: '4-2b-heading-r',
+          type: 'heading',
+          order: 17,
+          level: 2,
+          text: 'Avkastningskravet: direkteavkastning + kursvekst'
+        },
+        {
+          id: '4-2b-text-r',
+          type: 'text',
+          order: 18,
+          text: 'Snur vi Gordon-modellen, ser vi at avkastningskravet (den avkastningen investorene faktisk får) består av to deler: løpende utbytte pluss forventet kursstigning.'
+        },
+        {
+          id: '4-2b-formula-r',
+          type: 'formula',
+          order: 19,
+          formula: '$$r = \\underbrace{\\dfrac{Div_1}{P_0}}_{\\text{direkteavkastning}} + \\underbrace{g}_{\\text{kursvekst}}$$',
+          description: 'Eier du aksjen fra eksempelet over (P₀ = 40, Div₁ = 4, g = 6%): r = 4/40 + 0,06 = 10% + 6% = 16%. Nøyaktig avkastningskravet vi startet med.'
+        },
+        {
+          id: '4-2b-heading-roe',
+          type: 'heading',
+          order: 20,
+          level: 2,
+          text: 'EPS, utdelingsforhold og ROE'
+        },
+        {
+          id: '4-2b-def-eps',
+          type: 'definition',
+          order: 21,
+          term: 'EPS (fortjeneste per aksje)',
+          definition: 'Resultat etter skatt delt på antall utestående aksjer. Viser hvor mye hver aksje «tjente» i perioden.'
+        },
+        {
+          id: '4-2b-formula-eps',
+          type: 'formula',
+          order: 22,
+          formula: '$$\\text{EPS} = \\dfrac{\\text{Resultat etter skatt}}{\\text{Antall aksjer}} \\qquad \\text{Utdelingsforhold} = \\dfrac{Div_1}{\\text{EPS}_1}$$',
+          description: 'Utdelingsforholdet (payout ratio) er andelen av EPS som betales ut. Resten – (1 − utdelingsforhold) – beholdes og reinvesteres.'
+        },
+        {
+          id: '4-2b-def-roe',
+          type: 'definition',
+          order: 23,
+          term: 'ROE (egenkapitalrentabilitet)',
+          definition: 'Resultat etter skatt delt på egenkapital. Måler hvor god selskapet er til å skape avkastning på eiernes kapital.'
+        },
+        {
+          id: '4-2b-formula-g',
+          type: 'formula',
+          order: 24,
+          formula: '$$g = (1 - \\text{utdelingsforhold}) \\times \\text{ROE}$$',
+          description: 'Vekstraten kommer fra å beholde overskudd og reinvestere det til ROE-avkastning. Et selskap med 50% utdeling og 12% ROE vokser g = 0,5 × 12% = 6%. Vet du to av de tre (utdeling, ROE, g), finner du den tredje.'
+        },
+        {
+          id: '4-2b-keypoint-verdi',
+          type: 'keypoint',
+          order: 25,
+          points: [
+            'ROE > r: reinvesteringene skaper verdi – vekst er bra',
+            'ROE = r: verdinøytralt',
+            'ROE < r: vekst ØDELEGGER verdi – selskapet burde heller betale mer utbytte',
+            'Vekst er altså ikke alltid bra – det avhenger av ROE vs. avkastningskravet'
+          ]
+        },
+        {
+          id: '4-2b-heading-pvgo',
+          type: 'heading',
+          order: 26,
+          level: 2,
+          text: 'PVGO – nåverdien av vekstmuligheter'
+        },
+        {
+          id: '4-2b-text-pvgo',
+          type: 'text',
+          order: 27,
+          text: 'Et selskap som betaler ut hele overskuddet ($g = 0$) er bare en perpetuitet verdt $EPS_1/r$. Har selskapet i tillegg gode investeringsmuligheter, er aksjen verdt mer. Denne ekstraverdien kaller vi **PVGO**.'
+        },
+        {
+          id: '4-2b-formula-pvgo',
+          type: 'formula',
+          order: 28,
+          formula: '$$P_0 = \\dfrac{\\text{EPS}_1}{r} + \\text{PVGO} \\qquad \\Rightarrow \\qquad \\text{PVGO} = P_0 - \\dfrac{\\text{EPS}_1}{r}$$',
+          description: 'PVGO kan være positiv (verdiskapende vekst), null (verdinøytral) eller negativ (verdi-ødeleggende reinvestering).'
+        },
+        {
+          id: '4-2b-example-pvgo',
+          type: 'example',
+          order: 29,
+          title: 'Eksempel: positiv vs. negativ PVGO',
+          content: 'To aksjer har begge EPS₁ = 4 kr og avkastningskrav 10%. «Ikke-vekst»-prisen ville vært EPS₁/r = 4/0,10 = 40 kr.',
+          calculation: '**Aksje A – pris 50 kr:**\nPVGO = 50 − 40 = **+10 kr**. Markedet betaler 10 kr ekstra for forventet verdiskapende vekst (20% av verdien kommer fra vekst).\n\n**Aksje B – pris 30 kr:**\nPVGO = 30 − 40 = **−10 kr**. Markedet «straffer» selskapet: reinvesteringene ødelegger verdi (ROE < r). Aktivistinvestorer ville presset på for høyere utbytte.'
+        },
+        {
+          id: '4-2b-example-alt',
+          type: 'example',
+          order: 30,
+          title: 'Alt sammen (Oppgavesett 4, oppgave 9)',
+          content: 'Aksjen Must prises etter Gordon-modellen. Forventet utbytte om ett år: kr 8. Avkastningskrav 13%, konstant vekst 9%, utdelingsforhold 0,4. Finn pris, P/E, ROE og PVGO.',
+          calculation: '**Pris:** $P_0 = \\dfrac{8}{0{,}13 - 0{,}09} = \\dfrac{8}{0{,}04} = $ **kr 200**\n\n**EPS₁** = Div₁ / utdelingsforhold = 8 / 0,4 = **20 kr**\n\n**P/E** = P₀ / EPS₁ = 200 / 20 = **10**\n\n**ROE:** g = (1 − utdeling) × ROE → 0,09 = 0,6 × ROE → ROE = **15%** (> r, så vekst skaper verdi)\n\n**PVGO** = P₀ − EPS₁/r = 200 − 20/0,13 = 200 − 153,8 = **46,2 kr** (positiv, som forventet når ROE > r)'
+        },
+        {
+          id: '4-2b-quiz-pvgo',
+          type: 'quiz',
+          order: 31,
+          question: 'Et selskap har positiv PVGO. Hva forteller det oss?',
+          options: [
+            'Selskapet betaler høyt utbytte',
+            'Markedet forventer at reinvesteringene skaper verdi (ROE > avkastningskravet)',
+            'Aksjen er overpriset',
+            'Selskapet har lav gjeld'
+          ],
+          correctAnswer: 1,
+          explanation: 'Positiv PVGO betyr at aksjen er verdt mer enn «ingen-vekst»-prisen EPS₁/r. Det skjer når selskapet har investeringsmuligheter med avkastning over avkastningskravet (ROE > r) – da skaper tilbakeholdt overskudd verdi.'
+        },
+        {
+          id: '4-2b-reflection',
+          type: 'reflection',
+          order: 32,
+          question: 'Et modent selskap med lav vekst har ofte høyt utdelingsforhold, mens et vekstselskap betaler lite eller ingen utbytte. Hvordan kan dividendemodellen likevel verdsette et selskap som ikke betaler utbytte i dag?'
+        }
+      ]
+    },
+
+    // ===================================
     // SEKSJON 4.3: Aksjemarkedets mekanikk
     // ===================================
     {
@@ -470,6 +753,36 @@ export const modul4AksjerModule: Module = {
           type: 'text',
           order: 2,
           text: 'Å forstå hvordan aksjemarkedet fungerer gir deg en fordel som investor. Du skjønner hvorfor kursene beveger seg, hvordan du plasserer ordre, og hvilke kostnader som påvirker avkastningen din.'
+        },
+        {
+          id: '4-3-heading-emh',
+          type: 'heading',
+          order: 2.5,
+          level: 2,
+          text: 'Markedseffisiens – reflekterer kursen all informasjon?'
+        },
+        {
+          id: '4-3-def-emh',
+          type: 'definition',
+          order: 2.6,
+          term: 'Markedseffisienshypotesen (EMH)',
+          definition: 'Hypotesen om at aksjekurser til enhver tid reflekterer all tilgjengelig informasjon. Er markedet effisient, er det svært vanskelig å slå det systematisk – ny informasjon er allerede priset inn nesten umiddelbart.'
+        },
+        {
+          id: '4-3-text-emh-former',
+          type: 'text',
+          order: 2.7,
+          text: 'Vi skiller mellom tre former, etter hvor mye informasjon som er priset inn:\n\n**Svak form:** all historisk pris- og volumdata er reflektert → teknisk analyse (å lese kursgrafer) gir ingen systematisk gevinst.\n**Halvsterk form:** all *offentlig* informasjon er priset inn (regnskap, nyheter) → fundamental analyse på offentlige data hjelper heller ikke systematisk.\n**Sterk form:** *all* informasjon, også innsideinformasjon, er priset inn → selv innsidere kan ikke tjene systematisk.'
+        },
+        {
+          id: '4-3-keypoint-emh',
+          type: 'keypoint',
+          order: 2.8,
+          points: [
+            'De fleste utviklede markeder antas å være minst halvsterkt effisiente',
+            'Dette er hovedargumentet for indeksfond: klarer du ikke å slå markedet, kjøp heller hele markedet billig',
+            'Effisiens er en grad, ikke absolutt – anomalier og bobler finnes'
+          ]
         },
         {
           id: '4-3-heading-oslobors',
@@ -675,7 +988,7 @@ export const modul4AksjerModule: Module = {
           type: 'keypoint',
           order: 26,
           points: [
-            'Oslo Børs er Norges hovedmarked med ca. 300 noterte selskaper',
+            'Oslo Børs er Norges hovedmarked med rundt 200 selskaper på hovedlisten (flere hundre totalt medregnet Euronext Growth)',
             'Aksjekursen bestemmes av tilbud og etterspørsel i ordreboken',
             'Spread er en skjult kostnad – velg likvide aksjer',
             'Bruk limitordre for prisgaranti, markedsordre for hastighet',
@@ -800,7 +1113,7 @@ export const modul4AksjerModule: Module = {
           id: '4-4-formula-capm',
           type: 'formula',
           order: 14,
-          formula: 'Forventet avkastning = Risikofri rente + β × Markedets risikopremie',
+          formula: '$$E(r) = r_f + \\beta \\times (r_m - r_f)$$',
           description: 'CAPM (Capital Asset Pricing Model):\n• β (beta) måler aksjens følsomhet for markedsbevegelser\n• β = 1: Følger markedet\n• β > 1: Mer volatil enn markedet\n• β < 1: Mindre volatil enn markedet'
         },
         {
