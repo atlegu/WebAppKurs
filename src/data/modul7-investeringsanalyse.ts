@@ -217,7 +217,7 @@ export const modul7InvesteringsanalyseModule: Module = {
           id: '7-2-formula-1',
           type: 'formula',
           order: 4,
-          formula: 'NPV = -I₀ + CF₁/(1+r) + CF₂/(1+r)² + ... + CFₙ/(1+r)ⁿ',
+          formula: '$$NPV = -I_0 + \\dfrac{CF_1}{1+r} + \\dfrac{CF_2}{(1+r)^2} + \\cdots + \\dfrac{CF_n}{(1+r)^n}$$',
           description: 'Hvor I₀ = initial investering, CFₜ = kontantstrøm i år t, r = avkastningskrav, n = prosjektets levetid.'
         },
         {
@@ -293,7 +293,7 @@ export const modul7InvesteringsanalyseModule: Module = {
               helpText: 'Antall år med kontantstrømmer'
             }
           ],
-          formula: 'NPV = -I₀ + Σ CFₜ/(1+r)^t',
+          formula: '$$NPV = -I_0 + \\sum_{t=1}^{n} \\dfrac{CF_t}{(1+r)^t}$$',
           resultLabel: 'Nåverdi (NPV)',
           resultUnit: 'kr',
           explanation: 'Se hvordan avkastningskrav påvirker prosjektverdien'
@@ -435,7 +435,7 @@ export const modul7InvesteringsanalyseModule: Module = {
           id: '7-3-formula-1',
           type: 'formula',
           order: 4,
-          formula: '0 = -I₀ + CF₁/(1+IRR) + CF₂/(1+IRR)² + ... + CFₙ/(1+IRR)ⁿ',
+          formula: '$$0 = -I_0 + \\dfrac{CF_1}{1+IRR} + \\dfrac{CF_2}{(1+IRR)^2} + \\cdots + \\dfrac{CF_n}{(1+IRR)^n}$$',
           description: 'IRR finnes ved å løse denne ligningen. Det gjøres vanligvis med regneark (IRR-funksjonen i Excel) eller kalkulator.'
         },
         {
@@ -461,7 +461,7 @@ export const modul7InvesteringsanalyseModule: Module = {
           type: 'example',
           order: 7,
           title: 'IRR i praksis',
-          content: 'Prosjektet fra forrige seksjon:\n• Investering: 1 000 000 kr\n• År 1: 300 000 kr, År 2: 400 000 kr, År 3: 500 000 kr\n\nVi fant at NPV = -21 037 kr ved 10% avkastningskrav.\n\nFor å finne IRR, prøver vi ulike renter:\n• Ved 9%: NPV = +17 520 kr\n• Ved 10%: NPV = -21 037 kr\n\nIRR ligger mellom 9% og 10%. Mer presist: IRR ≈ 9,4%\n\nSiden IRR (9,4%) < avkastningskrav (10%), bekrefter dette at prosjektet bør avslås.'
+          content: 'Prosjektet fra forrige seksjon:\n• Investering: 1 000 000 kr\n• År 1: 300 000 kr, År 2: 400 000 kr, År 3: 500 000 kr\n\nVi fant at NPV = -21 037 kr ved 10% avkastningskrav.\n\nFor å finne IRR, prøver vi ulike renter:\n• Ved 8%: NPV = +17 640 kr\n• Ved 9%: NPV = -2 010 kr\n\nIRR ligger mellom 8% og 9% (der NPV skifter fortegn). Mer presist: IRR ≈ 8,9%\n\nSiden IRR (8,9%) < avkastningskrav (10%), bekrefter dette at prosjektet bør avslås.'
         },
         {
           id: '7-3-calc-irr',
@@ -510,7 +510,7 @@ export const modul7InvesteringsanalyseModule: Module = {
               helpText: 'Sammenlign IRR med dette kravet'
             }
           ],
-          formula: 'IRR: renten der NPV = 0',
+          formula: '$$\\text{IRR er renten der } NPV = 0$$',
           resultLabel: 'Internrente (IRR)',
           resultUnit: '%',
           explanation: 'Er IRR høyere eller lavere enn avkastningskravet?'
@@ -702,15 +702,31 @@ export const modul7InvesteringsanalyseModule: Module = {
           id: '7-4-formula-1',
           type: 'formula',
           order: 11,
-          formula: 'PI = PV(kontantstrømmer) / Investering = (NPV + Investering) / Investering',
+          formula: '$$\\text{PI} = \\dfrac{PV(\\text{kontantstrømmer})}{\\text{Investering}} = \\dfrac{NPV + \\text{Investering}}{\\text{Investering}}$$',
           description: 'PI = 1,2 betyr at hver investert krone genererer 1,20 kr i nåverdi. Jo høyere PI, jo bedre avkastning per investert krone.'
         },
         {
-          id: '7-4-example-2',
-          type: 'example',
+          id: '7-4-pi-intro',
+          type: 'text',
           order: 12,
-          title: 'Når PI er nyttig',
-          content: 'Et selskap har 1 000 000 kr å investere og tre mulige prosjekter:\n\n| Prosjekt | Investering | NPV | PI |\n|----------|-------------|-----|----|\n| A | 500 000 | 150 000 | 1,30 |\n| B | 700 000 | 175 000 | 1,25 |\n| C | 400 000 | 100 000 | 1,25 |\n\nNPV-rangering: B > A > C\nPI-rangering: A > B = C\n\nMed kapitalbegrensning på 1 MNOK:\n• Bare B: NPV = 175 000\n• A + C: NPV = 250 000 ← Bedre!\n\nPI hjelper oss finne den beste kombinasjonen.'
+          text: '**Når PI er nyttig.** Et selskap har 1 000 000 kr å investere og tre mulige prosjekter:'
+        },
+        {
+          id: '7-4-pi-table',
+          type: 'table',
+          order: 12.3,
+          headers: ['Prosjekt', 'Investering', 'NPV', 'PI'],
+          rows: [
+            ['A', '500 000', '150 000', '1,30'],
+            ['B', '700 000', '175 000', '1,25'],
+            ['C', '400 000', '100 000', '1,25']
+          ]
+        },
+        {
+          id: '7-4-pi-insikt',
+          type: 'text',
+          order: 12.6,
+          text: 'NPV-rangering: B > A > C. PI-rangering: A > B = C.\n\nMed kapitalbegrensning på 1 MNOK: velger du bare B får du NPV = 175 000. Men **A + C sammen** (500 000 + 400 000 = 900 000 investert) gir NPV = 250 000 – bedre! PI hjelper oss finne den beste *kombinasjonen* når kapitalen er begrenset.'
         },
         {
           id: '7-4-heading-5',
@@ -816,11 +832,28 @@ export const modul7InvesteringsanalyseModule: Module = {
           definition: 'En metode for å teste hvor følsom NPV er for endringer i enkeltvariabler. Viser hvilke variabler som har størst påvirkning på prosjektets lønnsomhet.'
         },
         {
-          id: '7-5-example-1',
-          type: 'example',
+          id: '7-5-sens-intro',
+          type: 'text',
           order: 4,
-          title: 'Sensitivitetsanalyse',
-          content: 'Basecase NPV = 500 000 kr. Vi tester ±20% endring i nøkkelvariabler:\n\n| Variabel | -20% | Base | +20% |\n|----------|------|------|------|\n| Salgspris | -200 000 | 500 000 | 1 200 000 |\n| Salgsvolum | 100 000 | 500 000 | 900 000 |\n| Variable kostnader | 700 000 | 500 000 | 300 000 |\n| Investering | 600 000 | 500 000 | 400 000 |\n\n**Innsikt:** NPV er mest sensitiv for salgspris (swing på 1,4 MNOK). Dette er den kritiske variabelen – selskapet bør fokusere på å sikre prisen.'
+          text: '**Sensitivitetsanalyse.** Basecase NPV = 500 000 kr. Vi tester ±20% endring i nøkkelvariabler og ser hvordan NPV påvirkes:'
+        },
+        {
+          id: '7-5-sens-table',
+          type: 'table',
+          order: 4.3,
+          headers: ['Variabel', '−20%', 'Base', '+20%'],
+          rows: [
+            ['Salgspris', '−200 000', '500 000', '1 200 000'],
+            ['Salgsvolum', '100 000', '500 000', '900 000'],
+            ['Variable kostnader', '700 000', '500 000', '300 000'],
+            ['Investering', '600 000', '500 000', '400 000']
+          ]
+        },
+        {
+          id: '7-5-sens-insikt',
+          type: 'text',
+          order: 4.6,
+          text: '**Innsikt:** NPV er mest sensitiv for **salgspris** (svinger 1,4 MNOK fra −20% til +20%). Det er den kritiske variabelen – selskapet bør fokusere på å sikre prisen. Merk også at NPV faller når variable kostnader og investering *øker* (negativt fortegn på endringen).'
         },
         {
           id: '7-5-heading-2',
@@ -902,7 +935,7 @@ export const modul7InvesteringsanalyseModule: Module = {
           id: '7-5-formula-1',
           type: 'formula',
           order: 11,
-          formula: 'Forventet NPV = Σ(NPVᵢ × Sannsynlighetsᵢ)',
+          formula: '$$E(NPV) = \\sum_i NPV_i \\times p_i$$',
           description: 'Forventet NPV = 0,20 × (-300) + 0,60 × 500 + 0,20 × 1200 = 480 tusen kr'
         },
         {
