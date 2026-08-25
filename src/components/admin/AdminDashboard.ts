@@ -1,6 +1,7 @@
 import { supabase } from '../../services/auth/supabaseClient';
 import { AuthService } from '../../services/auth/AuthService';
 import type { Application } from '../../types/auth';
+import { StudentActivity } from './StudentActivity';
 
 export class AdminDashboard {
   private container: HTMLElement;
@@ -8,6 +9,8 @@ export class AdminDashboard {
   private applications: Application[] = [];
   private filter: 'all' | 'pending' | 'approved' | 'rejected' = 'pending';
   private onLogout: () => void;
+  private view: 'students' | 'applications' = 'students';
+  private studentActivity: StudentActivity | null = null;
 
   constructor(container: HTMLElement, onLogout: () => void) {
     this.container = container;
@@ -36,36 +39,31 @@ export class AdminDashboard {
         </header>
 
         <main class="admin-main">
-          <div class="admin-tabs">
-            <button class="admin-tab ${this.filter === 'pending' ? 'active' : ''}" data-filter="pending">
-              Ventende
+          <div class="admin-view-tabs">
+            <button class="admin-view-tab ${this.view === 'students' ? 'active' : ''}" data-view="students">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              Studenter
+            </button>
+            <button class="admin-view-tab ${this.view === 'applications' ? 'active' : ''}" data-view="applications">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              Søknader
               <span class="admin-tab-count" id="pending-count">0</span>
-            </button>
-            <button class="admin-tab ${this.filter === 'approved' ? 'active' : ''}" data-filter="approved">
-              Godkjente
-            </button>
-            <button class="admin-tab ${this.filter === 'rejected' ? 'active' : ''}" data-filter="rejected">
-              Avviste
-            </button>
-            <button class="admin-tab ${this.filter === 'all' ? 'active' : ''}" data-filter="all">
-              Alle
             </button>
           </div>
 
-          <div class="admin-content">
-            <div class="applications-list" id="applications-list">
-              <div class="loading-spinner">Laster søknader...</div>
-            </div>
-          </div>
+          <div class="admin-content" id="admin-view"></div>
         </main>
       </div>
     `;
 
-    this.attachEventListeners();
-    await this.loadApplications();
+    this.attachHeaderListeners();
+    await this.renderActiveView();
+    // Load applications in the background so the pending badge is populated
+    // regardless of which view is active.
+    this.loadApplications();
   }
 
-  private attachEventListeners(): void {
+  private attachHeaderListeners(): void {
     // Back to course button
     const backBtn = this.container.querySelector('#back-to-course');
     backBtn?.addEventListener('click', (e) => {
@@ -81,15 +79,59 @@ export class AdminDashboard {
       this.onLogout();
     });
 
-    // Tab buttons
-    const tabs = this.container.querySelectorAll('.admin-tab');
-    tabs.forEach(tab => {
+    // Primary view tabs (Studenter / Søknader)
+    this.container.querySelectorAll('.admin-view-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const v = tab.getAttribute('data-view') as 'students' | 'applications';
+        if (v === this.view) return;
+        this.view = v;
+        this.container.querySelectorAll('.admin-view-tab').forEach(t =>
+          t.classList.toggle('active', t.getAttribute('data-view') === v));
+        this.renderActiveView();
+      });
+    });
+  }
+
+  private async renderActiveView(): Promise<void> {
+    const host = this.container.querySelector('#admin-view') as HTMLElement;
+    if (!host) return;
+
+    if (this.view === 'students') {
+      if (!this.studentActivity) this.studentActivity = new StudentActivity(host);
+      await this.studentActivity.render();
+      return;
+    }
+
+    // Applications view
+    host.innerHTML = `
+      <div class="admin-tabs">
+        <button class="admin-tab ${this.filter === 'pending' ? 'active' : ''}" data-filter="pending">
+          Ventende
+        </button>
+        <button class="admin-tab ${this.filter === 'approved' ? 'active' : ''}" data-filter="approved">
+          Godkjente
+        </button>
+        <button class="admin-tab ${this.filter === 'rejected' ? 'active' : ''}" data-filter="rejected">
+          Avviste
+        </button>
+        <button class="admin-tab ${this.filter === 'all' ? 'active' : ''}" data-filter="all">
+          Alle
+        </button>
+      </div>
+      <div class="applications-list" id="applications-list">
+        <div class="loading-spinner">Laster søknader...</div>
+      </div>
+    `;
+
+    host.querySelectorAll('.admin-tab').forEach(tab => {
       tab.addEventListener('click', () => {
         this.filter = tab.getAttribute('data-filter') as typeof this.filter;
         this.updateTabs();
         this.renderApplications();
       });
     });
+
+    this.renderApplications();
   }
 
   private updateTabs(): void {
