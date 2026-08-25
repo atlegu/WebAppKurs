@@ -248,7 +248,7 @@ export class LandingPage {
             ${this.renderFaq('Hvilke verktøy trenger jeg?',
               'Bare en PC eller nettbrett med nettleser. Alle kalkulatorer, grafer og verktøy er innebygget i plattformen. Ingen installasjon nødvendig.')}
             ${this.renderFaq('Når kan jeg starte?',
-              'Vi tar opp studenter to ganger i året — ved semesterstart høst (august) og vår (januar). Søknaden åpnes noen måneder før oppstart.')}
+              'Vi tar opp studenter to ganger i året — ved semesterstart høst (august) og vår (januar). Ta kontakt med kursansvarlig på <a href="mailto:atle.guttormsen@nmbu.no?subject=Tilgang%20til%20finanskurset.no">atle.guttormsen@nmbu.no</a> for tilgang.')}
           </div>
         </section>
 

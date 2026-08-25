@@ -6720,6 +6720,16 @@ a:hover {
   line-height: var(--leading-relaxed);
 }
 
+.faq-answer a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.faq-answer a:hover {
+  text-decoration: underline;
+}
+
 /* ---- Final CTA ---- */
 .landing-final-cta {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
