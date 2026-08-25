@@ -1,16 +1,13 @@
 export class LandingPage {
   private container: HTMLElement;
   private onLogin: () => void;
-  private onApply: () => void;
 
   constructor(
     container: HTMLElement,
-    onLogin: () => void,
-    onApply: () => void
+    onLogin: () => void
   ) {
     this.container = container;
     this.onLogin = onLogin;
-    this.onApply = onApply;
   }
 
   render(): void {
@@ -328,12 +325,6 @@ export class LandingPage {
       el.addEventListener('click', (e) => {
         e.preventDefault();
         this.onLogin();
-      });
-    });
-    this.container.querySelectorAll('[data-action="apply"]').forEach((el) => {
-      el.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.onApply();
       });
     });
   }

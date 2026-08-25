@@ -6,26 +6,23 @@ import { AuthService } from '../../services/auth/AuthService';
  *  1. Pre-check the email against the roster (friendly message if not on it).
  *  2. supabase.auth.signUp with a chosen password.
  *  3. DB trigger auto-approves + creates the student profile.
- * Students not on the roster are routed to the manual application form (onApply).
+ * Students not on the roster are asked to email the course owner for access.
  */
 export class RegistrationForm {
   private container: HTMLElement;
   private authService: AuthService;
   private onSuccess: () => void;
   private onBack: () => void;
-  private onApply: () => void;
 
   constructor(
     container: HTMLElement,
     onSuccess: () => void,
-    onBack: () => void,
-    onApply: () => void
+    onBack: () => void
   ) {
     this.container = container;
     this.authService = AuthService.getInstance();
     this.onSuccess = onSuccess;
     this.onBack = onBack;
-    this.onApply = onApply;
   }
 
   render(): void {
@@ -88,9 +85,11 @@ export class RegistrationForm {
           <div class="auth-divider">
             <span>Står du ikke på klasselisten?</span>
           </div>
-          <button class="auth-btn auth-btn-secondary" id="apply-btn">
-            Søk om tilgang manuelt
-          </button>
+          <p class="auth-contact">
+            Send en e-post til
+            <a href="mailto:atle.guttormsen@nmbu.no?subject=Tilgang%20til%20finanskurset.no">atle.guttormsen@nmbu.no</a>,
+            så legger kursansvarlig deg til.
+          </p>
         </div>
       </div>
     `;
@@ -101,14 +100,12 @@ export class RegistrationForm {
   private attachEventListeners(): void {
     const form = this.container.querySelector('#register-form') as HTMLFormElement;
     const backBtn = this.container.querySelector('#back-btn');
-    const applyBtn = this.container.querySelector('#apply-btn');
 
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
       await this.handleSubmit(form);
     });
     backBtn?.addEventListener('click', () => this.onBack());
-    applyBtn?.addEventListener('click', () => this.onApply());
   }
 
   private async handleSubmit(form: HTMLFormElement): Promise<void> {
@@ -182,18 +179,19 @@ export class RegistrationForm {
             <h1 class="auth-title">Fant deg ikke på klasselisten</h1>
             <p class="auth-subtitle">
               <strong>${email}</strong> står ikke på listen over oppmeldte studenter.
-              Sjekk at du brukte riktig e-postadresse (samme som du er oppmeldt med),
-              eller søk om tilgang manuelt så ser kursansvarlig på det.
+              Sjekk først at du brukte riktig e-postadresse – samme som du er oppmeldt med.
             </p>
           </div>
           <button class="auth-btn auth-btn-primary" id="retry-btn">Prøv en annen e-post</button>
-          <div class="auth-divider"><span>eller</span></div>
-          <button class="auth-btn auth-btn-secondary" id="apply-btn">Søk om tilgang manuelt</button>
+          <p class="auth-contact">
+            Skal du ha tilgang, men står ikke på lista? Send en e-post til
+            <a href="mailto:atle.guttormsen@nmbu.no?subject=Tilgang%20til%20finanskurset.no">atle.guttormsen@nmbu.no</a>,
+            så legger kursansvarlig deg til.
+          </p>
         </div>
       </div>
     `;
     this.container.querySelector('#retry-btn')?.addEventListener('click', () => this.render());
-    this.container.querySelector('#apply-btn')?.addEventListener('click', () => this.onApply());
   }
 
   private showConfirmEmail(email: string): void {

@@ -4,19 +4,16 @@ export class LoginPage {
   private container: HTMLElement;
   private authService: AuthService;
   private onSuccess: () => void;
-  private onApply: () => void;
   private onRegister: () => void;
 
   constructor(
     container: HTMLElement,
     onSuccess: () => void,
-    onApply: () => void,
     onRegister: () => void
   ) {
     this.container = container;
     this.authService = AuthService.getInstance();
     this.onSuccess = onSuccess;
-    this.onApply = onApply;
     this.onRegister = onRegister;
   }
 
@@ -84,9 +81,10 @@ export class LoginPage {
             Registrer deg
           </button>
 
-          <div class="auth-links" style="margin-top: 0.75rem;">
-            <a href="#" id="apply-link">Ikke oppmeldt i kurset? Søk om tilgang</a>
-          </div>
+          <p class="auth-contact">
+            Ikke oppmeldt i kurset? Send e-post til
+            <a href="mailto:atle.guttormsen@nmbu.no?subject=Tilgang%20til%20finanskurset.no">atle.guttormsen@nmbu.no</a>.
+          </p>
         </div>
       </div>
     `;
@@ -97,7 +95,6 @@ export class LoginPage {
   private attachEventListeners(): void {
     const form = this.container.querySelector('#login-form') as HTMLFormElement;
     const registerBtn = this.container.querySelector('#register-btn');
-    const applyLink = this.container.querySelector('#apply-link');
     const forgotLink = this.container.querySelector('#forgot-password-link');
 
     form?.addEventListener('submit', async (e) => {
@@ -107,11 +104,6 @@ export class LoginPage {
 
     registerBtn?.addEventListener('click', () => {
       this.onRegister();
-    });
-
-    applyLink?.addEventListener('click', (e) => {
-      e.preventDefault();
-      this.onApply();
     });
 
     forgotLink?.addEventListener('click', (e) => {

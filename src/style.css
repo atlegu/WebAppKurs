@@ -5147,6 +5147,24 @@ a:hover {
   text-decoration: underline;
 }
 
+.auth-contact {
+  text-align: center;
+  margin-top: var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+.auth-contact a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-contact a:hover {
+  text-decoration: underline;
+}
+
 .auth-divider {
   display: flex;
   align-items: center;

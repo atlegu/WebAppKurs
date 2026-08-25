@@ -14,7 +14,6 @@ import { Onboarding } from './components/Onboarding';
 import { ProgressTracker } from './services/ProgressTracker';
 import { AuthService } from './services/auth/AuthService';
 import { LoginPage } from './components/auth/LoginPage';
-import { ApplicationForm } from './components/auth/ApplicationForm';
 import { RegistrationForm } from './components/auth/RegistrationForm';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { SignupCompletionPage } from './components/auth/SignupCompletionPage';
@@ -679,12 +678,11 @@ class AppRouter {
   private authService: AuthService;
   private courseApp: SustainableFinanceApp | null = null;
   private loginPage: LoginPage | null = null;
-  private applicationForm: ApplicationForm | null = null;
   private registrationForm: RegistrationForm | null = null;
   private adminDashboard: AdminDashboard | null = null;
   private signupCompletionPage: SignupCompletionPage | null = null;
   private landingPage: LandingPage | null = null;
-  private currentView: 'loading' | 'landing' | 'login' | 'apply' | 'register' | 'course' | 'admin' | 'complete-signup' = 'loading';
+  private currentView: 'loading' | 'landing' | 'login' | 'register' | 'course' | 'admin' | 'complete-signup' = 'loading';
 
   constructor() {
     this.app = document.querySelector<HTMLDivElement>('#app')!;
@@ -738,8 +736,6 @@ class AppRouter {
       this.showLogin();
     } else if (hash === '#register') {
       this.showRegistrationForm();
-    } else if (hash === '#apply') {
-      this.showApplicationForm();
     } else {
       this.showLanding();
     }
@@ -773,9 +769,6 @@ class AppRouter {
       this.app,
       () => {
         window.location.hash = '#login';
-      },
-      () => {
-        window.location.hash = '#apply';
       }
     );
     this.landingPage.render();
@@ -792,27 +785,10 @@ class AppRouter {
         // Success - will be handled by auth state change
       },
       () => {
-        window.location.hash = '#apply';
-      },
-      () => {
         window.location.hash = '#register';
       }
     );
     this.loginPage.render();
-  }
-
-  private showApplicationForm(): void {
-    if (this.currentView === 'apply') return;
-    this.currentView = 'apply';
-    this.app.classList.add('auth-active');
-
-    this.applicationForm = new ApplicationForm(
-      this.app,
-      () => {
-        window.location.hash = '#login';
-      }
-    );
-    this.applicationForm.render();
   }
 
   private showRegistrationForm(): void {
@@ -827,9 +803,6 @@ class AppRouter {
       },
       () => {
         window.location.hash = '#login';
-      },
-      () => {
-        window.location.hash = '#apply';
       }
     );
     this.registrationForm.render();
