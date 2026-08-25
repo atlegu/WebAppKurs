@@ -10,6 +10,7 @@ import { ModuleQuizHandler } from './components/ModuleQuizHandler';
 import { ExerciseSetHandler } from './components/ExerciseSetHandler';
 import { ChatWidget } from './components/ChatWidget';
 import { HomePage } from './components/HomePage';
+import { Onboarding } from './components/Onboarding';
 import { ProgressTracker } from './services/ProgressTracker';
 import { AuthService } from './services/auth/AuthService';
 import { LoginPage } from './components/auth/LoginPage';
@@ -49,6 +50,7 @@ class SustainableFinanceApp {
   private chatWidget: ChatWidget;
   private moduleQuizHandler: ModuleQuizHandler | null = null;
   private homePage: HomePage | null = null;
+  private onboarding: Onboarding | null = null;
   private progressTracker: ProgressTracker;
   private course: Course;
   private exerciseSets: ExerciseSet[];
@@ -133,10 +135,17 @@ class SustainableFinanceApp {
     // Initial render
     this.render();
 
+    // Onboarding-veiviser (Birger) – deep-linker inn i første modul/seksjon
+    const firstStop = this.getAllSectionsFlat()[0] ?? null;
+    this.onboarding = new Onboarding(
+      (moduleId, sectionId) => this.loadSection(moduleId, sectionId),
+      firstStop
+    );
+
     // Vis velkomst for førstegangsbrukere (med liten forsinkelse så siden laster først)
     setTimeout(() => {
-      this.chatWidget.showFirstTimeWelcome();
-    }, 500);
+      this.onboarding?.maybeShowFirstTime();
+    }, 400);
   }
 
   private setupAppStructure(): void {
@@ -387,7 +396,8 @@ class SustainableFinanceApp {
       this.homePage = new HomePage(
         homepageContainer,
         this.progressTracker,
-        (moduleId, sectionId) => this.loadSection(moduleId, sectionId)
+        (moduleId, sectionId) => this.loadSection(moduleId, sectionId),
+        () => this.onboarding?.show()
       );
     }
     this.homePage.render(this.course.modules);

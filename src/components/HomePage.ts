@@ -5,15 +5,18 @@ export class HomePage {
   private container: HTMLElement;
   private progressTracker: ProgressTracker;
   private onModuleSelect: (moduleId: string, sectionId: string) => void;
+  private onShowGuide?: () => void;
 
   constructor(
     container: HTMLElement,
     progressTracker: ProgressTracker,
-    onModuleSelect: (moduleId: string, sectionId: string) => void
+    onModuleSelect: (moduleId: string, sectionId: string) => void,
+    onShowGuide?: () => void
   ) {
     this.container = container;
     this.progressTracker = progressTracker;
     this.onModuleSelect = onModuleSelect;
+    this.onShowGuide = onShowGuide;
   }
 
   render(modules: Module[]): void {
@@ -52,6 +55,16 @@ export class HomePage {
               ` : ''}
               <button class="hero-btn hero-btn-secondary" data-action="start">
                 ${lastAccessed ? 'Start fra begynnelsen' : 'Start kurset'}
+              </button>
+              <button class="hero-btn hero-btn-ghost" data-action="how-it-works">
+                <span class="hero-btn-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                  </svg>
+                </span>
+                Slik fungerer kurset
               </button>
             </div>
           </div>
@@ -158,7 +171,7 @@ export class HomePage {
                             <line x1="15" y1="9" x2="9" y2="15"></line>
                             <line x1="9" y1="9" x2="15" y2="15"></line>
                           </svg>
-                          Quiz ${quizScore}% (trenger 90%)
+                          Quiz ${quizScore}% (trenger ${module.moduleQuiz!.passingScore}%)
                         </span>
                       ` : `
                         <span class="quiz-status quiz-status-pending">
@@ -301,6 +314,12 @@ export class HomePage {
           this.onModuleSelect(firstModule.id, firstSection.id);
         }
       });
+    }
+
+    // "Slik fungerer kurset" – re-open the onboarding guide
+    const guideBtn = this.container.querySelector('[data-action="how-it-works"]');
+    if (guideBtn && this.onShowGuide) {
+      guideBtn.addEventListener('click', () => this.onShowGuide!());
     }
   }
 }
