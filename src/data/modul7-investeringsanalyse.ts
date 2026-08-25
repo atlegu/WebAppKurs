@@ -516,6 +516,32 @@ export const modul7InvesteringsanalyseModule: Module = {
           explanation: 'Er IRR høyere eller lavere enn avkastningskravet?'
         } as CalculatorContent,
         {
+          id: '7-3-model-npv-profile',
+          type: 'interactive-model',
+          order: 8.5,
+          modelType: 'npv-profile',
+          title: 'NPV-profilen – se IRR som nullpunktet',
+          description: 'NPV-profilen tegner prosjektets NPV som funksjon av avkastningskravet. Der kurven krysser null-linjen finner du IRR. Juster investering, årlig kontantstrøm og levetid og se hvordan kurven – og IRR – flytter seg.',
+          controls: [
+            { key: 'investment', label: 'Investering (år 0)', type: 'slider', min: 500, max: 2000, step: 50, default: 1000, unit: ' kr', helpText: 'Utbetalingen i dag' },
+            { key: 'cashFlow', label: 'Årlig innbetaling', type: 'slider', min: 50, max: 500, step: 10, default: 280, unit: ' kr', helpText: 'Like store beløp hvert år' },
+            { key: 'years', label: 'Antall år', type: 'slider', min: 2, max: 15, step: 1, default: 5, unit: ' år', helpText: 'Prosjektets levetid' }
+          ],
+          outputs: [
+            { key: 'irr', label: 'IRR (der NPV = 0)', unit: '%', precision: 1, highlight: true },
+            { key: 'npvAt10', label: 'NPV ved 10% krav', unit: ' kr', precision: 0 },
+            { key: 'npvAt0', label: 'NPV ved 0% (sum − investering)', unit: ' kr', precision: 0 }
+          ],
+          charts: [{
+            type: 'line',
+            title: 'NPV som funksjon av avkastningskravet',
+            xAxis: { key: 'rate', label: 'Avkastningskrav (%)' },
+            yAxis: { key: 'npv', label: 'NPV (kr)' },
+            series: [{ key: 'npv', name: 'NPV', color: '#046530' }]
+          }],
+          explanation: 'Kurven faller når avkastningskravet stiger – fremtidige kontantstrømmer diskonteres hardere. Der den krysser null-linjen (oransje punkt) er **IRR**.\n\n**Til venstre** for IRR (lavere krav enn IRR) er NPV positiv → prosjektet er lønnsomt. **Til høyre** (krav over IRR) er NPV negativ → avslå. Slik henger NPV-regelen og IRR-regelen sammen: de gir alltid samme svar for ett vanlig prosjekt.'
+        } as InteractiveModelContent,
+        {
           id: '7-3-heading-3',
           type: 'heading',
           order: 9,

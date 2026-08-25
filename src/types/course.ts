@@ -271,7 +271,10 @@ export type InteractiveModelType =
   | 'sensitivity-spider'
   | 'capital-structure'
   | 'yield-curve'
-  | 'compound-growth';
+  | 'compound-growth'
+  | 'diversification-curve'
+  | 'npv-profile'
+  | 'leverage-roe';
 
 export interface ModelControl {
   key: string;

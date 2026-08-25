@@ -231,6 +231,35 @@ export const modul5PortefoljeModule: Module = {
           ]
         },
         {
+          id: '5-1-model-diversification',
+          type: 'interactive-model',
+          order: 21.5,
+          modelType: 'diversification-curve',
+          title: 'Diversifiseringskurven – risiko faller mot et gulv',
+          description: 'Dra i skyveknappene og se hvordan porteføljerisikoen synker når du legger til flere aksjer – men bare ned til et gulv. Det gule området er risikoen du KAN diversifisere bort; gulvet er systematisk markedsrisiko du sitter igjen med.',
+          controls: [
+            { key: 'singleStockRisk', label: 'Risiko i én enkelt aksje', type: 'slider', min: 10, max: 60, step: 1, default: 40, unit: '%', helpText: 'Standardavvik for en typisk enkeltaksje' },
+            { key: 'correlation', label: 'Gjennomsnittlig korrelasjon', type: 'slider', min: 0, max: 1, step: 0.05, default: 0.3, helpText: 'Hvor likt aksjene beveger seg – bestemmer hvor høyt gulvet ligger' }
+          ],
+          outputs: [
+            { key: 'riskAt1', label: 'Risiko med 1 aksje', unit: '%', precision: 1 },
+            { key: 'riskAt30', label: 'Risiko med 30 aksjer', unit: '%', precision: 1, highlight: true },
+            { key: 'systematicRisk', label: 'Systematisk gulv', unit: '%', precision: 1 },
+            { key: 'diversifiablePct', label: 'Andel risiko som kan diversifiseres bort', unit: '%', precision: 0 }
+          ],
+          charts: [{
+            type: 'line',
+            title: 'Porteføljerisiko vs. antall aksjer',
+            xAxis: { key: 'n', label: 'Antall aksjer' },
+            yAxis: { key: 'risk', label: 'Risiko (%)' },
+            series: [
+              { key: 'totalRisk', name: 'Total risiko', color: '#046530' },
+              { key: 'systematicRisk', name: 'Systematisk', color: '#ef4444' }
+            ]
+          }],
+          explanation: 'Den grønne kurven viser hvordan total porteføljerisiko faller når du sprer investeringen på flere aksjer, men den flater ut mot et **systematisk gulv** (rød stiplet linje) – markedsrisiko som rammer alle aksjer og ikke kan diversifiseres bort.\n\nMesteparten av gevinsten kommer allerede ved 15–20 aksjer. Høyere korrelasjon → høyere gulv (mindre å hente); lavere korrelasjon → mer risiko forsvinner.'
+        } as InteractiveModelContent,
+        {
           id: '5-1-reflection',
           type: 'reflection',
           order: 22,

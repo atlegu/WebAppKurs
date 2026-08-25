@@ -118,6 +118,12 @@ export class InteractiveModelHandler {
         return this.calculateYieldCurve(state);
       case 'compound-growth':
         return this.calculateCompoundGrowth(state);
+      case 'diversification-curve':
+        return this.calculateDiversification(state);
+      case 'npv-profile':
+        return this.calculateNpvProfile(state);
+      case 'leverage-roe':
+        return this.calculateLeverageRoe(state);
       default:
         return {};
     }
@@ -491,6 +497,57 @@ export class InteractiveModelHandler {
     };
   }
 
+  // ============== DIVERSIFICATION CURVE ==============
+  private calculateDiversification(state: StateRecord): StateRecord {
+    const { singleStockRisk, correlation } = state;
+    const sigma = singleStockRisk;
+    const rho = Math.max(0, correlation);
+    const systematicRisk = sigma * Math.sqrt(rho);
+    const riskAt1 = sigma;
+    const riskAt30 = sigma * Math.sqrt(rho + (1 - rho) / 30);
+    const diversifiablePct = sigma > 0 ? ((sigma - systematicRisk) / sigma) * 100 : 0;
+    return { systematicRisk, riskAt1, riskAt30, diversifiablePct };
+  }
+
+  // ============== NPV PROFILE ==============
+  private npvAtRate(investment: number, cashFlow: number, years: number, r: number): number {
+    let npv = -investment;
+    for (let t = 1; t <= years; t++) npv += cashFlow / Math.pow(1 + r, t);
+    return npv;
+  }
+  private calculateNpvProfile(state: StateRecord): StateRecord {
+    const { investment, cashFlow, years } = state;
+    const npv0 = this.npvAtRate(investment, cashFlow, years, 0);
+    let irr = 0;
+    if (npv0 > 0) {
+      let lo = 0, hi = 1;
+      for (let i = 0; i < 100; i++) {
+        const mid = (lo + hi) / 2;
+        if (this.npvAtRate(investment, cashFlow, years, mid) > 0) lo = mid; else hi = mid;
+      }
+      irr = ((lo + hi) / 2) * 100;
+    }
+    return {
+      irr,
+      npvAt10: this.npvAtRate(investment, cashFlow, years, 0.10),
+      npvAt0: npv0
+    };
+  }
+
+  // ============== LEVERAGE -> ROE ==============
+  private leverageRoe(roa: number, costOfDebt: number, deRatio: number): number {
+    return roa + (roa - costOfDebt) * deRatio;
+  }
+  private calculateLeverageRoe(state: StateRecord): StateRecord {
+    const { costOfDebt, roa } = state;
+    return {
+      roe0: this.leverageRoe(roa, costOfDebt, 0),
+      roe40: this.leverageRoe(roa, costOfDebt, 40 / 60),
+      roe70: this.leverageRoe(roa, costOfDebt, 70 / 30),
+      breakeven: costOfDebt
+    };
+  }
+
   // ============== SENSITIVITY SPIDER (TORNADO DIAGRAM) ==============
   private calculateSensitivitySpider(state: StateRecord): StateRecord {
     const { investment, annualCashFlow, discountRate, years, priceChange, volumeChange, costChange } = state;
@@ -721,6 +778,12 @@ export class InteractiveModelHandler {
         return this.generateYieldCurveChartData(state);
       case 'compound-growth':
         return this.generateCompoundGrowthChartData(state);
+      case 'diversification-curve':
+        return this.generateDiversificationChartData(state);
+      case 'npv-profile':
+        return this.generateNpvProfileChartData(state);
+      case 'leverage-roe':
+        return this.generateLeverageRoeChartData(state);
       default:
         return [];
     }
@@ -991,6 +1054,43 @@ export class InteractiveModelHandler {
     return data;
   }
 
+  private generateDiversificationChartData(state: StateRecord): ChartDataPoint[] {
+    const { singleStockRisk, correlation } = state;
+    const sigma = singleStockRisk;
+    const rho = Math.max(0, correlation);
+    const systematicRisk = sigma * Math.sqrt(rho);
+    const data: ChartDataPoint[] = [];
+    for (let n = 1; n <= 40; n++) {
+      data.push({ n, totalRisk: sigma * Math.sqrt(rho + (1 - rho) / n), systematicRisk });
+    }
+    return data;
+  }
+
+  private generateNpvProfileChartData(state: StateRecord): ChartDataPoint[] {
+    const { investment, cashFlow, years } = state;
+    const data: ChartDataPoint[] = [];
+    for (let i = 0; i <= 60; i++) {
+      const r = i * 0.005; // 0 % to 30 %
+      data.push({ rate: r * 100, npv: this.npvAtRate(investment, cashFlow, years, r) });
+    }
+    return data;
+  }
+
+  private generateLeverageRoeChartData(state: StateRecord): ChartDataPoint[] {
+    const { costOfDebt, roa: refRoa } = state;
+    const data: ChartDataPoint[] = [];
+    for (let roa = -5; roa <= 20; roa += 1) {
+      data.push({
+        roa,
+        roe0: this.leverageRoe(roa, costOfDebt, 0),
+        roe40: this.leverageRoe(roa, costOfDebt, 40 / 60),
+        roe70: this.leverageRoe(roa, costOfDebt, 70 / 30),
+        refRoa
+      });
+    }
+    return data;
+  }
+
   private generateSensitivityChartData(state: StateRecord): ChartDataPoint[] {
     const { investment, annualCashFlow, discountRate, years } = state;
     const data: ChartDataPoint[] = [];
@@ -1224,6 +1324,29 @@ export class InteractiveModelHandler {
       xMax = data.length > 0 ? Math.max(...data.map(d => d.year)) : 30;
       yMin = 0;
       yMax = data.length > 0 ? Math.max(...data.map(d => d.compoundValue)) * 1.05 : 100;
+    } else if (modelType === 'diversification-curve') {
+      xLabel = 'Antall aksjer i porteføljen';
+      yLabel = 'Porteføljerisiko (%)';
+      xMin = 1;
+      xMax = data.length > 0 ? Math.max(...data.map(d => d.n)) : 40;
+      yMin = 0;
+      yMax = data.length > 0 ? Math.max(...data.map(d => d.totalRisk)) * 1.1 : 50;
+    } else if (modelType === 'npv-profile') {
+      xLabel = 'Avkastningskrav (%)';
+      yLabel = 'NPV (kr)';
+      xMin = 0;
+      xMax = data.length > 0 ? Math.max(...data.map(d => d.rate)) : 30;
+      const npvs = data.map(d => d.npv);
+      yMin = Math.min(...npvs, 0) * 1.1;
+      yMax = Math.max(...npvs, 0) * 1.1;
+    } else if (modelType === 'leverage-roe') {
+      xLabel = 'Driftsrentabilitet ROA (%)';
+      yLabel = 'Egenkapitalavkastning ROE (%)';
+      xMin = data.length > 0 ? Math.min(...data.map(d => d.roa)) : -5;
+      xMax = data.length > 0 ? Math.max(...data.map(d => d.roa)) : 20;
+      const allRoe = data.flatMap(d => [d.roe0, d.roe40, d.roe70]);
+      yMin = Math.min(...allRoe) * 1.1;
+      yMax = Math.max(...allRoe) * 1.1;
     } else if (modelType === 'sensitivity-spider') {
       xLabel = 'NPV (kr)';
       yLabel = '';
@@ -1605,6 +1728,131 @@ export class InteractiveModelHandler {
       compoundLegend.setAttribute('font-size', '10');
       compoundLegend.textContent = '— Renters rente';
       svg.appendChild(compoundLegend);
+    } else if (modelType === 'diversification-curve') {
+      // Area between total risk and the systematic floor = diversifiable risk
+      const areaPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const areaPoints =
+        data.map((d, i) => `${i === 0 ? 'M' : 'L'} ${scaleX(d.n)} ${scaleY(d.totalRisk)}`).join(' ') +
+        data.slice().reverse().map((d) => `L ${scaleX(d.n)} ${scaleY(d.systematicRisk)}`).join(' ') + ' Z';
+      areaPath.setAttribute('d', areaPoints);
+      areaPath.setAttribute('fill', 'rgba(245, 158, 11, 0.15)');
+      svg.appendChild(areaPath);
+
+      // Systematic (undiversifiable) floor — dashed red
+      const floor = data.length > 0 ? data[0].systematicRisk : 0;
+      const floorPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      floorPath.setAttribute('d', `M ${scaleX(xMin)} ${scaleY(floor)} L ${scaleX(xMax)} ${scaleY(floor)}`);
+      floorPath.setAttribute('fill', 'none');
+      floorPath.setAttribute('stroke', '#ef4444');
+      floorPath.setAttribute('stroke-width', '2');
+      floorPath.setAttribute('stroke-dasharray', '5,5');
+      svg.appendChild(floorPath);
+
+      // Total risk curve (declining) — solid green
+      const totalPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      totalPath.setAttribute('d', data.map((d, i) => `${i === 0 ? 'M' : 'L'} ${scaleX(d.n)} ${scaleY(d.totalRisk)}`).join(' '));
+      totalPath.setAttribute('fill', 'none');
+      totalPath.setAttribute('stroke', '#046530');
+      totalPath.setAttribute('stroke-width', '2.5');
+      svg.appendChild(totalPath);
+
+      const dl1 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      dl1.setAttribute('x', (margin.left + 80).toString()); dl1.setAttribute('y', (margin.top + 10).toString());
+      dl1.setAttribute('fill', '#046530'); dl1.setAttribute('font-size', '10');
+      dl1.textContent = '— Total risiko'; svg.appendChild(dl1);
+      const dl2 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      dl2.setAttribute('x', (margin.left + 80).toString()); dl2.setAttribute('y', (margin.top + 24).toString());
+      dl2.setAttribute('fill', '#ef4444'); dl2.setAttribute('font-size', '10');
+      dl2.textContent = '- - Systematisk (udiversifiserbar)'; svg.appendChild(dl2);
+    } else if (modelType === 'npv-profile') {
+      // Zero line
+      const zeroLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      zeroLine.setAttribute('x1', scaleX(xMin).toString());
+      zeroLine.setAttribute('y1', scaleY(0).toString());
+      zeroLine.setAttribute('x2', scaleX(xMax).toString());
+      zeroLine.setAttribute('y2', scaleY(0).toString());
+      zeroLine.setAttribute('stroke', '#9ca3af');
+      zeroLine.setAttribute('stroke-width', '1');
+      zeroLine.setAttribute('stroke-dasharray', '4,4');
+      svg.appendChild(zeroLine);
+
+      // NPV curve
+      const npvPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      npvPath.setAttribute('d', data.map((d, i) => `${i === 0 ? 'M' : 'L'} ${scaleX(d.rate)} ${scaleY(d.npv)}`).join(' '));
+      npvPath.setAttribute('fill', 'none');
+      npvPath.setAttribute('stroke', '#046530');
+      npvPath.setAttribute('stroke-width', '2.5');
+      svg.appendChild(npvPath);
+
+      // IRR marker where the curve crosses zero
+      let irrX: number | null = null;
+      for (let i = 1; i < data.length; i++) {
+        const a = data[i - 1].npv, b = data[i].npv;
+        if ((a >= 0 && b < 0) || (a < 0 && b >= 0)) {
+          const t = a / (a - b);
+          irrX = data[i - 1].rate + t * (data[i].rate - data[i - 1].rate);
+          break;
+        }
+      }
+      if (irrX !== null) {
+        const irrLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        irrLine.setAttribute('x1', scaleX(irrX).toString());
+        irrLine.setAttribute('y1', scaleY(0).toString());
+        irrLine.setAttribute('x2', scaleX(irrX).toString());
+        irrLine.setAttribute('y2', (height - margin.bottom).toString());
+        irrLine.setAttribute('stroke', '#f59e0b');
+        irrLine.setAttribute('stroke-width', '1.5');
+        irrLine.setAttribute('stroke-dasharray', '4,4');
+        svg.appendChild(irrLine);
+        const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        dot.setAttribute('cx', scaleX(irrX).toString());
+        dot.setAttribute('cy', scaleY(0).toString());
+        dot.setAttribute('r', '4'); dot.setAttribute('fill', '#f59e0b');
+        svg.appendChild(dot);
+        const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        lbl.setAttribute('x', (scaleX(irrX) + 6).toString());
+        lbl.setAttribute('y', (scaleY(0) - 6).toString());
+        lbl.setAttribute('fill', '#b45309'); lbl.setAttribute('font-size', '11'); lbl.setAttribute('font-weight', '600');
+        lbl.textContent = `IRR ≈ ${irrX.toFixed(1)}%`;
+        svg.appendChild(lbl);
+      }
+    } else if (modelType === 'leverage-roe') {
+      const series = [
+        { key: 'roe0', color: '#9ca3af', label: '0% gjeld' },
+        { key: 'roe40', color: '#3b82f6', label: '40% gjeld' },
+        { key: 'roe70', color: '#046530', label: '70% gjeld' }
+      ];
+      // Zero line (ROE = 0) if range spans it
+      if (yMin < 0 && yMax > 0) {
+        const zl = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        zl.setAttribute('x1', scaleX(xMin).toString()); zl.setAttribute('y1', scaleY(0).toString());
+        zl.setAttribute('x2', scaleX(xMax).toString()); zl.setAttribute('y2', scaleY(0).toString());
+        zl.setAttribute('stroke', '#d1d5db'); zl.setAttribute('stroke-width', '1');
+        svg.appendChild(zl);
+      }
+      series.forEach((s, si) => {
+        const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        p.setAttribute('d', data.map((d, i) => `${i === 0 ? 'M' : 'L'} ${scaleX(d.roa)} ${scaleY(d[s.key])}`).join(' '));
+        p.setAttribute('fill', 'none');
+        p.setAttribute('stroke', s.color);
+        p.setAttribute('stroke-width', '2.5');
+        svg.appendChild(p);
+        const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        lbl.setAttribute('x', (margin.left + 10).toString());
+        lbl.setAttribute('y', (margin.top + 10 + si * 14).toString());
+        lbl.setAttribute('fill', s.color); lbl.setAttribute('font-size', '10');
+        lbl.textContent = `— ${s.label}`;
+        svg.appendChild(lbl);
+      });
+      // Vertical marker at the chosen reference ROA (driven by the slider)
+      const refRoa = data.length > 0 ? data[0].refRoa : undefined;
+      if (refRoa !== undefined && refRoa >= xMin && refRoa <= xMax) {
+        const rl = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        rl.setAttribute('x1', scaleX(refRoa).toString()); rl.setAttribute('y1', margin.top.toString());
+        rl.setAttribute('x2', scaleX(refRoa).toString()); rl.setAttribute('y2', (height - margin.bottom).toString());
+        rl.setAttribute('stroke', '#111827'); rl.setAttribute('stroke-width', '1'); rl.setAttribute('stroke-dasharray', '3,3');
+        svg.appendChild(rl);
+      }
     } else if (modelType === 'sensitivity-spider') {
       // Tornado diagram (horizontal bars)
       const barHeight = chartHeight / (data.length + 1);

@@ -246,6 +246,36 @@ export const modul8KapitalstrukturModule: Module = {
           calculation: 'Med gjeldsgrad 0 (ingen gjeld):\nrE = 8% + (8% - 4%) × 0 = 8%\n\nMed gjeldsgrad 0,5:\nrE = 8% + (8% - 4%) × 0,5 = 10%\n\nMed gjeldsgrad 1,0:\nrE = 8% + (8% - 4%) × 1,0 = 12%\n\nMed gjeldsgrad 2,0:\nrE = 8% + (8% - 4%) × 2,0 = 16%'
         },
         {
+          id: 'kapitalstruktur-8-2-model-leverage',
+          type: 'interactive-model',
+          order: 9.5,
+          modelType: 'leverage-roe',
+          title: 'Gearing-effekten: hvordan gjeld forsterker ROE',
+          description: 'Se hvordan egenkapitalavkastningen (ROE) avhenger av driftsresultatet (ROA) for tre gjeldsnivåer. Jo mer gjeld, jo brattere linje – gjeld forsterker både oppturer og nedturer.',
+          controls: [
+            { key: 'roa', label: 'Driftsrentabilitet (ROA)', type: 'slider', min: -5, max: 20, step: 1, default: 10, unit: '%', helpText: 'Avkastning på totalkapitalen – den svarte streken viser hvor du er' },
+            { key: 'costOfDebt', label: 'Gjeldsrente', type: 'slider', min: 0, max: 12, step: 0.5, default: 5, unit: '%', helpText: 'Der ROA = gjeldsrenten møtes alle linjene (break-even)' }
+          ],
+          outputs: [
+            { key: 'roe0', label: 'ROE ved 0% gjeld', unit: '%', precision: 1 },
+            { key: 'roe40', label: 'ROE ved 40% gjeld', unit: '%', precision: 1 },
+            { key: 'roe70', label: 'ROE ved 70% gjeld', unit: '%', precision: 1, highlight: true },
+            { key: 'breakeven', label: 'Break-even ROA (= gjeldsrente)', unit: '%', precision: 1 }
+          ],
+          charts: [{
+            type: 'line',
+            title: 'ROE som funksjon av ROA',
+            xAxis: { key: 'roa', label: 'ROA (%)' },
+            yAxis: { key: 'roe', label: 'ROE (%)' },
+            series: [
+              { key: 'roe0', name: '0% gjeld', color: '#9ca3af' },
+              { key: 'roe40', name: '40% gjeld', color: '#3b82f6' },
+              { key: 'roe70', name: '70% gjeld', color: '#046530' }
+            ]
+          }],
+          explanation: 'Med mer gjeld blir ROE-linjen brattere: samme endring i driftsresultat (ROA) gir større utslag i ROE. Det er **finansiell gearing** – gjeld forsterker avkastningen til eierne.\n\nMen forsterkningen går begge veier: **når ROA er høyere enn gjeldsrenten** løfter gjeld ROE, **når ROA er lavere** trekker gjeld ROE kraftig ned (helt i minus). Alle linjene møtes ved break-even der ROA = gjeldsrenten. Høyere gjeld = høyere forventet ROE, men også høyere risiko – kjernen i kapitalstrukturvalget.'
+        } as InteractiveModelContent,
+        {
           id: 'kapitalstruktur-8-2-heading-skatt',
           type: 'heading',
           order: 10,
