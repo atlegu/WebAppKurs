@@ -35,8 +35,7 @@ export class LandingPage {
               <a href="#faq">FAQ</a>
             </nav>
             <div class="landing-nav-actions">
-              <button class="btn-ghost" data-action="login">Logg inn</button>
-              <button class="btn-primary" data-action="apply">Søk om studieplass</button>
+              <button class="btn-primary" data-action="login">Logg inn</button>
             </div>
           </div>
         </header>
@@ -57,19 +56,19 @@ export class LandingPage {
               For deg som vil lære finans fra bunnen — uansett hvor du bor.
             </p>
             <div class="landing-hero-actions">
-              <button class="btn-primary btn-lg" data-action="apply">
-                Søk om studieplass
+              <a href="#moduler" class="btn-primary btn-lg">
+                Se kursinnhold
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                   <polyline points="12 5 19 12 12 19"></polyline>
                 </svg>
-              </button>
-              <a href="#moduler" class="btn-secondary btn-lg">Se kursinnhold</a>
+              </a>
+              <button class="btn-secondary btn-lg" data-action="login">Logg inn</button>
             </div>
             <div class="landing-hero-trust">
               <span>✓ Fleksibelt tempo</span>
               <span>✓ Norsk språk</span>
-              <span>✓ Lånekasse-godkjent</span>
+              <span>✓ Offisiell eksamen fra NMBU</span>
             </div>
           </div>
           <div class="landing-hero-visual">
@@ -260,10 +259,9 @@ export class LandingPage {
         <section class="landing-final-cta">
           <div class="final-cta-inner">
             <h2>Klar til å starte din finansreise?</h2>
-            <p>Søk om studieplass nå — vi sender tilbakemelding innen to virkedager.</p>
+            <p>Logg inn for å få tilgang til alt kursinnholdet.</p>
             <div class="final-cta-actions">
-              <button class="btn-primary btn-lg" data-action="apply">Søk om studieplass</button>
-              <button class="btn-ghost btn-lg" data-action="login">Jeg er allerede student</button>
+              <button class="btn-primary btn-lg" data-action="login">Logg inn</button>
             </div>
           </div>
         </section>
