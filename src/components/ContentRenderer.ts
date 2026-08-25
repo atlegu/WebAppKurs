@@ -19,6 +19,7 @@ import {
   InteractiveModelContent,
   ExerciseSetContent,
   PresentationContent,
+  DiagramContent,
   ExerciseSet
 } from '../types/course';
 import { ExerciseSetHandler } from './ExerciseSetHandler';
@@ -90,6 +91,8 @@ export class ContentRenderer {
         return this.renderExerciseSet(content as ExerciseSetContent);
       case 'presentation':
         return this.renderPresentation(content as PresentationContent);
+      case 'diagram':
+        return this.renderDiagram(content as DiagramContent);
       default:
         return '';
     }
@@ -124,6 +127,16 @@ export class ContentRenderer {
           <tbody>${rows}</tbody>
         </table>
       </div>
+    `;
+  }
+
+  private renderDiagram(content: DiagramContent): string {
+    return `
+      <figure class="content-diagram">
+        ${content.title ? `<div class="diagram-title">${content.title}</div>` : ''}
+        <div class="diagram-svg">${content.svg}</div>
+        ${content.caption ? `<figcaption class="diagram-caption">${this.formatText(content.caption)}</figcaption>` : ''}
+      </figure>
     `;
   }
 

@@ -59,7 +59,8 @@ export type ContentType =
   | 'calculator'
   | 'interactive-model'
   | 'exerciseset'
-  | 'presentation';
+  | 'presentation'
+  | 'diagram';
 
 export interface BaseContent {
   id: string;
@@ -230,6 +231,13 @@ export interface PresentationContent extends BaseContent {
   slides: PresentationSlide[];
 }
 
+export interface DiagramContent extends BaseContent {
+  type: 'diagram';
+  title?: string;
+  svg: string;        // raw inline SVG markup (author-controlled)
+  caption?: string;
+}
+
 export type Content =
   | TextContent
   | HeadingContent
@@ -249,7 +257,8 @@ export type Content =
   | CalculatorContent
   | InteractiveModelContent
   | ExerciseSetContent
-  | PresentationContent;
+  | PresentationContent
+  | DiagramContent;
 
 export interface UserProgress {
   moduleId: string;

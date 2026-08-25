@@ -800,6 +800,32 @@ a:hover {
   font-size: 0.9em;
 }
 
+/* Inline SVG concept diagrams */
+.content-diagram {
+  margin: var(--space-6) 0;
+  text-align: center;
+}
+.diagram-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: var(--space-3);
+}
+.diagram-svg {
+  overflow-x: auto;
+  color: var(--text-primary);
+}
+.diagram-svg svg {
+  max-width: 100%;
+  height: auto;
+}
+.diagram-caption {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-top: var(--space-3);
+  line-height: var(--leading-relaxed);
+}
+
 .formula-description {
   font-size: var(--text-sm);
   color: var(--text-secondary);
