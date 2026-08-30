@@ -196,8 +196,8 @@ export class LandingPage {
             </div>
             <div class="why-card">
               <div class="why-icon">✍️</div>
-              <h3>5 komplette oppgavesett</h3>
-              <p>Obligasjoner, aksjer, portefølje/CAPM, investeringsanalyse og kapitalstruktur — alle med steg-for-steg fasit. Realistisk eksamenstrening.</p>
+              <h3>Oppgavesett med fasit</h3>
+              <p>Obligasjoner, aksjer, portefølje/CAPM, investeringsanalyse, kapitalstruktur og flere — alle med steg-for-steg fasit. Realistisk eksamenstrening.</p>
             </div>
             <div class="why-card">
               <div class="why-icon">🌱</div>
@@ -240,15 +240,11 @@ export class LandingPage {
             ${this.renderFaq('Hvor mye tid krever kurset?',
               'Vi anbefaler 8–10 timer per uke i et semester, men tempoet er fleksibelt. Alt innhold er tilgjengelig når du logger inn, og du kan studere på kvelder, helger eller i ferier.')}
             ${this.renderFaq('Hvilke forkunnskaper trenger jeg?',
-              'Generell studiekompetanse er anbefalt. Du trenger ikke tidligere finans- eller regnskapskunnskap — kurset starter fra grunnleggende begreper og bygger gradvis opp. Matematikken holder seg på videregående nivå.')}
-            ${this.renderFaq('Kan jeg få støtte fra Lånekassen?',
-              'Ja. Kurset gir 7,5 studiepoeng som deltidsstudier og kvalifiserer for støtte fra Statens lånekasse for utdanning, forutsatt at du oppfyller ordinære krav.')}
+              'Generell studiekompetanse kreves. Du trenger ikke tidligere finans- eller regnskapskunnskap — kurset starter fra grunnleggende begreper og bygger gradvis opp. Matematikken holder seg på videregående nivå.')}
             ${this.renderFaq('Hva koster kurset?',
               'Semesteravgift og eksamensavgift følger ordinære satser ved NMBU. Selve kursinnholdet (plattform, videoer, oppgaver, AI-veileder) er inkludert.')}
             ${this.renderFaq('Hvilke verktøy trenger jeg?',
               'Bare en PC eller nettbrett med nettleser. Alle kalkulatorer, grafer og verktøy er innebygget i plattformen. Ingen installasjon nødvendig.')}
-            ${this.renderFaq('Når kan jeg starte?',
-              'Vi tar opp studenter to ganger i året — ved semesterstart høst (august) og vår (januar). Ta kontakt med kursansvarlig på <a href="mailto:atle.guttormsen@nmbu.no?subject=Tilgang%20til%20finanskurset.no">atle.guttormsen@nmbu.no</a> for tilgang.')}
           </div>
         </section>
 
