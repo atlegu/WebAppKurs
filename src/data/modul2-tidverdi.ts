@@ -1319,6 +1319,31 @@ export const modul2TidverdiModule: Module = {
           emphasis: 'important'
         }
       ]
+    },
+    {
+      id: 'seksjon-2-7-oppgaver',
+      title: 'Regneoppgaver',
+      order: 7,
+      content: [
+        {
+          id: '2-7-intro',
+          type: 'text',
+          order: 1,
+          text: 'Test dine ferdigheter med de to oppgavesettene om renteregning – de samme som brukes i BUS220. Sett 0 er oppfriskning av grunnleggende renteregning, og sett 1 bygger videre på dette. Klikk på en oppgave for å se oppgaveteksten, og bruk "Vis fasit"-knappen når du vil sjekke svaret ditt.'
+        },
+        {
+          id: '2-7-exerciseset-0',
+          type: 'exerciseset',
+          order: 2,
+          exerciseSetId: 'oppgavesett-0-renteregning'
+        },
+        {
+          id: '2-7-exerciseset-1',
+          type: 'exerciseset',
+          order: 3,
+          exerciseSetId: 'oppgavesett-1-renteregning-2'
+        }
+      ]
     }
   ],
   moduleQuiz: {

@@ -31,11 +31,15 @@ import { modul6BaerekraftModule } from './data/modul6-baerekraft';
 import { modul7FremtidModule } from './data/modul7-fremtid';
 
 // Import exercise sets
-import { obligasjonerExerciseSet } from './data/exercises/oppgavesett-obligasjoner';
-import { aksjerExerciseSet } from './data/exercises/oppgavesett-aksjer';
-import { portefoljeCAPMExerciseSet } from './data/exercises/oppgavesett-portefolje-capm';
-import { investeringsanalyseExerciseSet } from './data/exercises/oppgavesett-investeringsanalyse';
-import { oppgavesettKapitalstruktur } from './data/exercises/oppgavesett-kapitalstruktur';
+import { oppgavesett0Renteregning } from './data/exercises/oppgavesett-0-renteregning';
+import { oppgavesett1Renteregning2 } from './data/exercises/oppgavesett-1-renteregning-2';
+import { oppgavesett2Obligasjoner } from './data/exercises/oppgavesett-2-obligasjoner';
+import { oppgavesett3Aksjeprising } from './data/exercises/oppgavesett-3-aksjeprising';
+import { oppgavesett4Investeringsanalyse } from './data/exercises/oppgavesett-4-investeringsanalyse';
+import { oppgavesett5RisikoAvkastning } from './data/exercises/oppgavesett-5-risiko-avkastning';
+import { oppgavesett6Capm } from './data/exercises/oppgavesett-6-capm';
+import { oppgavesett7Kapitalkostnad } from './data/exercises/oppgavesett-7-kapitalkostnad';
+import { oppgavesett8KapitalstrukturDividende } from './data/exercises/oppgavesett-8-kapitalstruktur-dividende';
 
 class SustainableFinanceApp {
   private app: HTMLElement;
@@ -81,11 +85,15 @@ class SustainableFinanceApp {
 
     // Initialize exercise sets
     this.exerciseSets = [
-      obligasjonerExerciseSet,
-      aksjerExerciseSet,
-      portefoljeCAPMExerciseSet,
-      investeringsanalyseExerciseSet,
-      oppgavesettKapitalstruktur
+      oppgavesett0Renteregning,
+      oppgavesett1Renteregning2,
+      oppgavesett2Obligasjoner,
+      oppgavesett3Aksjeprising,
+      oppgavesett4Investeringsanalyse,
+      oppgavesett5RisikoAvkastning,
+      oppgavesett6Capm,
+      oppgavesett7Kapitalkostnad,
+      oppgavesett8KapitalstrukturDividende
     ];
 
     // Initialize components

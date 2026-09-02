@@ -1580,13 +1580,19 @@ export const modul5PortefoljeModule: Module = {
           id: '5-6-intro',
           type: 'text',
           order: 1,
-          text: 'Test dine ferdigheter med disse regneoppgavene om porteføljeteori og CAPM. Oppgavene dekker avkastningsberegning, varians, kovarians, porteføljerisiko, beta og kapitalverdimodellen. Klikk på en oppgave for å se oppgaveteksten, og bruk "Vis fasit"-knappen når du vil sjekke svaret ditt.'
+          text: 'Test dine ferdigheter med de to oppgavesettene om risiko, avkastning og CAPM – de samme som brukes i BUS220. Sett 5 dekker avkastning, varians og porteføljerisiko; sett 6 dekker beta og kapitalverdimodellen. Klikk på en oppgave for å se oppgaveteksten, og bruk "Vis fasit"-knappen når du vil sjekke svaret ditt.'
         },
         {
-          id: '5-6-exerciseset',
+          id: '5-6-exerciseset-5',
           type: 'exerciseset',
           order: 2,
-          exerciseSetId: 'oppgavesett-portefolje-capm'
+          exerciseSetId: 'oppgavesett-5-risiko-avkastning'
+        },
+        {
+          id: '5-6-exerciseset-6',
+          type: 'exerciseset',
+          order: 3,
+          exerciseSetId: 'oppgavesett-6-capm'
         }
       ]
     }

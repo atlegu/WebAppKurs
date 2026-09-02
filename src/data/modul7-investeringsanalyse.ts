@@ -1073,7 +1073,7 @@ export const modul7InvesteringsanalyseModule: Module = {
           id: '7-6-exerciseset',
           type: 'exerciseset',
           order: 2,
-          exerciseSetId: 'oppgavesett-investeringsanalyse'
+          exerciseSetId: 'oppgavesett-4-investeringsanalyse'
         }
       ]
     }

@@ -858,13 +858,13 @@ export const modul8KapitalstrukturModule: Module = {
           id: '8-6-intro',
           type: 'text',
           order: 1,
-          text: 'Test dine ferdigheter med disse regneoppgavene om kapitalstruktur. Oppgavene dekker WACC, egenkapitalkostnad, Modigliani-Miller-teoremet, skatteskjold og effekten av gjeldsfinansiering. Klikk på en oppgave for å se oppgaveteksten, og bruk "Vis fasit"-knappen når du vil sjekke svaret ditt.'
+          text: 'Test dine ferdigheter med oppgavesettet om kapitalstruktur og dividende – det samme som brukes i BUS220. Del 1 dekker Modigliani-Miller, skatteskjold og gjeldsfinansiering; del 2 dekker dividende og utbetalingspolitikk. Klikk på en oppgave for å se oppgaveteksten, og bruk "Vis fasit"-knappen når du vil sjekke svaret ditt.'
         },
         {
           id: '8-6-exerciseset',
           type: 'exerciseset',
           order: 2,
-          exerciseSetId: 'oppgavesett-kapitalstruktur'
+          exerciseSetId: 'oppgavesett-8-kapitalstruktur-dividende'
         }
       ]
     }

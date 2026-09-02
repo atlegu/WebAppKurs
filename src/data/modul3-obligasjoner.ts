@@ -2117,7 +2117,7 @@ export const modul3ObligasjonerModule: Module = {
           id: '3-11-exerciseset',
           type: 'exerciseset',
           order: 2,
-          exerciseSetId: 'oppgavesett-obligasjoner'
+          exerciseSetId: 'oppgavesett-2-obligasjoner'
         }
       ]
     }

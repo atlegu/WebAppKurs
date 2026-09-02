@@ -1151,7 +1151,26 @@ export const modul8KapitalkostnadModule: Module = {
           id: '8-6-text-exercises',
           type: 'text',
           order: 13,
-          text: 'Vil du øve mer på kapitalkostnad og WACC? Oppgavesettet til dette emnet finner du under neste modul: Kapitalstruktur og Dividende. Der vil du finne flere oppgaver som kombinerer kapitalkostnad med kapitalstrukturvalg.'
+          text: 'Vil du øve mer på kapitalkostnad og WACC? Oppgavesett 7 finner du i neste seksjon, Regneoppgaver.'
+        }
+      ]
+    },
+    {
+      id: 'seksjon-8-7-oppgaver',
+      title: 'Regneoppgaver',
+      order: 7,
+      content: [
+        {
+          id: '8-7-intro',
+          type: 'text',
+          order: 1,
+          text: 'Test dine ferdigheter med oppgavesettet om kapitalkostnad og WACC – det samme som brukes i BUS220. Klikk på en oppgave for å se oppgaveteksten, og bruk "Vis fasit"-knappen når du vil sjekke svaret ditt.'
+        },
+        {
+          id: '8-7-exerciseset',
+          type: 'exerciseset',
+          order: 2,
+          exerciseSetId: 'oppgavesett-7-kapitalkostnad'
         }
       ]
     }

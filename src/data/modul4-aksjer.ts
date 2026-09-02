@@ -1626,7 +1626,7 @@ export const modul4AksjerModule: Module = {
           id: '4-6-exerciseset',
           type: 'exerciseset',
           order: 2,
-          exerciseSetId: 'oppgavesett-aksjer'
+          exerciseSetId: 'oppgavesett-3-aksjeprising'
         }
       ]
     }
