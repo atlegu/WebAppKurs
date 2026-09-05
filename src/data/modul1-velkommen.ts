@@ -1,4 +1,4 @@
-import { Module } from '../types/course';
+import { Module, PresentationContent } from '../types/course';
 
 /**
  * MODUL 1: Velkommen til Din Finansreise
@@ -24,6 +24,27 @@ export const modul1VelkommenModule: Module = {
     'Forstå sammenhengen mellom personlig økonomi og bærekraft'
   ],
   sections: [
+    // ============================================
+    // SEKSJON: Forelesningsslides
+    // ============================================
+    {
+      id: 'velkommen-forelesningsslides',
+      title: 'Forelesningsslides',
+      icon: '🎓',
+      order: 0,
+      content: [
+        {
+          id: 'velkommen-pres',
+          type: 'presentation',
+          order: 1,
+          title: 'Forelesningsslides: Velkommen til finansfaget',
+          description: 'Slides fra den første klasseromsforelesningen: hva finans er, hvordan kurset og finanskurset.no fungerer, og hvordan du bruker KI i læringsprosessen — hva du skal forstå, hva du skal kunne regne for hånd, og hva du kan overlate til maskinen.',
+          slides: [
+            { title: 'Forelesning 1 — Velkommen: faget, kurset og KI i læringsprosessen', filename: 'Forelesning1_Intro_2026.html' }
+          ]
+        } as PresentationContent
+      ]
+    },
     // ============================================
     // SEKSJON 1.1: Velkommen til Kurset
     // ============================================

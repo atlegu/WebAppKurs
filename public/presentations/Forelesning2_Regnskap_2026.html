@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BUS 220 – Forelesning 2: Regnskap for finansfolk</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css" id="theme">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap');
+  :root { --nmbu-green: #046530; --nmbu-green-light: #f0f7f2; --accent-orange: #f59e0b; --tavle-bg: #fef3c7; --text-dark: #1a1a1a; --text-muted: #4b5563; --ki: #0e7490; --ki-light: #ecfeff; }
+  .reveal { font-family: 'Source Serif 4', Georgia, serif; font-size: 28px; color: var(--text-dark); }
+  .reveal h1, .reveal h2, .reveal h3 { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); text-transform: none; letter-spacing: 0; font-weight: 700; }
+  .reveal h1 { font-size: 1.8em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.5em; line-height: 1.2; margin-bottom: 0.5em; }
+  .reveal h3 { font-size: 1.2em; }
+  .reveal p { line-height: 1.5; }
+  .reveal ul, .reveal ol { display: block; margin-left: 1em; }
+  .reveal li { margin-bottom: 0.4em; line-height: 1.5; }
+  .reveal .title-slide { background: var(--nmbu-green); color: white; padding: 60px; }
+  .reveal .title-slide h1 { color: white; font-size: 2.4em; margin-bottom: 0.3em; }
+  .reveal .title-slide .subtitle { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 1.4em; color: rgba(255,255,255,0.95); margin-bottom: 1em; }
+  .reveal .title-slide .meta { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 0.85em; color: rgba(255,255,255,0.8); margin-top: 2em; }
+  .reveal .section-divider { background: var(--nmbu-green); color: white; }
+  .reveal .section-divider h2 { color: white; font-size: 2.2em; }
+  .reveal .section-divider .section-number { font-family: 'Source Sans 3', Arial, sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9em; letter-spacing: 0.2em; margin-bottom: 1em; }
+  .reveal .definisjon { background: var(--nmbu-green-light); border-left: 5px solid var(--nmbu-green); padding: 18px 24px; margin: 20px 0; text-align: left; border-radius: 0 8px 8px 0; }
+  .reveal .definisjon .term { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: var(--nmbu-green); margin-bottom: 6px; }
+  .reveal .formel { background: white; border: 2px solid var(--nmbu-green); padding: 24px 32px; margin: 20px auto; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+  .reveal .key-point { background: var(--nmbu-green-light); padding: 16px 22px; margin: 16px 0; border-radius: 8px; text-align: left; font-size: 0.95em; }
+  .reveal .key-point::before { content: "→ "; color: var(--nmbu-green); font-weight: 700; }
+  .reveal .tavle-marker { background: var(--tavle-bg); border: 2px dashed var(--accent-orange); padding: 18px 24px; margin: 24px 0; border-radius: 10px; text-align: left; }
+  .reveal .tavle-marker .tavle-label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #b45309; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.15em; margin-bottom: 8px; }
+  .reveal .norsk-eksempel { background: #fef9f0; border-left: 4px solid #d97706; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .norsk-eksempel .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #b45309; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal .folkelig { background: #fff7ed; border-left: 4px solid #ea580c; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .folkelig .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #c2410c; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal .ki-box { background: var(--ki-light); border-left: 4px solid var(--ki); padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .ki-box .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: var(--ki); font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal .interactive-model { background: #ede9fe; border-left: 4px solid #7c3aed; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .interactive-model .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #6d28d9; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal .interactive-model a { color: #6d28d9; text-decoration: underline; }
+  .reveal table { margin: 16px auto; border-collapse: collapse; font-size: 0.75em; }
+  .reveal table th { background: var(--nmbu-green); color: white; padding: 8px 12px; font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; }
+  .reveal table td { padding: 6px 12px; border: 1px solid #d4d4d4; text-align: left; vertical-align: top; }
+  .reveal table td.r { text-align: right; font-variant-numeric: tabular-nums; }
+  .reveal table tr.sum td { font-weight: 700; background: var(--nmbu-green-light); }
+  .reveal .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; text-align: left; }
+  .reveal .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; align-items: stretch; text-align: left; font-size: 0.78em; }
+  .reveal .three-col .col { padding: 16px 18px; border-radius: 10px; }
+  .reveal .three-col .col h3 { font-size: 1.15em; margin-bottom: 10px; }
+  .reveal .three-col .col ul { margin-left: 0.8em; }
+  .reveal .three-col .col li { margin-bottom: 0.25em; line-height: 1.35; }
+  .reveal .col-forsta { background: var(--nmbu-green-light); border-top: 5px solid var(--nmbu-green); }
+  .reveal .col-forsta h3 { color: var(--nmbu-green); }
+  .reveal .col-regne { background: var(--tavle-bg); border-top: 5px solid var(--accent-orange); }
+  .reveal .col-regne h3 { color: #b45309; }
+  .reveal .col-overlate { background: var(--ki-light); border-top: 5px solid var(--ki); }
+  .reveal .col-overlate h3 { color: var(--ki); }
+  .reveal .caption { font-size: 0.7em; color: var(--text-muted); font-style: italic; margin-top: 8px; }
+  .reveal mjx-container { font-size: 1.0em !important; }
+  .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+  .reveal blockquote { background: var(--nmbu-green-light); border-left: 4px solid var(--nmbu-green); padding: 14px 22px; margin: 16px 0; font-style: italic; font-size: 0.95em; text-align: left; border-radius: 0 6px 6px 0; box-shadow: none; }
+  .reveal .big-number { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 2.6em; font-weight: 700; color: var(--nmbu-green); line-height: 1.1; }
+  .reveal .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 20px 0; }
+  .reveal .stat { background: var(--nmbu-green-light); border-radius: 10px; padding: 14px 10px; text-align: center; }
+  .reveal .stat .n { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 1.8em; font-weight: 700; color: var(--nmbu-green); line-height: 1; }
+  .reveal .stat .l { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 0.65em; color: var(--text-muted); margin-top: 6px; }
+  .reveal .avk-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 14px 0; }
+  .reveal .avk { border-radius: 8px; padding: 10px 8px; text-align: center; background: #f8fafc; border: 1px solid #e2e8f0; }
+  .reveal .avk .n { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 1.4em; font-weight: 700; color: var(--nmbu-green); line-height: 1.1; }
+  .reveal .avk .l { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 0.6em; color: var(--text-muted); margin-top: 4px; }
+</style>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }, svg: { fontCache: 'global' }, startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { if (window.Reveal) Reveal.layout(); }); } } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section class="title-slide">
+  <h1>Regnskap for finansfolk</h1>
+  <div class="subtitle">Balanse, resultat, kontantstrøm — og hva avkastning egentlig er</div>
+  <div class="meta">BUS 220 — Finansiering og investering<br>Atle G. Guttormsen · Høst 2026<br>Pensum: HRWJ kapittel 2 og 3</div>
+</section>
+
+<section>
+  <h2>I dag</h2>
+  <ol>
+    <li><strong>Hvorfor regnskap i et finanskurs?</strong> — kartet over kurset ligger i balansen</li>
+    <li><strong>Tre oppstillinger</strong> — stillbildet, filmen og pengestrømmen</li>
+    <li><strong>Tre sannheter</strong> finansfolk vet om regnskapet — bokført ≠ marked, resultat ≠ kontanter, og kongruens</li>
+    <li><strong>Hva er avkastning — egentlig?</strong> — ett selskap, fem svar</li>
+    <li><strong>Nøkkeltallene vi bruker senere</strong> — og hva du skal kunne selv</li>
+  </ol>
+  <div class="key-point">Dette er <strong>ikke</strong> et regnskapskurs. Vi hopper over regnskapsloven, periodiseringsregler og vurderingsprinsipper. Vi tar med det finansfaget trenger — og det er mer enn du tror.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL A</div>
+  <h2>Hvorfor regnskap i et finanskurs?</h2>
+</section>
+
+<section>
+  <h2>Regnskap er finansens språk</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Equinor, årsrapport 2023</div>
+    Over 300 sider. Men alt du trenger for å <em>begynne</em> å vurdere selskapet står i tre tall:
+  </div>
+  <div class="stat-grid" style="grid-template-columns: repeat(3, 1fr)">
+    <div class="stat"><div class="n">28,6</div><div class="l">mrd USD driftsresultat<br><em>resultatregnskapet</em></div></div>
+    <div class="stat"><div class="n">148</div><div class="l">mrd USD eiendeler, 45 % EK<br><em>balansen</em></div></div>
+    <div class="stat"><div class="n">36</div><div class="l">mrd USD fra drift<br><em>kontantstrømmen</em></div></div>
+  </div>
+  <p style="text-align:left">Hver eneste modell i dette kurset — NPV, CAPM, WACC, Gordon, Modigliani-Miller — tar tall <em>fra</em> regnskapet og gir svar <em>om</em> regnskapet.</p>
+  <div class="key-point">Kan du ikke lese de tre oppstillingene, kan du ikke bruke modellene. Så enkelt er det.</div>
+</section>
+
+<section>
+  <h2>Dette er ikke et regnskapskurs</h2>
+  <div class="two-col">
+    <div>
+      <h3 style="color:#b45309">Hopper over</h3>
+      <ul style="font-size:0.9em">
+        <li>Regnskapsloven § for §</li>
+        <li>FIFO vs gjennomsnitt, ukurans</li>
+        <li>Utsatt skatt, pensjonsforpliktelser</li>
+        <li>Konsernregnskap, IFRS-detaljer</li>
+        <li>Bokføring, bilag, debet/kredit</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Trenger</h3>
+      <ul style="font-size:0.9em">
+        <li>Forskjellen på <strong>balanse</strong> og <strong>resultat</strong></li>
+        <li>Hvorfor <strong>kontantstrøm</strong> er noe annet enn overskudd</li>
+        <li>Hvorfor <strong>bokført verdi</strong> ikke er verdi</li>
+        <li>Hvordan <strong>gjeld, egenkapital og utbytte</strong> henger sammen</li>
+        <li>Hva <strong>avkastning</strong> er — og hvorfor det finnes fem svar</li>
+      </ul>
+    </div>
+  </div>
+  <div class="folkelig">
+    <div class="label">Folkelig</div>
+    Du trenger ikke kunne bygge en motor for å kjøre bil. Men du må vite hva turtelleren, bensinmåleren og oljelampen betyr. Regnskapet er dashbordet.
+  </div>
+</section>
+
+<section>
+  <h2>Kartet: hele kurset ligger i balansen</h2>
+  <div style="margin: 6px auto; text-align:center">
+    <svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg">
+      <!-- Eiendeler -->
+      <rect x="30" y="30" width="330" height="270" rx="10" fill="#f0f7f2" stroke="#046530" stroke-width="2.5"/>
+      <text x="195" y="60" text-anchor="middle" font-family="Source Sans 3" font-size="17" font-weight="700" fill="#046530">EIENDELER</text>
+      <text x="195" y="82" text-anchor="middle" font-family="Source Sans 3" font-size="12" fill="#4b5563">hva pengene er brukt til</text>
+      <rect x="50" y="100" width="290" height="80" rx="6" fill="white" stroke="#046530" stroke-width="1.5"/>
+      <text x="195" y="128" text-anchor="middle" font-family="Source Sans 3" font-size="14" font-weight="700" fill="#046530">Anleggsmidler</text>
+      <text x="195" y="150" text-anchor="middle" font-family="Source Sans 3" font-size="12" fill="#1a1a1a">Skal vi investere? Hva er det verdt?</text>
+      <text x="195" y="168" text-anchor="middle" font-family="Source Sans 3" font-size="12" font-weight="700" fill="#b45309">F7–F11 Investeringsanalyse, verdsetting</text>
+      <rect x="50" y="195" width="290" height="85" rx="6" fill="white" stroke="#046530" stroke-width="1.5"/>
+      <text x="195" y="222" text-anchor="middle" font-family="Source Sans 3" font-size="14" font-weight="700" fill="#046530">Omløpsmidler</text>
+      <text x="195" y="244" text-anchor="middle" font-family="Source Sans 3" font-size="12" fill="#1a1a1a">Kontanter, kunder, varelager</text>
+      <text x="195" y="264" text-anchor="middle" font-family="Source Sans 3" font-size="12" font-weight="700" fill="#b45309">Likviditet — semesteroppgaven</text>
+      <!-- Finansiering -->
+      <rect x="400" y="30" width="330" height="270" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
+      <text x="565" y="60" text-anchor="middle" font-family="Source Sans 3" font-size="17" font-weight="700" fill="#b45309">EGENKAPITAL OG GJELD</text>
+      <text x="565" y="82" text-anchor="middle" font-family="Source Sans 3" font-size="12" fill="#4b5563">hvor pengene kommer fra</text>
+      <rect x="420" y="100" width="290" height="80" rx="6" fill="white" stroke="#d97706" stroke-width="1.5"/>
+      <text x="565" y="128" text-anchor="middle" font-family="Source Sans 3" font-size="14" font-weight="700" fill="#b45309">Egenkapital</text>
+      <text x="565" y="150" text-anchor="middle" font-family="Source Sans 3" font-size="12" fill="#1a1a1a">Hva koster den? Hva betaler vi ut?</text>
+      <text x="565" y="168" text-anchor="middle" font-family="Source Sans 3" font-size="12" font-weight="700" fill="#046530">F9–F11 Aksjer · F15 rE · F17 Utbytte</text>
+      <rect x="420" y="195" width="290" height="85" rx="6" fill="white" stroke="#d97706" stroke-width="1.5"/>
+      <text x="565" y="222" text-anchor="middle" font-family="Source Sans 3" font-size="14" font-weight="700" fill="#b45309">Gjeld</text>
+      <text x="565" y="244" text-anchor="middle" font-family="Source Sans 3" font-size="12" fill="#1a1a1a">Hvor mye? Til hvilken rente?</text>
+      <text x="565" y="264" text-anchor="middle" font-family="Source Sans 3" font-size="12" font-weight="700" fill="#046530">F5–F6 Obligasjoner · F16 Kapitalstruktur</text>
+      <!-- Equals sign -->
+      <text x="380" y="175" text-anchor="middle" font-family="Source Sans 3" font-size="28" font-weight="700" fill="#1a1a1a">=</text>
+      <!-- Footer -->
+      <text x="380" y="322" text-anchor="middle" font-family="Source Sans 3" font-size="12" font-style="italic" fill="#4b5563">Limet mellom sidene: F3–F4 renteregning · F12–F14 risiko · F15 avkastningskravet (WACC)</text>
+    </svg>
+  </div>
+  <div class="key-point">Venstre side = investeringsbeslutningen. Høyre side = finansieringsbeslutningen. Alt i kurset er ett av de to.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL B</div>
+  <h2>Tre oppstillinger</h2>
+</section>
+
+<section>
+  <h2>Balansen — stillbildet</h2>
+  <div class="definisjon">
+    <div class="term">Balansen</div>
+    Et <strong>øyeblikksbilde</strong> av hva selskapet eier og skylder <em>på ett tidspunkt</em> — typisk 31.12. Trykk på pause-knappen: dette er det du ser.
+  </div>
+  <div class="formel big-formula">
+    $$\text{Eiendeler} = \text{Gjeld} + \text{Egenkapital}$$
+  </div>
+  <p style="text-align:left">Ligningen <em>må</em> gå opp — alltid. Ikke fordi noen passer på, men fordi egenkapitalen er <strong>definert</strong> som resten:</p>
+  <div class="formel">
+    $\text{Egenkapital} = \text{Eiendeler} - \text{Gjeld}$
+  </div>
+  <div class="key-point">Egenkapital er ikke penger på en konto. Det er det som er igjen til eierne <em>hvis</em> alt ble solgt til bokført verdi og all gjeld betalt. Den kan være negativ — Norwegian hadde −8 mrd i egenkapital i 2020.</div>
+</section>
+
+<section>
+  <h2>De fire boksene — og hva finans spør om</h2>
+  <table>
+    <tr><th>Post</th><th>Hva det er</th><th>Finansspørsmålet</th></tr>
+    <tr><td><strong>Anleggsmidler</strong></td><td>Fabrikker, skip, lisenser, aksjer i andre selskap — ting som skal <em>brukes</em>, ikke selges</td><td>Var det en god investering? Hva er det verdt i dag?</td></tr>
+    <tr><td><strong>Omløpsmidler</strong></td><td>Kontanter, kundefordringer, varelager — snus innen ett år</td><td>Har vi nok til lønn på fredag?</td></tr>
+    <tr><td><strong>Gjeld</strong></td><td>Banklån, obligasjoner, leverandørgjeld — noen andres penger, med rente og forfall</td><td>Hvor mye tåler vi? Hva koster det?</td></tr>
+    <tr><td><strong>Egenkapital</strong></td><td>Innskutt (aksjekapital) + opptjent (tilbakeholdt overskudd) — eiernes penger</td><td>Hva krever eierne i avkastning? Hva betaler vi ut?</td></tr>
+  </table>
+  <div class="key-point">Skillet mellom <strong>anleggs-</strong> og <strong>omløps</strong>midler er tid (over/under ett år). Skillet mellom <strong>gjeld</strong> og <strong>egenkapital</strong> er <em>hvem som står først i køen</em> — og det er det som gjør egenkapital dyrere. Kommer i F15.</div>
+</section>
+
+<section>
+  <h2>Resultatregnskapet — filmen</h2>
+  <div class="definisjon">
+    <div class="term">Resultatregnskapet</div>
+    Hva som skjedde <strong>i løpet av en periode</strong> — typisk ett år. Inntekter minus kostnader. Trykk play: dette er handlingen mellom to stillbilder.
+  </div>
+  <table style="font-size:0.72em">
+    <tr><th>Linje</th><th>Navn</th><th>Hvem bryr seg</th></tr>
+    <tr><td>Driftsinntekter</td><td>Salg</td><td>Alle</td></tr>
+    <tr><td>− Driftskostnader (unntatt avskrivninger)</td><td>→ <strong>EBITDA</strong></td><td>Kontantnær lønnsomhet, ofte i verdsetting (F11)</td></tr>
+    <tr><td>− Avskrivninger</td><td>→ <strong>EBIT</strong> (driftsresultat)</td><td><em>Eiendelene</em> — før noen har fått betalt for kapitalen</td></tr>
+    <tr><td>− Rentekostnader</td><td>→ Resultat før skatt</td><td>Långiverne har fått sitt</td></tr>
+    <tr><td>− Skatt (22 %)</td><td>→ <strong>Årsresultat</strong></td><td>Staten har fått sitt — resten er eiernes</td></tr>
+  </table>
+  <div class="key-point">Resultatregnskapet er en <strong>kø</strong>. Långiverne står foran eierne. Det er hele grunnen til at gjeld er billigere enn egenkapital — og at gjeld er farligere for eierne.</div>
+</section>
+
+<section>
+  <h2>Driftsresultatet er uavhengig av finansiering</h2>
+  <p style="text-align:left">Se på tabellen igjen. <strong>EBIT</strong> kommer <em>før</em> rentekostnadene. Det betyr:</p>
+  <ul>
+    <li>To identiske fabrikker, en finansiert med 100 % egenkapital og en med 80 % gjeld, har <strong>samme EBIT</strong></li>
+    <li>EBIT måler hva <em>eiendelene</em> tjener — ikke hvem som eier dem</li>
+    <li>Først under EBIT fordeles kaken: renter til banken, skatt til staten, resten til eierne</li>
+  </ul>
+  <div class="tavle-marker">
+    <div class="tavle-label">Husk dette til F15</div>
+    Når vi diskonterer et prosjekt med WACC, bruker vi kontantstrøm basert på <strong>EBIT</strong> — nettopp fordi WACC allerede inneholder både bankens og eiernes krav. Trekker du fra renter <em>og</em> diskonterer med WACC, teller du gjeldskostnaden to ganger. Den feilen ser jeg hvert år.
+  </div>
+</section>
+
+<section>
+  <h2>Kontantstrømoppstillingen — følg pengene</h2>
+  <div class="definisjon">
+    <div class="term">Kontantstrømoppstillingen</div>
+    Hvor kom kontantene fra, og hvor gikk de? Tre kilder, én periode. Den eneste oppstillingen som ikke inneholder skjønn.
+  </div>
+  <div class="three-col" style="font-size:0.85em">
+    <div class="col col-forsta">
+      <h3>Fra drift (CFO)</h3>
+      <p>Årsresultat + avskrivninger ± endring i arbeidskapital. Det driften faktisk kastet av seg i kontanter.</p>
+    </div>
+    <div class="col col-regne">
+      <h3>Fra investering (CFI)</h3>
+      <p>Kjøp og salg av anleggsmidler. Nesten alltid negativ — selskapet bygger.</p>
+    </div>
+    <div class="col col-overlate">
+      <h3>Fra finansiering (CFF)</h3>
+      <p>Låneopptak, nedbetaling, emisjon, utbytte, tilbakekjøp. Trafikken på høyre side av balansen.</p>
+    </div>
+  </div>
+  <div class="formel">
+    $\text{Fri kontantstrøm} = \text{CFO} - \text{Investeringer}$
+  </div>
+  <div class="key-point">Fri kontantstrøm er det som er <em>tilgjengelig</em> for långivere og eiere. Det er dette tallet verdsettingsmodellene i F7–F11 diskonterer — ikke årsresultatet.</div>
+</section>
+
+<section>
+  <h2>Stillbilde, film — og pengestrøm</h2>
+  <table>
+    <tr><th></th><th>Balansen</th><th>Resultatregnskapet</th><th>Kontantstrømmen</th></tr>
+    <tr><td><strong>Tid</strong></td><td>Ett tidspunkt (31.12)</td><td>En periode (året)</td><td>En periode (året)</td></tr>
+    <tr><td><strong>Type</strong></td><td>Beholdning (stock)</td><td>Strøm (flow)</td><td>Strøm (flow)</td></tr>
+    <tr><td><strong>Spørsmål</strong></td><td>Hva eier og skylder vi?</td><td>Tjente vi penger?</td><td>Hvor ble kontantene av?</td></tr>
+    <tr><td><strong>Skjønn</strong></td><td>Mye (verdsetting av eiendeler)</td><td>Mye (periodisering)</td><td>Lite</td></tr>
+    <tr><td><strong>Finans bruker det til</strong></td><td>Kapitalstruktur, bokført EK, arbeidskapital</td><td>Marginer, EBIT, avkastning</td><td>NPV, verdsetting, gjeldsevne</td></tr>
+  </table>
+  <div class="folkelig">
+    <div class="label">Folkelig</div>
+    Balansen er kontoutskriften 31. desember. Resultatet er lønnsslippene og regningene gjennom året. Kontantstrømmen er svaret på «hvorfor er det så lite igjen når jeg tjente så mye?».
+  </div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL C</div>
+  <h2>Tre sannheter finansfolk vet om regnskapet</h2>
+</section>
+
+<section>
+  <h2>Sannhet 1: Bokført verdi er ikke verdi</h2>
+  <p style="text-align:left">Balansen viser hva eiendelene <em>kostet</em> — minus avskrivninger. Markedet viser hva de er <em>verdt</em>. Forholdet kalles <strong>P/B</strong> (pris/bok):</p>
+  <table>
+    <tr><th>Selskap</th><th>Omtrentlig P/B</th><th>Hvorfor</th></tr>
+    <tr><td>DNB</td><td class="r">~1,3</td><td>Bankens eiendeler er utlån — allerede verdsatt nær marked</td></tr>
+    <tr><td>Equinor</td><td class="r">~1,8</td><td>Oljefelt bokført til kostpris, verdt mer ved dagens priser</td></tr>
+    <tr><td>Mowi</td><td class="r">~2,5</td><td>Konsesjoner kjøpt billig for tjue år siden</td></tr>
+    <tr><td>Kahoot (2021)</td><td class="r">~15</td><td>Verdien er kode, merkevare og brukere — nesten ingenting i balansen</td></tr>
+  </table>
+  <div class="key-point">Samme regnskapsregler, P/B fra 1 til 15. Balansen er <strong>historie</strong>. Markedsverdi er <strong>forventning om fremtiden</strong>. Det er derfor vi i F7–F11 verdsetter ved å diskontere fremtidige kontantstrømmer — ikke ved å lese balansen.</div>
+  <p class="caption">P/B-tallene er illustrative størrelsesordener — sjekk dagens tall på Euronext Oslo.</p>
+</section>
+
+<section>
+  <h2>Sannhet 2: Overskudd er en mening — kontanter er et faktum</h2>
+  <p style="text-align:left">Resultatregnskapet <strong>periodiserer</strong>: inntekter når de er opptjent, kostnader når de er påløpt — ikke når pengene flytter seg.</p>
+  <div class="two-col" style="font-size:0.88em">
+    <div class="norsk-eksempel">
+      <div class="label">Kredittsalg</div>
+      Du selger for 1 mill i desember, kunden betaler i februar. <strong>Resultat</strong> i år: +1 mill. <strong>Kontanter</strong> i år: 0. Kundefordringen ligger i balansen og venter.
+    </div>
+    <div class="norsk-eksempel">
+      <div class="label">Avskrivning</div>
+      Du kjøper en maskin for 5 mill i januar. <strong>Kontanter</strong>: −5 mill nå. <strong>Resultat</strong>: −0,5 mill i år, og hvert år i ti år. Avskrivning er en kostnad uten kontantstrøm.
+    </div>
+  </div>
+  <div class="key-point">Begge er <em>riktige</em> etter regnskapsreglene. Men et selskap kan gå konkurs med overskudd (kundene betaler ikke) og overleve med underskudd (store avskrivninger, sterk kontantstrøm). Finans følger pengene.</div>
+</section>
+
+<section>
+  <h2>Fjord AS — resultat 70, kontanter 40</h2>
+  <p style="text-align:left">Selskapet vi skal bruke resten av timen. Ett år:</p>
+  <div class="two-col" style="font-size:0.85em">
+    <div>
+      <table style="margin:0">
+        <tr><th colspan="2">Resultat</th></tr>
+        <tr><td>Driftsinntekter</td><td class="r">800</td></tr>
+        <tr><td>Driftskostnader (inkl. avskr. 50)</td><td class="r">−680</td></tr>
+        <tr class="sum"><td>EBIT</td><td class="r">120</td></tr>
+        <tr><td>Renter (5 % av 600)</td><td class="r">−30</td></tr>
+        <tr><td>Skatt 22 %</td><td class="r">−19,8</td></tr>
+        <tr class="sum"><td>Årsresultat</td><td class="r">70,2</td></tr>
+      </table>
+    </div>
+    <div>
+      <table style="margin:0">
+        <tr><th colspan="2">Kontantstrøm</th></tr>
+        <tr><td>Årsresultat</td><td class="r">70,2</td></tr>
+        <tr><td>+ Avskrivninger (ikke kontanter)</td><td class="r">+50</td></tr>
+        <tr><td>− Økte kundefordringer</td><td class="r">−20</td></tr>
+        <tr class="sum"><td>Fra drift (CFO)</td><td class="r">100,2</td></tr>
+        <tr><td>− Investeringer</td><td class="r">−60</td></tr>
+        <tr class="sum"><td>Fri kontantstrøm</td><td class="r">40,2</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="key-point">Overskudd 70. Fri kontantstrøm 40. Det er de <strong>40</strong> eierne og banken faktisk kan dele — og det er de 40 vi diskonterer når vi skal finne hva Fjord AS er verdt.</div>
+</section>
+
+<section>
+  <h2>Sannhet 3: Kongruensprinsippet</h2>
+  <div class="definisjon">
+    <div class="term">Kongruensprinsippet</div>
+    Alle endringer i egenkapitalen fra ett stillbilde til det neste forklares av <strong>resultatet</strong> — pluss det eierne skyter inn, minus det de tar ut.
+  </div>
+  <div class="formel big-formula">
+    $$EK_{UB} = EK_{IB} + \text{Årsresultat} - \text{Utbytte} + \text{Emisjon}$$
+  </div>
+  <div class="norsk-eksempel">
+    <div class="label">Fjord AS</div>
+    $EK_{IB} = 400$. Årsresultat 70,2. Utbytte 40. Ingen emisjon.
+    $$EK_{UB} = 400 + 70{,}2 - 40 = 430{,}2$$
+  </div>
+  <div class="key-point">Denne ene linjen kobler <strong>filmen</strong> (resultatet) til <strong>stillbildet</strong> (balansen). Det er broen mellom de to oppstillingene — og det er der de neste to forelesningsblokkene lever.</div>
+</section>
+
+<section>
+  <h2>… og det ER kapitalstruktur og dividende</h2>
+  <p style="text-align:left">Se på ligningen én gang til. Hver beslutning på høyre side av balansen er en linje i den:</p>
+  <table>
+    <tr><th>Beslutning</th><th>Hva skjer i balansen</th><th>Forelesning</th></tr>
+    <tr><td>Betale utbytte</td><td>EK ↓, kontanter ↓</td><td>F17 Dividende</td></tr>
+    <tr><td>Kjøpe tilbake aksjer</td><td>EK ↓, kontanter ↓, færre aksjer</td><td>F17 Dividende</td></tr>
+    <tr><td>Ta opp lån, kjøpe tilbake aksjer</td><td>Gjeld ↑, EK ↓ — <em>samme eiendeler</em></td><td>F16 Kapitalstruktur</td></tr>
+    <tr><td>Emisjon, betale ned gjeld</td><td>EK ↑, gjeld ↓ — <em>samme eiendeler</em></td><td>F16 Kapitalstruktur</td></tr>
+    <tr><td>Holde tilbake overskudd</td><td>EK ↑ — eierne reinvesterer uten å bli spurt</td><td>F17 Dividende</td></tr>
+  </table>
+  <div class="key-point">Kapitalstruktur er å <strong>flytte tall mellom gjeld og egenkapital</strong> uten å røre eiendelene. Dividende er å <strong>flytte tall fra egenkapital til eiernes lommer</strong>. Begge deler er ren balanse-aritmetikk — og hovedspørsmålet i F16–F17 er om det <em>skaper verdi</em>.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL D</div>
+  <h2>Hva er avkastning — egentlig?</h2>
+</section>
+
+<section>
+  <h2>Fjord AS — hele bildet</h2>
+  <div class="two-col" style="font-size:0.85em">
+    <div>
+      <table style="margin:0">
+        <tr><th colspan="2">Balanse 1.1.</th></tr>
+        <tr><td>Eiendeler</td><td class="r">1 000</td></tr>
+        <tr><td>Gjeld (5 % rente)</td><td class="r">600</td></tr>
+        <tr><td>Egenkapital</td><td class="r">400</td></tr>
+        <tr><td>Antall aksjer</td><td class="r">100</td></tr>
+        <tr><td>Bokført EK per aksje</td><td class="r">4,00</td></tr>
+        <tr><td>Aksjekurs 1.1.</td><td class="r">10,00</td></tr>
+      </table>
+    </div>
+    <div>
+      <table style="margin:0">
+        <tr><th colspan="2">Året</th></tr>
+        <tr><td>EBIT</td><td class="r">120</td></tr>
+        <tr><td>Årsresultat</td><td class="r">70,2</td></tr>
+        <tr><td>Utbytte (0,40 per aksje)</td><td class="r">40</td></tr>
+        <tr><td>Aksjekurs 31.12.</td><td class="r">11,00</td></tr>
+      </table>
+    </div>
+  </div>
+  <p style="text-align:left; margin-top:14px"><strong>Spørsmålet:</strong> Hvor god avkastning ga Fjord AS i år?</p>
+  <div class="key-point">Det finnes minst <strong>fem</strong> ærlige svar. Alle er riktige. De måler forskjellige ting.</div>
+</section>
+
+<section>
+  <h2>Svar 1 og 2: ROA og ROE</h2>
+  <div class="two-col">
+    <div>
+      <h3>Avkastning på eiendelene</h3>
+      <div class="formel">$\text{ROA} = \dfrac{\text{EBIT}}{\text{Eiendeler}} = \dfrac{120}{1000} = 12\,\%$</div>
+      <p style="font-size:0.85em">Hva <em>eiendelene</em> kaster av seg, før noen har fått betalt. Uavhengig av finansiering.</p>
+    </div>
+    <div>
+      <h3>Avkastning på egenkapitalen</h3>
+      <div class="formel">$\text{ROE} = \dfrac{\text{Årsresultat}}{\text{EK}} = \dfrac{70{,}2}{400} = 17{,}55\,\%$</div>
+      <p style="font-size:0.85em">Hva <em>eierne</em> sitter igjen med per krone de har inne. Etter renter og skatt.</p>
+    </div>
+  </div>
+  <div class="key-point">Samme selskap, samme år: <strong>12 %</strong> eller <strong>17,55 %</strong>. Ingen av dem er feil. Forskjellen er hvem du spør — og den forskjellen har ett navn: <strong>gearing</strong>.</div>
+</section>
+
+<section>
+  <h2>Hvorfor er ROE høyere enn ROA?</h2>
+  <p style="text-align:left">Fordi eiendelene tjener 12 %, men banken nøyer seg med 5 %. Differansen tilfaller eierne — <em>ganget med</em> hvor mye gjeld de har lånt:</p>
+  <div class="formel big-formula">
+    $$\text{ROE} = \text{ROA}_{e.sk.} + \big(\text{ROA}_{e.sk.} - r_D(1-t)\big) \cdot \frac{D}{E}$$
+  </div>
+  <div class="norsk-eksempel">
+    <div class="label">Fjord AS</div>
+    $\text{ROA}_{e.sk.} = 12\,\% \times 0{,}78 = 9{,}36\,\%$ · $r_D(1-t) = 5\,\% \times 0{,}78 = 3{,}9\,\%$ · $D/E = 600/400 = 1{,}5$
+    $$\text{ROE} = 9{,}36\,\% + (9{,}36\,\% - 3{,}9\,\%) \times 1{,}5 = 9{,}36\,\% + 8{,}19\,\% = 17{,}55\,\%$$
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Dette er F16 i miniatyr</div>
+    Mer gjeld → høyere ROE. Så hvorfor ikke låne alt? Fordi leddet i parentesen kan bli <strong>negativt</strong> i et dårlig år — og da forsterker gjelden tapet like hardt. Høy ROE er ikke bare dyktighet. Det kan være risiko i forkledning.
+  </div>
+</section>
+
+<section>
+  <h2>Svar 3 og 4: EPS og P/E — markedet kommer inn</h2>
+  <div class="two-col">
+    <div>
+      <h3>Resultat per aksje</h3>
+      <div class="formel">$\text{EPS} = \dfrac{70{,}2}{100} = 0{,}70$</div>
+      <p style="font-size:0.85em">Samme som årsresultatet, bare delt på aksjene. Ingen ny informasjon — men det er tallet avisene skriver om.</p>
+    </div>
+    <div>
+      <h3>Pris/fortjeneste</h3>
+      <div class="formel">$\text{P/E} = \dfrac{10{,}00}{0{,}70} = 14{,}2$</div>
+      <p style="font-size:0.85em">Markedet betaler 14 kroner for hver krone i årlig overskudd. Snudd: $1/14{,}2 = 7\,\%$ «earnings yield».</p>
+    </div>
+  </div>
+  <div class="key-point">P/E er det første tallet som bruker <strong>markedsverdi</strong>, ikke bokført. Bokført EK per aksje er 4 kr, kursen er 10 kr — P/B = 2,5. Markedet mener Fjord AS er verdt 2,5 ganger det balansen sier. Hvorfor? Det er F9–F11.</div>
+</section>
+
+<section>
+  <h2>Svar 5: Totalavkastning — det eieren faktisk fikk</h2>
+  <div class="formel big-formula">
+    $$\text{TSR} = \frac{P_1 - P_0 + \text{Utbytte}}{P_0} = \frac{11 - 10 + 0{,}40}{10} = 14\,\%$$
+  </div>
+  <p style="text-align:left">Kursstigning 10 % + direkteavkastning 4 % = 14 %. Dette er den eneste av de fem som svarer på spørsmålet <em>«hva fikk jeg igjen for pengene mine i år?»</em></p>
+  <div class="avk-grid">
+    <div class="avk"><div class="n">12 %</div><div class="l">ROA<br>eiendelene</div></div>
+    <div class="avk"><div class="n">17,6 %</div><div class="l">ROE<br>bokført EK</div></div>
+    <div class="avk"><div class="n">0,70</div><div class="l">EPS<br>per aksje</div></div>
+    <div class="avk"><div class="n">14,2</div><div class="l">P/E<br>markedspris</div></div>
+    <div class="avk"><div class="n">14 %</div><div class="l">TSR<br>eierens år</div></div>
+  </div>
+  <div class="key-point">Fem tall, ett selskap. ROA og ROE er <strong>regnskapstall</strong> — hva bedriften presterte. TSR er et <strong>markedstall</strong> — hva investoren opplevde. I F12 lærer vi å regne på TSR over mange år. I F14 lærer vi hva TSR <em>burde</em> vært, gitt risikoen.</div>
+</section>
+
+<section>
+  <h2>DuPont — ROE brutt ned i tre</h2>
+  <div class="formel big-formula">
+    $$\text{ROE} = \underbrace{\frac{\text{Resultat}}{\text{Salg}}}_{\text{margin}} \times \underbrace{\frac{\text{Salg}}{\text{Eiendeler}}}_{\text{omløp}} \times \underbrace{\frac{\text{Eiendeler}}{\text{EK}}}_{\text{gearing}}$$
+  </div>
+  <div class="norsk-eksempel">
+    <div class="label">Fjord AS</div>
+    $$\frac{70{,}2}{800} \times \frac{800}{1000} \times \frac{1000}{400} = 8{,}8\,\% \times 0{,}8 \times 2{,}5 = 17{,}55\,\%$$
+  </div>
+  <p style="text-align:left; font-size:0.9em">Tre spørsmål: Tjener de godt per krone solgt? Får de mye salg ut av eiendelene? Hvor mye er lånt?</p>
+  <div class="interactive-model">
+    <div class="label">Interaktiv modell — finanskurset.no, modul 2</div>
+    DuPont-modellen har tre skyveknapper. Dra gearing-knappen opp og se hva som skjer med ROE — og med risikoen.
+  </div>
+</section>
+
+<section>
+  <h2>Samme ROE — tre helt ulike selskaper</h2>
+  <table>
+    <tr><th>Selskap (type)</th><th>Margin</th><th>Omløp</th><th>Gearing</th><th>ROE</th><th>Hvordan</th></tr>
+    <tr><td>Dagligvare (Rema-type)</td><td class="r">2 %</td><td class="r">4,0</td><td class="r">2,0</td><td class="r"><strong>16 %</strong></td><td>Tjener nesten ingenting per vare — men selger enormt mye</td></tr>
+    <tr><td>Programvare (Visma-type)</td><td class="r">20 %</td><td class="r">0,6</td><td class="r">1,3</td><td class="r"><strong>16 %</strong></td><td>Høy margin, lite eiendeler, nesten ingen gjeld</td></tr>
+    <tr><td>Bank (DNB-type)</td><td class="r">30 %</td><td class="r">0,04</td><td class="r">13</td><td class="r"><strong>16 %</strong></td><td>Eiendelene (utlån) gir lite — men nesten alt er lånt</td></tr>
+  </table>
+  <div class="key-point">Tre selskaper, identisk ROE, <strong>tre ulike forretningsmodeller og tre ulike risikoprofiler</strong>. Det er derfor ett tall aldri er nok. Og det er derfor banken med ROE 16 % er en helt annen investering enn dagligvarekjeden med ROE 16 %.</div>
+  <p class="caption">Tallene er stiliserte for å gi likt ROE — bransjeprofilene er reelle.</p>
+</section>
+
+<section>
+  <h2>Fallgruver du skal kjenne igjen</h2>
+  <ul style="font-size:0.9em">
+    <li><strong>ROE kan kjøpes med gjeld.</strong> Et selskap som øker gearing fra 1,5 til 4 «forbedrer» ROE uten å bli en krone dyktigere. Sjekk alltid gearing ved siden av ROE</li>
+    <li><strong>Negativ EK gir meningsløs ROE.</strong> Norwegian 2020: underskudd delt på negativ egenkapital = positivt tall. Regn det ut, og du får «god avkastning» i et selskap som var teknisk konkurs</li>
+    <li><strong>Bokført EK ≠ det eierne har betalt.</strong> ROE på 17,55 % er regnet på 400 i bokført EK. Eierne har betalt 1 000 i markedet. <em>Deres</em> avkastning er TSR, ikke ROE</li>
+    <li><strong>Ett år er ikke en trend.</strong> Engangsgevinster, nedskrivninger og valutaeffekter forstyrrer. Se fem år</li>
+    <li><strong>Sammenlign innenfor bransje.</strong> DNB mot Rema er meningsløst. DNB mot SpareBank 1 er nyttig</li>
+  </ul>
+  <div class="key-point">Regnskapet lyver sjelden. Men det svarer bare på det spørsmålet du faktisk stilte.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL E</div>
+  <h2>Nøkkeltallene vi tar med videre</h2>
+</section>
+
+<section>
+  <h2>Fire nøkkeltall — og hvor de dukker opp igjen</h2>
+  <table style="font-size:0.72em">
+    <tr><th>Nøkkeltall</th><th>Formel</th><th>Fjord AS</th><th>Tolkning</th><th>Brukes i</th></tr>
+    <tr><td><strong>Egenkapitalandel</strong></td><td>EK / Eiendeler</td><td class="r">40 %</td><td>Hvor mye tåler vi å tape før långiverne blir nervøse? &gt; 30 % er ofte greit</td><td>F16, semesteroppgaven</td></tr>
+    <tr><td><strong>Gjeldsgrad</strong></td><td>Gjeld / EK</td><td class="r">1,5</td><td>Samme informasjon, annen skala. D/E er det vi bruker i formlene</td><td>F15 WACC, F16 MM</td></tr>
+    <tr><td><strong>Rentedekningsgrad</strong></td><td>EBIT / Renter</td><td class="r">4,0</td><td>Hvor mange ganger kan driften betale rentene? &lt; 2 er faresignal</td><td>F5–F6 kredittrisiko, F16</td></tr>
+    <tr><td><strong>Likviditetsgrad 1</strong></td><td>Omløpsmidler / Kortsiktig gjeld</td><td class="r">—</td><td>Kan vi betale regningene de neste 12 månedene? &gt; 1 minimum</td><td>Semesteroppgaven</td></tr>
+  </table>
+  <div class="key-point">Legg merke til at <strong>alle fire</strong> handler om høyre side av balansen — gjeld mot egenkapital, gjeld mot inntjening. Det er der finansieringsbeslutningen bor.</div>
+</section>
+
+<section>
+  <h2>Nivå 1 / 2 / 3 for regnskap</h2>
+  <div class="three-col">
+    <div class="col col-forsta">
+      <h3>FORSTÅ</h3>
+      <ul>
+        <li>Balanse = stillbilde, resultat = film</li>
+        <li>EK er en rest, ikke en konto</li>
+        <li>EBIT er finansieringsuavhengig</li>
+        <li>Resultat ≠ kontantstrøm, og hvorfor</li>
+        <li>Bokført ≠ marked</li>
+        <li>Hvorfor ROE &gt; ROA med gjeld</li>
+      </ul>
+    </div>
+    <div class="col col-regne">
+      <h3>REGNE FOR HÅND</h3>
+      <ul>
+        <li>EK = Eiendeler − Gjeld</li>
+        <li>Kongruens: $EK_{UB}$ fra $EK_{IB}$</li>
+        <li>ROA, ROE, EPS, P/E, TSR</li>
+        <li>DuPont: tre brøker</li>
+        <li>CFO fra resultat + avskrivninger − ΔAK</li>
+        <li>De fire nøkkeltallene</li>
+      </ul>
+    </div>
+    <div class="col col-overlate">
+      <h3>OVERLATE</h3>
+      <ul>
+        <li>Hente årsrapporten og finne tallene</li>
+        <li>Bygge nøkkeltall for 5 år i Excel</li>
+        <li>Sammenligne med bransje</li>
+        <li>Periodiseringsregler, IFRS-detaljer</li>
+        <li>«Forklar hva utsatt skatt er» — spør KI, ikke meg</li>
+      </ul>
+    </div>
+  </div>
+  <div class="ki-box">
+    <div class="label">Prompt som virker</div>
+    «Her er balansen og resultatet til [selskap]. Regn ut ROE med DuPont, og forklar hvilken av de tre komponentene som skiller dette selskapet fra bransjen.» — Så sjekker du at KI-ens ROE stemmer med din egen.
+  </div>
+</section>
+
+<section>
+  <h2>finanskurset.no — modul 2</h2>
+  <div class="stat-grid">
+    <div class="stat"><div class="n">5</div><div class="l">seksjoner</div></div>
+    <div class="stat"><div class="n">40</div><div class="l">quizspørsmål</div></div>
+    <div class="stat"><div class="n">1</div><div class="l">interaktiv DuPont-modell</div></div>
+    <div class="stat"><div class="n">1</div><div class="l">balansespill</div></div>
+  </div>
+  <ul style="font-size:0.9em">
+    <li><strong>Balansespillet</strong> — dra postene til riktig side. Gjør det til du får alt riktig på første forsøk</li>
+    <li><strong>Equinor-caset</strong> — de tre tallene fra i dag, med lenke til årsrapporten</li>
+    <li><strong>DuPont-modellen</strong> — skyv på margin, omløp og gearing. Se når ROE blir høy av feil grunn</li>
+    <li><strong>Modulquiz</strong> — 20 trekkes av 40, 80 % for bestått. Ta den før mandag</li>
+  </ul>
+  <div class="key-point">Regnskapsmodulen er den eneste som ikke har egne forelesningsslides fra før — så denne forelesningen legges inn der i løpet av uken.</div>
+</section>
+
+<section>
+  <h2>Oppsummering</h2>
+  <ol style="font-size:0.88em">
+    <li><strong>Balansen</strong> er et stillbilde: Eiendeler = Gjeld + EK. Egenkapital er resten, ikke en konto</li>
+    <li><strong>Resultatet</strong> er en film: en kø der långiverne står foran eierne. EBIT er før køen — finansieringsuavhengig</li>
+    <li><strong>Kontantstrømmen</strong> følger pengene. Fri kontantstrøm er det vi diskonterer</li>
+    <li><strong>Bokført ≠ marked</strong> — balansen er historie, kursen er forventning</li>
+    <li><strong>Resultat ≠ kontanter</strong> — periodisering. Fjord AS: 70 vs 40</li>
+    <li><strong>Kongruens</strong>: $EK_{UB} = EK_{IB} + \text{resultat} - \text{utbytte} + \text{emisjon}$ — og det <em>er</em> kapitalstruktur og dividende</li>
+    <li><strong>Avkastning har fem svar</strong>: ROA, ROE, EPS, P/E, TSR — de måler ulike ting for ulike folk</li>
+    <li><strong>ROE &gt; ROA</strong> skyldes gearing. Høy ROE kan være risiko i forkledning</li>
+    <li><strong>DuPont</strong>: margin × omløp × gearing. Samme ROE, ulike forretningsmodeller</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Til mandag</h2>
+  <div class="definisjon">
+    <div class="term">Gjør</div>
+    Modul 2 på finanskurset.no — balansespillet og DuPont-modellen. Ta modulquizen.
+  </div>
+  <div class="definisjon">
+    <div class="term">Les</div>
+    HRWJ kapittel 2 (hele) og kapittel 3 (nøkkeltallsdelen). Hopp over skattedelen i kapittel 2 — den er amerikansk.
+  </div>
+  <div class="definisjon">
+    <div class="term">Prøv</div>
+    Finn årsrapporten til ett norsk børsnotert selskap du liker. Regn ut ROA, ROE og gjeldsgrad selv. Så be KI gjøre det samme — og se om dere er enige. Ta med resultatet.
+  </div>
+  <p style="text-align:center; color: var(--nmbu-green); margin-top: 16px"><strong>Mandag 14.09:</strong> Forelesning 3 — Renteregning I. Oppgavesett 0 starter tirsdag.</p>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script>Reveal.initialize({ hash: true, slideNumber: 'c/t', width: 1280, height: 800, margin: 0.06, controls: true, progress: true, center: true, transition: 'slide', plugins: [ RevealNotes ] });</script>
+</body>
+</html>

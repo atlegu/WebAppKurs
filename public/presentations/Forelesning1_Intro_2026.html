@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BUS 220 – Forelesning 1: Velkommen til finansfaget</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css" id="theme">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap');
+  :root { --nmbu-green: #046530; --nmbu-green-light: #f0f7f2; --accent-orange: #f59e0b; --tavle-bg: #fef3c7; --text-dark: #1a1a1a; --text-muted: #4b5563; --ki: #0e7490; --ki-light: #ecfeff; }
+  .reveal { font-family: 'Source Serif 4', Georgia, serif; font-size: 28px; color: var(--text-dark); }
+  .reveal h1, .reveal h2, .reveal h3 { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); text-transform: none; letter-spacing: 0; font-weight: 700; }
+  .reveal h1 { font-size: 1.8em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.5em; line-height: 1.2; margin-bottom: 0.5em; }
+  .reveal h3 { font-size: 1.2em; }
+  .reveal p { line-height: 1.5; }
+  .reveal ul, .reveal ol { display: block; margin-left: 1em; }
+  .reveal li { margin-bottom: 0.4em; line-height: 1.5; }
+  .reveal .title-slide { background: var(--nmbu-green); color: white; padding: 60px; }
+  .reveal .title-slide h1 { color: white; font-size: 2.4em; margin-bottom: 0.3em; }
+  .reveal .title-slide .subtitle { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 1.4em; color: rgba(255,255,255,0.95); margin-bottom: 1em; }
+  .reveal .title-slide .meta { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 0.85em; color: rgba(255,255,255,0.8); margin-top: 2em; }
+  .reveal .section-divider { background: var(--nmbu-green); color: white; }
+  .reveal .section-divider h2 { color: white; font-size: 2.2em; }
+  .reveal .section-divider .section-number { font-family: 'Source Sans 3', Arial, sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9em; letter-spacing: 0.2em; margin-bottom: 1em; }
+  .reveal .section-divider.ki { background: var(--ki); }
+  .reveal .definisjon { background: var(--nmbu-green-light); border-left: 5px solid var(--nmbu-green); padding: 18px 24px; margin: 20px 0; text-align: left; border-radius: 0 8px 8px 0; }
+  .reveal .definisjon .term { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: var(--nmbu-green); margin-bottom: 6px; }
+  .reveal .formel { background: white; border: 2px solid var(--nmbu-green); padding: 24px 32px; margin: 20px auto; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+  .reveal .key-point { background: var(--nmbu-green-light); padding: 16px 22px; margin: 16px 0; border-radius: 8px; text-align: left; font-size: 0.95em; }
+  .reveal .key-point::before { content: "→ "; color: var(--nmbu-green); font-weight: 700; }
+  .reveal .tavle-marker { background: var(--tavle-bg); border: 2px dashed var(--accent-orange); padding: 18px 24px; margin: 24px 0; border-radius: 10px; text-align: left; }
+  .reveal .tavle-marker .tavle-label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #b45309; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.15em; margin-bottom: 8px; }
+  .reveal .norsk-eksempel { background: #fef9f0; border-left: 4px solid #d97706; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .norsk-eksempel .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #b45309; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal .folkelig { background: #fff7ed; border-left: 4px solid #ea580c; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .folkelig .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #c2410c; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal .ki-box { background: var(--ki-light); border-left: 4px solid var(--ki); padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
+  .reveal .ki-box .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: var(--ki); font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal .prompt { background: #1e293b; color: #e2e8f0; font-family: 'SF Mono', Menlo, Consolas, monospace; font-size: 0.7em; padding: 12px 16px; margin: 8px 0; border-radius: 6px; text-align: left; line-height: 1.5; }
+  .reveal .prompt::before { content: "› "; color: #22d3ee; }
+  .reveal table { margin: 16px auto; border-collapse: collapse; font-size: 0.75em; }
+  .reveal table th { background: var(--nmbu-green); color: white; padding: 8px 12px; font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; }
+  .reveal table td { padding: 6px 12px; border: 1px solid #d4d4d4; text-align: left; vertical-align: top; }
+  .reveal .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; text-align: left; }
+  .reveal .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; align-items: stretch; text-align: left; font-size: 0.78em; }
+  .reveal .three-col .col { padding: 16px 18px; border-radius: 10px; }
+  .reveal .three-col .col h3 { font-size: 1.15em; margin-bottom: 10px; }
+  .reveal .three-col .col ul { margin-left: 0.8em; }
+  .reveal .three-col .col li { margin-bottom: 0.25em; line-height: 1.35; }
+  .reveal .col-forsta { background: var(--nmbu-green-light); border-top: 5px solid var(--nmbu-green); }
+  .reveal .col-forsta h3 { color: var(--nmbu-green); }
+  .reveal .col-regne { background: var(--tavle-bg); border-top: 5px solid var(--accent-orange); }
+  .reveal .col-regne h3 { color: #b45309; }
+  .reveal .col-overlate { background: var(--ki-light); border-top: 5px solid var(--ki); }
+  .reveal .col-overlate h3 { color: var(--ki); }
+  .reveal .caption { font-size: 0.7em; color: var(--text-muted); font-style: italic; margin-top: 8px; }
+  .reveal mjx-container { font-size: 1.0em !important; }
+  .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+  .reveal blockquote { background: var(--nmbu-green-light); border-left: 4px solid var(--nmbu-green); padding: 14px 22px; margin: 16px 0; font-style: italic; font-size: 0.95em; text-align: left; border-radius: 0 6px 6px 0; box-shadow: none; }
+  .reveal .big-number { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 2.6em; font-weight: 700; color: var(--nmbu-green); line-height: 1.1; }
+  .reveal .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 20px 0; }
+  .reveal .stat { background: var(--nmbu-green-light); border-radius: 10px; padding: 14px 10px; text-align: center; }
+  .reveal .stat .n { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 1.8em; font-weight: 700; color: var(--nmbu-green); line-height: 1; }
+  .reveal .stat .l { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 0.65em; color: var(--text-muted); margin-top: 6px; }
+  .reveal .film-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; font-size: 0.62em; text-align: left; }
+  .reveal .film { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px 10px; }
+  .reveal .film b { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); display: block; margin-bottom: 2px; }
+</style>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }, svg: { fontCache: 'global' }, startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { if (window.Reveal) Reveal.layout(); }); } } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section class="title-slide">
+  <h1>Velkommen til finansfaget</h1>
+  <div class="subtitle">Om kurset, om faget — og om hvordan du lærer finans i 2026</div>
+  <div class="meta">BUS 220 — Finansiering og investering<br>Atle G. Guttormsen · Høst 2026<br>Pensum: HRWJ kapittel 1 (+ litt kapittel 2)</div>
+</section>
+
+<section>
+  <h2>I dag</h2>
+  <ol>
+    <li><strong>Hva er finans</strong> — og hvorfor det angår deg uansett hva du skal bli</li>
+    <li><strong>Praktisk informasjon</strong> — forelesninger, øvinger, finanskurset.no, litteratur, eksamen, semesteroppgave</li>
+    <li><strong>KI i læringsprosessen</strong> — hva du skal forstå, hva du skal kunne regne for hånd, og hva du kan overlate til maskinen</li>
+    <li><strong>Bedriften og finansmarkedet</strong> — fagets plassering og de tre store spørsmålene</li>
+  </ol>
+  <div class="key-point">Punkt 3 er nytt i år. Jeg kommer til å bruke god tid på det — og jeg vil høre hva <em>dere</em> mener.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL A</div>
+  <h2>Hva er finans?</h2>
+</section>
+
+<section>
+  <h2>Tre spørsmål du skal kunne svare på i desember</h2>
+  <div class="norsk-eksempel">
+    <div class="label">1 — Privat</div>
+    Du får 100 000 kr i dag. Bank gir 4 %, et globalt indeksfond har gitt 7 % i snitt. Hvor mye er forskjellen verdt når du er 65?
+  </div>
+  <div class="norsk-eksempel">
+    <div class="label">2 — Bedrift</div>
+    Mowi vurderer et nytt slakteri til 800 mill kr. Hvordan avgjør de om det er verdt det — og hvilken rente skal de bruke i regnestykket?
+  </div>
+  <div class="norsk-eksempel">
+    <div class="label">3 — Samfunn</div>
+    Er kjernekraft lønnsomt i Norge? Svaret avhenger nesten utelukkende av <em>ett</em> tall. Hvilket?
+  </div>
+  <div class="key-point">Svar på 1: ca. 1,5 mill vs 0,5 mill etter 40 år. Svar på 2 og 3: kommer i forelesning 7–15. Alle tre handler om det samme.</div>
+</section>
+
+<section>
+  <h2>Hva er finansiering og investering?</h2>
+  <div class="definisjon">
+    <div class="term">Teoretisk definisjon</div>
+    <strong>Ressursallokering over tid.</strong> Du gir opp noe i dag for å få noe (mer, håper du) i fremtiden — eller omvendt.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Investering</h3>
+      <ul>
+        <li>Hvor mye skal vi investere?</li>
+        <li>I hvilke prosjekter?</li>
+        <li>Hva er de verdt?</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Finansiering</h3>
+      <ul>
+        <li>Hvor skal pengene komme fra?</li>
+        <li>Gjeld eller egenkapital?</li>
+        <li>Hva koster kapitalen?</li>
+      </ul>
+    </div>
+  </div>
+  <div class="key-point">Alt i dette kurset er varianter av ett spørsmål: <strong>hva er noe verdt i dag, gitt hva det gir i fremtiden — og hvor sikkert det er?</strong></div>
+</section>
+
+<section>
+  <h2>Finans brukes til å verdsette</h2>
+  <div class="three-col" style="font-size:0.85em">
+    <div class="col col-forsta">
+      <h3>Flytte penger i tid</h3>
+      <p>100 kr i dag ≠ 100 kr om ett år. Renteregning, obligasjoner, nåverdi.</p>
+      <p class="caption">F3–F6</p>
+    </div>
+    <div class="col col-regne">
+      <h3>Håndtere risiko</h3>
+      <p>En sikker krone er verdt mer enn en usikker. Porteføljer, CAPM, avkastningskrav.</p>
+      <p class="caption">F12–F15</p>
+    </div>
+    <div class="col col-overlate">
+      <h3>Ta beslutninger</h3>
+      <p>Skal vi investere? Hvordan finansiere? Hva betale ut? NPV, kapitalstruktur, utbytte, opsjoner.</p>
+      <p class="caption">F7–F11, F16–F18</p>
+    </div>
+  </div>
+  <div class="key-point">Dette er hele kurset på én slide. Alt annet er detaljer.</div>
+</section>
+
+<section>
+  <h2>Hvem trenger dette?</h2>
+  <table>
+    <tr><th>Sektor</th><th>Typiske beslutninger</th></tr>
+    <tr><td><strong>Husholdninger</strong></td><td>Studielån, boligkjøp, pensjonssparing, BSU, aksjesparekonto — konsumutjevning over livet</td></tr>
+    <tr><td><strong>Bedrifter</strong></td><td>Realinvesteringer, kapitalstruktur (gjeld vs EK), utbytte, kapitalanskaffelse, risikostyring</td></tr>
+    <tr><td><strong>Offentlig sektor</strong></td><td>Infrastruktur, Oljefondet, statsobligasjoner, diskonteringsrente for klimatiltak</td></tr>
+  </table>
+  <div class="folkelig">
+    <div class="label">Folkelig</div>
+    Du har allerede tatt en finansbeslutning: du investerte 3–5 år og et studielån i en utdannelse, mot forventet høyere inntekt senere. Du har gjort en NPV-vurdering — bare uten formelen.
+  </div>
+</section>
+
+<section>
+  <h2>Fagets plassering</h2>
+  <div style="margin: 10px auto; text-align:center">
+    <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg">
+      <rect x="20" y="20" width="660" height="210" rx="12" fill="none" stroke="#9ca3af" stroke-width="2" stroke-dasharray="6 4"/>
+      <text x="40" y="48" font-family="Source Sans 3" font-size="15" font-weight="700" fill="#6b7280">SAMFUNNSØKONOMI — makro og mikro</text>
+      <rect x="60" y="70" width="580" height="140" rx="10" fill="#f0f7f2" stroke="#046530" stroke-width="2"/>
+      <text x="80" y="98" font-family="Source Sans 3" font-size="15" font-weight="700" fill="#046530">BEDRIFTSØKONOMI — normativt: hva er lurt å gjøre?</text>
+      <rect x="100" y="115" width="500" height="75" rx="8" fill="#046530"/>
+      <text x="350" y="145" text-anchor="middle" font-family="Source Sans 3" font-size="17" font-weight="700" fill="white">FINANS</text>
+      <text x="350" y="172" text-anchor="middle" font-family="Source Sans 3" font-size="13" fill="rgba(255,255,255,0.85)">investering · finansiering · verdsetting · risiko</text>
+    </svg>
+  </div>
+  <ul style="font-size:0.9em">
+    <li><strong>Makro</strong> gir rentenivået og konjunkturene vi opererer i</li>
+    <li><strong>Mikro</strong> gir prisdannelse og markedslogikk</li>
+    <li><strong>Finans</strong> bruker begge til å svare på: <em>hva skal bedriften gjøre med pengene?</em></li>
+  </ul>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL B</div>
+  <h2>Praktisk informasjon</h2>
+</section>
+
+<section>
+  <h2>Kursets oppbygning — 20 forelesninger i 6 blokker</h2>
+  <table style="font-size:0.72em">
+    <tr><th>Blokk</th><th>Forelesninger</th><th>Uker</th><th>Innhold</th></tr>
+    <tr><td>1. Verktøykassen</td><td>F1–F6</td><td>37–39</td><td>Regnskap, renteregning, obligasjoner</td></tr>
+    <tr><td>2. Investeringsanalyse</td><td>F7–F8</td><td>40</td><td>NPV, IRR, kontantstrøm, sensitivitet</td></tr>
+    <tr><td>3. Aksjer og verdsetting</td><td>F9–F11 + gjest</td><td>41–42</td><td>DDM, P/E, multiplikatorer</td></tr>
+    <tr><td>4. Risiko og CAPM</td><td>F12–F14</td><td>43–44</td><td>Portefølje, diversifisering, beta</td></tr>
+    <tr><td>5. Kapitalstruktur og utbytte</td><td>F15–F17</td><td>44–45</td><td>WACC, Modigliani-Miller, dividende</td></tr>
+    <tr><td>6. Anvendelser</td><td>F18–F19</td><td>47</td><td>Opsjoner, internasjonal finans</td></tr>
+    <tr><td>Oppsummering</td><td>F20</td><td>49</td><td>Eksamensforberedelse</td></tr>
+  </table>
+  <div class="key-point">Full timeplan med datoer ligger på Canvas. <strong>Ikke</strong> alle mandager og torsdager har forelesning — sjekk planen.</div>
+</section>
+
+<section>
+  <h2>Forelesninger</h2>
+  <div class="two-col">
+    <div class="definisjon">
+      <div class="term">Mandag</div>
+      08:15 – 10:00
+    </div>
+    <div class="definisjon">
+      <div class="term">Torsdag</div>
+      08:15 – 10:00
+    </div>
+  </div>
+  <ul>
+    <li>Rom annonseres på Canvas / TimeEdit</li>
+    <li>Presentasjonene legges ut <em>før</em> forelesning — som HTML (interaktiv) og PDF</li>
+    <li>Forelesningene <strong>er pensum</strong>. Slidene utdypes muntlig — det som sies er like viktig som det som står</li>
+    <li>To gjesteforelesninger (én bekreftet: Kristin Skaug, AksjeNorge, 5. oktober)</li>
+  </ul>
+  <div class="key-point">Forutsetter for- og etterarbeid. 2 timer forelesning ≈ 4–6 timer eget arbeid per uke for å henge med.</div>
+</section>
+
+<section>
+  <h2>Øvinger — der finans faktisk læres</h2>
+  <div class="three-col" style="font-size:0.9em">
+    <div class="col col-forsta"><h3>Mandag</h3><p>10:15 – 12:00</p></div>
+    <div class="col col-forsta"><h3>Tirsdag</h3><p>10:15 – 12:00</p></div>
+    <div class="col col-forsta"><h3>Torsdag</h3><p>10:15 – 12:00</p></div>
+  </div>
+  <ul>
+    <li>Tre <strong>parallelle</strong> øvingskurs — samme innhold, du velger <strong>én</strong> dag</li>
+    <li>Hvert oppgavesett går tirsdag → torsdag → mandag uken etter, så alle får det etter forelesningen</li>
+    <li>9 oppgavesett + gamle eksamensoppgaver. Alt ligger ute fra dag 1</li>
+  </ul>
+  <div class="tavle-marker">
+    <div class="tavle-label">NB</div>
+    Møter det opp svært få på en av dagene, kan antall øvingskurs bli <strong>redusert</strong>. Møt opp — det er der du lærer å regne.
+  </div>
+</section>
+
+<section>
+  <h2>finanskurset.no — kursets egen læringsplattform</h2>
+  <p style="text-align:left">Alt du trenger, samlet på ett sted. Bygget for dette kurset.</p>
+  <div class="stat-grid">
+    <div class="stat"><div class="n">11</div><div class="l">moduler · 79 seksjoner</div></div>
+    <div class="stat"><div class="n">400</div><div class="l">quizspørsmål</div></div>
+    <div class="stat"><div class="n">14</div><div class="l">interaktive modeller</div></div>
+    <div class="stat"><div class="n">9</div><div class="l">oppgavesett med fasit</div></div>
+  </div>
+  <ul style="font-size:0.9em">
+    <li><strong>Alle forelesningene</strong> ligger inne som interaktive slides, koblet til riktig modul</li>
+    <li><strong>8 kalkulatorer</strong> (nåverdi, annuitet, obligasjonspris, NPV, IRR, WACC …)</li>
+    <li><strong>6 podcaster</strong> — hør pensum på bussen</li>
+    <li><strong>Birger</strong> — kursets egen KI-assistent, som kjenner pensum og fasitene</li>
+  </ul>
+</section>
+
+<section>
+  <h2>finanskurset.no — hvordan bruke den</h2>
+  <div class="two-col">
+    <div>
+      <h3>Kom i gang</h3>
+      <ol style="font-size:0.9em">
+        <li>Gå til <strong>finanskurset.no</strong></li>
+        <li>Registrer deg med <strong>NMBU-e-posten</strong> din</li>
+        <li>Du er på klasselisten — får du «fant deg ikke», send meg en e-post</li>
+        <li>Fremdriften din lagres — bytt gjerne maskin</li>
+      </ol>
+    </div>
+    <div>
+      <h3>Modulquizene</h3>
+      <ul style="font-size:0.9em">
+        <li>40 spørsmål i banken, 20 trekkes tilfeldig</li>
+        <li>80 % for bestått (16/20)</li>
+        <li>Ubegrenset antall forsøk — nye spørsmål hver gang</li>
+        <li>Full fasitgjennomgang etterpå</li>
+      </ul>
+    </div>
+  </div>
+  <div class="ki-box">
+    <div class="label">Trykk «SPØR AI» på et oppgavesett</div>
+    Birger får oppgaveteksten <em>og</em> fasiten som kontekst. Be ham forklare hvorfor fasiten er som den er — ikke bare hva svaret er.
+  </div>
+</section>
+
+<section>
+  <h2>Litteratur</h2>
+  <div class="definisjon">
+    <div class="term">Hovedbok</div>
+    Hillier, Ross, Westerfield &amp; Jordan (HRWJ): <em>Fundamentals of Corporate Finance</em>, European Edition
+  </div>
+  <p style="text-align:left"><strong>Norske alternativer</strong> hvis engelsk er tungt:</p>
+  <ul style="font-size:0.9em">
+    <li>Strøm: <em>Foretaksfinans</em></li>
+    <li>Bøhren, Michalsen &amp; Norli: <em>Finans: Teori og praksis</em></li>
+    <li>Helbæk &amp; Lindset: <em>Finansiering og investering — kort og godt</em></li>
+  </ul>
+  <div class="key-point">Ærlig talt: det er fullt mulig å klare kurset uten boken. Forelesninger + finanskurset.no + oppgaver + KI dekker pensum. Men boken gir dybde og ro — vurder selv hvordan du lærer best.</div>
+</section>
+
+<section>
+  <h2>Eksamen</h2>
+  <div class="definisjon">
+    <div class="term">Skriftlig skoleeksamen, 3 timer</div>
+    Hjelpemidler: <strong>enkel kalkulator</strong>. Ikke PC, ikke telefon, ikke KI, ikke formelsamling.
+  </div>
+  <ul>
+    <li>Blanding av regneoppgaver og forståelsesspørsmål</li>
+    <li>Gamle eksamensoppgaver ligger på Canvas — «fra før dere ble født»</li>
+    <li>Uke 49 er satt av til eksamensforberedelse med gamle oppgaver i øvingene</li>
+  </ul>
+  <div class="tavle-marker">
+    <div class="tavle-label">Merk deg dette nå</div>
+    Eksamen er <strong>uten KI</strong>. Det får en direkte konsekvens for hvordan du bør bruke KI <em>underveis</em>. Mer om det om litt.
+  </div>
+</section>
+
+<section>
+  <h2>Arbeidskrav — semesteroppgaven</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Oppdraget</div>
+    Dere er konsulentgruppen <strong>NMBU Markets</strong>. En klient vurderer å investere i et norsk børsnotert selskap og vil ha en analyse. Dere velger selskap, og leverer en investorrettet rapport.
+  </div>
+  <ul style="font-size:0.9em">
+    <li>Grupper på <strong>2–4</strong>. Maks tre grupper per selskap — jeg trekker ved konflikt</li>
+    <li><strong>Fem deler</strong> med egne frister, koblet til pensumblokkene. Hver del: godkjent / ikke godkjent</li>
+    <li>Sluttproduktet er en <strong>presentasjon</strong> (Canva eller tilsvarende) — form <em>og</em> innhold teller. Rent Word-dokument godkjennes ikke</li>
+    <li>Må være bestått for å gå opp til eksamen</li>
+  </ul>
+  <div class="key-point">Alle frister og detaljer ligger i «Oppgaver» på Canvas. Velg selskap tidlig — de populære går fort.</div>
+</section>
+
+<section class="section-divider ki">
+  <div class="section-number">DEL C</div>
+  <h2>KI i læringsprosessen</h2>
+</section>
+
+<section>
+  <h2>La oss være ærlige</h2>
+  <div class="big-number" style="margin: 30px 0 10px">30 sekunder</div>
+  <p>Så lang tid bruker ChatGPT, Claude eller Gemini på å løse <em>enhver</em> oppgave i dette kurset. Korrekt. Med forklaring.</p>
+  <p style="margin-top:30px">Så hva er poenget med å lære det?</p>
+  <div class="key-point">Det er det viktigste spørsmålet i denne forelesningen. Og svaret er ikke «fordi eksamen er uten KI» — selv om det også er sant.</div>
+</section>
+
+<section>
+  <h2>Min holdning</h2>
+  <blockquote style="font-size:1.1em">Bruk KI så mye som overhodet mulig i læringsprosessen.</blockquote>
+  <ul>
+    <li>KI er den beste private øvingslæreren dere noen gang kommer til å ha. Tilgjengelig 24/7, uendelig tålmodig, kan forklare alt på ti ulike måter</li>
+    <li>Den som lærer seg å <em>lære med</em> KI nå, har et forsprang resten av livet</li>
+    <li>Verktøyene dere har når dere er ferdige her, er bedre enn de som finnes i dag</li>
+  </ul>
+  <div class="ki-box">
+    <div class="label">Men</div>
+    Det finnes en måte å bruke KI på som gjør deg <strong>dummere</strong>, og en som gjør deg <strong>smartere</strong>. Forskjellen er ikke verktøyet. Forskjellen er <em>hva du ber om</em>.
+  </div>
+</section>
+
+<section>
+  <h2>Hvorfor det fortsatt er verdt å lære finans</h2>
+  <div class="folkelig">
+    <div class="label">Folkelig — kalkulatoren i 1975</div>
+    Da lommekalkulatoren kom, spurte folk: hvorfor lære gangetabellen? Svaret viste seg å være: fordi den som ikke kan gange, ser ikke at kalkulatoren viste 4 200 når svaret skulle vært 420. Tastefeilen oppdages bare av den som vet omtrent hva svaret bør bli.
+  </div>
+  <p style="text-align:left">KI er kalkulatoren ganger tusen. Den kan gjøre alt — men den kan også ta feil, misforstå spørsmålet, eller svare på et annet spørsmål enn det du stilte.</p>
+  <div class="key-point">Arbeidslivet trenger ikke folk som kan regne NPV. Det trenger folk som vet <strong>når NPV-tallet er feil</strong>, <strong>hvilke forutsetninger som er urimelige</strong>, og <strong>hvilket spørsmål som egentlig skulle vært stilt</strong>. Det kan du ikke uten å kunne faget.</div>
+</section>
+
+<section>
+  <h2>Tre nivåer</h2>
+  <div class="three-col">
+    <div class="col col-forsta">
+      <h3>FORSTÅ</h3>
+      <p>Konseptene. Må sitte i hodet ditt, uten hjelpemidler. Det du skal kunne <em>forklare</em> til en venn.</p>
+    </div>
+    <div class="col col-regne">
+      <h3>REGNE FOR HÅND</h3>
+      <p>Grunnberegningene. Med enkel kalkulator og papir. Det som testes på eksamen — og det som gjør at du <em>ser</em> når KI tar feil.</p>
+    </div>
+    <div class="col col-overlate">
+      <h3>OVERLATE</h3>
+      <p>Det tunge, det repetitive, det iterative. Excel, Python, KI. Det du gjør i semesteroppgaven og i jobben.</p>
+    </div>
+  </div>
+  <div class="key-point">De neste tre slidene går gjennom hva som havner hvor. Dette er den viktigste tabellen i kurset.</div>
+</section>
+
+<section>
+  <h2>Nivå 1 — Dette skal du FORSTÅ</h2>
+  <div class="two-col" style="font-size:0.85em">
+    <ul>
+      <li><strong>Tidsverdien av penger</strong> — hvorfor 100 kr i dag er verdt mer enn 100 kr om ett år</li>
+      <li><strong>Risiko og avkastning</strong> — hvorfor de henger uløselig sammen</li>
+      <li><strong>Diversifisering</strong> — hvorfor det er den eneste gratis lunsjen</li>
+      <li><strong>Avkastningskravet</strong> — hvorfor det er tallet som avgjør alt</li>
+    </ul>
+    <ul>
+      <li><strong>NPV-regelen</strong> — hvorfor det er <em>det</em> riktige kriteriet, ikke payback eller IRR</li>
+      <li><strong>Systematisk vs usystematisk risiko</strong> — hvorfor bare den ene prises</li>
+      <li><strong>Modigliani-Miller</strong> — hva de sier, og hvorfor forutsetningene er hele poenget</li>
+      <li><strong>Opsjonstankegang</strong> — hvorfor fleksibilitet har verdi</li>
+    </ul>
+  </div>
+  <div class="ki-box">
+    <div class="label">Test deg selv</div>
+    Kan du forklare hvert punkt i tre setninger til noen som ikke studerer økonomi? Hvis ikke, be KI stille deg spørsmål til du kan.
+  </div>
+</section>
+
+<section>
+  <h2>Nivå 2 — Dette skal du kunne REGNE FOR HÅND</h2>
+  <table style="font-size:0.7em">
+    <tr><th>Beregning</th><th>Hvorfor for hånd</th></tr>
+    <tr><td>Nåverdi og fremtidsverdi av enkle kontantstrømmer, annuiteter</td><td>Grunnmuren. Alt annet bygger på dette</td></tr>
+    <tr><td>Obligasjonspris gitt kupong og YTM</td><td>Ser du at prisen faller når renten stiger? Da forstår du renterisiko</td></tr>
+    <tr><td>NPV av et prosjekt med 3–5 kontantstrømmer</td><td>Eksamensklassikeren. Og du må se om fortegnet er riktig</td></tr>
+    <tr><td>Gordon: $P_0 = D_1/(r-g)$</td><td>Tre tall, én linje. Men $g$ nær $r$ gir absurde svar — det må du <em>se</em></td></tr>
+    <tr><td>CAPM: $r = r_f + \beta(E(R_M) - r_f)$</td><td>Kursets sentrale formel. Skal kunne settes inn i søvne</td></tr>
+    <tr><td>WACC, to-aksje-portefølje, opsjonspayoff</td><td>Korte regnestykker der logikken er poenget</td></tr>
+  </table>
+  <div class="key-point">Felles for alle: de er <em>korte</em>. Ingen av dem tar mer enn fem minutter med kalkulator. Poenget er ikke regnekraft — det er at du skal <em>kjenne igjen</em> et rimelig svar.</div>
+</section>
+
+<section>
+  <h2>Nivå 3 — Dette kan du OVERLATE</h2>
+  <div class="two-col" style="font-size:0.85em">
+    <div>
+      <h3>Til Excel / Python / KI</h3>
+      <ul>
+        <li><strong>IRR</strong> — iterativ løsning, ingen lukket formel</li>
+        <li><strong>Black-Scholes</strong> — du skal kjenne intuisjonen, ikke slå opp $N(d_1)$</li>
+        <li><strong>Sensitivitets- og scenarioanalyse</strong> med mange variabler</li>
+        <li><strong>Monte Carlo</strong>-simulering</li>
+        <li><strong>Datahenting</strong> — kurser, regnskap, betaverdier</li>
+        <li><strong>Store regnearkmodeller</strong> — DCF over 10 år</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Til KI spesielt</h3>
+      <ul>
+        <li>Forklare et konsept du ikke skjønte i forelesningen — på nytt, og på nytt</li>
+        <li>Lage <em>nye</em> øvingsoppgaver lik dem du sliter med</li>
+        <li>Sjekke løsningen din og peke på feilen</li>
+        <li>Første utkast av tekst i semesteroppgaven</li>
+        <li>Oppsummere et kapittel før du leser det</li>
+      </ul>
+    </div>
+  </div>
+  <div class="key-point">Regelen: <strong>KI gjør arbeidet, du tar ansvaret.</strong> Alt du leverer skal du kunne forklare og forsvare.</div>
+</section>
+
+<section>
+  <h2>Tre måter å bruke KI på</h2>
+  <table style="font-size:0.75em">
+    <tr><th style="width:12%"></th><th style="width:38%">Hva du gjør</th><th>Hva som skjer i hodet ditt</th></tr>
+    <tr style="background:#fee2e2"><td><strong>Dårlig</strong></td><td>«Løs oppgave 3.» Kopier svaret. Neste.</td><td>Ingenting. Du har lært å kopiere. Eksamen blir et sjokk.</td></tr>
+    <tr style="background:#fef3c7"><td><strong>OK</strong></td><td>Løs selv først. Be KI sjekke. Se på forskjellene.</td><td>Du oppdager egne feil. Bra — men KI kan også ta feil, og da vet du ikke hvem som har rett.</td></tr>
+    <tr style="background:#dcfce7"><td><strong>Best</strong></td><td>Be KI forklare konseptet på tre måter. Løs selv. Be om en <em>ny</em> oppgave med andre tall. Løs den. Be KI kritisere resonnementet ditt — ikke svaret.</td><td>Du bygger forståelse som tåler eksamen, jobbintervju og en sjef som spør «hvorfor?»</td></tr>
+  </table>
+  <div class="key-point">Forskjellen mellom rad 1 og rad 3 er ikke tiden du bruker. Det er <em>hvem som tenker</em>.</div>
+</section>
+
+<section>
+  <h2>Prompter som faktisk virker</h2>
+  <p style="text-align:left; font-size:0.9em">Kopier disse. Bytt ut temaet.</p>
+  <div class="prompt">Forklar nåverdi som om jeg var 15 år. Bruk et eksempel med noe jeg kan kjøpe.</div>
+  <div class="prompt">Her er oppgaven og min løsning: [lim inn]. Ikke gi meg riktig svar — fortell meg bare hvilket steg som er feil, og hvorfor.</div>
+  <div class="prompt">Lag tre nye oppgaver om obligasjonsprising på samme nivå som denne: [lim inn]. Ikke vis løsningene før jeg ber om det.</div>
+  <div class="prompt">Still meg fem spørsmål som avslører om jeg faktisk har forstått diversifisering eller bare pugget det.</div>
+  <div class="prompt">Hva er de tre vanligste feilene studenter gjør når de bruker CAPM? Gi meg et eksempel på hver.</div>
+  <div class="key-point">Fellesnevner: du ber om <strong>spørsmål, kritikk og variasjon</strong> — ikke om svar.</div>
+</section>
+
+<section>
+  <h2>KI misforstår — og du må se det</h2>
+  <div class="norsk-eksempel">
+    <div class="label">Spørsmål</div>
+    «Hva er nåverdien av 10 000 kr i året i fem år, første betaling <strong>i dag</strong>, med 5 % rente?»
+  </div>
+  <div class="two-col" style="font-size:0.9em">
+    <div>
+      <p><strong>Svar A</strong> — ordinær annuitet (første betaling om ett år):</p>
+      <div class="formel">$10\,000 \times \dfrac{1 - 1{,}05^{-5}}{0{,}05} = 43\,295$</div>
+    </div>
+    <div>
+      <p><strong>Svar B</strong> — forskuddsannuitet (første betaling i dag):</p>
+      <div class="formel">$43\,295 \times 1{,}05 = 45\,460$</div>
+    </div>
+  </div>
+  <p style="text-align:left; font-size:0.9em">Ordet «i dag» er verdt <strong>2 165 kr</strong>. Både mennesker og modeller overser det. Får du svar A, oppdager du feilen bare hvis du <em>selv</em> vet hva forskjellen betyr.</p>
+  <div class="key-point">Dette er hele argumentet for nivå 2. Du regner for hånd for å kunne <strong>kontrollere</strong> — ikke for å konkurrere med maskinen.</div>
+</section>
+
+<section>
+  <h2>Du er sjefen. KI er assistenten.</h2>
+  <ul>
+    <li>En god sjef gir <strong>presise oppdrag</strong> — vage spørsmål gir vage svar</li>
+    <li>En god sjef <strong>sjekker arbeidet</strong> — særlig tallene og forutsetningene</li>
+    <li>En god sjef vet at assistenten er <strong>selvsikker også når den tar feil</strong></li>
+    <li>En god sjef bruker assistenten til å bli <strong>bedre selv</strong>, ikke til å slippe å tenke</li>
+  </ul>
+  <div class="folkelig">
+    <div class="label">Folkelig</div>
+    Tenk på KI som en nyutdannet, briljant, lynrask praktikant som aldri sover — og som aldri innrømmer at den er usikker. Du ville ikke sendt praktikantens regneark rett til styret uten å se på det. Gjør ikke det med KI heller.
+  </div>
+</section>
+
+<section>
+  <h2>Semesteroppgaven og KI — spillereglene</h2>
+  <div class="ki-box">
+    <div class="label">Tillatt og oppfordret</div>
+    Bruk KI til datainnsamling, regneark, tekstutkast, språkvask, strukturering, figurer, kritikk av egen analyse. Alt.
+  </div>
+  <div class="tavle-marker">
+    <div class="tavle-label">Kravet</div>
+    <strong>Dere skal forstå og kunne forsvare hvert tall og hver påstand i rapporten.</strong> Jeg kan be hvem som helst i gruppen forklare hvorfor betaen er 1,2 eller hvorfor WACC er 8,4 %. Kan dere ikke det, er det ikke deres arbeid — uansett hvem som skrev det.
+  </div>
+  <ul style="font-size:0.9em">
+    <li>Oppgi kort hvordan KI ble brukt (ett avsnitt). Ikke for å straffe — for å lære hva som fungerer</li>
+    <li>Tall fra KI skal <strong>kontrolleres mot kilde</strong> (årsrapport, Oslo Børs, Norges Bank). KI finner på tall</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Hva mener dere?</h2>
+  <p style="text-align:left">Ta 3 minutter med sidemannen. Så tar vi det i plenum.</p>
+  <ol>
+    <li>Hvordan bruker du KI i studiene i dag — ærlig?</li>
+    <li>Har du opplevd at KI ga et svar som var feil, men overbevisende? Hva skjedde?</li>
+    <li>Hva tror du arbeidsgivere om fem år forventer at du kan <em>uten</em> KI?</li>
+    <li>Er det noe i «tre nivåer»-rammeverket du er uenig i?</li>
+  </ol>
+  <div class="key-point">Det finnes ikke et fasitsvar her. Men det finnes dårlige og gode strategier — og dere velger deres nå.</div>
+</section>
+
+<section class="section-divider">
+  <div class="section-number">DEL D</div>
+  <h2>Bedriften og finansmarkedet</h2>
+</section>
+
+<section>
+  <h2>Finansmarkedets hovedfunksjoner</h2>
+  <ol>
+    <li><strong>Flytte ressurser i tid</strong> — sparere gir opp forbruk nå, lånere får forbruk nå. Studielånet ditt er et eksempel</li>
+    <li><strong>Bringe sparere og lånere sammen</strong> — banker, børser, fond</li>
+    <li><strong>Prise risiko</strong> — hva koster det å bære usikkerhet? Det er markedet som svarer</li>
+    <li><strong>Skape verdier</strong> — gjennom å kanalisere kapital til de prosjektene som gir mest igjen</li>
+  </ol>
+  <div class="norsk-eksempel">
+    <div class="label">Norsk skala</div>
+    Oljefondet: ~20 000 mrd kr. Oslo Børs: ~4 000 mrd kr i markedsverdi. Norske husholdningers boliggjeld: ~4 000 mrd kr. Alt dette er finansmarkedet i arbeid.
+  </div>
+</section>
+
+<section>
+  <h2>Hva er bedriftens mål?</h2>
+  <div class="two-col">
+    <div>
+      <h3>Kandidater</h3>
+      <ul>
+        <li>Maksimere profitt?</li>
+        <li>Minimere kostnader?</li>
+        <li>Størst mulig markedsandel?</li>
+        <li>Overleve?</li>
+        <li>Vokse?</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Problemet med hver</h3>
+      <ul>
+        <li>Profitt — hvilket år? Med hvilken risiko?</li>
+        <li>Kostnader — null produksjon er billigst</li>
+        <li>Markedsandel — kan kjøpes med tap</li>
+        <li>Overleve — men til hvilken pris?</li>
+        <li>Vokse — Norwegian vokste seg konkurs</li>
+      </ul>
+    </div>
+  </div>
+  <div class="key-point">Ingen av dem holder som overordnet mål. Vi trenger ett som tar hensyn til <strong>tid</strong> og <strong>risiko</strong> samtidig.</div>
+</section>
+
+<section>
+  <h2>Aksjonærverdiprinsippet</h2>
+  <div class="definisjon">
+    <div class="term">Bedriftens mål i finansfaget</div>
+    <strong>Maksimere verdien av egenkapitalen</strong> — dagens verdi av alle fremtidige kontantstrømmer til eierne, justert for risiko.
+  </div>
+  <ul style="font-size:0.9em">
+    <li>Eierne står <em>sist</em> i køen: ansatte, leverandører, långivere og staten får sitt først. Det som er igjen, er eiernes</li>
+    <li>Derfor: øker restverdien, har alle de andre allerede fått sitt</li>
+    <li>Det er et <strong>langsiktig</strong> mål — kursmanipulasjon i dag ødelegger verdi i morgen</li>
+  </ul>
+  <div class="key-point">Interessentmodellen (ansatte, miljø, samfunn) er ikke i konflikt med dette — den er en <em>forutsetning</em>. Bedrifter som behandler interessentene dårlig, får ikke beholde verdien over tid. Vi kommer tilbake til dette under bærekraftig finans.</div>
+</section>
+
+<section>
+  <h2>De tre store finansielle beslutningene</h2>
+  <table style="font-size:0.8em">
+    <tr><th>Beslutning</th><th>Spørsmål</th><th>Hvor i kurset</th></tr>
+    <tr><td><strong>Investering</strong><br><span style="color:#6b7280">capital budgeting</span></td><td>Hvilke prosjekter skal vi satse på? Hva er de verdt?</td><td>F7–F11</td></tr>
+    <tr><td><strong>Finansiering</strong><br><span style="color:#6b7280">capital structure</span></td><td>Gjeld eller egenkapital? Hvor mye av hver? Hva koster det?</td><td>F15–F17</td></tr>
+    <tr><td><strong>Likviditet</strong><br><span style="color:#6b7280">working capital</span></td><td>Har vi penger til lønn på fredag? Hvor mye varelager?</td><td>F2, semesteroppgaven</td></tr>
+  </table>
+  <div class="key-point">Og under alle tre ligger <strong>risiko</strong> (F12–F14) og <strong>avkastningskravet</strong> (F15). Det er derfor de kommer midt i kurset — de er limet.</div>
+</section>
+
+<section>
+  <h2>Finans på film — når du trenger en pause</h2>
+  <div class="film-grid">
+    <div class="film"><b>The Big Short (2015)</b>Finanskrisen 2008, forklart med humor. Beste innføring i CDO-er som finnes.</div>
+    <div class="film"><b>Margin Call (2011)</b>24 timer i en investeringsbank før krakket. Risikostyring i praksis.</div>
+    <div class="film"><b>Dumb Money (2023)</b>GameStop og Reddit mot hedgefondene. Short-salg og markedspsykologi.</div>
+    <div class="film"><b>Inside Job (2010)</b>Dokumentar. Oscar-vinner. Sinne på faktabasis.</div>
+    <div class="film"><b>Exit (NRK, 2019–)</b>Norske finansfolk på sitt verste. Overdrevet — men ikke så mye som du tror.</div>
+    <div class="film"><b>Too Big to Fail (2011)</b>Lehman-helgen fra innsiden av Finansdepartementet.</div>
+    <div class="film"><b>The Wolf of Wall Street (2013)</b>Pump-and-dump. Se den for å forstå hva vi <em>ikke</em> lærer bort.</div>
+    <div class="film"><b>Rogue Trader (1999)</b>Nick Leeson senker Barings Bank alene. Derivater uten kontroll.</div>
+  </div>
+  <p class="caption">Alle er bedre etter at du har hatt kurset. Se dem igjen i desember.</p>
+</section>
+
+<section>
+  <h2>Velmente råd</h2>
+  <div class="two-col" style="font-size:0.9em">
+    <div class="definisjon">
+      <div class="term">Ligg på forskudd</div>
+      Gjennomgå stoffet <em>før</em> forelesning. Faller du av i uke 40, er det tungt å komme på igjen i uke 44 — alt bygger på alt.
+    </div>
+    <div class="definisjon">
+      <div class="term">Regn, ikke les</div>
+      Finans læres med blyant. Finn din egen løsning <em>før</em> du ser fasiten. Sjekk mot KI etterpå — og husk at det kan være din som er riktig.
+    </div>
+    <div class="definisjon">
+      <div class="term">Snakk finans</div>
+      Kollokvier virker. Å forklare CAPM til en medstudent er den beste testen på om du kan det.
+    </div>
+    <div class="definisjon">
+      <div class="term">Følg med</div>
+      DN, Finansavisen, E24. Når du ser «Norges Bank hever renten», skal du fra uke 39 vite hva det gjør med obligasjonskursene.
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Oppsummering</h2>
+  <ol style="font-size:0.9em">
+    <li>Finans = <strong>ressursallokering over tid</strong>. Verdsette ved å flytte penger i tid, håndtere risiko, ta beslutninger</li>
+    <li>Forelesning Man/Tor 08:15. Øving Man/Tir/Tor 10:15 — velg én dag, møt opp</li>
+    <li><strong>finanskurset.no</strong>: registrer deg i dag med NMBU-e-post. Alt ligger der</li>
+    <li>Eksamen: 3 timer, enkel kalkulator, <strong>uten KI</strong></li>
+    <li>Semesteroppgave: NMBU Markets, grupper på 2–4, fem deler, presentasjon</li>
+    <li><strong>Tre nivåer</strong>: forstå konseptene · regn grunnstykkene for hånd · overlat resten</li>
+    <li>Bruk KI <strong>maksimalt</strong> — men be om spørsmål og kritikk, ikke svar</li>
+    <li>Bedriftens mål: maksimere egenkapitalverdi, langsiktig, med alle interessenter ivaretatt</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Til torsdag</h2>
+  <div class="definisjon">
+    <div class="term">Gjør</div>
+    Registrer deg på <strong>finanskurset.no</strong>. Gå gjennom modul 1 («Velkommen»). Ta en titt på oppgavesett 0.
+  </div>
+  <div class="definisjon">
+    <div class="term">Les</div>
+    HRWJ kapittel 1. Skum kapittel 2 — vi bruker det på torsdag.
+  </div>
+  <div class="definisjon">
+    <div class="term">Prøv</div>
+    Ta én av promptene fra i dag og bruk den på begrepet «nåverdi». Se hva som skjer. Ta med det mest overraskende svaret på torsdag.
+  </div>
+  <p style="text-align:center; color: var(--nmbu-green); margin-top: 16px"><strong>Torsdag 10.09:</strong> Forelesning 2 — Det du trenger å kunne om regnskap.</p>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script>Reveal.initialize({ hash: true, slideNumber: 'c/t', width: 1280, height: 800, margin: 0.06, controls: true, progress: true, center: true, transition: 'slide', plugins: [ RevealNotes ] });</script>
+</body>
+</html>

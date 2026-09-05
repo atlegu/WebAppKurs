@@ -1,4 +1,4 @@
-import { Module } from '../types/course';
+import { Module, PresentationContent } from '../types/course';
 
 export const modul2RegnskapModule: Module = {
   id: 'modul-2-regnskap',
@@ -13,6 +13,25 @@ export const modul2RegnskapModule: Module = {
     'Beregne og tolke sentrale nøkkeltall for lønnsomhet, likviditet og soliditet'
   ],
   sections: [
+    // SEKSJON: Forelesningsslides
+    {
+      id: 'regnskap-forelesningsslides',
+      title: 'Forelesningsslides',
+      icon: '🎓',
+      order: 0,
+      content: [
+        {
+          id: 'regnskap-pres',
+          type: 'presentation',
+          order: 1,
+          title: 'Forelesningsslides: Regnskap for finansfolk',
+          description: 'Slides fra klasseromsforelesningen om regnskap sett med finansøyne: balanse vs resultat, hvorfor kontantstrøm er noe annet enn overskudd, kongruensprinsippet som bro til kapitalstruktur og utbytte, og fem måter å måle avkastning på — med Fjord AS som gjennomgående eksempel.',
+          slides: [
+            { title: 'Forelesning 2 — Regnskap for finansfolk: balanse, resultat, kontantstrøm og fem avkastningsmål', filename: 'Forelesning2_Regnskap_2026.html' }
+          ]
+        } as PresentationContent
+      ]
+    },
     // SEKSJON 2.1: Hvorfor regnskap?
     {
       id: 'seksjon-2-1-hvorfor-regnskap',
