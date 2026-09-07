@@ -3,18 +3,34 @@
 
 const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
 
-// CORS headers
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-};
+// CORS: kun kursets egne domener (og lokal utvikling) får bruke proxyen.
+// Kall fra andre nettsteder – og kall uten Origin-header (skript/curl) – avvises.
+const ALLOWED_ORIGINS = new Set([
+  'https://finanskurset.no',
+  'https://www.finanskurset.no',
+  'http://localhost:5173', // lokal utvikling (vite)
+]);
+
+function corsHeadersFor(origin) {
+  return {
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Vary': 'Origin',
+  };
+}
 
 export default {
   async fetch(request, env) {
+    const origin = request.headers.get('Origin') || '';
+    if (!ALLOWED_ORIGINS.has(origin)) {
+      return new Response('Forbidden', { status: 403 });
+    }
+    const corsHeaders = corsHeadersFor(origin);
+
     // Handle CORS preflight
     if (request.method === 'OPTIONS') {
-      return new Response(null, { headers: corsHeaders });
+      return new Response(null, { status: 204, headers: corsHeaders });
     }
 
     // Only allow POST
