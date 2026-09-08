@@ -942,20 +942,25 @@ a:hover {
   margin-bottom: var(--space-5);
 }
 
+/* Svaralternativ – felles for innlagte quizer («Sjekk din forståelse») og
+   modulquizen. Den native radioknappen er skjult; A/B/C/D-markøren viser
+   valget. .selected settes av QuizHandler/ModuleQuizHandler og fjernes ved
+   fasit, så .correct/.incorrect (definert etter) alltid vinner. */
 .quiz-option {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  gap: var(--space-3);
   padding: var(--space-4);
   background: var(--bg-secondary);
   border: 2px solid transparent;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all var(--transition);
 }
 
 .quiz-option:hover {
-  background: var(--primary-50);
-  border-color: var(--primary-100);
+  background: var(--bg-tertiary);
+  border-color: var(--border);
 }
 
 .quiz-option.selected {
@@ -979,17 +984,39 @@ a:hover {
 }
 
 .quiz-option input[type="radio"] {
-  width: 20px;
-  height: 20px;
-  margin-right: var(--space-3);
-  accent-color: var(--primary);
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.quiz-option-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
   flex-shrink: 0;
+  transition: all var(--transition);
+}
+
+.quiz-option.selected .quiz-option-marker {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
 }
 
 .quiz-option-text {
   flex: 1;
   font-size: var(--text-base);
+  color: var(--text-primary);
   line-height: var(--leading-normal);
+  padding-top: 2px;
 }
 
 .quiz-submit {
@@ -3277,62 +3304,8 @@ a:hover {
   gap: var(--space-3);
 }
 
-.quiz-option {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-3);
-  padding: var(--space-4);
-  background: var(--bg-secondary);
-  border: 2px solid transparent;
-  border-radius: var(--radius-lg);
-  cursor: pointer;
-  transition: all var(--transition);
-}
-
-.quiz-option:hover {
-  background: var(--bg-tertiary);
-  border-color: var(--border);
-}
-
-.quiz-option.selected {
-  background: var(--primary-50);
-  border-color: var(--primary);
-}
-
-.quiz-option input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.quiz-option-marker {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  background: var(--bg-card);
-  border: 2px solid var(--border);
-  border-radius: var(--radius);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--text-secondary);
-  flex-shrink: 0;
-  transition: all var(--transition);
-}
-
-.quiz-option.selected .quiz-option-marker {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: white;
-}
-
-.quiz-option-text {
-  font-size: var(--text-base);
-  color: var(--text-primary);
-  line-height: var(--leading-normal);
-  padding-top: 2px;
-}
+/* .quiz-option, .quiz-option-marker og .quiz-option-text er definert én gang
+   i quiz-seksjonen lenger opp (delt med «Sjekk din forståelse»). */
 
 /* Quiz Actions */
 .module-quiz-actions {
