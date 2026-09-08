@@ -243,6 +243,7 @@ export class ContentRenderer {
               ${content.options.map((option, index) => `
                 <label class="quiz-option" data-index="${index}">
                   <input type="radio" name="${quizId}" value="${index}" />
+                  <span class="quiz-option-marker" aria-hidden="true">${String.fromCharCode(65 + index)}</span>
                   <span class="quiz-option-text">${option}</span>
                 </label>
               `).join('')}

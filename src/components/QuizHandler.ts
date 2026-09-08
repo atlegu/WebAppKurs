@@ -15,11 +15,23 @@ export class QuizHandler {
 
   attachEventListeners(container: HTMLElement): void {
     const submitButtons = container.querySelectorAll('.quiz-submit');
-    
+
     submitButtons.forEach(button => {
       button.addEventListener('click', (e) => {
-        const quizId = (e.target as HTMLElement).dataset.quizId!;
+        const quizId = (e.currentTarget as HTMLElement).dataset.quizId!;
         this.checkAnswer(quizId);
+      });
+    });
+
+    // Visuell markering av valgt alternativ. Den native radioknappen er skjult
+    // i CSS, så uten .selected-klassen ser det ut som om klikket ikke virker.
+    const radios = container.querySelectorAll('.quiz-option input[type="radio"]');
+    radios.forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        const input = e.target as HTMLInputElement;
+        const group = input.closest('.quiz-options');
+        group?.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+        input.closest('.quiz-option')?.classList.add('selected');
       });
     });
   }
@@ -62,9 +74,11 @@ export class QuizHandler {
       (input as HTMLInputElement).disabled = true;
     });
 
-    // Highlight correct and wrong answers
+    // Highlight correct and wrong answers (fjern .selected først, ellers
+    // overstyrer den senere definerte .selected-regelen grønn/rød i CSS)
     const options = quizElement.querySelectorAll('.quiz-option');
     options.forEach((option, index) => {
+      option.classList.remove('selected');
       if (index === quiz.correctAnswer) {
         option.classList.add('correct');
       } else if (index === selectedAnswer && !isCorrect) {
