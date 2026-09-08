@@ -282,7 +282,7 @@ export const modul1VelkommenModule: Module = {
           type: 'example',
           title: 'Marie vs. Knut – En livshistorie i tall',
           content: 'Marie (25) og Knut (25) starter begge i sin første jobb med 450 000 kr i årslønn.\n\nMarie tar dette kurset og lærer om pengenes tidsverdi. Hun setter 3 000 kr i måneden i et indeksfond fra dag én.\n\nKnut tenker han skal "starte med sparing senere". Han venter til han er 35.',
-          calculation: 'Etter 40 år (ved 65):\n\nMaries portefølje: ca. 8,3 millioner kr\nKnuts portefølje: ca. 3,4 millioner kr\n────────────────────────────────────\nForskjell: 4,9 millioner kr\n\n(Forutsetninger: 7% årlig avkastning, inflasjonsjustert)\n\nMaries "forsprang" på 10 år kostet Knut nesten 5 millioner kroner i tapt formue.',
+          calculation: 'Etter 40 år (ved 65):\n\nMaries portefølje: ca. 7,9 millioner kr\nKnuts portefølje: ca. 3,7 millioner kr\n────────────────────────────────────\nForskjell: ca. 4,2 millioner kr\n\n(Forutsetninger: begge sparer 3 000 kr i måneden, 7% årlig avkastning med månedlig rentesrente, inflasjonsjusterte tall)\n\nMaries "forsprang" på 10 år kostet Knut over 4 millioner kroner i tapt formue.',
           order: 11
         },
         {
