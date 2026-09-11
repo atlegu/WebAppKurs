@@ -291,11 +291,15 @@ class SustainableFinanceApp {
 
     if (currentIndex < allSections.length - 1) {
       const next = allSections[currentIndex + 1];
-      this.loadSection(next.moduleId, next.sectionId);
 
-      // Mark current section as completed
+      // Merk seksjonen studenten FORLATER som fullført – og gjør det FØR
+      // loadSection, som bytter currentModule/currentSection til neste seksjon.
+      // (Tidligere sto dette etter loadSection, så seksjonen man ankom ble
+      // merket i stedet – og første seksjon i hver modul kunne aldri fullføres.)
       this.progressTracker.markSectionComplete(this.currentModule!.id, this.currentSection!.id);
       this.navigation.setCompletedSections(this.progressTracker.getCompletedSections());
+
+      this.loadSection(next.moduleId, next.sectionId);
     }
   }
 
