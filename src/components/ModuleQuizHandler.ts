@@ -1,4 +1,5 @@
 import { ModuleQuiz, ModuleQuizQuestion } from '../types/course';
+import { renderLatex } from '../utils/latex';
 
 interface QuizState {
   currentQuestion: number;
@@ -98,7 +99,7 @@ export class ModuleQuizHandler {
           </button>
           <div class="module-quiz-title-section">
             <h1 class="module-quiz-title">${this.quiz.title}</h1>
-            <p class="module-quiz-subtitle">${this.quiz.description}</p>
+            <p class="module-quiz-subtitle">${renderLatex(this.quiz.description)}</p>
             ${totalQuestions < totalPool ? `<p class="module-quiz-random-info">${totalQuestions} tilfeldig valgte spørsmål fra en pool på ${totalPool}</p>` : ''}
           </div>
         </div>
@@ -151,7 +152,7 @@ export class ModuleQuizHandler {
           <span class="quiz-question-number">Spørsmål ${index + 1}</span>
           ${isAnswered ? '<span class="quiz-question-status">✓ Besvart</span>' : ''}
         </div>
-        <p class="quiz-question-text">${question.question}</p>
+        <p class="quiz-question-text">${renderLatex(question.question)}</p>
         <div class="quiz-question-options">
           ${question.options.map((option, optIndex) => `
             <label class="quiz-option ${selectedAnswer === optIndex ? 'selected' : ''}">
@@ -162,7 +163,7 @@ export class ModuleQuizHandler {
                      data-question-index="${index}"
                      data-option-index="${optIndex}" />
               <span class="quiz-option-marker">${String.fromCharCode(65 + optIndex)}</span>
-              <span class="quiz-option-text">${option}</span>
+              <span class="quiz-option-text">${renderLatex(option)}</span>
             </label>
           `).join('')}
         </div>
@@ -269,7 +270,7 @@ export class ModuleQuizHandler {
             ${isCorrect ? '✓ Riktig' : '✗ Feil'}
           </span>
         </div>
-        <p class="review-question-text">${question.question}</p>
+        <p class="review-question-text">${renderLatex(question.question)}</p>
         <div class="review-options">
           ${question.options.map((option, optIndex) => {
             const isSelected = selectedAnswer === optIndex;
@@ -281,7 +282,7 @@ export class ModuleQuizHandler {
             return `
               <div class="review-option ${optionClass}">
                 <span class="review-option-marker">${String.fromCharCode(65 + optIndex)}</span>
-                <span class="review-option-text">${option}</span>
+                <span class="review-option-text">${renderLatex(option)}</span>
                 ${isCorrectOption ? '<span class="review-option-badge correct">Riktig svar</span>' : ''}
                 ${isSelected && !isCorrectOption ? '<span class="review-option-badge wrong">Ditt svar</span>' : ''}
               </div>
@@ -290,7 +291,7 @@ export class ModuleQuizHandler {
         </div>
         <div class="review-explanation">
           <span class="review-explanation-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></span>
-          <p>${question.explanation}</p>
+          <p>${renderLatex(question.explanation)}</p>
         </div>
       </div>
     `;

@@ -237,14 +237,14 @@ export class ContentRenderer {
           <span class="quiz-title">Sjekk din forståelse</span>
         </div>
         <div class="quiz-body">
-          <div class="quiz-question">${content.question}</div>
+          <div class="quiz-question">${this.formatText(content.question)}</div>
           ${content.options ? `
             <div class="quiz-options">
               ${content.options.map((option, index) => `
                 <label class="quiz-option" data-index="${index}">
                   <input type="radio" name="${quizId}" value="${index}" />
                   <span class="quiz-option-marker" aria-hidden="true">${String.fromCharCode(65 + index)}</span>
-                  <span class="quiz-option-text">${option}</span>
+                  <span class="quiz-option-text">${this.formatText(option)}</span>
                 </label>
               `).join('')}
             </div>
@@ -287,7 +287,7 @@ export class ContentRenderer {
           <span class="reflection-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
           <span class="reflection-title">Refleksjon</span>
         </div>
-        <div class="reflection-question">${content.question}</div>
+        <div class="reflection-question">${this.formatText(content.question)}</div>
       </div>
     `;
   }
@@ -313,7 +313,7 @@ export class ContentRenderer {
           <span class="definition-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></span>
           <span class="definition-label">Definisjon</span>
         </div>
-        <div class="definition-term">${content.term}</div>
+        <div class="definition-term">${this.formatText(content.term)}</div>
         <div class="definition-text">${this.formatText(content.definition)}</div>
       </div>
     `;
@@ -329,7 +329,7 @@ export class ContentRenderer {
           <span class="draggame-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"></rect><line x1="6" y1="12" x2="10" y2="12"></line><line x1="8" y1="10" x2="8" y2="14"></line><circle cx="17" cy="10" r="1"></circle><circle cx="15" cy="14" r="1"></circle></svg></span>
           <span class="draggame-title">${content.title}</span>
         </div>
-        <div class="draggame-instructions">${content.instructions}</div>
+        <div class="draggame-instructions">${this.formatText(content.instructions)}</div>
 
         <div class="draggame-items-pool">
           <div class="draggame-pool-label">Dra elementene til riktig kategori:</div>
@@ -389,14 +389,14 @@ export class ContentRenderer {
           <span class="calc-title">${content.title}</span>
         </div>
 
-        ${content.description ? `<div class="calc-description">${content.description}</div>` : ''}
+        ${content.description ? `<div class="calc-description">${this.formatText(content.description)}</div>` : ''}
 
         <div class="calc-body">
           <div class="calc-inputs">
             ${content.inputs.map(input => `
               <div class="calc-input-group">
                 <label class="calc-label" for="${calcId}-${input.key}">
-                  ${input.label}
+                  ${this.formatText(input.label)}
                   ${input.helpText ? `<span class="calc-help" title="${input.helpText}">?</span>` : ''}
                 </label>
                 <div class="calc-input-wrapper">
@@ -419,7 +419,7 @@ export class ContentRenderer {
           ${content.formula ? `
             <div class="calc-formula">
               <div class="calc-formula-label">Formel:</div>
-              <div class="calc-formula-display">${content.formula}</div>
+              <div class="calc-formula-display">${this.formatText(content.formula)}</div>
             </div>
           ` : ''}
 

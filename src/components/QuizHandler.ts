@@ -1,4 +1,5 @@
 import { QuizContent } from '../types/course';
+import { renderLatex } from '../utils/latex';
 
 export class QuizHandler {
   private quizzes: Map<string, QuizContent> = new Map();
@@ -58,7 +59,7 @@ export class QuizHandler {
     // Show feedback
     let feedback = isCorrect ? 'Riktig!' : 'Feil. Prøv igjen!';
     if (quiz.explanation) {
-      feedback += `<br><br>${quiz.explanation}`;
+      feedback += `<br><br>${renderLatex(quiz.explanation)}`;
     }
     
     this.showFeedback(quizId, feedback, isCorrect);
