@@ -56,8 +56,9 @@ export class QuizHandler {
     // Update score
     this.scores.set(quizId, isCorrect ? 100 : 0);
     
-    // Show feedback
-    let feedback = isCorrect ? 'Riktig!' : 'Feil. Prøv igjen!';
+    // Show feedback. Alternativene låses etter svar og fasit vises, så vi
+    // må ikke love at man kan «prøve igjen».
+    let feedback = isCorrect ? 'Riktig!' : 'Ikke riktig. Riktig svar er markert med grønt.';
     if (quiz.explanation) {
       feedback += `<br><br>${renderLatex(quiz.explanation)}`;
     }
