@@ -96,6 +96,8 @@ export interface FormulaContent extends BaseContent {
   type: 'formula';
   formula: string;
   description?: string;
+  /** Kort navn brukt på formelarket (f.eks. «CAPM», «Nåverdi»). Vises ikke i modulen. */
+  name?: string;
 }
 
 export interface ExampleContent extends BaseContent {

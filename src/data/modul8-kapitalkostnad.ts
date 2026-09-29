@@ -218,9 +218,10 @@ export const modul8KapitalkostnadModule: Module = {
         {
           id: '8-2-formula-1',
           type: 'formula',
+          name: 'CAPM (egenkapitalkostnad)',
           order: 5,
-          formula: '$$r_E = r_f + \\beta \\times (r_M - r_f)$$',
-          description: 'Hvor rE = egenkapitalkostnad, rf = risikofri rente, β = aksjens beta (systematisk risiko), og (rM - rf) = markedets risikopremie.'
+          formula: '$$r_E = r_f + \\beta_E \\times (E(R_M) - r_f)$$',
+          description: 'Hvor $r_E$ = egenkapitalkostnad, $r_f$ = risikofri rente, $\\beta_E$ = egenkapitalbeta (systematisk risiko), $E(R_M)$ = forventet markedsavkastning, og $(E(R_M) - r_f)$ = markedets risikopremie.'
         },
         {
           id: '8-2-heading-2',
@@ -234,7 +235,7 @@ export const modul8KapitalkostnadModule: Module = {
           type: 'heading',
           order: 7,
           level: 3,
-          text: 'Risikofri rente (rf)'
+          text: 'Risikofri rente'
         },
         {
           id: '8-2-text-2',
@@ -247,7 +248,7 @@ export const modul8KapitalkostnadModule: Module = {
           type: 'heading',
           order: 9,
           level: 3,
-          text: 'Markedets risikopremie (rM - rf)'
+          text: 'Markedets risikopremie'
         },
         {
           id: '8-2-text-3',
@@ -274,10 +275,10 @@ export const modul8KapitalkostnadModule: Module = {
           order: 13,
           ordered: false,
           items: [
-            'β = 1,0: Aksjen svinger likt med markedet',
-            'β > 1,0: Mer volatil enn markedet (f.eks. β = 1,5 betyr 50% mer svingninger)',
-            'β < 1,0: Mindre volatil enn markedet (f.eks. β = 0,7 betyr 30% mindre svingninger)',
-            'β < 0: Beveger seg motsatt av markedet (sjeldent)'
+            '$\\beta_E$ = 1,0: Aksjen svinger likt med markedet',
+            '$\\beta_E$ > 1,0: Mer volatil enn markedet (f.eks. $\\beta_E$ = 1,5 betyr 50% mer svingninger)',
+            '$\\beta_E$ < 1,0: Mindre volatil enn markedet (f.eks. $\\beta_E$ = 0,7 betyr 30% mindre svingninger)',
+            '$\\beta_E$ < 0: Beveger seg motsatt av markedet (sjeldent)'
           ]
         },
         {
@@ -299,7 +300,7 @@ export const modul8KapitalkostnadModule: Module = {
           type: 'example',
           order: 15,
           title: 'CAPM-beregning for Equinor',
-          content: 'La oss beregne egenkapitalkostnaden for Equinor:\n\nGitt informasjon:\n• Risikofri rente (10-års statsobligasjon): 3,5%\n• Markedets risikopremie: 5%\n• Equinors beta: 1,2\n\nBeregning med CAPM:\nrE = rf + β × (rM - rf)\nrE = 3,5% + 1,2 × 5%\nrE = 3,5% + 6,0% = 9,5%\n\nEquinors aksjonærer krever altså 9,5% avkastning på sin investering.'
+          content: 'La oss beregne egenkapitalkostnaden for Equinor:\n\nGitt informasjon:\n• Risikofri rente (10-års statsobligasjon): 3,5%\n• Markedets risikopremie: 5%\n• Equinors beta: 1,2\n\nBeregning med CAPM:\n$r_E = r_f + \\beta_E \\times (E(R_M) - r_f)$\n$r_E$ = 3,5% + 1,2 × 5%\n$r_E$ = 3,5% + 6,0% = 9,5%\n\nEquinors aksjonærer krever altså 9,5% avkastning på sin investering.'
         },
         {
           id: '8-2-heading-6',
@@ -317,9 +318,10 @@ export const modul8KapitalkostnadModule: Module = {
         {
           id: '8-2-formula-2',
           type: 'formula',
+          name: 'Egenkapitalkostnad (Gordon)',
           order: 18,
-          formula: '$$r_E = \\dfrac{D_1}{P_0} + g$$',
-          description: 'Hvor D₁ = forventet utbytte neste år, P₀ = dagens aksjekurs, og g = forventet årlig vekstrate i utbytte.'
+          formula: '$$r_E = \\dfrac{Div_1}{P_0} + g$$',
+          description: 'Hvor $Div_1$ = forventet utbytte neste år, $P_0$ = dagens aksjekurs, og $g$ = forventet årlig vekstrate i utbytte.'
         },
         {
           id: '8-2-text-6',
@@ -347,8 +349,8 @@ export const modul8KapitalkostnadModule: Module = {
           title: 'CAPM og Security Market Line',
           description: 'Utforsk sammenhengen mellom beta og forventet avkastning. Juster parameterne og se hvordan Security Market Line (SML) endres.',
           controls: [
-            { key: 'riskFreeRate', label: 'Risikofri rente (rf)', type: 'slider', min: 0, max: 10, step: 0.5, default: 3.5, unit: '%', helpText: '10-års statsobligasjonsrente' },
-            { key: 'marketReturn', label: 'Markedsavkastning (rM)', type: 'slider', min: 5, max: 20, step: 0.5, default: 9, unit: '%', helpText: 'Forventet avkastning på markedsporteføljen' },
+            { key: 'riskFreeRate', label: 'Risikofri rente', type: 'slider', min: 0, max: 10, step: 0.5, default: 3.5, unit: '%', helpText: '10-års statsobligasjonsrente' },
+            { key: 'marketReturn', label: 'Forventet markedsavkastning', type: 'slider', min: 5, max: 20, step: 0.5, default: 9, unit: '%', helpText: 'Forventet avkastning på markedsporteføljen' },
             { key: 'beta', label: 'Aksjens beta (β)', type: 'slider', min: 0, max: 2.5, step: 0.1, default: 1.2, helpText: 'Systematisk risiko relativt til markedet' },
             { key: 'assetReturn', label: 'Aksjens faktiske avkastning', type: 'slider', min: 0, max: 25, step: 0.5, default: 10, unit: '%', helpText: 'Faktisk observert avkastning' }
           ],
@@ -384,7 +386,7 @@ export const modul8KapitalkostnadModule: Module = {
             '15%'
           ],
           correctAnswer: 2,
-          explanation: 'rE = rf + β × (rM - rf) = 4% + 1,5 × 6% = 4% + 9% = 13%. Høy beta (1,5) gir et betydelig risikotillegg.'
+          explanation: '$r_E = r_f + \\beta_E \\times (E(R_M) - r_f)$ = 4% + 1,5 × 6% = 4% + 9% = 13%. Høy beta (1,5) gir et betydelig risikotillegg.'
         },
         {
           id: '8-2-quiz-2',
@@ -406,13 +408,13 @@ export const modul8KapitalkostnadModule: Module = {
           order: 23,
           question: 'Hvilken komponent i CAPM representerer kompensasjon for systematisk risiko?',
           options: [
-            'Risikofri rente (rf)',
-            'Beta (β)',
-            'Risikopremien (rM - rf)',
-            'Produktet β × (rM - rf)'
+            'Risikofri rente ($r_f$)',
+            'Beta ($\\beta_E$)',
+            'Risikopremien ($E(R_M) - r_f$)',
+            'Produktet $\\beta_E \\times (E(R_M) - r_f)$'
           ],
           correctAnswer: 3,
-          explanation: 'Produktet β × (rM - rf) er risikotillegget som kompenserer for systematisk risiko. Beta måler mengden systematisk risiko, og risikopremien er prisen per enhet risiko.'
+          explanation: 'Produktet $\\beta_E \\times (E(R_M) - r_f)$ er risikotillegget som kompenserer for systematisk risiko. Beta måler mengden systematisk risiko, og risikopremien er prisen per enhet risiko.'
         },
         {
           id: '8-2-exercise-1',
@@ -455,7 +457,7 @@ export const modul8KapitalkostnadModule: Module = {
           id: '8-3-def-1',
           type: 'definition',
           order: 3,
-          term: 'Gjeldskostnad (rD)',
+          term: 'Gjeldskostnad ($r_D$)',
           definition: 'Den effektive renten selskapet betaler på sine lån og obligasjoner. For obligasjoner er dette yield to maturity (YTM) i markedet, for banklån er det avtalte rentebetingelser.'
         },
         {
@@ -487,9 +489,10 @@ export const modul8KapitalkostnadModule: Module = {
         {
           id: '8-3-formula-1',
           type: 'formula',
+          name: 'Gjeldskostnad etter skatt',
           order: 8,
-          formula: '$$r_{D,\\text{etter skatt}} = r_D \\times (1 - T_c)$$',
-          description: 'Hvor rD = gjeldskostnad før skatt (rentesats), og Tc = selskapsskattesats. I Norge er Tc = 22%.'
+          formula: '$$r_D^{\\text{etter skatt}} = r_D \\times (1 - t_s)$$',
+          description: 'Hvor $r_D$ = gjeldskostnad før skatt (rentesats), og $t_s$ = selskapsskattesats. I Norge er $t_s$ = 22%.'
         },
         {
           id: '8-3-example-1',
@@ -545,7 +548,7 @@ export const modul8KapitalkostnadModule: Module = {
           order: 15,
           points: [
             'Gjeldskostnad er renten selskapet betaler på lån og obligasjoner',
-            'Skatteskjoldet reduserer effektiv kostnad: rD × (1 - Tc)',
+            'Skatteskjoldet reduserer effektiv kostnad: $r_D \\times (1 - t_s)$',
             'Med 22% skatt blir en 6% rente bare 4,68% etter skatt',
             'Kredittvurdering påvirker rentekostnaden betydelig',
             'Gjeld er vanligvis billigere enn egenkapital pga. lavere risiko og skattefordel'
@@ -563,7 +566,7 @@ export const modul8KapitalkostnadModule: Module = {
             '6,25%'
           ],
           correctAnswer: 2,
-          explanation: 'rD,etter skatt = 5% × (1 - 0,25) = 5% × 0,75 = 3,75%. Skattefradraget sparer selskapet 1,25 prosentpoeng.'
+          explanation: '$r_D^{\\text{etter skatt}}$ = 5% × (1 - 0,25) = 5% × 0,75 = 3,75%. Skattefradraget sparer selskapet 1,25 prosentpoeng.'
         },
         {
           id: '8-3-quiz-2',
@@ -640,9 +643,10 @@ export const modul8KapitalkostnadModule: Module = {
         {
           id: '8-4-formula-1',
           type: 'formula',
+          name: 'WACC',
           order: 4,
-          formula: '$$WACC = \\dfrac{E}{V} \\times r_E + \\dfrac{D}{V} \\times r_D \\times (1 - T_c)$$',
-          description: 'Hvor E = markedsverdi egenkapital, D = markedsverdi gjeld, V = E + D = total verdi, rE = egenkapitalkostnad, rD = gjeldskostnad før skatt, Tc = skattesats.'
+          formula: '$$\\text{WACC} = \\dfrac{E}{V} \\times r_E + \\dfrac{D}{V} \\times r_D \\times (1 - t_s)$$',
+          description: 'Hvor $E$ = markedsverdi egenkapital, $D$ = markedsverdi gjeld, $V = E + D$ = total verdi, $r_E$ = egenkapitalkostnad, $r_D$ = gjeldskostnad før skatt, $t_s$ = skattesats.'
         },
         {
           id: '8-4-heading-2',
@@ -660,8 +664,8 @@ export const modul8KapitalkostnadModule: Module = {
             'Finn markedsverdi av egenkapital (E): Aksjekurs × antall aksjer',
             'Finn markedsverdi av gjeld (D): Bokført verdi eller markedspris på obligasjoner',
             'Beregn vektene: E/V og D/V der V = E + D',
-            'Beregn egenkapitalkostnad (rE) med CAPM',
-            'Finn gjeldskostnad før skatt (rD)',
+            'Beregn egenkapitalkostnad ($r_E$) med CAPM',
+            'Finn gjeldskostnad før skatt ($r_D$)',
             'Sett inn i WACC-formelen med skattejustering på gjeld'
           ]
         },
@@ -670,7 +674,7 @@ export const modul8KapitalkostnadModule: Module = {
           type: 'example',
           order: 7,
           title: 'WACC-beregning for NorTech ASA',
-          content: 'La oss beregne WACC for NorTech ASA:\n\nGitt informasjon:\n• Markedsverdi egenkapital (E): 600 MNOK\n• Markedsverdi gjeld (D): 400 MNOK\n• Egenkapitalkostnad (fra CAPM): 10%\n• Gjeldskostnad før skatt: 5%\n• Skattesats: 22%\n\nSteg 1: Beregn total verdi og vekter\nV = E + D = 600 + 400 = 1000 MNOK\nE/V = 600/1000 = 60%\nD/V = 400/1000 = 40%\n\nSteg 2: Sett inn i WACC-formelen\nWACC = (E/V) × rE + (D/V) × rD × (1 - Tc)\nWACC = 0,60 × 10% + 0,40 × 5% × (1 - 0,22)\nWACC = 6% + 0,40 × 5% × 0,78\nWACC = 6% + 1,56%\nWACC = 7,56%\n\nNorTechs samlede kapitalkostnad er 7,56%. Dette er minimumskravet til avkastning på nye prosjekter.'
+          content: 'La oss beregne WACC for NorTech ASA:\n\nGitt informasjon:\n• Markedsverdi egenkapital (E): 600 MNOK\n• Markedsverdi gjeld (D): 400 MNOK\n• Egenkapitalkostnad (fra CAPM): 10%\n• Gjeldskostnad før skatt: 5%\n• Skattesats: 22%\n\nSteg 1: Beregn total verdi og vekter\nV = E + D = 600 + 400 = 1000 MNOK\nE/V = 600/1000 = 60%\nD/V = 400/1000 = 40%\n\nSteg 2: Sett inn i WACC-formelen\n$\\text{WACC} = \\frac{E}{V} \\times r_E + \\frac{D}{V} \\times r_D \\times (1 - t_s)$\nWACC = 0,60 × 10% + 0,40 × 5% × (1 - 0,22)\nWACC = 6% + 0,40 × 5% × 0,78\nWACC = 6% + 1,56%\nWACC = 7,56%\n\nNorTechs samlede kapitalkostnad er 7,56%. Dette er minimumskravet til avkastning på nye prosjekter.'
         },
         {
           id: '8-4-heading-3',
@@ -737,7 +741,7 @@ export const modul8KapitalkostnadModule: Module = {
           points: [
             'WACC er vektet snitt av EK- og gjeldskostnad',
             'Bruk markedsverdier for vektene, ikke bokførte verdier',
-            'Gjeld får skattejustering (1 - Tc) pga. fradragsrett',
+            'Gjeld får skattejustering $(1 - t_s)$ pga. fradragsrett',
             'WACC er minimumskravet for prosjektavkastning',
             'Juster WACC hvis prosjektrisiko avviker fra selskapsrisiko'
           ]
@@ -756,7 +760,7 @@ export const modul8KapitalkostnadModule: Module = {
             { key: 'costDebt', label: 'Gjeldskostnad før skatt', type: 'percentage', default: 5, min: 0, max: 20, step: 0.25, helpText: 'Renten på gjelden' },
             { key: 'taxRate', label: 'Skattesats', type: 'percentage', default: 22, min: 0, max: 50, step: 1, helpText: 'Norsk selskapsskatt er 22%' }
           ],
-          formula: '$$WACC = \\dfrac{E}{V} \\times r_E + \\dfrac{D}{V} \\times r_D \\times (1 - T_c)$$',
+          formula: '$$\\text{WACC} = \\dfrac{E}{V} \\times r_E + \\dfrac{D}{V} \\times r_D \\times (1 - t_s)$$',
           resultLabel: 'WACC',
           resultUnit: '%',
           explanation: 'Prøv å endre kapitalstrukturen og se hvordan WACC endrer seg!'
@@ -801,7 +805,7 @@ export const modul8KapitalkostnadModule: Module = {
             'WACC kan både øke og synke avhengig av situasjonen'
           ],
           correctAnswer: 3,
-          explanation: 'I utgangspunktet synker WACC med mer gjeld pga. skattefordelen. Men for høy gjeld øker konkurssannsynligheten, noe som øker både rE og rD. Optimal gjeldsgrad balanserer disse effektene.'
+          explanation: 'I utgangspunktet synker WACC med mer gjeld pga. skattefordelen. Men for høy gjeld øker konkurssannsynligheten, noe som øker både $r_E$ og $r_D$. Optimal gjeldsgrad balanserer disse effektene.'
         },
         {
           id: '8-4-exercise-1',
@@ -1038,9 +1042,9 @@ export const modul8KapitalkostnadModule: Module = {
           order: 3,
           headers: ['Konsept', 'Formel', 'Formål'],
           rows: [
-            ['Egenkapitalkostnad (CAPM)', 'rE = rf + β(rM - rf)', 'Avkastningskrav fra aksjonærer'],
-            ['Gjeldskostnad etter skatt', 'rD × (1 - Tc)', 'Lånekostnad justert for skattefordel'],
-            ['WACC', '(E/V)×rE + (D/V)×rD×(1-Tc)', 'Samlet kapitalkostnad']
+            ['Egenkapitalkostnad (CAPM)', '$r_E = r_f + \\beta_E \\times (E(R_M) - r_f)$', 'Avkastningskrav fra aksjonærer'],
+            ['Gjeldskostnad etter skatt', '$r_D \\times (1 - t_s)$', 'Lånekostnad justert for skattefordel'],
+            ['WACC', '$\\frac{E}{V} \\times r_E + \\frac{D}{V} \\times r_D \\times (1 - t_s)$', 'Samlet kapitalkostnad']
           ]
         },
         {
@@ -1050,7 +1054,7 @@ export const modul8KapitalkostnadModule: Module = {
           points: [
             'Kapitalkostnad er investorenes avkastningskrav - prisen selskapet betaler for kapital',
             'CAPM beregner egenkapitalkostnad basert på systematisk risiko (beta)',
-            'Gjeld har skattefordel som reduserer effektiv kostnad med faktoren (1 - Tc)',
+            'Gjeld har skattefordel som reduserer effektiv kostnad med faktoren $(1 - t_s)$',
             'WACC kombinerer EK- og gjeldskostnad til én diskonteringsrente',
             'Bruk WACC som minimumskrav for prosjekter - NPV > 0 betyr lønnsomt',
             'Juster for prosjektspesifikk risiko når den avviker fra selskapsrisiko'
@@ -1097,9 +1101,9 @@ export const modul8KapitalkostnadModule: Module = {
           order: 8,
           question: 'Hvilken komponent i CAPM varierer mest fra selskap til selskap?',
           options: [
-            'Risikofri rente (rf)',
-            'Markedets risikopremie (rM - rf)',
-            'Beta (β)',
+            'Risikofri rente ($r_f$)',
+            'Markedets risikopremie ($E(R_M) - r_f$)',
+            'Beta ($\\beta_E$)',
             'Alle varierer like mye'
           ],
           correctAnswer: 2,
@@ -1248,17 +1252,17 @@ export const modul8KapitalkostnadModule: Module = {
         id: 'kk-q6',
         question: 'Hva er formelen for CAPM?',
         options: [
-          'rE = rf × β × (rM - rf)',
-          'rE = rf + β × (rM - rf)',
-          'rE = rf - β × (rM - rf)',
-          'rE = rf + β + (rM - rf)'
+          '$r_E = r_f \\times \\beta_E \\times (E(R_M) - r_f)$',
+          '$r_E = r_f + \\beta_E \\times (E(R_M) - r_f)$',
+          '$r_E = r_f - \\beta_E \\times (E(R_M) - r_f)$',
+          '$r_E = r_f + \\beta_E + (E(R_M) - r_f)$'
         ],
         correctAnswer: 1,
-        explanation: 'CAPM-formelen er rE = rf + β × (rM - rf), hvor risikofri rente pluss beta ganger risikopremien gir egenkapitalkostnaden.'
+        explanation: 'CAPM-formelen er $r_E = r_f + \\beta_E \\times (E(R_M) - r_f)$, hvor risikofri rente pluss beta ganger risikopremien gir egenkapitalkostnaden.'
       },
       {
         id: 'kk-q7',
-        question: 'Hva representerer risikofri rente (rf) i CAPM?',
+        question: 'Hva representerer risikofri rente ($r_f$) i CAPM?',
         options: [
           'Sentralbankens styringsrente',
           'Avkastningen på en investering uten risiko, typisk statsobligasjoner',
@@ -1270,7 +1274,7 @@ export const modul8KapitalkostnadModule: Module = {
       },
       {
         id: 'kk-q8',
-        question: 'Hva måler beta (β) i CAPM?',
+        question: 'Hva måler beta ($\\beta_E$) i CAPM?',
         options: [
           'Selskapets totale risiko',
           'Selskapets systematiske risiko relativt til markedet',
@@ -1302,7 +1306,7 @@ export const modul8KapitalkostnadModule: Module = {
           '13,5%'
         ],
         correctAnswer: 2,
-        explanation: 'rE = rf + β × (rM - rf) = 3% + 1,5 × 6% = 3% + 9% = 12%'
+        explanation: '$r_E = r_f + \\beta_E \\times (E(R_M) - r_f)$ = 3% + 1,5 × 6% = 3% + 9% = 12%'
       },
       {
         id: 'kk-q11',
@@ -1326,7 +1330,7 @@ export const modul8KapitalkostnadModule: Module = {
           'Standardavviket i markedsavkastningen'
         ],
         correctAnswer: 1,
-        explanation: 'Risikopremien (rM - rf) er den ekstra avkastningen investorer krever for å bære markedsrisiko fremfor å investere risikofritt.'
+        explanation: 'Risikopremien $(E(R_M) - r_f)$ er den ekstra avkastningen investorer krever for å bære markedsrisiko fremfor å investere risikofritt.'
       },
       {
         id: 'kk-q13',
@@ -1350,7 +1354,7 @@ export const modul8KapitalkostnadModule: Module = {
           '10%'
         ],
         correctAnswer: 1,
-        explanation: 'rE = 4% + 0,8 × 5% = 4% + 4% = 8%. Lav beta gir lavere egenkapitalkostnad.'
+        explanation: '$r_E$ = 4% + 0,8 × 5% = 4% + 4% = 8%. Lav beta gir lavere egenkapitalkostnad.'
       },
       // Gjeldskostnad
       {
@@ -1381,13 +1385,13 @@ export const modul8KapitalkostnadModule: Module = {
         id: 'kk-q17',
         question: 'Hva er formelen for gjeldskostnad etter skatt?',
         options: [
-          'rD × Tc',
-          'rD / (1 - Tc)',
-          'rD × (1 - Tc)',
-          'rD + Tc'
+          '$r_D \\times t_s$',
+          '$r_D / (1 - t_s)$',
+          '$r_D \\times (1 - t_s)$',
+          '$r_D + t_s$'
         ],
         correctAnswer: 2,
-        explanation: 'Gjeldskostnad etter skatt = rD × (1 - Tc), hvor Tc er skattesatsen. Skattefradraget reduserer den effektive kostnaden.'
+        explanation: 'Gjeldskostnad etter skatt = $r_D \\times (1 - t_s)$, hvor $t_s$ er skattesatsen. Skattefradraget reduserer den effektive kostnaden.'
       },
       {
         id: 'kk-q18',
@@ -1399,7 +1403,7 @@ export const modul8KapitalkostnadModule: Module = {
           '7,32%'
         ],
         correctAnswer: 0,
-        explanation: 'rD etter skatt = 6% × (1 - 0,22) = 6% × 0,78 = 4,68%'
+        explanation: '$r_D^{\\text{etter skatt}}$ = 6% × (1 - 0,22) = 6% × 0,78 = 4,68%'
       },
       {
         id: 'kk-q19',
@@ -1454,13 +1458,13 @@ export const modul8KapitalkostnadModule: Module = {
         id: 'kk-q23',
         question: 'Hva er WACC-formelen?',
         options: [
-          'WACC = (E/V) × rE + (D/V) × rD',
-          'WACC = (E/V) × rE + (D/V) × rD × (1 - Tc)',
-          'WACC = rE + rD × (1 - Tc)',
-          'WACC = (E + D) × (rE + rD)'
+          '$\\text{WACC} = \\frac{E}{V} \\times r_E + \\frac{D}{V} \\times r_D$',
+          '$\\text{WACC} = \\frac{E}{V} \\times r_E + \\frac{D}{V} \\times r_D \\times (1 - t_s)$',
+          '$\\text{WACC} = r_E + r_D \\times (1 - t_s)$',
+          '$\\text{WACC} = (E + D) \\times (r_E + r_D)$'
         ],
         correctAnswer: 1,
-        explanation: 'WACC = (E/V) × rE + (D/V) × rD × (1 - Tc). Gjeldskostnaden skattejusteres, egenkapitalkostnaden gjør ikke det.'
+        explanation: '$\\text{WACC} = \\frac{E}{V} \\times r_E + \\frac{D}{V} \\times r_D \\times (1 - t_s)$. Gjeldskostnaden skattejusteres, egenkapitalkostnaden gjør ikke det.'
       },
       {
         id: 'kk-q24',
@@ -1508,7 +1512,7 @@ export const modul8KapitalkostnadModule: Module = {
           'WACC forblir uendret'
         ],
         correctAnswer: 2,
-        explanation: 'Ved lav gjeld synker WACC pga. skattefordelen. Ved for høy gjeld øker konkurssannsynligheten, som øker både rE og rD.'
+        explanation: 'Ved lav gjeld synker WACC pga. skattefordelen. Ved for høy gjeld øker konkurssannsynligheten, som øker både $r_E$ og $r_D$.'
       },
       {
         id: 'kk-q28',
@@ -1618,7 +1622,7 @@ export const modul8KapitalkostnadModule: Module = {
           '7,2%'
         ],
         correctAnswer: 0,
-        explanation: 'Markedets risikopremie = 9% − 3% = 6%. rE = rf + β × (rM − rf) = 3% + 1,2 × 6% = 3% + 7,2% = 10,2%.'
+        explanation: 'Markedets risikopremie = 9% − 3% = 6%. $r_E = r_f + \\beta_E \\times (E(R_M) - r_f)$ = 3% + 1,2 × 6% = 3% + 7,2% = 10,2%.'
       },
       {
         id: 'kk-q37',
@@ -1642,7 +1646,7 @@ export const modul8KapitalkostnadModule: Module = {
           '8,54%'
         ],
         correctAnswer: 0,
-        explanation: 'rD etter skatt = 7% × (1 - 0,22) = 7% × 0,78 = 5,46%'
+        explanation: '$r_D^{\\text{etter skatt}}$ = 7% × (1 - 0,22) = 7% × 0,78 = 5,46%'
       },
       {
         id: 'kk-q39',

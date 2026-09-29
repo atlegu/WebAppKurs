@@ -313,6 +313,7 @@ export const modul4AksjerModule: Module = {
         {
           id: '4-2-formula-pe',
           type: 'formula',
+          name: 'P/E-tallet',
           order: 10,
           formula: '$$\\text{P/E} = \\dfrac{\\text{Aksjekurs}}{\\text{EPS}} = \\dfrac{\\text{Markedsverdi}}{\\text{Årsresultat}}$$',
           description: 'Eksempel: Aksjekurs 100 kr, EPS 5 kr → P/E = 100/5 = 20.\nDu betaler 20 kr for hver krone selskapet tjener.'
@@ -340,6 +341,7 @@ export const modul4AksjerModule: Module = {
         {
           id: '4-2-formula-pb',
           type: 'formula',
+          name: 'P/B-tallet',
           order: 13,
           formula: '$$\\text{P/B} = \\dfrac{\\text{Aksjekurs}}{\\text{Egenkapital per aksje}}$$',
           description: 'P/B under 1 betyr at aksjen handles under bokført verdi – kan indikere et godt kjøp (eller at markedet forventer tap).'
@@ -354,8 +356,9 @@ export const modul4AksjerModule: Module = {
         {
           id: '4-2-formula-yield',
           type: 'formula',
+          name: 'Direkteavkastning',
           order: 15,
-          formula: '$$\\text{Direkteavkastning} = \\dfrac{\\text{Utbytte per aksje}}{\\text{Aksjekurs}} \\times 100\\%$$',
+          formula: '$$\\text{Direkteavkastning} = \\dfrac{\\text{Utbytte per aksje}}{\\text{Aksjekurs}}$$',
           description: 'Eksempel: Utbytte 10 kr, kurs 200 kr → Direkteavkastning = 10/200 = 5%'
         },
         {
@@ -382,6 +385,7 @@ export const modul4AksjerModule: Module = {
         {
           id: '4-2-formula-dcf',
           type: 'formula',
+          name: 'Kontantstrømverdsettelse (DCF)',
           order: 18,
           formula: '$$\\text{Verdi} = \\sum_{t=1}^{n} \\dfrac{FCF_t}{(1+r)^t} + \\dfrac{\\text{Terminalverdi}}{(1+r)^n}$$',
           description: 'FCF = Fri kontantstrøm i år t\nr = Avkastningskrav (diskonteringsrente)\nTerminalverdi = Verdi av alle kontantstrømmer etter prognoseperioden'
@@ -511,6 +515,7 @@ export const modul4AksjerModule: Module = {
         {
           id: '4-2b-formula-general',
           type: 'formula',
+          name: 'Dividendemodellen (T perioder)',
           order: 4,
           formula: '$$P_0 = \\sum_{t=1}^{T} \\dfrac{Div_t}{(1+r)^t} + \\dfrac{P_T}{(1+r)^T}$$',
           description: 'P₀ = pris i dag, Div_t = utbytte i år t, P_T = salgspris om T år, r = avkastningskravet.'
@@ -524,6 +529,7 @@ export const modul4AksjerModule: Module = {
         {
           id: '4-2b-formula-infinite',
           type: 'formula',
+          name: 'Dividendemodellen (uendelig horisont)',
           order: 6,
           formula: '$$P_0 = \\sum_{t=1}^{\\infty} \\dfrac{Div_t}{(1+r)^t}$$',
           description: 'Aksjeprisen er nåverdien av alle fremtidige utbytter. Punktum.'
@@ -553,6 +559,7 @@ export const modul4AksjerModule: Module = {
         {
           id: '4-2b-formula-gordon',
           type: 'formula',
+          name: 'Gordons vekstmodell',
           order: 10,
           formula: '$$P_0 = \\dfrac{Div_1}{r - g}$$',
           description: 'Div₁ = utbytte om ett år (= Div₀·(1+g)), r = avkastningskrav, g = konstant vekstrate. Krever r > g, ellers blir prisen uendelig.'
@@ -624,6 +631,7 @@ export const modul4AksjerModule: Module = {
         {
           id: '4-2b-formula-r',
           type: 'formula',
+          name: 'Avkastningskrav (Gordon)',
           order: 19,
           formula: '$$r = \\underbrace{\\dfrac{Div_1}{P_0}}_{\\text{direkteavkastning}} + \\underbrace{g}_{\\text{kursvekst}}$$',
           description: 'Eier du aksjen fra eksempelet over (P₀ = 40, Div₁ = 4, g = 6%): r = 4/40 + 0,06 = 10% + 6% = 16%. Nøyaktig avkastningskravet vi startet med.'
@@ -645,6 +653,7 @@ export const modul4AksjerModule: Module = {
         {
           id: '4-2b-formula-eps',
           type: 'formula',
+          name: 'Resultat per aksje (EPS)',
           order: 22,
           formula: '$$\\text{EPS} = \\dfrac{\\text{Resultat etter skatt}}{\\text{Antall aksjer}} \\qquad \\text{Utdelingsforhold} = \\dfrac{Div_1}{\\text{EPS}_1}$$',
           description: 'Utdelingsforholdet (payout ratio) er andelen av EPS som betales ut. Resten – (1 − utdelingsforhold) – beholdes og reinvesteres.'
@@ -659,6 +668,7 @@ export const modul4AksjerModule: Module = {
         {
           id: '4-2b-formula-g',
           type: 'formula',
+          name: 'Vekst fra reinvestering',
           order: 24,
           formula: '$$g = (1 - \\text{utdelingsforhold}) \\times \\text{ROE}$$',
           description: 'Vekstraten kommer fra å beholde overskudd og reinvestere det til ROE-avkastning. Et selskap med 50% utdeling og 12% ROE vokser g = 0,5 × 12% = 6%. Vet du to av de tre (utdeling, ROE, g), finner du den tredje.'
@@ -690,6 +700,7 @@ export const modul4AksjerModule: Module = {
         {
           id: '4-2b-formula-pvgo',
           type: 'formula',
+          name: 'PVGO (nåverdi av vekstmuligheter)',
           order: 28,
           formula: '$$P_0 = \\dfrac{\\text{EPS}_1}{r} + \\text{PVGO} \\qquad \\Rightarrow \\qquad \\text{PVGO} = P_0 - \\dfrac{\\text{EPS}_1}{r}$$',
           description: 'PVGO kan være positiv (verdiskapende vekst), null (verdinøytral) eller negativ (verdi-ødeleggende reinvestering).'
@@ -1120,9 +1131,10 @@ export const modul4AksjerModule: Module = {
         {
           id: '4-4-formula-capm',
           type: 'formula',
+          name: 'CAPM (avkastningskrav)',
           order: 14,
-          formula: '$$E(r) = r_f + \\beta \\times (r_m - r_f)$$',
-          description: 'CAPM (Capital Asset Pricing Model):\n• β (beta) måler aksjens følsomhet for markedsbevegelser\n• β = 1: Følger markedet\n• β > 1: Mer volatil enn markedet\n• β < 1: Mindre volatil enn markedet'
+          formula: '$$r = r_f + \\beta \\times (E(R_M) - r_f)$$',
+          description: 'CAPM (Capital Asset Pricing Model):\n• $r$ = avkastningskravet til aksjen (samme $r$ som i dividendemodellen)\n• $r_f$ = risikofri rente\n• $E(R_M)$ = forventet markedsavkastning, og $(E(R_M) - r_f)$ = markedets risikopremie\n• $\\beta$ (beta) måler aksjens følsomhet for markedsbevegelser\n• β = 1: Følger markedet\n• β > 1: Mer volatil enn markedet\n• β < 1: Mindre volatil enn markedet'
         },
         {
           id: '4-4-table-beta',
@@ -1229,7 +1241,7 @@ export const modul4AksjerModule: Module = {
           order: 25,
           title: 'Oppgave: Forventet avkastning med CAPM',
           description: 'Bruk CAPM til å beregne forventet avkastning:\n\n• Risikofri rente: 4%\n• Markedets risikopremie: 5%\n• Aksjens beta: 1,2\n\n1. Hva er forventet avkastning for aksjen?\n2. Hvis aksjen har beta 0,8 i stedet, hva blir forventet avkastning?\n3. Hvorfor gir høyere beta høyere forventet avkastning?',
-          hint: 'Formel: E(r) = Rf + β × (Rm - Rf) der Rf = risikofri rente og (Rm - Rf) = risikopremien.'
+          hint: 'Formel: $r = r_f + \\beta \\times (E(R_M) - r_f)$ der $r_f$ = risikofri rente og $(E(R_M) - r_f)$ = risikopremien.'
         },
         {
           id: '4-4-keypoint',
@@ -1696,7 +1708,7 @@ export const modul4AksjerModule: Module = {
           'En modell for porteføljeoptimering'
         ],
         correctAnswer: 1,
-        explanation: 'Gordon Growth Model: P = D₁/(r-g), der D₁ er neste års utbytte, r er avkastningskrav og g er vekstrate. Den verdsetter aksjer basert på nåverdien av fremtidige utbytter.'
+        explanation: 'Gordon Growth Model: P₀ = Div₁/(r-g), der Div₁ er neste års utbytte, r er avkastningskrav og g er vekstrate. Den verdsetter aksjer basert på nåverdien av fremtidige utbytter.'
       },
       {
         id: 'q5-6',
@@ -1868,7 +1880,7 @@ export const modul4AksjerModule: Module = {
       },
       {
         id: 'q5-20',
-        question: 'Hva er utbytteandel (payout ratio)?',
+        question: 'Hva er utdelingsforhold (payout ratio)?',
         options: [
           'Utbytte dividert med aksjekurs',
           'Andelen av overskuddet som betales ut som utbytte',
@@ -1876,7 +1888,7 @@ export const modul4AksjerModule: Module = {
           'Utbytte per aksje i kroner'
         ],
         correctAnswer: 1,
-        explanation: 'Utbytteandel = Utbytte / Årsresultat. Viser hvor stor del av overskuddet selskapet deler ut til aksjonærene vs. beholder for reinvestering.'
+        explanation: 'Utdelingsforhold = Utbytte / Årsresultat. Viser hvor stor del av overskuddet selskapet deler ut til aksjonærene vs. beholder for reinvestering.'
       },
       {
         id: 'q5-21',
@@ -1888,7 +1900,7 @@ export const modul4AksjerModule: Module = {
           'Modellen blir irrelevant'
         ],
         correctAnswer: 1,
-        explanation: 'P = D/(r-g). Når g nærmer seg r, går nevneren mot null og verdien mot uendelig. Derfor krever modellen at r > g.'
+        explanation: 'P₀ = Div₁/(r-g). Når g nærmer seg r, går nevneren mot null og verdien mot uendelig. Derfor krever modellen at r > g.'
       },
       {
         id: 'q5-22',
@@ -2068,7 +2080,7 @@ export const modul4AksjerModule: Module = {
           'Utbytteavkastning alene'
         ],
         correctAnswer: 1,
-        explanation: 'CAPM: E(r) = rf + β × (rm - rf). Forventet avkastning = Risikofri rente + Aksjens beta × Markedets risikopremie.'
+        explanation: 'CAPM: $r = r_f + \\beta \\times (E(R_M) - r_f)$. Forventet avkastning = Risikofri rente + Aksjens beta × Markedets risikopremie.'
       },
       {
         id: 'q5-37',

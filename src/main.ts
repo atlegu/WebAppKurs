@@ -11,6 +11,7 @@ import { ExerciseSetHandler } from './components/ExerciseSetHandler';
 import { ChatWidget } from './components/ChatWidget';
 import { HomePage } from './components/HomePage';
 import { Onboarding } from './components/Onboarding';
+import { FormulaSheet } from './components/FormulaSheet';
 import { ProgressTracker } from './services/ProgressTracker';
 import { AuthService } from './services/auth/AuthService';
 import { LoginPage } from './components/auth/LoginPage';
@@ -54,6 +55,8 @@ class SustainableFinanceApp {
   private moduleQuizHandler: ModuleQuizHandler | null = null;
   private homePage: HomePage | null = null;
   private onboarding: Onboarding | null = null;
+  private formulaSheet: FormulaSheet | null = null;
+  private formulaSheetVisible = false;
   private progressTracker: ProgressTracker;
   private course: Course;
   private exerciseSets: ExerciseSet[];
@@ -168,6 +171,13 @@ class SustainableFinanceApp {
             <span class="user-greeting">Hei, ${user?.full_name || 'Student'}!</span>
           </div>
           <div class="user-header-right">
+            <a href="#formelark" class="user-header-btn formula-sheet-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+              Formelark
+            </a>
             ${isAdmin ? `
               <a href="#admin" class="user-header-btn admin-btn">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -187,6 +197,7 @@ class SustainableFinanceApp {
           </div>
         </div>
         <div class="homepage-container"></div>
+        <div class="formula-sheet-container" style="display: none;"></div>
         <div class="course-content" style="display: none;">
           <div class="progress-container">
             <div class="progress-header">
@@ -389,7 +400,52 @@ class SustainableFinanceApp {
     this.showHomePage();
   }
 
+  /** Viser formelarket (adresse #formelark). Fullbredde, uten sidemeny. */
+  public showFormulaSheet(): void {
+    const homepageContainer = document.querySelector('.homepage-container') as HTMLElement;
+    const courseContent = document.querySelector('.course-content') as HTMLElement;
+    const sheetContainer = document.querySelector('.formula-sheet-container') as HTMLElement;
+    if (!sheetContainer) return;
+
+    this.app.classList.add('homepage-active');
+    if (homepageContainer) homepageContainer.style.display = 'none';
+    if (courseContent) courseContent.style.display = 'none';
+    sheetContainer.style.display = 'block';
+
+    if (!this.formulaSheet) {
+      this.formulaSheet = new FormulaSheet(
+        sheetContainer,
+        (moduleId, sectionId) => this.loadSection(moduleId, sectionId),
+        () => this.showHomePage()
+      );
+    }
+    this.formulaSheet.render(this.course.modules);
+    this.formulaSheetVisible = true;
+    window.scrollTo(0, 0);
+  }
+
+  /** Holder visningen i takt med #-adressen (lenke, bokmerke, nettleserens tilbakeknapp). */
+  public syncWithHash(): void {
+    if (window.location.hash === '#formelark') {
+      if (!this.formulaSheetVisible) this.showFormulaSheet();
+    } else if (this.formulaSheetVisible) {
+      this.showHomePage();
+    }
+  }
+
+  private hideFormulaSheet(): void {
+    const sheetContainer = document.querySelector('.formula-sheet-container') as HTMLElement;
+    if (sheetContainer) sheetContainer.style.display = 'none';
+    if (this.formulaSheetVisible) {
+      this.formulaSheetVisible = false;
+      // Rydd adressen så en omlasting ikke åpner arket igjen
+      if (window.location.hash === '#formelark') window.location.hash = '';
+    }
+  }
+
   private showHomePage(): void {
+    this.hideFormulaSheet();
+
     // Add class to #app for full-width homepage
     this.app.classList.add('homepage-active');
 
@@ -418,6 +474,8 @@ class SustainableFinanceApp {
   }
 
   private showCourseContent(): void {
+    this.hideFormulaSheet();
+
     // Remove homepage-active class to show navigation
     this.app.classList.remove('homepage-active');
 
@@ -739,6 +797,7 @@ class AppRouter {
       this.showAdmin();
     } else {
       this.showCourse();
+      this.courseApp?.syncWithHash();
     }
   }
 
@@ -824,7 +883,8 @@ class AppRouter {
     if (this.currentView === 'course' && this.courseApp) return;
     this.currentView = 'course';
     this.app.classList.remove('auth-active');
-    window.location.hash = '';
+    // #formelark er en visning inne i kurset og skal overleve oppstarten
+    if (window.location.hash !== '#formelark') window.location.hash = '';
 
     // Clear the app container for fresh init
     this.app.innerHTML = '';

@@ -218,17 +218,17 @@ Nå snakker vi avkastning! Har du en spesifikk oppgave du vil at jeg skal hjelpe
 WACC er som drivstoffprisen for bedriften - skal du styre skuta, må du vite hva kapitalen koster!
 
 **Her er formelen:**
-$$WACC = \\frac{E}{V} \\times R_e + \\frac{D}{V} \\times R_d \\times (1 - T_c)$$
+$$\\text{WACC} = \\frac{E}{V} \\times r_E + \\frac{D}{V} \\times r_D \\times (1 - t_s)$$
 
 **La meg bryte det ned:**
 - $E$ = Markedsverdi egenkapital
 - $D$ = Markedsverdi gjeld
 - $V = E + D$ (totalverdi)
-- $R_e$ = Egenkapitalkostnad
-- $R_d$ = Gjeldskostnad
-- $T_c$ = Skattesats
+- $r_E$ = Egenkapitalkostnad
+- $r_D$ = Gjeldskostnad
+- $t_s$ = Skattesats
 
-Det geniale med gjeld? Skatteskjoldet $(1 - T_c)$ gjør den billigere! Staten sponser faktisk litt av rentekostnadene dine.
+Det geniale med gjeld? Skatteskjoldet $(1 - t_s)$ gjør den billigere! Staten sponser faktisk litt av rentekostnadene dine.
 
 Skal vi regne på et eksempel sammen?`;
     }

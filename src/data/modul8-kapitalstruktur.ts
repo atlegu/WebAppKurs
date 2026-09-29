@@ -90,6 +90,7 @@ export const modul8KapitalstrukturModule: Module = {
         {
           id: 'kapitalstruktur-8-1-formula-gjeldsgrad',
           type: 'formula',
+          name: 'Gjeldsgrad',
           order: 8,
           formula: '$$\\text{Gjeldsgrad} = \\dfrac{\\text{Gjeld}}{\\text{Egenkapital}}$$',
           description: 'Viser hvor mange kroner gjeld det er per krone egenkapital. En gjeldsgrad på 1 betyr like mye gjeld som egenkapital.'
@@ -97,6 +98,7 @@ export const modul8KapitalstrukturModule: Module = {
         {
           id: 'kapitalstruktur-8-1-formula-gjeldsandel',
           type: 'formula',
+          name: 'Gjeldsandel',
           order: 9,
           formula: '$$\\text{Gjeldsandel} = \\dfrac{\\text{Gjeld}}{\\text{Totalkapital}}$$',
           description: 'Andelen av totalkapitalen som er finansiert med gjeld. Ofte uttrykt i prosent.'
@@ -104,6 +106,7 @@ export const modul8KapitalstrukturModule: Module = {
         {
           id: 'kapitalstruktur-8-1-formula-egenkapitalandel',
           type: 'formula',
+          name: 'Egenkapitalandel',
           order: 10,
           formula: '$$\\text{Egenkapitalandel} = \\dfrac{\\text{Egenkapital}}{\\text{Totalkapital}}$$',
           description: 'Andelen av totalkapitalen som er finansiert med egenkapital. Viser bedriftens finansielle soliditet.'
@@ -233,9 +236,10 @@ export const modul8KapitalstrukturModule: Module = {
         {
           id: 'kapitalstruktur-8-2-formula-re',
           type: 'formula',
+          name: 'Modigliani–Miller II',
           order: 8,
           formula: '$$r_E = r_A + (r_A - r_D) \\times \\dfrac{D}{E}$$',
-          description: 'rE = avkastningskrav egenkapital, rA = avkastningskrav totalkapital, rD = gjeldsrente, D/E = gjeldsgrad'
+          description: '$r_E$ = avkastningskrav egenkapital, $r_A$ = avkastningskrav totalkapital, $r_D$ = gjeldsrente, $D/E$ = gjeldsgrad'
         },
         {
           id: 'kapitalstruktur-8-2-example',
@@ -243,7 +247,7 @@ export const modul8KapitalstrukturModule: Module = {
           order: 9,
           title: 'Avkastningskrav og gjeldsgrad',
           content: 'Grønn Kraft AS har avkastningskrav på totalkapitalen på 8% og kan låne til 4% rente. Hva blir avkastningskravet til egenkapitalen ved ulike gjeldsgrader?',
-          calculation: 'Med gjeldsgrad 0 (ingen gjeld):\nrE = 8% + (8% - 4%) × 0 = 8%\n\nMed gjeldsgrad 0,5:\nrE = 8% + (8% - 4%) × 0,5 = 10%\n\nMed gjeldsgrad 1,0:\nrE = 8% + (8% - 4%) × 1,0 = 12%\n\nMed gjeldsgrad 2,0:\nrE = 8% + (8% - 4%) × 2,0 = 16%'
+          calculation: 'Med gjeldsgrad 0 (ingen gjeld):\n$r_E$ = 8% + (8% - 4%) × 0 = 8%\n\nMed gjeldsgrad 0,5:\n$r_E$ = 8% + (8% - 4%) × 0,5 = 10%\n\nMed gjeldsgrad 1,0:\n$r_E$ = 8% + (8% - 4%) × 1,0 = 12%\n\nMed gjeldsgrad 2,0:\n$r_E$ = 8% + (8% - 4%) × 2,0 = 16%'
         },
         {
           id: 'kapitalstruktur-8-2-model-leverage',
@@ -298,9 +302,10 @@ export const modul8KapitalstrukturModule: Module = {
         {
           id: 'kapitalstruktur-8-2-formula-skatteskjold',
           type: 'formula',
+          name: 'Verdi med gjeld (MM med skatt)',
           order: 13,
-          formula: '$$V_L = V_U + T_C \\times D$$',
-          description: 'VL = verdi med gjeld, VU = verdi uten gjeld, TC = selskapsskattesats, D = gjeld. Skatteskjoldets verdi er TC × D.'
+          formula: '$$V_L = V_U + t_s \\times D$$',
+          description: '$V_L$ = verdi med gjeld, $V_U$ = verdi uten gjeld, $t_s$ = selskapsskattesats, $D$ = gjeld. Skatteskjoldets verdi er $t_s \\times D$.'
         },
         {
           id: 'kapitalstruktur-8-2-example-skatt',
@@ -385,9 +390,10 @@ export const modul8KapitalstrukturModule: Module = {
         {
           id: 'kapitalstruktur-8-3-formula-wacc',
           type: 'formula',
+          name: 'WACC',
           order: 4,
-          formula: '$$WACC = \\dfrac{E}{V} \\times r_E + \\dfrac{D}{V} \\times r_D \\times (1 - T_C)$$',
-          description: 'E = egenkapital, D = gjeld, V = totalverdi (E+D), rE = egenkapitalkostnad, rD = gjeldskostnad, TC = skattesats'
+          formula: '$$\\text{WACC} = \\dfrac{E}{V} \\times r_E + \\dfrac{D}{V} \\times r_D \\times (1 - t_s)$$',
+          description: '$E$ = egenkapital, $D$ = gjeld, $V$ = totalverdi ($E+D$), $r_E$ = egenkapitalkostnad, $r_D$ = gjeldskostnad, $t_s$ = skattesats'
         },
         {
           id: 'kapitalstruktur-8-3-wacc-forklaring',
@@ -419,15 +425,16 @@ export const modul8KapitalstrukturModule: Module = {
         {
           id: 'kapitalstruktur-8-3-formula-capm',
           type: 'formula',
+          name: 'CAPM (egenkapitalkostnad)',
           order: 9,
-          formula: '$$r_E = r_f + \\beta \\times (r_m - r_f)$$',
-          description: 'rf = risikofri rente, β = aksjens beta, rm = forventet markedsavkastning, (rm - rf) = markedets risikopremie'
+          formula: '$$r_E = r_f + \\beta_E \\times (E(R_M) - r_f)$$',
+          description: '$r_f$ = risikofri rente, $\\beta_E$ = egenkapitalbeta, $E(R_M)$ = forventet markedsavkastning, $(E(R_M) - r_f)$ = markedets risikopremie'
         },
         {
           id: 'kapitalstruktur-8-3-def-beta',
           type: 'definition',
           order: 10,
-          term: 'Beta (β)',
+          term: 'Beta ($\\beta_E$)',
           definition: 'Mål på aksjens systematiske risiko relativt til markedet. Beta = 1 betyr lik risiko som markedet. Beta > 1 betyr høyere risiko, Beta < 1 betyr lavere risiko.'
         },
         {
@@ -436,7 +443,7 @@ export const modul8KapitalstrukturModule: Module = {
           order: 11,
           title: 'Egenkapitalkostnad med CAPM',
           content: 'Risikofri rente er 3%, forventet markedsavkastning er 9%, og aksjens beta er 1,2. Hva er egenkapitalkostnaden?',
-          calculation: 'Markedets risikopremie = 9% - 3% = 6%\n\nrE = 3% + 1,2 × 6%\nrE = 3% + 7,2%\nrE = 10,2%\n\nAksjonærene krever 10,2% forventet avkastning for å investere i dette selskapet.'
+          calculation: 'Markedets risikopremie = 9% - 3% = 6%\n\n$r_E$ = 3% + 1,2 × 6%\n$r_E$ = 3% + 7,2%\n$r_E$ = 10,2%\n\nAksjonærene krever 10,2% forventet avkastning for å investere i dette selskapet.'
         },
         {
           id: 'kapitalstruktur-8-3-heading-gjeld',
@@ -454,9 +461,10 @@ export const modul8KapitalstrukturModule: Module = {
         {
           id: 'kapitalstruktur-8-3-formula-gjeldskost',
           type: 'formula',
+          name: 'Gjeldskostnad etter skatt',
           order: 14,
-          formula: '$$r_{D,\\text{etter skatt}} = r_D \\times (1 - T_C)$$',
-          description: 'rD = gjeldskostnad før skatt, TC = selskapsskattesats. Skattefradraget reduserer den effektive kostnaden.'
+          formula: '$$r_D^{\\text{etter skatt}} = r_D \\times (1 - t_s)$$',
+          description: '$r_D$ = gjeldskostnad før skatt, $t_s$ = selskapsskattesats. Skattefradraget reduserer den effektive kostnaden.'
         },
         {
           id: 'kapitalstruktur-8-3-heading-optimal',
@@ -475,12 +483,12 @@ export const modul8KapitalstrukturModule: Module = {
           id: 'kapitalstruktur-8-3-table',
           type: 'table',
           order: 17,
-          headers: ['Gjeldsandel', 'rE', 'rD', 'WACC'],
+          headers: ['Gjeldsandel', 'Egenkapitalkostnad', 'Gjeldskostnad før skatt', 'WACC'],
           rows: [
             ['0%', '10,0%', '4,0%', '10,0%'],
             ['20%', '10,5%', '4,5%', '9,1%'],
             ['40%', '11,5%', '5,0%', '8,5%'],
-            ['60%', '13,5%', '6,5%', '8,6%'],
+            ['60%', '13,5%', '6,5%', '8,4%'],
             ['80%', '18,0%', '9,0%', '9,2%']
           ]
         },
@@ -581,15 +589,17 @@ export const modul8KapitalstrukturModule: Module = {
         {
           id: 'kapitalstruktur-8-4-formula-utbytteandel',
           type: 'formula',
+          name: 'Utdelingsforhold',
           order: 6,
-          formula: '$$\\text{Utbytteandel} = \\dfrac{\\text{Dividende per aksje}}{\\text{Resultat per aksje}}$$',
+          formula: '$$\\text{Utdelingsforhold} = \\dfrac{\\text{Utbytte per aksje}}{\\text{Resultat per aksje}}$$',
           description: 'Viser hvor stor andel av overskuddet som utbetales som dividende. Også kalt payout ratio.'
         },
         {
           id: 'kapitalstruktur-8-4-formula-direkteavkast',
           type: 'formula',
+          name: 'Direkteavkastning',
           order: 7,
-          formula: '$$\\text{Direkteavkastning} = \\dfrac{\\text{Dividende per aksje}}{\\text{Aksjekurs}}$$',
+          formula: '$$\\text{Direkteavkastning} = \\dfrac{\\text{Utbytte per aksje}}{\\text{Aksjekurs}}$$',
           description: 'Viser dividenden som prosent av aksjekursen. Også kalt dividend yield.'
         },
         {
@@ -598,7 +608,7 @@ export const modul8KapitalstrukturModule: Module = {
           order: 8,
           title: 'Dividendenøkkeltall',
           content: 'Vannkraft AS har resultat per aksje på 8 kr, dividende per aksje på 5 kr, og aksjekursen er 100 kr.',
-          calculation: 'Utbytteandel = 5 / 8 = 62,5%\nDirekteavkastning = 5 / 100 = 5%\n\nSelskapet betaler ut 62,5% av overskuddet og beholder 37,5% til reinvestering.'
+          calculation: 'Utdelingsforhold = 5 / 8 = 62,5%\nDirekteavkastning = 5 / 100 = 5%\n\nSelskapet betaler ut 62,5% av overskuddet og beholder 37,5% til reinvestering.'
         },
         {
           id: 'kapitalstruktur-8-4-heading-mm-div',
@@ -640,7 +650,7 @@ export const modul8KapitalstrukturModule: Module = {
           ordered: false,
           items: [
             'Stabil dividende: Fast kronemengde per aksje, økes gradvis over tid',
-            'Konstant utbytteandel: Fast prosent av overskuddet, varierer med resultatet',
+            'Konstant utdelingsforhold: Fast prosent av overskuddet, varierer med resultatet',
             'Residualdividende: Først investering, deretter utbetaling av rest',
             'Null dividende: Alt reinvesteres, typisk for vekstselskaper'
           ]
@@ -671,7 +681,7 @@ export const modul8KapitalstrukturModule: Module = {
           order: 18,
           points: [
             'Dividende er kontant utbetaling til aksjonærene',
-            'Utbytteandel viser hvor mye av overskuddet som deles ut',
+            'Utdelingsforhold viser hvor mye av overskuddet som deles ut',
             'I perfekte markeder er dividendepolitikk irrelevant',
             'I praksis påvirker skatt, signaler og preferanser valget'
           ]
@@ -1234,7 +1244,7 @@ export const modul8KapitalstrukturModule: Module = {
           'At dividende er irrelevant'
         ],
         correctAnswer: 1,
-        explanation: 'M&M II sier at når gjelden øker, øker også risikoen for aksjonærene, og dermed avkastningskravet til egenkapital (re øker med D/E).'
+        explanation: 'M&M II sier at når gjelden øker, øker også risikoen for aksjonærene, og dermed avkastningskravet til egenkapital ($r_E$ øker med $D/E$).'
       },
       {
         id: 'q8-31',
@@ -1310,7 +1320,7 @@ export const modul8KapitalstrukturModule: Module = {
       },
       {
         id: 'q8-37',
-        question: 'Hva er "payout ratio" (utbetalingsandel)?',
+        question: 'Hva er "payout ratio" (utdelingsforhold)?',
         options: [
           'Gjeld dividert på egenkapital',
           'Dividende dividert på årsresultat',

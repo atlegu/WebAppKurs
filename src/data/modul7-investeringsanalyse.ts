@@ -216,9 +216,10 @@ export const modul7InvesteringsanalyseModule: Module = {
         {
           id: '7-2-formula-1',
           type: 'formula',
+          name: 'Nettonåverdi (NPV)',
           order: 4,
-          formula: '$$NPV = -I_0 + \\dfrac{CF_1}{1+r} + \\dfrac{CF_2}{(1+r)^2} + \\cdots + \\dfrac{CF_n}{(1+r)^n}$$',
-          description: 'Hvor I₀ = initial investering, CFₜ = kontantstrøm i år t, r = avkastningskrav, n = prosjektets levetid.'
+          formula: '$$NPV = -CF_0 + \\dfrac{CF_1}{1+r} + \\dfrac{CF_2}{(1+r)^2} + \\cdots + \\dfrac{CF_n}{(1+r)^n}$$',
+          description: 'Hvor CF₀ = initial investering (utbetalingen i dag), CFₜ = kontantstrøm i år t, r = avkastningskrav, n = prosjektets levetid.'
         },
         {
           id: '7-2-heading-2',
@@ -293,7 +294,7 @@ export const modul7InvesteringsanalyseModule: Module = {
               helpText: 'Antall år med kontantstrømmer'
             }
           ],
-          formula: '$$NPV = -I_0 + \\sum_{t=1}^{n} \\dfrac{CF_t}{(1+r)^t}$$',
+          formula: '$$NPV = -CF_0 + \\sum_{t=1}^{n} \\dfrac{CF_t}{(1+r)^t}$$',
           resultLabel: 'Nåverdi (NPV)',
           resultUnit: 'kr',
           explanation: 'Se hvordan avkastningskrav påvirker prosjektverdien'
@@ -327,7 +328,7 @@ export const modul7InvesteringsanalyseModule: Module = {
           type: 'definition',
           order: 12,
           term: 'WACC (Weighted Average Cost of Capital)',
-          definition: 'Vektet gjennomsnittlig kapitalkostnad – brukes ofte som avkastningskrav. WACC = (E/V) × Rₑ + (D/V) × Rᵈ × (1-T), der E = egenkapital, D = gjeld, V = total verdi, Rₑ = egenkapitalkrav, Rᵈ = gjeldsrente, T = skattesats.'
+          definition: 'Vektet gjennomsnittlig kapitalkostnad – brukes ofte som avkastningskrav. $WACC = (E/V) \\times r_E + (D/V) \\times r_D \\times (1 - t_s)$, der $E$ = egenkapital, $D$ = gjeld, $V$ = total verdi, $r_E$ = egenkapitalkrav, $r_D$ = gjeldsrente, $t_s$ = skattesats.'
         },
         {
           id: '7-2-heading-4',
@@ -434,8 +435,9 @@ export const modul7InvesteringsanalyseModule: Module = {
         {
           id: '7-3-formula-1',
           type: 'formula',
+          name: 'Internrente (IRR)',
           order: 4,
-          formula: '$$0 = -I_0 + \\dfrac{CF_1}{1+IRR} + \\dfrac{CF_2}{(1+IRR)^2} + \\cdots + \\dfrac{CF_n}{(1+IRR)^n}$$',
+          formula: '$$0 = -CF_0 + \\dfrac{CF_1}{1+IRR} + \\dfrac{CF_2}{(1+IRR)^2} + \\cdots + \\dfrac{CF_n}{(1+IRR)^n}$$',
           description: 'IRR finnes ved å løse denne ligningen. Det gjøres vanligvis med regneark (IRR-funksjonen i Excel) eller kalkulator.'
         },
         {
@@ -632,7 +634,7 @@ export const modul7InvesteringsanalyseModule: Module = {
           order: 17,
           title: 'Oppgave: IRR vs NPV',
           description: 'Du vurderer to prosjekter (avkastningskrav 12%):\n\n**Prosjekt X:**\n• Investering: 500 000 kr\n• År 1-5: 150 000 kr per år\n\n**Prosjekt Y:**\n• Investering: 1 000 000 kr\n• År 1-5: 280 000 kr per år\n\n1. Beregn NPV for begge prosjekter.\n2. Finn IRR for begge prosjekter (bruk Excel eller prøv ulike renter).\n3. Hvilket prosjekt bør velges hvis de er gjensidig utelukkende? Forklar.',
-          hint: 'For annuiteter: NPV = -I + CF × [(1 - (1+r)^-n) / r]'
+          hint: 'For annuiteter: NPV = -CF₀ + CF × [(1 - (1+r)^-n) / r]'
         },
         {
           id: '7-3-reflection-1',
@@ -727,6 +729,7 @@ export const modul7InvesteringsanalyseModule: Module = {
         {
           id: '7-4-formula-1',
           type: 'formula',
+          name: 'Lønnsomhetsindeks (PI)',
           order: 11,
           formula: '$$\\text{PI} = \\dfrac{PV(\\text{kontantstrømmer})}{\\text{Investering}} = \\dfrac{NPV + \\text{Investering}}{\\text{Investering}}$$',
           description: 'PI = 1,2 betyr at hver investert krone genererer 1,20 kr i nåverdi. Jo høyere PI, jo bedre avkastning per investert krone.'
@@ -960,6 +963,7 @@ export const modul7InvesteringsanalyseModule: Module = {
         {
           id: '7-5-formula-1',
           type: 'formula',
+          name: 'Forventet NPV',
           order: 11,
           formula: '$$E(NPV) = \\sum_i NPV_i \\times p_i$$',
           description: 'Forventet NPV = 0,20 × (-300) + 0,60 × 500 + 0,20 × 1200 = 480 tusen kr'

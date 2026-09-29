@@ -520,6 +520,7 @@ export const modul2RegnskapModule: Module = {
         {
           id: '2-3-formula-1',
           type: 'formula',
+          name: 'Arbeidskapital',
           order: 17,
           formula: '$$\\text{Arbeidskapital} = \\text{Omløpsmidler} - \\text{Kortsiktig gjeld}$$',
           description: 'Med tallene fra tabellen: 330 - 100 = 230 MNOK. Selskapet har god likviditetsreserve.'
@@ -697,6 +698,7 @@ export const modul2RegnskapModule: Module = {
         {
           id: '2-4-formula-1',
           type: 'formula',
+          name: 'Fri kontantstrøm',
           order: 11,
           formula: '$$\\text{Fri kontantstrøm} = \\text{Kontantstrøm fra drift} - \\text{Investeringer}$$',
           description: 'I eksempelet: 180 - 100 = 80 MNOK. Dette beløpet kan brukes til å betale utbytte, nedbetale gjeld, eller opparbeide kontantreserve.'
@@ -825,6 +827,7 @@ export const modul2RegnskapModule: Module = {
         {
           id: '2-5-formula-1',
           type: 'formula',
+          name: 'Egenkapitalrentabilitet (ROE)',
           order: 5,
           formula: '$$\\text{ROE} = \\dfrac{\\text{Årsresultat}}{\\text{Gj.snittlig egenkapital}} \\times 100\\%$$',
           description: 'Eksempel: Årsresultat 175 MNOK, gjennomsnittlig egenkapital 1000 MNOK. ROE = 17,5%. Dette betyr at eierne fikk 17,5% avkastning på sin investering.'
@@ -893,6 +896,7 @@ export const modul2RegnskapModule: Module = {
         {
           id: '2-5-formula-2',
           type: 'formula',
+          name: 'DuPont-modellen',
           order: 14,
           formula: '$$\\text{ROE} = \\text{Resultatmargin} \\times \\text{Kapitalomløp} \\times \\text{Finansiell gearing}$$',
           description: 'ROE = (Resultat/Inntekter) × (Inntekter/Eiendeler) × (Eiendeler/Egenkapital)\n\nDette viser tre veier til høy ROE:\n1. Høyere marginer (premium priser, lavere kostnader)\n2. Raskere kapitalomløp (selge mer per investert krone)\n3. Høyere gearing (bruke mer gjeld) – men dette øker risikoen'

@@ -354,9 +354,10 @@ export const modul5PortefoljeModule: Module = {
         {
           id: '5-2-formula-portefolje',
           type: 'formula',
+          name: 'Porteføljevarians (to aksjer)',
           order: 10,
-          formula: '$$\\sigma_p^2 = w_1^2\\sigma_1^2 + w_2^2\\sigma_2^2 + 2\\,w_1 w_2\\, \\sigma_1 \\sigma_2\\, \\rho_{12}$$',
-          description: 'For en portefølje med to aktiva:\n• σ_p = porteføljens risiko (standardavvik)\n• w = vekt i porteføljen\n• σ = standardavvik (risiko) for hver aktiva\n• ρ = korrelasjon mellom aktivaene\n\nNøkkelinnsikt: Lavere ρ → lavere porteføljerisiko!'
+          formula: '$$\\sigma_p^2 = w_A^2\\sigma_A^2 + w_B^2\\sigma_B^2 + 2\\,w_A w_B\\,\\rho_{AB}\\,\\sigma_A\\sigma_B$$',
+          description: 'For en portefølje med to aktiva, A og B:\n• $\\sigma_p$ = porteføljens risiko (standardavvik)\n• $w_A$, $w_B$ = vekt i porteføljen\n• $\\sigma_A$, $\\sigma_B$ = standardavvik (risiko) for hver aktiva\n• $\\rho_{AB}$ = korrelasjon mellom aktivaene\n\nNøkkelinnsikt: Lavere ρ → lavere porteføljerisiko!'
         },
         {
           id: '5-2-example-korrelasjon',
@@ -447,7 +448,7 @@ export const modul5PortefoljeModule: Module = {
           type: 'exercise',
           order: 20,
           title: 'Oppgave: Beregn porteføljerisiko',
-          description: 'Du har to aksjer:\n• Aksje A: Vekt 60%, volatilitet 25%\n• Aksje B: Vekt 40%, volatilitet 15%\n• Korrelasjon mellom A og B: +0,3\n\nBruk formelen σ_p² = w₁²σ₁² + w₂²σ₂² + 2w₁w₂σ₁σ₂ρ til å beregne:\n1. Porteføljens varians (σ_p²)\n2. Porteføljens standardavvik (σ_p)\n3. Sammenlign med det vektede gjennomsnittet av risikoen (0,6×25 + 0,4×15 = 21%). Er porteføljerisikoen lavere?',
+          description: 'Du har to aksjer:\n• Aksje A: Vekt 60%, volatilitet 25%\n• Aksje B: Vekt 40%, volatilitet 15%\n• Korrelasjon mellom A og B: +0,3\n\nBruk formelen $\\sigma_p^2 = w_A^2\\sigma_A^2 + w_B^2\\sigma_B^2 + 2\\,w_A w_B\\,\\rho_{AB}\\,\\sigma_A\\sigma_B$ til å beregne:\n1. Porteføljens varians ($\\sigma_p^2$)\n2. Porteføljens standardavvik ($\\sigma_p$)\n3. Sammenlign med det vektede gjennomsnittet av risikoen (0,6×25 + 0,4×15 = 21%). Er porteføljerisikoen lavere?',
           hint: 'Husk å bruke desimaltall for vektene (0,6 og 0,4) og volatiliteten (0,25 og 0,15).'
         },
         {
@@ -502,6 +503,7 @@ export const modul5PortefoljeModule: Module = {
         {
           id: '5-2b-formula-return',
           type: 'formula',
+          name: 'Totalavkastning',
           order: 3,
           formula: '$$R = \\frac{Div_1 + (P_1 - P_0)}{P_0} = \\underbrace{\\frac{Div_1}{P_0}}_{\\text{direkteavkastning}} + \\underbrace{\\frac{P_1 - P_0}{P_0}}_{\\text{kursgevinst}}$$',
           description: 'Totalavkastningen på en aksje er summen av utbytte og kursendring, målt i forhold til det du betalte.'
@@ -524,6 +526,7 @@ export const modul5PortefoljeModule: Module = {
         {
           id: '5-2b-formula-expected',
           type: 'formula',
+          name: 'Forventet avkastning og varians',
           order: 6,
           formula: '$$E(R) = \\sum_i p_i R_i \\qquad \\sigma^2 = \\sum_i p_i\\,\\bigl(R_i - E(R)\\bigr)^2 \\qquad \\sigma = \\sqrt{\\sigma^2}$$',
           description: 'pᵢ = sannsynlighet for utfall i, Rᵢ = avkastning i utfall i. Variansen måler hvor mye utfallene spres rundt forventningen; standardavviket σ er kvadratroten og har samme enhet som avkastningen.'
@@ -552,8 +555,9 @@ export const modul5PortefoljeModule: Module = {
         {
           id: '5-2b-formula-geo',
           type: 'formula',
+          name: 'Geometrisk gjennomsnitt',
           order: 10,
-          formula: '$$R_{\\text{geo}} = \\left(\\prod_{i=1}^{n}(1 + R_i)\\right)^{1/n} - 1$$',
+          formula: '$$\\bar{R}_g = \\left(\\prod_{i=1}^{n}(1 + R_i)\\right)^{1/n} - 1$$',
           description: 'Eksempel: +50% ett år og −50% neste gir aritmetisk snitt 0%, men geometrisk (1,5 × 0,5)^(1/2) − 1 = −13,4% – du har faktisk tapt penger.'
         },
         {
@@ -566,24 +570,26 @@ export const modul5PortefoljeModule: Module = {
         {
           id: '5-2b-formula-portreturn',
           type: 'formula',
+          name: 'Porteføljens forventede avkastning',
           order: 12,
-          formula: '$$E(R_p) = w_1 E(R_1) + w_2 E(R_2)$$',
+          formula: '$$E(R_p) = w_A E(R_A) + w_B E(R_B)$$',
           description: 'Porteføljens forventede avkastning er bare et vektet snitt. Risikoen derimot (fra forrige seksjon) avhenger av korrelasjonen:'
         },
         {
           id: '5-2b-formula-corr',
           type: 'formula',
+          name: 'Porteføljevarians (to aksjer)',
           order: 13,
-          formula: '$$\\sigma_p^2 = w_1^2\\sigma_1^2 + w_2^2\\sigma_2^2 + 2\\,w_1 w_2\\,\\sigma_1\\sigma_2\\,\\rho_{12} \\qquad \\rho_{12} = \\frac{\\text{Cov}(R_1, R_2)}{\\sigma_1 \\sigma_2}$$',
-          description: 'Korrelasjonen ρ ligger mellom −1 og +1. Kovariansen måler hvordan to aktiva beveger seg sammen; korrelasjonen er den standardiserte versjonen.'
+          formula: '$$\\sigma_p^2 = w_A^2\\sigma_A^2 + w_B^2\\sigma_B^2 + 2\\,w_A w_B\\,\\rho_{AB}\\,\\sigma_A\\sigma_B$$',
+          description: 'Korrelasjonen $\\rho_{AB} = \\dfrac{\\text{Cov}(R_A, R_B)}{\\sigma_A \\sigma_B}$ ligger mellom −1 og +1. Kovariansen måler hvordan to aktiva beveger seg sammen; korrelasjonen er den standardiserte versjonen.'
         },
         {
           id: '5-2b-example-div',
           type: 'example',
           order: 14,
           title: 'Diversifisering i tall (Oppgavesett 5, oppgave 8)',
-          content: 'Aksje A: E(R)=16%, σ=28%. Aksje B: E(R)=21%, σ=36%. Likevektet portefølje (50/50). Forventet avkastning: E(Rp) = 0,5×16 + 0,5×21 = **18,5%** uansett korrelasjon. Men risikoen avhenger sterkt av ρ:',
-          calculation: '**ρ = +1,0 (ingen diversifisering):**\nσp = 0,5×28 + 0,5×36 = **32,0%**\n\n**ρ = +0,5:**\nσp² = 0,25×784 + 0,25×1296 + 2×0,25×28×36×0,5 = 772 → σp = **27,8%**\n\n**ρ = −0,5:**\nσp² = 196 + 324 − 252 = 268 → σp = **16,4%**\n\nSamme forventede avkastning (18,5%), men risikoen faller fra 32% til 16,4% når korrelasjonen synker. Det er diversifiseringens magi – gratis risikoreduksjon.'
+          content: 'Aksje A: $E(R_A)$ = 16%, $\\sigma_A$ = 28%. Aksje B: $E(R_B)$ = 21%, $\\sigma_B$ = 36%. Likevektet portefølje (50/50). Forventet avkastning: $E(R_p)$ = 0,5×16 + 0,5×21 = **18,5%** uansett korrelasjon. Men risikoen avhenger sterkt av ρ:',
+          calculation: '**ρ = +1,0 (ingen diversifisering):**\n$\\sigma_p$ = 0,5×28 + 0,5×36 = **32,0%**\n\n**ρ = +0,5:**\n$\\sigma_p^2$ = 0,25×784 + 0,25×1296 + 2×0,25×28×36×0,5 = 772 → $\\sigma_p$ = **27,8%**\n\n**ρ = −0,5:**\n$\\sigma_p^2$ = 196 + 324 − 252 = 268 → $\\sigma_p$ = **16,4%**\n\nSamme forventede avkastning (18,5%), men risikoen faller fra 32% til 16,4% når korrelasjonen synker. Det er diversifiseringens magi – gratis risikoreduksjon.'
         },
         {
           id: '5-2b-heading-sharpe',
@@ -602,8 +608,9 @@ export const modul5PortefoljeModule: Module = {
         {
           id: '5-2b-formula-sharpe',
           type: 'formula',
+          name: 'Sharpe-forholdet',
           order: 17,
-          formula: '$$\\text{Sharpe} = \\frac{E(R_p) - R_f}{\\sigma_p}$$',
+          formula: '$$\\text{Sharpe} = \\dfrac{E(R_p) - r_f}{\\sigma_p}$$',
           description: 'Eksempel: portefølje med 18,5% forventet avkastning og 27,8% risiko, risikofri rente 3%: Sharpe = (18,5 − 3)/27,8 = 15,5/27,8 ≈ 0,56.'
         },
         {
@@ -618,7 +625,7 @@ export const modul5PortefoljeModule: Module = {
             'Sharpe kan ikke sammenligne porteføljer'
           ],
           correctAnswer: 1,
-          explanation: 'Med lik forventet avkastning og lavere σ har A høyere Sharpe-rate ((E(R)−Rf)/σ). Du får samme avkastning for mindre risiko – klart å foretrekke.'
+          explanation: 'Med lik forventet avkastning og lavere σ har A høyere Sharpe-rate ($(E(R_p) - r_f)/\\sigma_p$). Du får samme avkastning for mindre risiko – klart å foretrekke.'
         },
         {
           id: '5-2b-reflection',
@@ -846,7 +853,7 @@ export const modul5PortefoljeModule: Module = {
           controls: [
             {
               key: 'return1',
-              label: 'Forventet avkastning - Aktiva 1',
+              label: 'Forventet avkastning - Aktiva A',
               type: 'slider',
               min: 0,
               max: 25,
@@ -857,7 +864,7 @@ export const modul5PortefoljeModule: Module = {
             },
             {
               key: 'return2',
-              label: 'Forventet avkastning - Aktiva 2',
+              label: 'Forventet avkastning - Aktiva B',
               type: 'slider',
               min: 0,
               max: 25,
@@ -868,25 +875,25 @@ export const modul5PortefoljeModule: Module = {
             },
             {
               key: 'std1',
-              label: 'Risiko (std.avvik) - Aktiva 1',
+              label: 'Risiko (std.avvik) - Aktiva A',
               type: 'slider',
               min: 5,
               max: 40,
               step: 1,
               default: 20,
               unit: '%',
-              helpText: 'Volatilitet/risiko for aktiva 1'
+              helpText: 'Volatilitet/risiko for aktiva A'
             },
             {
               key: 'std2',
-              label: 'Risiko (std.avvik) - Aktiva 2',
+              label: 'Risiko (std.avvik) - Aktiva B',
               type: 'slider',
               min: 5,
               max: 40,
               step: 1,
               default: 8,
               unit: '%',
-              helpText: 'Volatilitet/risiko for aktiva 2'
+              helpText: 'Volatilitet/risiko for aktiva B'
             },
             {
               key: 'correlation',
@@ -900,14 +907,14 @@ export const modul5PortefoljeModule: Module = {
             },
             {
               key: 'weight1',
-              label: 'Vekt i Aktiva 1',
+              label: 'Vekt i Aktiva A',
               type: 'slider',
               min: 0,
               max: 100,
               step: 5,
               default: 50,
               unit: '%',
-              helpText: 'Andel av porteføljen i aktiva 1'
+              helpText: 'Andel av porteføljen i aktiva A'
             },
             {
               key: 'riskFreeRate',
@@ -942,7 +949,7 @@ export const modul5PortefoljeModule: Module = {
             },
             {
               key: 'minVarWeight1',
-              label: 'MVP: Vekt Aktiva 1',
+              label: 'MVP: Vekt Aktiva A',
               unit: '%',
               precision: 1
             },
@@ -954,7 +961,7 @@ export const modul5PortefoljeModule: Module = {
             },
             {
               key: 'tangencyWeight1',
-              label: 'Tangent: Vekt Aktiva 1',
+              label: 'Tangent: Vekt Aktiva A',
               unit: '%',
               precision: 1
             },
@@ -1024,9 +1031,10 @@ export const modul5PortefoljeModule: Module = {
         {
           id: '5-3b-formula-capm',
           type: 'formula',
+          name: 'CAPM (verdipapirmarkedslinjen)',
           order: 5,
-          formula: '$$E(r) = r_f + \\beta\\,(r_m - r_f)$$',
-          description: 'r_f = risikofri rente, r_m = forventet markedsavkastning, (r_m − r_f) = markedets risikopremie. Jo høyere beta, jo høyere avkastning krever investorene.'
+          formula: '$$E(R_i) = r_f + \\beta_i \\times (E(R_M) - r_f)$$',
+          description: '$E(R_i)$ = forventet avkastning (avkastningskravet) for aksje $i$, $\\beta_i$ = aksjens beta, $r_f$ = risikofri rente, $E(R_M)$ = forventet markedsavkastning, $(E(R_M) - r_f)$ = markedets risikopremie. Jo høyere beta, jo høyere avkastning krever investorene.'
         },
         {
           id: '5-3b-example-capm',
@@ -1034,7 +1042,7 @@ export const modul5PortefoljeModule: Module = {
           order: 6,
           title: 'Eksempel: CAPM i bruk',
           content: 'Risikofri rente er 3%, aksjens beta er 1,2, og forventet markedsavkastning er 9%. Hva er avkastningskravet?',
-          calculation: 'Markedets risikopremie: 9% − 3% = 6%\n\n$E(r) = 3\\% + 1{,}2 \\times 6\\% = 3\\% + 7{,}2\\% = $ **10,2%**\n\nEn aksje som svinger 20% mer enn markedet (β = 1,2) må gi 10,2% i forventet avkastning for å kompensere for den ekstra systematiske risikoen.'
+          calculation: 'Markedets risikopremie: 9% − 3% = 6%\n\n$E(R_i) = 3\\% + 1{,}2 \\times 6\\% = 3\\% + 7{,}2\\% = $ **10,2%**\n\nEn aksje som svinger 20% mer enn markedet (β = 1,2) må gi 10,2% i forventet avkastning for å kompensere for den ekstra systematiske risikoen.'
         },
         {
           id: '5-3b-interactive-capm',
@@ -1083,7 +1091,7 @@ export const modul5PortefoljeModule: Module = {
             '11,0%'
           ],
           correctAnswer: 1,
-          explanation: 'E(r) = 3% + 0,8 × (8% − 3%) = 3% + 0,8 × 5% = 3% + 4% = 7,0%. Beta under 1 gir lavere avkastningskrav enn markedet fordi aksjen er mindre følsom for markedssvingninger.'
+          explanation: '$E(R_i)$ = 3% + 0,8 × (8% − 3%) = 3% + 0,8 × 5% = 3% + 4% = 7,0%. Beta under 1 gir lavere avkastningskrav enn markedet fordi aksjen er mindre følsom for markedssvingninger.'
         },
         {
           id: '5-3b-reflection',
@@ -2017,12 +2025,12 @@ export const modul5PortefoljeModule: Module = {
         question: 'Hva er formelen for porteføljeavkastning med to aktiva?',
         options: [
           'Gjennomsnittet av avkastningene',
-          'Den vektede summen: w₁R₁ + w₂R₂',
+          'Den vektede summen: $w_A R_A + w_B R_B$',
           'Produktet av avkastningene',
           'Den høyeste av avkastningene'
         ],
         correctAnswer: 1,
-        explanation: 'Porteføljeavkastning = w₁R₁ + w₂R₂, der w er vektene (som summerer til 1) og R er avkastningene. Det er et vektet gjennomsnitt.'
+        explanation: 'Porteføljeavkastning = $w_A R_A + w_B R_B$, der w er vektene (som summerer til 1) og R er avkastningene. Det er et vektet gjennomsnitt.'
       },
       {
         id: 'q6-36',

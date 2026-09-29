@@ -204,6 +204,7 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-2-formula-enkel',
           type: 'formula',
+          name: 'Enkel rente',
           order: 4,
           formula: '$$\\text{Enkel rente} = \\text{Hovedstol} \\times \\text{rente} \\times \\text{tid}$$',
           description: 'Hvis du investerer 10 000 kr til 5% enkel rente i 3 år: 10 000 × 0.05 × 3 = 1 500 kr i rente. Total: 11 500 kr.'
@@ -218,6 +219,7 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-2-formula-compound',
           type: 'formula',
+          name: 'Fremtidsverdi (renters rente)',
           order: 6,
           formula: '$$FV = PV \\cdot (1+r)^n$$',
           description: 'FV = Fremtidsverdi, PV = Nåverdi (startbeløp), r = rente per periode, n = antall perioder.\n\nSamme eksempel med renters rente: 10 000 × (1.05)³ = 11 576 kr. Du tjener 76 kr mer!'
@@ -303,6 +305,7 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-2-formula-72',
           type: 'formula',
+          name: '72-regelen',
           order: 13,
           formula: '$$n_{\\text{dobling}} \\approx \\dfrac{72}{r\\,(\\%)}$$',
           description: 'Med 6% rente: 72 ÷ 6 = 12 år for å doble pengene.\nMed 8% rente: 72 ÷ 8 = 9 år for å doble pengene.\nMed 3% rente: 72 ÷ 3 = 24 år for å doble pengene.'
@@ -444,6 +447,7 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-3-formula-fv',
           type: 'formula',
+          name: 'Fremtidsverdi (renters rente)',
           order: 5,
           formula: '$$FV = PV \\cdot (1+r)^n$$',
           description: 'FV = Fremtidsverdi\nPV = Nåverdi (dagens beløp)\nr = rente per periode (som desimaltall)\nn = antall perioder'
@@ -473,6 +477,7 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-3-formula-pv',
           type: 'formula',
+          name: 'Nåverdi',
           order: 9,
           formula: '$$PV = \\dfrac{FV}{(1+r)^n}$$',
           description: 'Denne formelen er bare fremtidsverdi-formelen snudd på hodet. Vi "diskonterer" det fremtidige beløpet tilbake til i dag.'
@@ -648,9 +653,10 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-4-formula-fv-annuitet',
           type: 'formula',
+          name: 'Fremtidsverdi av annuitet',
           order: 6,
-          formula: '$$FV = PMT \\cdot \\dfrac{(1+r)^n - 1}{r}$$',
-          description: 'FV = Fremtidsverdi\nPMT = Periodisk innbetaling\nr = rente per periode\nn = antall perioder\n\nDenne formelen brukes for å beregne verdien av regelmessig sparing.'
+          formula: '$$FV = C \\cdot \\dfrac{(1+r)^n - 1}{r}$$',
+          description: 'FV = Fremtidsverdi\nC = Periodisk innbetaling (annuitet)\nr = rente per periode\nn = antall perioder\n\nDenne formelen brukes for å beregne verdien av regelmessig sparing.'
         },
         {
           id: '2-4-example-sparing',
@@ -658,7 +664,7 @@ export const modul2TidverdiModule: Module = {
           order: 7,
           title: 'Månedlig pensjonssparing',
           content: 'Ida er 30 år og starter å spare 2 500 kr i måneden til pensjon i en aksjefond. Hun forventer 7% årlig avkastning (0.583% per måned). Hvor mye har hun ved 67 år?',
-          calculation: 'n = 37 år × 12 måneder = 444 måneder\nr = 0.07 ÷ 12 = 0.00583 per måned\nPMT = 2 500 kr\n\nFV = 2 500 × [(1.00583)^444 - 1] ÷ 0.00583\nFV = 2 500 × [13.33 - 1] ÷ 0.00583\nFV = 2 500 × 2 115.4\nFV = **5 288 500 kr**\n\nIda sparer inn 2 500 × 444 = 1 110 000 kr\nRenter tjent: 5 288 500 - 1 110 000 = **4 178 500 kr**\n\nMer enn 3/4 av sluttsummen er renter!'
+          calculation: 'n = 37 år × 12 måneder = 444 måneder\nr = 0.07 ÷ 12 = 0.00583 per måned\nC = 2 500 kr\n\nFV = 2 500 × [(1.00583)^444 - 1] ÷ 0.00583\nFV = 2 500 × [13.33 - 1] ÷ 0.00583\nFV = 2 500 × 2 115.4\nFV = **5 288 500 kr**\n\nIda sparer inn 2 500 × 444 = 1 110 000 kr\nRenter tjent: 5 288 500 - 1 110 000 = **4 178 500 kr**\n\nMer enn 3/4 av sluttsummen er renter!'
         },
         {
           id: '2-4-calc-fv',
@@ -698,7 +704,7 @@ export const modul2TidverdiModule: Module = {
               helpText: 'Hvor lenge du sparer'
             }
           ],
-          formula: '$$FV = PMT \\cdot \\dfrac{(1+r)^n - 1}{r}$$',
+          formula: '$$FV = C \\cdot \\dfrac{(1+r)^n - 1}{r}$$',
           resultLabel: 'Total oppsparing',
           resultUnit: 'kr',
           explanation: 'Se effekten av tid og avkastning på sparingen din'
@@ -713,9 +719,10 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-4-formula-laan',
           type: 'formula',
+          name: 'Annuitetsbeløp (lån)',
           order: 10,
-          formula: '$$PMT = PV \\cdot \\dfrac{r\\,(1+r)^n}{(1+r)^n - 1}$$',
-          description: 'PMT = Månedlig betaling\nPV = Lånebeløp\nr = månedlig rente\nn = antall månedlige betalinger\n\nDette er annuitetsformelen for å beregne månedlige låneavdrag.'
+          formula: '$$C = PV \\cdot \\dfrac{r\\,(1+r)^n}{(1+r)^n - 1}$$',
+          description: 'C = Månedlig betaling (annuitet)\nPV = Lånebeløp\nr = månedlig rente\nn = antall månedlige betalinger\n\nDette er annuitetsformelen for å beregne månedlige låneavdrag.'
         },
         {
           id: '2-4-example-boliglaan',
@@ -723,7 +730,7 @@ export const modul2TidverdiModule: Module = {
           order: 11,
           title: 'Hva koster egentlig et boliglån?',
           content: 'Erik tar opp et boliglån på 3 000 000 kr med 5% årlig rente og 25 års løpetid. Hva blir den månedlige betalingen, og hvor mye betaler han totalt i renter?',
-          calculation: 'PV = 3 000 000 kr\nr = 0.05 ÷ 12 = 0.00417 per måned\nn = 25 × 12 = 300 måneder\n\nPMT = 3 000 000 × [0.00417 × (1.00417)^300] ÷ [(1.00417)^300 - 1]\nPMT = 3 000 000 × [0.00417 × 3.481] ÷ [3.481 - 1]\nPMT = 3 000 000 × 0.01452 ÷ 2.481\nPMT = **17 533 kr per måned**\n\n**Total betaling:** 17 533 × 300 = 5 259 900 kr\n**Total rente:** 5 259 900 - 3 000 000 = **2 259 900 kr**\n\nErik betaler nesten like mye i renter som selve lånet!'
+          calculation: 'PV = 3 000 000 kr\nr = 0.05 ÷ 12 = 0.00417 per måned\nn = 25 × 12 = 300 måneder\n\nC = 3 000 000 × [0.00417 × (1.00417)^300] ÷ [(1.00417)^300 - 1]\nC = 3 000 000 × [0.00417 × 3.481] ÷ [3.481 - 1]\nC = 3 000 000 × 0.01452 ÷ 2.481\nC = **17 533 kr per måned**\n\n**Total betaling:** 17 533 × 300 = 5 259 900 kr\n**Total rente:** 5 259 900 - 3 000 000 = **2 259 900 kr**\n\nErik betaler nesten like mye i renter som selve lånet!'
         },
         {
           id: '2-4-calc-loan',
@@ -763,7 +770,7 @@ export const modul2TidverdiModule: Module = {
               helpText: 'Antall år på lånet'
             }
           ],
-          formula: '$$PMT = PV \\cdot \\dfrac{r\\,(1+r)^n}{(1+r)^n - 1}$$',
+          formula: '$$C = PV \\cdot \\dfrac{r\\,(1+r)^n}{(1+r)^n - 1}$$',
           resultLabel: 'Månedlig betaling',
           resultUnit: 'kr',
           explanation: 'Se hvordan rente og løpetid påvirker kostnaden'
@@ -820,7 +827,7 @@ export const modul2TidverdiModule: Module = {
           type: 'exercise',
           order: 18,
           title: 'Beregn din egen spareplan',
-          description: 'Ta frem en kalkulator eller et regneark. Beregn hvor mye du vil ha om 20 år hvis du sparer et beløp du selv velger, med 6% årlig avkastning.\n\nBruk formelen: FV = PMT × [(1.06)^20 - 1] ÷ 0.06\n\nPrøv med ulike beløp: 500 kr/mnd, 1 000 kr/mnd, 2 000 kr/mnd. Se hvordan forskjellen vokser!',
+          description: 'Ta frem en kalkulator eller et regneark. Beregn hvor mye du vil ha om 20 år hvis du sparer et beløp du selv velger, med 6% årlig avkastning.\n\nBruk formelen: FV = C × [(1.06)^20 - 1] ÷ 0.06\n\nPrøv med ulike beløp: 500 kr/mnd, 1 000 kr/mnd, 2 000 kr/mnd. Se hvordan forskjellen vokser!',
           hint: 'Husk at [(1.06)^20 - 1] ÷ 0.06 ≈ 36.79. Så multipliser ditt månedlige beløp × 12 × 36.79 for å få et grovt estimat.'
         },
         {
@@ -887,6 +894,7 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-6-perp-formula',
           type: 'formula',
+          name: 'Perpetuitet',
           order: 5,
           formula: '$$PV = \\dfrac{C}{r}$$',
           description: 'C = fast betaling per periode, r = avkastningskrav per periode. Forutsetter at første betaling kommer om én periode (etterskuddsvis).'
@@ -915,6 +923,7 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-6-gperp-formula',
           type: 'formula',
+          name: 'Voksende perpetuitet',
           order: 9,
           formula: '$$PV = \\dfrac{C_1}{r - g}$$',
           description: 'C₁ = betalingen om ett år (den første), g = konstant vekstrate. Formelen krever r > g – ellers vokser strømmen fortere enn den diskonteres, og verdien blir uendelig.'
@@ -965,9 +974,10 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-6-eff-formula',
           type: 'formula',
+          name: 'Effektiv årlig rente',
           order: 15,
           formula: '$$r_{\\text{eff}} = \\left(1 + \\dfrac{r_{\\text{nom}}}{m}\\right)^{m} - 1$$',
-          description: 'r_nom = nominell årsrente, m = antall renteperioder per år (12 for månedlig, 4 for kvartalsvis, 365 for daglig).'
+          description: '$r_{\\text{nom}}$ = nominell årsrente, m = antall renteperioder per år (12 for månedlig, 4 for kvartalsvis, 365 for daglig).'
         },
         {
           id: '2-6-eff-example',
@@ -975,7 +985,7 @@ export const modul2TidverdiModule: Module = {
           order: 16,
           title: 'Kredittkortet som ikke var billig',
           content: 'Kortet tar **2% per måned**. Hva er den effektive årsrenten?',
-          calculation: 'Nominell årsrente er 12 × 2% = 24%, med månedlig renteberegning (m = 12):\n\n$r_{eff} = (1 + 0{,}02)^{12} - 1 = 1{,}268 - 1 = $ **26,8%**\n\nDen «lille» månedsrenten tilsvarer nesten 27% i året. Til sammenligning gir en sparekonto med 12% nominell rente og månedlig kapitalisering $(1 + 0{,}12/12)^{12} - 1 = $ **12,68%** effektivt.'
+          calculation: 'Nominell årsrente er 12 × 2% = 24%, med månedlig renteberegning (m = 12):\n\n$r_{\\text{eff}} = (1 + 0{,}02)^{12} - 1 = 1{,}268 - 1 = $ **26,8%**\n\nDen «lille» månedsrenten tilsvarer nesten 27% i året. Til sammenligning gir en sparekonto med 12% nominell rente og månedlig kapitalisering $(1 + 0{,}12/12)^{12} - 1 = $ **12,68%** effektivt.'
         },
         {
           id: '2-6-eff-quiz',
@@ -1007,9 +1017,10 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-6-npv-formula',
           type: 'formula',
+          name: 'Nettonåverdi (NPV)',
           order: 20,
-          formula: '$$NPV = -I_0 + \\sum_{t=1}^{n} \\dfrac{CF_t}{(1+r)^t}$$',
-          description: 'I₀ = investeringen i dag, CF_t = kontantstrømmen i år t, r = avkastningskravet. Er NPV > 0, skaper prosjektet verdi.'
+          formula: '$$NPV = -CF_0 + \\sum_{t=1}^{n} \\dfrac{CF_t}{(1+r)^t}$$',
+          description: 'CF₀ = investeringen (utbetalingen) i dag, CFₜ = kontantstrømmen i år t, r = avkastningskravet. Er NPV > 0, skaper prosjektet verdi.'
         },
         {
           id: '2-6-npv-example',
@@ -1052,6 +1063,7 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-6-loesetid-formula',
           type: 'formula',
+          name: 'Antall perioder',
           order: 26,
           formula: '$$n = \\dfrac{\\ln(FV / PV)}{\\ln(1 + r)}$$',
           description: 'Eksempel (Oppgavesett 0, oppgave 4): Hvor lenge før 92 000 kr vokser til 150 000 kr ved 5%? n = ln(150000/92000) / ln(1,05) ≈ 10 år.'
@@ -1137,9 +1149,10 @@ export const modul2TidverdiModule: Module = {
         {
           id: '2-5-formula-reell',
           type: 'formula',
+          name: 'Reell rente (tilnærming)',
           order: 10,
-          formula: '$$r_{\\text{reell}} \\approx r_{\\text{nominell}} - \\text{inflasjon}$$',
-          description: 'En enkel tilnærming som fungerer godt for lave renter.\n\nEksempel: 5% nominell avkastning - 2.5% inflasjon = 2.5% reell avkastning.\n\nMer presis formel: (1 + nominell) ÷ (1 + inflasjon) - 1'
+          formula: '$$r_{\\text{reell}} \\approx r_{\\text{nom}} - \\text{inflasjon}$$',
+          description: 'En enkel tilnærming som fungerer godt for lave renter.\n\nEksempel: 5% nominell avkastning - 2.5% inflasjon = 2.5% reell avkastning.\n\nMer presis formel: $r_{\\text{reell}} = \\dfrac{1 + r_{\\text{nom}}}{1 + \\text{inflasjon}} - 1$'
         },
         {
           id: '2-5-example-sparekonto',
@@ -1715,15 +1728,15 @@ export const modul2TidverdiModule: Module = {
       },
       {
         id: 'q3-31',
-        question: 'Hva er PMT i en annuitetsformel?',
+        question: 'Hva er $C$ i en annuitetsformel?',
         options: [
-          'Principal Monthly Total',
+          'Kapitalen (lånebeløpet) i dag',
           'Periodisk (månedlig/årlig) betaling',
-          'Percentage Monthly Tax',
-          'Present Market Total'
+          'Renten per periode',
+          'Antall perioder'
         ],
         correctAnswer: 1,
-        explanation: 'PMT står for Payment - den periodiske betalingen (månedlig eller årlig) i en annuitet, som lån eller spareavtale.'
+        explanation: '$C$ står for den periodiske betalingen (månedlig eller årlig) i en annuitet, som lån eller spareavtale.'
       },
       {
         id: 'q3-32',

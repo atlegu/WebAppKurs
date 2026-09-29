@@ -464,6 +464,7 @@ export const modul3ObligasjonerModule: Module = {
         {
           id: '3-3-formula',
           type: 'formula',
+          name: 'Obligasjonspris (nåverdi av kontantstrømmer)',
           order: 8,
           formula: '$$P = \\dfrac{C}{(1+r)^1} + \\dfrac{C}{(1+r)^2} + \\cdots + \\dfrac{C}{(1+r)^n} + \\dfrac{F}{(1+r)^n}$$',
           description: 'Hvor:\n• C = Kupongbetaling per periode\n• r = Markedsrente per periode (diskonteringsrente)\n• n = Antall perioder til forfall\n• F = Pålydende (face value)'
@@ -471,6 +472,7 @@ export const modul3ObligasjonerModule: Module = {
         {
           id: '3-3-formula-annuitet',
           type: 'formula',
+          name: 'Obligasjonspris (annuitetsform)',
           order: 9,
           formula: '$$P = C \\cdot \\dfrac{1 - (1+r)^{-n}}{r} + \\dfrac{F}{(1+r)^n}$$',
           description: 'Forenklet formel der første ledd er nåverdien av kupongene (annuitet) og andre ledd er nåverdien av pålydende.'
@@ -706,6 +708,7 @@ export const modul3ObligasjonerModule: Module = {
         {
           id: '3-4-formula',
           type: 'formula',
+          name: 'Effektiv rente (YTM)',
           order: 9,
           formula: '$$P = \\dfrac{C}{(1+YTM)^1} + \\dfrac{C}{(1+YTM)^2} + \\cdots + \\dfrac{C+F}{(1+YTM)^n}$$',
           description: 'YTM er den renten som gjør at nåverdien av alle fremtidige kontantstrømmer blir lik dagens pris. Denne ligningen må løses numerisk (prøving og feiling, eller med kalkulator/Excel).'
@@ -713,6 +716,7 @@ export const modul3ObligasjonerModule: Module = {
         {
           id: '3-4-formula-approx',
           type: 'formula',
+          name: 'YTM (tilnærming)',
           order: 10,
           formula: '$$YTM \\approx \\dfrac{C + (F - P)/n}{(F + P)/2}$$',
           description: 'Tilnærmet formel:\n• C = Årlig kupongbetaling\n• F = Pålydende (Face value)\n• P = Pris\n• n = År til forfall\n\nDenne gir et godt estimat uten kompleks matematikk.'
@@ -879,6 +883,7 @@ export const modul3ObligasjonerModule: Module = {
         {
           id: '3-5-formula-modifisert',
           type: 'formula',
+          name: 'Modifisert durasjon',
           order: 7,
           formula: '$$D_{\\text{mod}} = \\dfrac{D_{\\text{Macaulay}}}{1 + r}$$',
           description: 'Der r = markedsrente per periode.\n\nPrisendring ≈ -Modifisert durasjon × Renteendring\n\nEksempel: Med modifisert durasjon 5 og renteøkning på 1%:\nPrisendring ≈ -5 × 1% = -5%'

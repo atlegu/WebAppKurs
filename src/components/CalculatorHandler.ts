@@ -98,7 +98,7 @@ export class CalculatorHandler {
     return pv * Math.pow(1 + rate, years);
   }
 
-  // Future Value of Annuity: FV = PMT × [(1+r)^n - 1] / r
+  // Future Value of Annuity: FV = C × [(1+r)^n - 1] / r
   private calcFutureValue(v: Record<string, number>): number {
     const pmt = v.payment || 0;
     const rate = (v.rate || 0) / 100;
@@ -115,7 +115,7 @@ export class CalculatorHandler {
     return fv / Math.pow(1 + rate, years);
   }
 
-  // Loan Payment (Annuity): PMT = PV × [r(1+r)^n] / [(1+r)^n - 1]
+  // Loan Payment (Annuity): C = PV × [r(1+r)^n] / [(1+r)^n - 1]
   private calcLoanPayment(v: Record<string, number>): number {
     const pv = v.loanAmount || 0;
     const rate = (v.rate || 0) / 100 / 12; // Monthly rate
