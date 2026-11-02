@@ -42,6 +42,16 @@ export const modul8KapitalstrukturModule: Module = {
           slides: [
             { title: 'Kapitalstruktur-modellen (alle seks deler)', filename: 'Modell_Kapitalstruktur_MM.html', kind: 'modell' }
           ]
+        } as PresentationContent,
+        {
+          id: 'utbytte-modell',
+          type: 'presentation',
+          order: 3,
+          title: 'Interaktiv modell: utbytte, tilbakekjøp og hjemmelaget utbytte',
+          description: 'Seks deler som følger kapittel 16 i læreboka: kursfallet på ex-dagen, utbytte mot tilbakekjøp, hjemmelaget utbytte og MM, utbyttepolitikk over tid med Lintners utjevning, aksjesplitt og aksjeutbytte, og skatt og klientell. Bekk AS fra oppgavesett 8 ligger inne som forhåndsvalg, og hver del har «prøv selv»-oppgaver med fasit.',
+          slides: [
+            { title: 'Utbyttemodellen (alle seks deler)', filename: 'Modell_Utbytte_MM.html', kind: 'modell' }
+          ]
         } as PresentationContent
       ]
     },
@@ -638,6 +648,16 @@ export const modul8KapitalstrukturModule: Module = {
           text: 'Det finnes ulike typer dividende. Ordinær dividende utbetales regelmessig (årlig eller kvartalsvis). Ekstraordinær dividende er engangsutbetalinger ved spesielle anledninger. Noen selskaper betaler også ut aksjeutbytte i form av nye aksjer.'
         },
         {
+          id: 'kapitalstruktur-8-4-modell-splitt',
+          type: 'presentation',
+          order: 4.5,
+          title: 'Utforsk: aksjeutbytte og aksjesplitt',
+          description: 'Flere aksjer, lavere kurs, samme verdi. Prøv 20 % aksjeutbytte og splitt 2 for 1 i Bekk AS, eller den omvendte splitten fra lærebokas selvtest.',
+          slides: [
+            { title: 'Del 5: Splitt og aksjeutbytte', filename: 'Modell_Utbytte_MM.html#splitt', kind: 'modell' }
+          ]
+        } as PresentationContent,
+        {
           id: 'kapitalstruktur-8-4-heading-nokkel',
           type: 'heading',
           order: 5,
@@ -669,6 +689,16 @@ export const modul8KapitalstrukturModule: Module = {
           calculation: 'Utdelingsforhold = 5 / 8 = 62,5%\nDirekteavkastning = 5 / 100 = 5%\n\nSelskapet betaler ut 62,5% av overskuddet og beholder 37,5% til reinvestering.'
         },
         {
+          id: 'kapitalstruktur-8-4-modell-exdag',
+          type: 'presentation',
+          order: 8.5,
+          title: 'Utforsk: hva skjer på ex-dagen?',
+          description: 'Markedsverdibalansen før og etter utbyttet, kursfallet, EPS og P/E, og aksjonærens formue som ikke endres. Slå på skatt og se hvorfor kursfallet ofte er litt mindre enn utbyttet.',
+          slides: [
+            { title: 'Del 1: Utbyttedagen (Bekk AS fra oppgavesett 8)', filename: 'Modell_Utbytte_MM.html#exdag', kind: 'modell' }
+          ]
+        } as PresentationContent,
+        {
           id: 'kapitalstruktur-8-4-heading-mm-div',
           type: 'heading',
           order: 9,
@@ -681,6 +711,16 @@ export const modul8KapitalstrukturModule: Module = {
           order: 10,
           text: 'Modigliani og Miller viste også at i perfekte markeder er dividendepolitikken irrelevant for selskapsverdien. Aksjonærer kan selv skape ønsket kontantstrøm ved å selge aksjer (hjemmelaget dividende) eller reinvestere dividenden.'
         },
+        {
+          id: 'kapitalstruktur-8-4-modell-hjemmelaget',
+          type: 'presentation',
+          order: 10.5,
+          title: 'Utforsk: hjemmelaget utbytte',
+          description: 'Bristol plc fra læreboka over to år: velg utbyttet i år 1 og se at nåverdien ikke endres, og at investoren får akkurat den kontantstrømmen hun vil ha ved å selge eller reinvestere. Per og Lise fra oppgave 11 ligger inne.',
+          slides: [
+            { title: 'Del 3: Hjemmelaget utbytte og MM', filename: 'Modell_Utbytte_MM.html#hjemmelaget', kind: 'modell' }
+          ]
+        } as PresentationContent,
         {
           id: 'kapitalstruktur-8-4-heading-praksis',
           type: 'heading',
@@ -714,6 +754,16 @@ export const modul8KapitalstrukturModule: Module = {
           ]
         },
         {
+          id: 'kapitalstruktur-8-4-modell-politikk',
+          type: 'presentation',
+          order: 14.5,
+          title: 'Utforsk: utbyttepolitikk over tid',
+          description: 'Konstant utdelingsforhold, residualpolitikk og Lintners utjevning på samme resultatbane. Se hvor mange kutt hver politikk gir, og sammenlign med Equinors faktiske utbytte 2018 til 2023.',
+          slides: [
+            { title: 'Del 4: Politikk over tid', filename: 'Modell_Utbytte_MM.html#politikk', kind: 'modell' }
+          ]
+        } as PresentationContent,
+        {
           id: 'kapitalstruktur-8-4-heading-signaling',
           type: 'heading',
           order: 15,
@@ -733,6 +783,16 @@ export const modul8KapitalstrukturModule: Module = {
           term: 'Klientell-effekten',
           definition: 'Teorien om at ulike investorgrupper foretrekker ulike dividendepolitikker. Pensjonister kan foretrekke høy dividende, mens unge investorer kan foretrekke vekst og reinvestering.'
         },
+        {
+          id: 'kapitalstruktur-8-4-modell-skatt',
+          type: 'presentation',
+          order: 17.5,
+          title: 'Utforsk: skatt og klientell',
+          description: 'Hva en personlig aksjonær, et holdingselskap og et pensjonsfond sitter igjen med etter utbytte, tilbakekjøp med salg nå, og tilbakekjøp med utsatt salg. Norske satser med skjermingsfradrag og fritaksmetoden som utgangspunkt.',
+          slides: [
+            { title: 'Del 6: Skatt og klientell', filename: 'Modell_Utbytte_MM.html#skatt', kind: 'modell' }
+          ]
+        } as PresentationContent,
         {
           id: 'kapitalstruktur-8-4-keypoints',
           type: 'keypoint',
@@ -812,6 +872,16 @@ export const modul8KapitalstrukturModule: Module = {
           content: 'Bioenergi AS har overskudd på 100 mill. kr og 10 millioner aksjer. Selskapet bruker 50 mill. kr til å kjøpe tilbake 1 million aksjer til kurs 50 kr.',
           calculation: 'Før tilbakekjøp:\nEPS = 100 mill. / 10 mill. aksjer = 10 kr\n\nEtter tilbakekjøp:\nAntall aksjer = 10 - 1 = 9 millioner\nEPS = 100 mill. / 9 mill. aksjer = 11,11 kr\n\nEPS øker med 11% selv om overskuddet er uendret!'
         },
+        {
+          id: 'kapitalstruktur-8-5-modell-tilbakekjop',
+          type: 'presentation',
+          order: 7.5,
+          title: 'Utforsk: utbytte eller tilbakekjøp',
+          description: 'Samme sum ut av selskapet på to måter. EPS stiger ved tilbakekjøp, men P/E blir det samme som etter et utbytte, og aksjonæren er like rik uansett. Slå på skatt og se hvorfor tilbakekjøp likevel ofte foretrekkes.',
+          slides: [
+            { title: 'Del 2: Utbytte eller tilbakekjøp (Bekk AS, oppgave 10)', filename: 'Modell_Utbytte_MM.html#tilbakekjop', kind: 'modell' }
+          ]
+        } as PresentationContent,
         {
           id: 'kapitalstruktur-8-5-heading-vs-div',
           type: 'heading',

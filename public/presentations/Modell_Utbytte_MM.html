@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Utbytte: ex-dagen, tilbakekjøp og hjemmelaget utbytte — interaktiv modell · BUS 220</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --g: #046530; --g2: #0b7a3e; --gl: #f0f7f2; --gb: #cfe5d7; --ink: #1a1a1a; --mut: #4b5563; --mut2: #6b7280; --line: #e4e4df; --bg: #f7f7f4;
+          --rod: #dc2626; --gronn: #10b981; --indigo: #6366f1; --oransje: #d97706; --oransje2: #f59e0b; --lilla: #8b5cf6; --blaa: #3b82f6; --teal: #0e7490; --graa: #6b7280; --mork: #374151; --skifer: #94a3b8; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Source Serif 4', Georgia, serif; font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
+  header.topp { background: #fff; border-bottom: 1px solid var(--line); padding: 26px 0 18px; }
+  .brod { font-family: 'Source Sans 3', sans-serif; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--g); font-weight: 700; }
+  h1 { font-family: 'Source Sans 3', sans-serif; font-size: 34px; line-height: 1.15; margin: 6px 0 8px; }
+  .ingress { max-width: 900px; color: #2c2c2c; margin: 0 0 12px; font-size: 17px; }
+  .tags span { display: inline-block; font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 600; border-radius: 99px; padding: 3px 11px; margin: 0 6px 6px 0; background: var(--gl); color: var(--g); border: 1px solid var(--gb); }
+  .deler { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; font-family: 'Source Sans 3', sans-serif; }
+  .deler button { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--gb); background: var(--gl); color: var(--g); border-radius: 99px; padding: 5px 14px 5px 5px; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .deler button .n { width: 26px; height: 26px; border-radius: 50%; background: #fff; color: var(--g); display: inline-flex; align-items: center; justify-content: center; font-weight: 700; border: 1px solid var(--gb); font-size: 13px; }
+  .deler button:hover { background: #e1efe6; }
+  .deler button.aktiv { background: var(--g); color: #fff; border-color: var(--g); }
+  .deler button.aktiv .n { border-color: #fff; }
+  main.grid { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 24px; padding: 24px 20px 40px; }
+  main.del { display: none; } main.del.aktiv { display: grid; }
+  @media (max-width: 900px) { main.grid { grid-template-columns: minmax(0, 1fr); } }
+  .panel { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; }
+  .panel h2 { font-family: 'Source Sans 3', sans-serif; font-size: 18px; margin: 0 0 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .panel h2 button { border: 0; background: none; color: var(--g); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: underline; }
+  .gruppe { font-family: 'Source Sans 3', sans-serif; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--g); font-weight: 700; margin: 14px 0 8px; padding-top: 10px; border-top: 1px solid var(--line); }
+  .gruppe.forste { border-top: 0; padding-top: 0; margin-top: 0; }
+  .ctl { margin-bottom: 12px; font-family: 'Source Sans 3', sans-serif; }
+  .ctl label { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; font-weight: 600; color: var(--mut); margin-bottom: 2px; }
+  .ctl label b { color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .ctl input[type=range] { width: 100%; accent-color: var(--g); margin: 0; }
+  .ctl input[type=number], .ctl select { width: 100%; min-width: 0; font: inherit; font-size: 14px; padding: 6px 9px; border: 1px solid #cfcfc7; border-radius: 8px; background: #fff; color: var(--ink); }
+  .ctl .mm { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--mut2); margin-top: -2px; }
+  .ctl.valg { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--mut); margin-top: 6px; }
+  .ctl.valg input { accent-color: var(--g); width: 17px; height: 17px; margin: 0; flex-shrink: 0; }
+  .ctl.valg label { display: inline; }
+  .to { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .tre { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .forhand { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
+  .knapp { font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 600; border: 1px solid var(--gb); background: var(--gl); color: var(--g); border-radius: 7px; padding: 5px 10px; cursor: pointer; text-align: left; }
+  .knapp:hover { background: #e1efe6; }
+  .knapp.aktiv { background: var(--g); color: #fff; border-color: var(--g); }
+  .hjelp { font-size: 12.5px; color: var(--mut2); font-family: 'Source Sans 3', sans-serif; margin: 2px 0 0; }
+  .info { font-family: 'Source Sans 3', sans-serif; font-size: 14px; color: var(--mut); background: #fafaf7; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; margin-bottom: 10px; }
+  .info b { color: var(--ink); }
+  a.lenke { color: var(--g); font-weight: 600; }
+  .teori p { margin: 0 0 10px; font-size: 15px; }
+  .teori h3 { font-family: 'Source Sans 3', sans-serif; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--g); margin: 16px 0 6px; }
+  .teori ul, .teori ol { padding-left: 20px; margin: 0 0 10px; font-size: 15px; }
+  .teori li { margin-bottom: 5px; }
+  details.teori summary { cursor: pointer; font-family: 'Source Sans 3', sans-serif; font-size: 16px; font-weight: 700; color: var(--g); list-style: none; display: flex; justify-content: space-between; }
+  details.teori summary::after { content: '+'; font-size: 20px; line-height: 1; }
+  details.teori[open] summary::after { content: '−'; }
+  details.teori summary::-webkit-details-marker { display: none; }
+  details.teori[open] summary { margin-bottom: 10px; }
+  .f { font-family: 'Source Serif 4', serif; font-style: italic; }
+  .fr { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; margin: 0 3px; line-height: 1.15; }
+  .fr > span:first-child { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .fr > span:last-child { padding: 1px 4px 0; }
+  .formel { background: var(--gl); border-left: 4px solid var(--g); border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 8px 0 12px; font-size: 17px; overflow-x: auto; }
+  .steg { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; }
+  .steg .nr { width: 36px; height: 36px; border-radius: 50%; background: var(--g); color: #fff; font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 17px; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .steg h3 { font-family: 'Source Sans 3', sans-serif; font-size: 17px; margin: 0 0 4px; }
+  .steg .hva { font-size: 14.5px; color: var(--mut); margin: 0 0 8px; }
+  .steg .regn { font-family: 'Source Serif 4', serif; font-size: 17px; background: #fafaf7; border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; overflow-x: auto; white-space: normal; line-height: 1.9; }
+  .steg .regn b { color: var(--g); }
+  .steg .merk { font-family: 'Source Sans 3', sans-serif; font-size: 13.5px; color: var(--mut); margin: 8px 0 0; }
+  .steg .merk.adv { color: #9a3412; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 8px; padding: 6px 10px; }
+  .res { background: var(--g); color: #fff; border-radius: 12px; padding: 18px 22px; margin-bottom: 14px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 20px; align-items: center; }
+  @media (max-width: 600px) { .res { grid-template-columns: 1fr; } }
+  .res .tall { font-family: 'Source Sans 3', sans-serif; font-size: 40px; font-weight: 700; line-height: 1; white-space: nowrap; }
+  .res .tall small { font-size: 15px; font-weight: 600; display: block; opacity: .85; margin-bottom: 4px; white-space: normal; }
+  .res .bidrag { font-family: 'Source Sans 3', sans-serif; font-size: 14px; }
+  .res .bar { display: flex; height: 22px; border-radius: 6px; overflow: hidden; margin: 6px 0 4px; background: rgba(255,255,255,.2); }
+  .res .bar i { display: block; height: 100%; }
+  @media (max-width: 600px) { .res .tall { font-size: 28px; white-space: normal; overflow-wrap: anywhere; } }
+  .graf-boks { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; }
+  .graf-boks h3 { font-family: 'Source Sans 3', sans-serif; font-size: 17px; margin: 0; }
+  .graf-boks .sub { font-family: 'Source Sans 3', sans-serif; font-size: 13.5px; color: var(--mut); margin: 3px 0 8px; }
+  .graf-boks svg { width: 100%; height: auto; display: block; }
+  .graf-boks svg text, .steg svg text, .boks svg text { font-family: 'Source Sans 3', sans-serif; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: 'Source Sans 3', sans-serif; font-size: 13px; color: var(--mut); margin-top: 6px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+  .legend i.l { height: 3px; width: 18px; border-radius: 2px; vertical-align: 3px; }
+  .legend i.ld { height: 0; width: 18px; border-top: 3px dashed; vertical-align: 3px; }
+  .legend i.k { border-radius: 2px; }
+  .to-kol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  @media (max-width: 1100px) { .to-kol { grid-template-columns: 1fr; } }
+  .boks { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px 20px 10px; margin-bottom: 14px; }
+  .boks h3 { font-family: 'Source Sans 3', sans-serif; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--g); margin: 0 0 8px; }
+  .boks.prov { border-top: 4px solid var(--g); }
+  .boks.arb { border-top: 4px solid var(--lilla); } .boks.arb h3 { color: #6d28d9; }
+  .boks p { font-size: 15px; margin: 0 0 8px; }
+  .boks ol, .boks ul { margin: 0 0 8px; padding-left: 22px; font-size: 15px; }
+  .boks li { margin-bottom: 6px; }
+  button.lite { font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 600; border: 1px solid var(--gb); background: var(--gl); color: var(--g); border-radius: 7px; padding: 3px 9px; cursor: pointer; }
+  button.lite:hover { background: #e1efe6; }
+  .tabwrap { overflow-x: auto; margin: 6px 0 4px; }
+  table.tab { border-collapse: collapse; font-family: 'Source Sans 3', sans-serif; font-size: 14px; min-width: 100%; white-space: nowrap; }
+  table.tab th, table.tab td { padding: 5px 10px; text-align: right; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+  table.tab th { font-weight: 700; color: var(--mut); background: #fafaf7; }
+  table.tab th:first-child, table.tab td:first-child { text-align: left; }
+  table.tab tr.hode td { font-weight: 700; color: var(--g); background: var(--gl); text-align: left; }
+  table.tab td.neg { color: var(--rod); }
+  table.tab tr.sum td { font-weight: 700; border-top: 2px solid #cfcfc7; }
+  table.tab tr.diff td { color: var(--mut2); font-style: italic; }
+  .oppg { margin-bottom: 12px; }
+  .oppg .rad { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 4px; }
+  .oppg input[type=text] { font: inherit; font-size: 14px; padding: 5px 9px; border: 1px solid #cfcfc7; border-radius: 8px; width: 140px; min-width: 0; }
+  .oppg .tilbake { font-family: 'Source Sans 3', sans-serif; font-size: 14px; margin-top: 4px; color: var(--mut); }
+  .oppg .tilbake.ok { color: var(--g); font-weight: 600; } .oppg .tilbake.nei { color: var(--rod); font-weight: 600; }
+  .oppg .losning { font-family: 'Source Sans 3', sans-serif; font-size: 14px; color: var(--mut); background: #fafaf7; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; margin-top: 6px; }
+  .oppg label.alt { display: block; font-size: 14.5px; font-family: 'Source Sans 3', sans-serif; margin: 2px 0; cursor: pointer; }
+  .oppg label.alt input { accent-color: var(--g); margin-right: 6px; }
+  .advarsel { background: #fffbea; border: 1px solid #f1e3a4; color: #7a5a06; border-radius: 10px; padding: 10px 14px; font-family: 'Source Sans 3', sans-serif; font-size: 14px; margin-bottom: 12px; display: none; }
+  .stabel { display: flex; height: 30px; border-radius: 6px; overflow: hidden; font-family: 'Source Sans 3', sans-serif; font-size: 12.5px; font-weight: 700; color: #fff; margin: 6px 0 2px; }
+  .stabel i { display: flex; align-items: center; justify-content: center; height: 100%; font-style: normal; overflow: hidden; white-space: nowrap; }
+  .stabel-navn { font-family: 'Source Sans 3', sans-serif; font-size: 13px; color: var(--mut); margin-top: 10px; }
+  footer { font-family: 'Source Sans 3', sans-serif; font-size: 13px; color: var(--mut2); text-align: center; padding: 10px 20px 30px; }
+  @media print {
+    body { background: #fff; font-size: 13px; }
+    .deler, .knapp, button.lite, .oppg input, .oppg .rad { display: none !important; }
+    main.del { display: grid !important; grid-template-columns: 1fr; gap: 12px; padding: 10px 0; page-break-before: always; }
+    .steg, .graf-boks, .boks, .res, .panel { break-inside: avoid; box-shadow: none; }
+    .res { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topp"><div class="wrap">
+  <div class="brod">BUS 220 · Interaktiv modell</div>
+  <h1>Utbytte: hva skjer når selskapet betaler ut?</h1>
+  <p class="ingress">Et utbytte flytter penger fra selskapet til eierne, men skaper ingen verdi i seg selv. Her følger du kapittel 16 i læreboka med tall du kan dra i: kursfallet på ex-dagen, utbytte mot tilbakekjøp, hjemmelaget utbytte og Modigliani og Millers irrelevans, utbyttepolitikk over tid med Lintners utjevning, aksjesplitt, og til slutt skatten som gjør at ulike eiere foretrekker ulik politikk.</p>
+  <div class="tags"><span>Middels</span><span>Ex-dagen</span><span>Tilbakekjøp</span><span>Hjemmelaget utbytte</span><span>Lintner</span><span>Skatt og klientell</span><span>HRWJ kapittel 16</span></div>
+  <nav class="deler" aria-label="Deler">
+    <button data-del="exdag"><span class="n">1</span>Utbyttedagen</button>
+    <button data-del="tilbakekjop"><span class="n">2</span>Utbytte eller tilbakekjøp</button>
+    <button data-del="hjemmelaget"><span class="n">3</span>Hjemmelaget utbytte</button>
+    <button data-del="politikk"><span class="n">4</span>Politikk over tid</button>
+    <button data-del="splitt"><span class="n">5</span>Splitt og aksjeutbytte</button>
+    <button data-del="skatt"><span class="n">6</span>Skatt og klientell</button>
+  </nav>
+</div></header>
+
+<!-- ===================== DEL 1 ===================== -->
+<main class="wrap grid del" id="del-exdag">
+  <aside>
+    <section class="panel">
+      <h2>Selskapet <button data-null="x">Tilbakestill</button></h2>
+      <div class="gruppe forste">Eksempler</div>
+      <div class="forhand">
+        <button class="knapp aktiv" data-pre="x:bekk">Bekk AS (oppgavesett 8)</button>
+        <button class="knapp" data-pre="x:slide">Selskapet på slide 12 og 14</button>
+        <button class="knapp" data-pre="x:hrwj">HRWJ 16.6: ekstrautbytte</button>
+        <button class="knapp" data-pre="x:fly">Flychucker SA (HRWJ 16.14)</button>
+      </div>
+      <div class="gruppe">Markedsverdibalansen</div>
+      <div class="to">
+        <div class="ctl"><label><span>Kontanter</span></label><input type="number" data-k="x.kont" min="0" step="1"></div>
+        <div class="ctl"><label><span>Andre eiendeler</span></label><input type="number" data-k="x.andre" min="0" step="1"></div>
+        <div class="ctl"><label><span>Gjeld</span></label><input type="number" data-k="x.gjeld" min="0" step="1"></div>
+        <div class="ctl"><label><span>Antall aksjer</span></label><input type="number" data-k="x.N" min="1" step="1"></div>
+      </div>
+      <div class="ctl"><label><span>Årsresultat (til EPS og P/E)</span></label><input type="number" data-k="x.ni" min="0" step="1"></div>
+      <div class="gruppe">Utbyttet</div>
+      <div class="ctl"><label><span>Utbytte per aksje</span> <b data-v="x.dps" data-f="n2"></b></label><input type="range" data-k="x.dps" min="0" max="10" step="0.05"><div class="mm"><span>0</span><span id="x-dpsmax"></span></div></div>
+      <div class="ctl"><label><span>Aksjonæren eier (aksjer)</span></label><input type="number" data-k="x.eier" min="1" step="1"></div>
+      <div class="gruppe">Skatt</div>
+      <div class="ctl valg"><input type="checkbox" id="x-skatt" data-c="x.skatt"><label for="x-skatt">Vis kursfallet med skatt (Elton og Gruber)</label></div>
+      <div data-vis="x.skatt" hidden>
+        <div class="ctl"><label><span>Skatt på utbytte (t<sub>P</sub>)</span> <b data-v="x.tp" data-f="pc1"></b></label><input type="range" data-k="x.tp" min="0" max="50" step="0.5"></div>
+        <div class="ctl"><label><span>Effektiv skatt på gevinst (t<sub>G</sub>)</span> <b data-v="x.tg" data-f="pc1"></b></label><input type="range" data-k="x.tg" min="0" max="50" step="0.5"></div>
+      </div>
+      <p class="hjelp">Utbyttet kan ikke overstige kassen her. Utbytte finansiert med ny egenkapital er temaet i del 3.</p>
+    </section>
+    <details class="panel teori">
+      <summary>Teori og formler</summary>
+      <h3>Fire datoer</h3>
+      <p>Styret vedtar utbyttet, aksjen går ex to virkedager før registreringsdatoen, selskapet registrerer eierne, og pengene utbetales. Kjøper du aksjen på ex-dagen eller senere, går utbyttet til forrige eier.</p>
+      <h3>Kursfallet</h3>
+      <div class="formel"><span class="f">P<sub>ex</sub> = P<sub>før</sub> − D</span></div>
+      <p>Uten skatt faller kursen med nøyaktig utbyttet. Aksjonæren er like rik: verdien har flyttet fra aksjen til kontoen. EPS er uendret, så P/E faller.</p>
+      <h3>Med skatt</h3>
+      <div class="formel"><span class="f"><span class="fr"><span>P<sub>før</sub> − P<sub>ex</sub></span><span>D</span></span> = <span class="fr"><span>1 − t<sub>P</sub></span><span>1 − t<sub>G</sub></span></span></span></div>
+      <p>Elton og Gruber: den marginale investoren er indifferent mellom å selge før ex-dagen og skatte av gevinsten, og å selge etter og skatte av utbyttet. Skattes utbytte hardere enn gevinst, faller kursen mindre enn utbyttet. Det er bokas oppgave 16.16.</p>
+    </details>
+  </aside>
+
+  <section>
+    <div class="advarsel" id="x-adv"></div>
+    <div class="steg"><div class="nr">1</div><div>
+      <h3>Før ex-dagen: <span id="x-navn"></span></h3>
+      <p class="hva">Markedsverdien av egenkapitalen er eiendelene minus gjelden. Kursen er egenkapitalen delt på antall aksjer.</p>
+      <div class="regn" id="x-s1"></div>
+    </div></div>
+    <div class="steg"><div class="nr">2</div><div>
+      <h3>Ex-dagen: kassen krymper, kursen faller</h3>
+      <p class="hva">Selskapet skylder nå eierne utbyttet. Det som er igjen av egenkapitalen, deles på like mange aksjer.</p>
+      <div class="tabwrap" id="x-tab"></div>
+      <p class="merk" id="x-s2m"></p>
+    </div></div>
+    <div class="steg"><div class="nr">3</div><div>
+      <h3>Aksjonærens formue</h3>
+      <p class="hva">Aksjer pluss kontanter, før og etter.</p>
+      <div class="tabwrap" id="x-form"></div>
+      <p class="merk" id="x-s3m"></p>
+    </div></div>
+    <div class="res" id="x-res"></div>
+    <div class="graf-boks">
+      <h3>Kursen rundt ex-dagen (HRWJ figur 16.2)</h3>
+      <p class="sub" id="x-sub"></p>
+      <div id="x-graf"></div>
+      <div class="legend"><span><i class="l" style="background:var(--g)"></i>Kurs uten skatt</span><span><i class="ld" style="border-color:var(--rod)"></i>Kurs med skatt</span><span><i style="background:var(--oransje2)"></i>Utbyttet</span></div>
+    </div>
+    <div class="boks prov">
+      <h3>Prøv selv</h3>
+      <ol>
+        <li class="oppg" data-svar="38" data-abs="0.01">Bekk AS har 200 000 aksjer à 40 kr og betaler 2 kr per aksje. Hva er kursen på ex-dagen uten skatt?
+          <div class="rad"><input type="text" inputmode="decimal" placeholder="kr"><button class="lite sjekk">Sjekk</button><button class="lite los">Vis løsning</button></div><div class="tilbake"></div>
+          <div class="losning" hidden>P<sub>ex</sub> = 40 − 2 = 38 kr. En aksjonær med 100 aksjer har 3 800 kr i aksjer og 200 kr i kontanter, til sammen 4 000 kr som før.</div></li>
+        <li class="oppg" data-svar="7.6" data-abs="0.02">Resultatet er 1 mill. kr. Hva er P/E etter utbyttet?
+          <div class="rad"><input type="text" inputmode="decimal" placeholder="P/E"><button class="lite sjekk">Sjekk</button><button class="lite los">Vis løsning</button></div><div class="tilbake"></div>
+          <div class="losning" hidden>EPS = 1 000 000 / 200 000 = 5 kr, uendret. P/E = 38 / 5 = 7,6, mot 8,0 før. Aksjen er ikke billigere, den har bare mindre kontanter bak seg.</div></li>
+        <li>Slå på skatt med 37,84 % på utbytte og 20 % effektiv gevinstskatt. Hvor mye faller kursen nå, og hvorfor? <button class="lite" data-sett='{"x.skatt":true,"x.tp":37.84,"x.tg":20}'>Slå på</button> <button class="lite" data-sett='{"x.skatt":false}'>Slå av</button></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== DEL 2 ===================== -->
+<main class="wrap grid del" id="del-tilbakekjop">
+  <aside>
+    <section class="panel">
+      <h2>Samme selskap, samme beløp</h2>
+      <div class="info" id="t-firma"></div>
+      <div class="forhand">
+        <button class="knapp aktiv" data-pre="x:bekk">Bekk AS</button>
+        <button class="knapp" data-pre="x:slide">Slide 12 og 14</button>
+        <button class="knapp" data-pre="x:hrwj">HRWJ 16.6</button>
+        <button class="knapp" data-pre="x:fly">Flychucker</button>
+      </div>
+      <div class="gruppe">Beløpet som deles ut</div>
+      <div class="ctl"><label><span>Utbytte per aksje, eller samme sum brukt på tilbakekjøp</span> <b data-v="x.dps" data-f="n2"></b></label><input type="range" data-k="x.dps" min="0" max="10" step="0.05"><div class="mm"><span>0</span><span id="t-dpsmax"></span></div></div>
+      <div class="ctl"><label><span>Aksjonæren eier (aksjer)</span></label><input type="number" data-k="x.eier" min="1" step="1"></div>
+      <div class="gruppe">Skatt</div>
+      <div class="ctl valg"><input type="checkbox" id="t-skatt" data-c="x.skatt2"><label for="t-skatt">Regn med skatt</label></div>
+      <div data-vis="x.skatt2" hidden>
+        <div class="ctl"><label><span>Skatt på utbytte</span> <b data-v="x.tp" data-f="pc1"></b></label><input type="range" data-k="x.tp" min="0" max="50" step="0.5"></div>
+        <div class="ctl"><label><span>Skatt på gevinst</span> <b data-v="x.tg" data-f="pc1"></b></label><input type="range" data-k="x.tg" min="0" max="50" step="0.5"></div>
+        <div class="ctl"><label><span>Aksjonærens inngangsverdi per aksje</span></label><input type="number" data-k="x.inng" min="0" step="1"></div>
+      </div>
+      <p class="hjelp">Balansen endres i del 1. Tilbakekjøpet skjer til markedskurs.</p>
+    </section>
+    <details class="panel teori">
+      <summary>Teori og formler</summary>
+      <h3>To måter å betale ut samme sum</h3>
+      <p>Utbytte: alle aksjonærer får kontanter, antall aksjer er uendret, kursen faller med utbyttet. Tilbakekjøp: selskapet kjøper aksjer til markedskurs, antall aksjer faller, kursen er uendret.</p>
+      <div class="formel"><span class="f">Tilbakekjøpte aksjer = <span class="fr"><span>Beløp</span><span>P</span></span> &nbsp;&nbsp; P<sub>etter</sub> = <span class="fr"><span>E − Beløp</span><span>N − Beløp/P</span></span> = P</span></div>
+      <h3>EPS stiger, P/E gjør det ikke</h3>
+      <p>Med færre aksjer stiger EPS mekanisk. Men P/E blir nøyaktig det samme som etter et utbytte, så aksjen er ikke blitt billigere. Det er bokas poeng om at tilbakekjøp ofte selges inn på EPS-effekten.</p>
+      <h3>Uten skatt er det samme sak</h3>
+      <p>En aksjonær som vil ha kontanter, selger andelen sin i tilbakekjøpet og står igjen nøyaktig som etter et utbytte. En som ikke vil, beholder aksjene. Tilbakekjøp er et utbytte du må be om.</p>
+      <h3>Med skatt</h3>
+      <p>Utbytte skattes hos alle med en gang. Ved tilbakekjøp skattes bare de som selger, og bare gevinsten, ikke hele beløpet. De som beholder, utsetter skatten. Derfor vokser tilbakekjøp i de fleste land.</p>
+    </details>
+  </aside>
+
+  <section>
+    <div class="advarsel" id="t-adv"></div>
+    <div class="steg"><div class="nr">1</div><div>
+      <h3>Selskapet etter utbetalingen</h3>
+      <p class="hva">Samme sum ut, to ulike regnskap.</p>
+      <div class="tabwrap" id="t-tab"></div>
+      <p class="merk" id="t-s1m"></p>
+    </div></div>
+    <div class="steg"><div class="nr">2</div><div>
+      <h3>Aksjonæren: tre valg, samme formue</h3>
+      <p class="hva">Få utbytte, beholde aksjene ved tilbakekjøp, eller selge sin andel i tilbakekjøpet.</p>
+      <div class="tabwrap" id="t-form"></div>
+      <p class="merk" id="t-s2m"></p>
+    </div></div>
+    <div class="res" id="t-res"></div>
+    <div class="graf-boks">
+      <h3>Formuen fordelt på aksjer, kontanter og skatt</h3>
+      <p class="sub" id="t-sub"></p>
+      <div id="t-graf"></div>
+      <div class="legend"><span><i class="k" style="background:var(--rod)"></i>Aksjer</span><span><i class="k" style="background:var(--oransje2)"></i>Kontanter</span><span><i class="k" style="background:var(--mork)"></i>Skatt</span></div>
+    </div>
+    <div class="boks prov">
+      <h3>Prøv selv</h3>
+      <ol>
+        <li class="oppg" data-svar="10000" data-tol="0.001">Bekk AS bruker 400 000 kr på tilbakekjøp til 40 kr. Hvor mange aksjer kjøpes tilbake?
+          <div class="rad"><input type="text" inputmode="decimal" placeholder="aksjer"><button class="lite sjekk">Sjekk</button><button class="lite los">Vis løsning</button></div><div class="tilbake"></div>
+          <div class="losning" hidden>400 000 / 40 = 10 000 aksjer. 190 000 blir igjen, og kursen er 7 600 000 / 190 000 = 40 kr, uendret.</div></li>
+        <li class="oppg" data-svar="5.26" data-abs="0.011">Hva blir EPS etter tilbakekjøpet, når resultatet er 1 mill. kr?
+          <div class="rad"><input type="text" inputmode="decimal" placeholder="kr"><button class="lite sjekk">Sjekk</button><button class="lite los">Vis løsning</button></div><div class="tilbake"></div>
+          <div class="losning" hidden>1 000 000 / 190 000 = 5,26 kr, opp fra 5,00. Men P/E = 40 / 5,26 = 7,6, det samme som etter utbyttet.</div></li>
+        <li>Slå på skatt. Hvem kommer best ut: den som får utbytte, eller den som beholder aksjene i et tilbakekjøp? <button class="lite" data-sett='{"x.skatt2":true}'>Skatt på</button> <button class="lite" data-sett='{"x.skatt2":false}'>Skatt av</button></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== DEL 3 ===================== -->
+<main class="wrap grid del" id="del-hjemmelaget">
+  <aside>
+    <section class="panel">
+      <h2>To perioder <button data-null="b">Tilbakestill</button></h2>
+      <div class="gruppe forste">Eksempler</div>
+      <div class="forhand">
+        <button class="knapp aktiv" data-pre="b:bristol">Bristol plc (HRWJ 16.2)</button>
+        <button class="knapp" data-pre="b:avondale">Avondale (HRWJ 16.12)</button>
+      </div>
+      <div class="gruppe">Selskapet</div>
+      <div class="to">
+        <div class="ctl"><label><span>Kontantstrøm år 1</span></label><input type="number" data-k="b.cf1" min="0" step="100"></div>
+        <div class="ctl"><label><span>Kontantstrøm år 2</span></label><input type="number" data-k="b.cf2" min="0" step="100"></div>
+        <div class="ctl"><label><span>Antall aksjer</span></label><input type="number" data-k="b.N" min="1" step="1"></div>
+        <div class="ctl"><label><span>Avkastningskrav</span> <b data-v="b.r" data-f="pc1"></b></label><input type="range" data-k="b.r" min="1" max="25" step="0.5"></div>
+      </div>
+      <div class="gruppe">Selskapets utbyttepolitikk</div>
+      <div class="ctl"><label><span>Utbytte per aksje år 1</span> <b data-v="b.d1" data-f="n2"></b></label><input type="range" data-k="b.d1" min="0" max="200" step="0.5"><div class="mm"><span>0</span><span id="b-d1max"></span></div></div>
+      <p class="hjelp">Mer enn kontantstrømmen i år 1 finansieres med ny egenkapital. Mindre settes i banken til avkastningskravet.</p>
+      <div class="gruppe">Investoren</div>
+      <div class="ctl"><label><span>Ønsket kontantstrøm per aksje år 1</span> <b data-v="b.onsk" data-f="n2"></b></label><input type="range" data-k="b.onsk" min="0" max="200" step="0.5"></div>
+      <div class="gruppe">Per og Lise i Bekk AS</div>
+      <div class="ctl"><label><span>Ønsket utbytte per aksje</span> <b data-v="b.bekk" data-f="n2"></b></label><input type="range" data-k="b.bekk" min="0" max="10" step="0.5"><div class="mm"><span>0 (Lise)</span><span>Bekk betaler 2</span></div></div>
+    </section>
+    <details class="panel teori">
+      <summary>Teori og formler</summary>
+      <h3>Utbyttepolitikk er timing</h3>
+      <p>Alle er enige om at utbytte er bra. Spørsmålet er om selskapet skal betale ut nå eller investere og betale ut senere. Det er dette som er utbyttepolitikk.</p>
+      <div class="formel"><span class="f">P<sub>0</sub> = <span class="fr"><span>D<sub>1</sub></span><span>1 + r</span></span> + <span class="fr"><span>D<sub>2</sub></span><span>(1 + r)²</span></span></span></div>
+      <h3>Hvorfor den er irrelevant</h3>
+      <p>Betaler selskapet mer i år 1 enn det tjener, må det hente penger fra nye eiere, som krever avkastningskravet sitt i år 2. Det de gamle eierne får ekstra i år 1, mister de med renter i år 2. Nåverdien er uendret for alle valg av D<sub>1</sub>.</p>
+      <h3>Hjemmelaget utbytte</h3>
+      <p>Vil investoren ha mer kontanter nå enn selskapet betaler, selger hun aksjer. Vil hun ha mindre, reinvesterer hun utbyttet. Hun får nøyaktig den kontantstrømmen hun ønsker, uansett politikk. Derfor kan ingen politikk være bedre enn en annen.</p>
+      <h3>Bokas test</h3>
+      <p>Er utbytte irrelevant? Nei, høyere utbytte ett år med alt annet likt gir høyere verdi. Er utbyttepolitikk irrelevant? Ja, i en verden uten skatt og kostnader, fordi politikken bare bytter utbytte ett år mot utbytte et annet år.</p>
+    </details>
+  </aside>
+
+  <section>
+    <div class="advarsel" id="b-adv"></div>
+    <div class="steg"><div class="nr">1</div><div>
+      <h3>Dagens politikk: utbytte lik kontantstrømmen</h3>
+      <p class="hva">Verdien av aksjen er nåverdien av utbyttene.</p>
+      <div class="regn" id="b-s1"></div>
+    </div></div>
+    <div class="steg"><div class="nr">2</div><div>
+      <h3>Alternativ politikk: velg utbyttet i år 1</h3>
+      <p class="hva">Differansen mot kontantstrømmen dekkes av nye eiere eller settes i banken. Begge krever avkastningskravet.</p>
+      <div class="regn" id="b-s2"></div>
+      <p class="merk" id="b-s2m"></p>
+    </div></div>
+    <div class="steg"><div class="nr">3</div><div>
+      <h3>Investoren lager sitt eget utbytte</h3>
+      <p class="hva">Hun får selskapets D<sub>1</sub>, men vil ha noe annet. Hun selger eller reinvesterer differansen til avkastningskravet.</p>
+      <div class="tabwrap" id="b-tab"></div>
+      <p class="merk" id="b-s3m"></p>
+    </div></div>
+    <div class="res" id="b-res"></div>
+    <div class="graf-boks">
+      <h3>Alle politikker ligger på samme linje</h3>
+      <p class="sub" id="b-sub"></p>
+      <div id="b-graf"></div>
+      <div class="legend"><span><i class="l" style="background:var(--g)"></i>Kombinasjoner av D<sub>1</sub> og D<sub>2</sub> med samme nåverdi</span><span><i style="background:var(--rod)"></i>Selskapets valg</span><span><i style="background:var(--blaa)"></i>Investorens ønske</span></div>
+    </div>
+    <div class="graf-boks">
+      <h3>Per og Lise i Bekk AS (oppgave 11)</h3>
+      <p class="sub">Bekk betaler 2 kr per aksje, kursen går fra 40 til 38 kr. Per vil ha 4 kr, Lise vil ha 0. Begge ordner det selv. Velg ønsket utbytte i panelet til venstre.</p>
+      <div class="tabwrap" id="b-bekk"></div>
+    </div>
+    <div class="boks prov">
+      <h3>Prøv selv</h3>
+      <ol>
+        <li class="oppg" data-svar="89" data-abs="0.1">Bristol plc: kontantstrøm 10 000 i to år, 100 aksjer, 10 % avkastningskrav. Selskapet betaler 110 per aksje i år 1. Hva blir utbyttet per aksje i år 2?
+          <div class="rad"><input type="text" inputmode="decimal" placeholder="£"><button class="lite sjekk">Sjekk</button><button class="lite los">Vis løsning</button></div><div class="tilbake"></div>
+          <div class="losning" hidden>Selskapet mangler 1 000 i år 1 og henter dem fra nye eiere, som krever 1 100 i år 2. Til de gamle eierne: (10 000 − 1 100) / 100 = 89. Nåverdien er 110/1,1 + 89/1,21 = 173,55, som før.</div></li>
+        <li class="oppg" data-svar="5.263" data-tol="0.005">Per eier 100 aksjer i Bekk AS, som betaler 2 kr. Han vil ha 4 kr per aksje. Hvor mange aksjer må han selge på ex-dagen?
+          <div class="rad"><input type="text" inputmode="decimal" placeholder="aksjer"><button class="lite sjekk">Sjekk</button><button class="lite los">Vis løsning</button></div><div class="tilbake"></div>
+          <div class="losning" hidden>Han mangler 200 kr og selger 200 / 38 = 5,263 aksjer. Da har han 94,737 × 38 = 3 600 kr i aksjer og 400 kr i kontanter, nøyaktig som om Bekk hadde betalt 4 kr.</div></li>
+        <li>Sett ønsket kontantstrøm lik 0 i år 1. Hvor mye får investoren i år 2, og hvorfor er nåverdien fortsatt den samme? <button class="lite" data-sett='{"b.onsk":0}'>Ønske 0</button> <button class="lite" data-sett='{"b.onsk":100}'>Ønske 100</button></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== DEL 4 ===================== -->
+<main class="wrap grid del" id="del-politikk">
+  <aside>
+    <section class="panel">
+      <h2>Resultat og politikk <button data-null="l">Tilbakestill</button></h2>
+      <div class="gruppe forste">Eksempler</div>
+      <div class="forhand">
+        <button class="knapp aktiv" data-pre="l:std">Simulert selskap</button>
+        <button class="knapp" data-pre="l:equinor">Equinor 2018 til 2023 (slide 34)</button>
+      </div>
+      <div class="gruppe">Resultat per aksje</div>
+      <div data-vis="l.sim">
+        <div class="to">
+          <div class="ctl"><label><span>EPS år 0</span></label><input type="number" data-k="l.eps0" min="0.1" step="1"></div>
+          <div class="ctl"><label><span>Antall år</span></label><input type="number" data-k="l.aar" min="4" max="30" step="1"></div>
+        </div>
+        <div class="ctl"><label><span>Trendvekst i EPS</span> <b data-v="l.vekst" data-f="pc1"></b></label><input type="range" data-k="l.vekst" min="-5" max="15" step="0.5"></div>
+        <div class="ctl"><label><span>Svingninger i EPS</span> <b data-v="l.vol" data-f="pc0"></b></label><input type="range" data-k="l.vol" min="0" max="80" step="5"></div>
+        <div class="ctl"><label><span>Tilfeldig bane nr.</span></label><input type="number" data-k="l.seed" min="1" max="999" step="1"></div>
+      </div>
+      <p class="hjelp" id="l-hjelp"></p>
+      <div class="gruppe">Tre politikker</div>
+      <div class="ctl"><label><span>Målsatt utdelingsforhold (b)</span> <b data-v="l.b" data-f="pc0"></b></label><input type="range" data-k="l.b" min="0" max="100" step="5"></div>
+      <div class="ctl"><label><span>Lintners justeringsfart (a)</span> <b data-v="l.a" data-f="pc0"></b></label><input type="range" data-k="l.a" min="5" max="100" step="5"><div class="mm"><span>treg</span><span>full tilpasning</span></div></div>
+      <div class="ctl"><label><span>Utbytte år 0 (start for Lintner)</span></label><input type="number" data-k="l.d0" min="0" step="0.1"></div>
+      <div class="ctl"><label><span>Residual: investering per aksje hvert år</span></label><input type="number" data-k="l.inv" min="0" step="0.5"></div>
+      <div class="ctl"><label><span>Residual: målsatt gjeldsgrad D/E</span> <b data-v="l.de" data-f="x2"></b></label><input type="range" data-k="l.de" min="0" max="2" step="0.1"></div>
+    </section>
+    <details class="panel teori">
+      <summary>Teori og formler</summary>
+      <h3>Konstant utdelingsforhold</h3>
+      <div class="formel"><span class="f">D<sub>t</sub> = b · EPS<sub>t</sub></span></div>
+      <p>Enkelt, men utbyttet svinger like mye som resultatet, og kuttes hver gang resultatet faller.</p>
+      <h3>Residualpolitikk</h3>
+      <div class="formel"><span class="f">D<sub>t</sub> = EPS<sub>t</sub> − <span class="fr"><span>Investering</span><span>1 + D/E</span></span></span></div>
+      <p>Først finansieres investeringene med egenkapitalandelen som holder gjeldsgraden fast. Resten deles ut. Utbyttet blir det som er til overs, og svinger enda mer.</p>
+      <h3>Lintners utjevning</h3>
+      <div class="formel"><span class="f">D<sub>t</sub> = D<sub>t−1</sub> + a · (b · EPS<sub>t</sub> − D<sub>t−1</sub>)</span></div>
+      <p>Lintner intervjuet ledere i 1956 og fant at de har et målsatt utdelingsforhold, justerer utbyttet sakte mot målet, og kutter nødig. Resultatet er at utbyttet henger etter resultatet og svinger langt mindre. Brav med flere fant det samme i 2005: 94 prosent av lederne prøver å unngå å kutte.</p>
+      <h3>Hvorfor det er rasjonelt</h3>
+      <p>Et kutt tolkes som et signal om varige problemer, og kursen faller. Derfor økes utbyttet bare når ledelsen tror det nye nivået kan holdes. Det er informasjonsinnholdet i utbyttet.</p>
+    </details>
+  </aside>
+
+  <section>
+    <div class="advarsel" id="l-adv"></div>
+    <div class="graf-boks">
+      <h3>Resultat og utbytte per aksje over tid</h3>
+      <p class="sub" id="l-sub"></p>
+      <div id="l-graf"></div>
+      <div class="legend"><span><i class="l" style="background:var(--graa)"></i>EPS</span><span><i class="ld" style="border-color:var(--oransje2)"></i>Konstant andel</span><span><i class="ld" style="border-color:var(--blaa)"></i>Residual</span><span><i class="l" style="background:var(--g)"></i>Lintner</span><span><i style="background:var(--rod)"></i>Faktisk utbytte</span></div>
+    </div>
+    <div class="steg"><div class="nr">1</div><div>
+      <h3>Siste år med tall</h3>
+      <p class="hva">De tre formlene med årets tall.</p>
+      <div class="regn" id="l-s1"></div>
+    </div></div>
+    <div class="steg"><div class="nr">2</div><div>
+      <h3>Hvor stabilt er utbyttet?</h3>
+      <p class="hva">Antall kutt, største kutt og gjennomsnittlig utdelingsforhold for hver politikk.</p>
+      <div class="tabwrap" id="l-tab"></div>
+      <p class="merk" id="l-s2m"></p>
+    </div></div>
+    <div class="res" id="l-res"></div>
+    <div class="boks prov">
+      <h3>Prøv selv</h3>
+      <ol>
+        <li class="oppg" data-svar="6.5" data-abs="0.02">Utbyttet i fjor var 5 kr. I år blir EPS 20 kr. Målsatt utdelingsforhold er 50 % og justeringsfarten 30 %. Hva blir årets utbytte etter Lintner?
+          <div class="rad"><input type="text" inputmode="decimal" placeholder="kr"><button class="lite sjekk">Sjekk</button><button class="lite los">Vis løsning</button></div><div class="tilbake"></div>
+          <div class="losning" hidden>Målet er 0,5 × 20 = 10 kr. Utbyttet justeres 30 % av veien: 5 + 0,3 × (10 − 5) = 6,5 kr. Et konstant utdelingsforhold ville gitt 10 kr med en gang.</div></li>
+        <li class="oppg" data-riktig="1" data-hvorfor="Residualpolitikken deler ut det som er igjen etter investeringene, så utbyttet svinger mer enn resultatet og kuttes oftest." data-hint="Hvilken politikk lar investeringsbudsjettet gå foran?">Hvilken politikk gir flest kutt når resultatet svinger?
+          <label class="alt"><input type="radio" name="l-mc1" value="0">Konstant utdelingsforhold</label><label class="alt"><input type="radio" name="l-mc1" value="1">Residualpolitikk</label><label class="alt"><input type="radio" name="l-mc1" value="2">Lintners utjevning</label>
+          <div class="rad"><button class="lite sjekk">Sjekk</button></div><div class="tilbake"></div></li>
+        <li>Velg Equinor og se hvordan det faktiske utbyttet ble holdt oppe gjennom 2019 og 2020. Hvilken av de tre politikkene ligner mest? <button class="lite" data-pre="l:equinor">Equinor</button></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== DEL 5 ===================== -->
+<main class="wrap grid del" id="del-splitt">
+  <aside>
+    <section class="panel">
+      <h2>Aksjen <button data-null="s">Tilbakestill</button></h2>
+      <div class="gruppe forste">Eksempler</div>
+      <div class="forhand">
+        <button class="knapp aktiv" data-pre="s:bekk20">Bekk AS: 20 % aksjeutbytte</button>
+        <button class="knapp" data-pre="s:bekk2">Bekk AS: splitt 2 for 1</button>
+        <button class="knapp" data-pre="s:eurasion">Eurasion (HRWJ selvtest 16.2)</button>
+        <button class="knapp" data-pre="s:apple">Apple 2020: splitt 4 for 1</button>
+      </div>
+      <div class="gruppe">Før</div>
+      <div class="to">
+        <div class="ctl"><label><span>Antall aksjer</span></label><input type="number" data-k="s.N" min="1" step="1"></div>
+        <div class="ctl"><label><span>Kurs</span></label><input type="number" data-k="s.P" min="0.01" step="1"></div>
+      </div>
+      <div class="ctl"><label><span>Aksjonæren eier (aksjer)</span></label><input type="number" data-k="s.eier" min="1" step="1"></div>
+      <div class="gruppe">Tiltaket</div>
+      <div class="ctl valg"><input type="radio" name="s-type" id="s-t1" data-r="s.type" value="splitt"><label for="s-t1">Aksjesplitt, nye aksjer per gammel</label></div>
+      <div class="ctl valg"><input type="radio" name="s-type" id="s-t2" data-r="s.type" value="utbytte"><label for="s-t2">Aksjeutbytte i prosent</label></div>
+      <div class="ctl valg"><input type="radio" name="s-type" id="s-t3" data-r="s.type" value="omvendt"><label for="s-t3">Omvendt splitt, gamle aksjer per ny</label></div>
+      <div class="ctl"><label><span id="s-lab">Forhold</span> <b data-v="s.k" data-f="x2"></b></label><input type="range" data-k="s.k" min="1" max="10" step="0.5"></div>
+      <div class="ctl"><label><span>Aksjeutbytte</span> <b data-v="s.pst" data-f="pc0"></b></label><input type="range" data-k="s.pst" min="1" max="100" step="1"></div>
+    </section>
+    <details class="panel teori">
+      <summary>Teori og formler</summary>
+      <h3>Papirtransaksjoner</h3>
+      <p>Et aksjeutbytte gir eierne flere aksjer i stedet for kontanter. En splitt deler hver aksje i flere. Begge øker antall aksjer uten at egenkapitalen endres, så kursen faller tilsvarende.</p>
+      <div class="formel"><span class="f">P<sub>etter</sub> = P<sub>før</sub> · <span class="fr"><span>gamle aksjer</span><span>nye aksjer</span></span></span></div>
+      <p>Aksjeutbytte oppgis i prosent, splitt som et forhold. Under IFRS behandles aksjeutbytte som et kontantutbytte som straks brukes til å kjøpe aksjer. Omvendt splitt går motsatt vei og brukes for å løfte kursen.</p>
+      <h3>Hvorfor gjøre det?</h3>
+      <p>Argumentet er et populært kursintervall: billigere aksjer skal være lettere å handle for småsparere. Boka er skeptisk. Institusjonene som står for det meste av handelen bryr seg ikke, og Lindt og Berkshire Hathaway handles til hundretusener uten problemer. Likviditeten ser ikke ut til å øke etter splitter.</p>
+    </details>
+  </aside>
+
+  <section>
+    <div class="steg"><div class="nr">1</div><div>
+      <h3 id="s-tittel"></h3>
+      <p class="hva">Antall aksjer, kurs og formue før og etter.</p>
+      <div class="regn" id="s-s1"></div>
+      <div class="tabwrap" id="s-tab"></div>
+    </div></div>
+    <div class="res" id="s-res"></div>
+    <div class="graf-boks">
+      <h3>Samme verdi, flere biter</h3>
+      <p class="sub" id="s-sub"></p>
+      <div id="s-graf"></div>
+    </div>
+    <div class="boks prov">
+      <h3>Prøv selv</h3>
+      <ol>
+        <li class="oppg" data-svar="33.33" data-abs="0.02">Bekk AS har 200 000 aksjer à 40 kr og gir 20 % aksjeutbytte. Hva blir kursen?
+          <div class="rad"><input type="text" inputmode="decimal" placeholder="kr"><button class="lite sjekk">Sjekk</button><button class="lite los">Vis løsning</button></div><div class="tilbake"></div>
+          <div class="losning" hidden>240 000 aksjer deler 8 mill. kr: 33,33 kr. En aksjonær med 100 aksjer har 120 aksjer à 33,33 kr = 4 000 kr, som før.</div></li>
+        <li class="oppg" data-svar="7.74" data-abs="0.02">Eurasion har 2,4 mill. aksjer à 5,16 £ og gjør en omvendt splitt 2 for 3. Hva blir kursen?
+          <div class="rad"><input type="text" inputmode="decimal" placeholder="£"><button class="lite sjekk">Sjekk</button><button class="lite los">Vis løsning</button></div><div class="tilbake"></div>
+          <div class="losning" hidden>Tre gamle aksjer blir to nye: 5,16 × 3/2 = 7,74 £, og 1,6 mill. aksjer er igjen. Bokas selvtest 16.2 d.</div></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== DEL 6 ===================== -->
+<main class="wrap grid del" id="del-skatt">
+  <aside>
+    <section class="panel">
+      <h2>Skattesatser <button data-null="k">Tilbakestill</button></h2>
+      <div class="info">Stilisert modell med norske regler som utgangspunkt. Satsene kan endres. Alt regnes per aksje.</div>
+      <div class="gruppe forste">Aksjen og utbetalingen</div>
+      <div class="to">
+        <div class="ctl"><label><span>Kurs før utbetaling</span></label><input type="number" data-k="k.P" min="1" step="1"></div>
+        <div class="ctl"><label><span>Beløp per aksje som deles ut</span></label><input type="number" data-k="k.D" min="0" step="0.5"></div>
+      </div>
+      <div class="ctl"><label><span>Aksjonærens inngangsverdi per aksje</span></label><input type="number" data-k="k.inng" min="0" step="1"></div>
+      <div class="gruppe">Personlig aksjonær</div>
+      <div class="ctl"><label><span>Skatt på utbytte og gevinst</span> <b data-v="k.tu" data-f="pc2"></b></label><input type="range" data-k="k.tu" min="0" max="50" step="0.01"><div class="mm"><span>0 %</span><span>50 %</span></div></div>
+      <div class="ctl"><label><span>Skjermingsrente</span> <b data-v="k.skjerm" data-f="pc1"></b></label><input type="range" data-k="k.skjerm" min="0" max="8" step="0.1"></div>
+      <div class="gruppe">Selskapsaksjonær (fritaksmetoden)</div>
+      <div class="ctl"><label><span>Effektiv skatt på utbytte</span> <b data-v="k.fritak" data-f="pc2"></b></label><input type="range" data-k="k.fritak" min="0" max="5" step="0.01"></div>
+      <p class="hjelp">3 % av utbyttet inntektsføres og skattes med 22 %: 0,66 %. Gevinster er skattefrie.</p>
+      <div class="gruppe">Utsettelse</div>
+      <div class="to">
+        <div class="ctl"><label><span>År før aksjen selges</span></label><input type="number" data-k="k.H" min="1" max="40" step="1"></div>
+        <div class="ctl"><label><span>Avkastning</span> <b data-v="k.r" data-f="pc1"></b></label><input type="range" data-k="k.r" min="0" max="15" step="0.5"></div>
+      </div>
+    </section>
+    <details class="panel teori">
+      <summary>Teori og formler</summary>
+      <h3>Norsk skatt på eieravkastning</h3>
+      <p>Personlige aksjonærer skatter 22 prosent av et oppjustert beløp, 1,72 ganger utbyttet eller gevinsten, det vil si 37,84 prosent. Skjermingsfradraget gjør en risikofri avkastning på inngangsverdien skattefri. Selskaper som eier aksjer er omfattet av fritaksmetoden: gevinster er skattefrie, og bare 3 prosent av utbyttet inntektsføres. Pensjonskasser og fond betaler ikke skatt på avkastningen.</p>
+      <h3>Hvorfor klientell?</h3>
+      <p>Når utbytte og gevinst skattes likt, er den viktigste forskjellen for personlige eiere at gevinstskatten kan utsettes til aksjen selges. Jo lenger utsettelse, desto lavere nåverdi av skatten. Et holdingselskap er nær indifferent, og et fond er helt indifferent. Ulike eiere foretrekker ulik politikk, og selskapene tiltrekker seg eierne som passer. Det er klientelleffekten.</p>
+      <h3>Informasjonsinnhold</h3>
+      <p>Kursen reagerer på uventede utbytteendringer fordi de sier noe om ledelsens forventninger, ikke fordi selve utbetalingen skaper verdi. Økning tolkes som gode nyheter, kutt som dårlige. Begge effektene får utbyttepolitikk til å se viktig ut selv om MM sier den ikke er det.</p>
+    </details>
+  </aside>
+
+  <section>
+    <div class="steg"><div class="nr">1</div><div>
+      <h3>Hva sitter eieren igjen med per aksje?</h3>
+      <p class="hva">Samme utbetaling fra selskapet, tre eiere, tre kanaler. Nåverdi etter skatt.</p>
+      <div class="tabwrap" id="k-tab"></div>
+      <p class="merk" id="k-s1m"></p>
+    </div></div>
+    <div class="res" id="k-res"></div>
+    <div class="graf-boks">
+      <h3>Etter skatt, per aksje</h3>
+      <p class="sub" id="k-sub"></p>
+      <div id="k-graf"></div>
+      <div class="legend"><span><i class="k" style="background:var(--oransje2)"></i>Utbytte nå</span><span><i class="k" style="background:var(--g)"></i>Tilbakekjøp, selger nå</span><span><i class="k" style="background:var(--teal)"></i>Tilbakekjøp, beholder og selger senere</span></div>
+    </div>
+    <div class="boks prov">
+      <h3>Prøv selv</h3>
+      <ol>
+        <li class="oppg" data-riktig="1" data-hvorfor="Kursen reagerer på informasjonen om fremtidige kontantstrømmer, ikke på at pengene byttet form. Det er informasjonsinnholdet i utbyttet." data-hint="Hva vet ledelsen som markedet ikke vet?">Equinor kuttet utbyttet med 67 % i april 2020, og aksjen falt ekstra. Hva forteller det?
+          <label class="alt"><input type="radio" name="k-mc1" value="0">At utbyttepolitikk skaper verdi, i strid med MM</label><label class="alt"><input type="radio" name="k-mc1" value="1">At kuttet avslørte ledelsens syn på fremtiden</label><label class="alt"><input type="radio" name="k-mc1" value="2">At investorene foretrekker gevinst fremfor utbytte</label>
+          <div class="rad"><button class="lite sjekk">Sjekk</button></div><div class="tilbake"></div></li>
+        <li class="oppg" data-riktig="2" data-hvorfor="Så lenge det finnes nok selskaper med høyt utbytte til dem som vil ha det, er klientellene mette. Et bytte av politikk bytter bare ut eierne." data-hint="Hva skjer hvis alle klientellene allerede er fornøyde?">Mange investorer liker høyt utbytte. Kan et selskap derfor øke kursen ved å øke utdelingsforholdet?
+          <label class="alt"><input type="radio" name="k-mc2" value="0">Ja, alltid</label><label class="alt"><input type="radio" name="k-mc2" value="1">Ja, hvis utbyttet skattes lavere enn gevinst</label><label class="alt"><input type="radio" name="k-mc2" value="2">Nei, ikke så lenge klientellene er dekket</label>
+          <div class="rad"><button class="lite sjekk">Sjekk</button></div><div class="tilbake"></div></li>
+        <li>Sett år før salg til 1 og så til 30. Hvor mye er utsettelsen verdt for den personlige aksjonæren? <button class="lite" data-sett='{"k.H":1}'>1 år</button> <button class="lite" data-sett='{"k.H":30}'>30 år</button> <button class="lite" data-sett='{"k.H":10}'>10 år</button></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer>BUS 220 Finansiering og investering, NMBU · Interaktiv modell for utbytte · Pensum: Hillier m.fl., <em>Fundamentals of Corporate Finance</em>, kapittel 16 · Alle beregninger skjer i nettleseren, filen kan åpnes uten nett</footer>
+
+<script>
+(function () {
+  'use strict';
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  const nf = (x, d = 1) => isFinite(x) ? new Intl.NumberFormat('nb-NO', { minimumFractionDigits: d, maximumFractionDigits: d }).format(x).replace(/-/g, '−') : '—';
+  const pc = (x, d = 2) => isFinite(x) ? nf(x, d) + ' %' : '—';
+  const auto = x => Math.abs(x) >= 1000 ? 0 : Math.abs(x) >= 100 ? 1 : 2;
+  const kr = (x, e, d) => isFinite(x) ? nf(x, d === undefined ? auto(x) : d) + (e ? ' ' + e : '') : '—';
+  const get = (o, p) => p.split('.').reduce((a, k) => a[k], o);
+  const set = (o, p, v) => { const ks = p.split('.'), l = ks.pop(); ks.reduce((a, k) => a[k], o)[l] = v; };
+  const neg = s => /^−/.test(s) ? ' class="neg"' : '';
+  const rad = (navn, celler, cls) => `<tr${cls ? ` class="${cls}"` : ''}><td>${navn}</td>${celler.map(c => `<td${neg(String(c))}>${c}</td>`).join('')}</tr>`;
+  const bel = (x, g, d) => kr(x, (g.mill ? 'mill. ' : '') + g.val, d !== undefined ? d : Math.abs(x) < 1e-9 ? 0 : g.mill ? (Math.abs(x - Math.round(x)) < 1e-6 ? 0 : 1) : auto(x));          // beløp i selskapet
+  const per = (x, g, d) => kr(x, g.val, d === undefined ? 2 : d);               // per aksje
+  const ant = (n, g, d) => nf(n, d === undefined ? (g.mill ? 2 : 0) : d) + (g.mill ? ' mill.' : '') + ' aksjer';
+
+  /* ---------- forhåndsvalg og tilstand ---------- */
+  const PRE = {
+    x: {
+      bekk: { navn: 'Bekk AS (oppgavesett 8)', kont: 400000, andre: 7600000, gjeld: 0, N: 200000, ni: 1000000, dps: 2, eier: 100, inng: 30, val: 'kr', mill: false },
+      slide: { navn: 'Selskapet på slide 12 og 14', kont: 50, andre: 450, gjeld: 200, N: 10, ni: 40, dps: 5, eier: 10, inng: 20, val: 'kr', mill: true },
+      hrwj: { navn: 'HRWJ 16.6: ekstrautbytte eller tilbakekjøp', kont: 300000, andre: 700000, gjeld: 0, N: 100000, ni: 49000, dps: 3, eier: 100, inng: 6, val: '£', mill: false },
+      fly: { navn: 'Flychucker SA (HRWJ 16.14)', kont: 5000, andre: 3000, gjeld: 0, N: 200, ni: 190, dps: 25, eier: 10, inng: 30, val: '€', mill: false }
+    },
+    b: {
+      bristol: { navn: 'Bristol plc', cf1: 10000, cf2: 10000, N: 100, r: 10, d1: 110, onsk: 100, val: '£' },
+      avondale: { navn: 'Avondale Property plc', cf1: 500, cf2: 1500, N: 2000, r: 18, d1: 0.25, onsk: 0.48, val: '£' }
+    },
+    l: {
+      std: { navn: 'Simulert selskap', sim: true, eps0: 10, aar: 12, vekst: 3, vol: 25, seed: 7, b: 50, a: 30, d0: 4, inv: 4, de: 0.5 },
+      equinor: { navn: 'Equinor 2018 til 2023', sim: false, eps: [2.29, 0.57, -1.71, 2.57, 9.53, 3.55], div: [1.00, 1.09, 0.54, 0.72, 3.20, 3.60], start: 2018, b: 45, a: 30, d0: 0.88, inv: 1.5, de: 0.5 }
+    },
+    s: {
+      bekk20: { navn: 'Bekk AS', N: 200000, P: 40, eier: 100, type: 'utbytte', k: 2, pst: 20, val: 'kr', mill: false },
+      bekk2: { navn: 'Bekk AS', N: 200000, P: 40, eier: 100, type: 'splitt', k: 2, pst: 20, val: 'kr', mill: false },
+      eurasion: { navn: 'Eurasion Natural Resources', N: 2.4, P: 5.16, eier: 100, type: 'omvendt', k: 1.5, pst: 8, val: '£', mill: true },
+      apple: { navn: 'Apple, august 2020', N: 4300, P: 500, eier: 10, type: 'splitt', k: 4, pst: 10, val: 'USD', mill: true }
+    },
+    k: { std: { P: 40, D: 2, inng: 30, tu: 37.84, skjerm: 3.5, fritak: 0.66, H: 10, r: 7 } }
+  };
+  const S = {
+    x: Object.assign({ skatt: false, skatt2: false, tp: 37.84, tg: 20 }, PRE.x.bekk),
+    b: Object.assign({ bekk: 4 }, PRE.b.bristol),
+    l: Object.assign({}, PRE.l.std),
+    s: Object.assign({}, PRE.s.bekk20),
+    k: Object.assign({}, PRE.k.std)
+  };
+
+  /* ---------- modeller ---------- */
+  function mX() {
+    const x = S.x, E = x.kont + x.andre - x.gjeld, P = x.N > 0 ? E / x.N : NaN, dpsMax = x.N > 0 ? x.kont / x.N : 0, dps = Math.max(0, Math.min(x.dps, dpsMax)), U = dps * x.N;
+    const Pex = P - dps, eps = x.ni / x.N, pe0 = P / eps, pe1 = Pex / eps;
+    const tp = x.tp / 100, tg = x.tg / 100, fall = tg < 1 ? dps * (1 - tp) / (1 - tg) : dps, PexSk = P - fall;
+    const nR = P > 0 ? U / P : 0, N1 = x.N - nR, P1 = N1 > 0 ? (E - U) / N1 : NaN, eps1 = x.ni / N1, pe2 = P1 / eps1;
+    const e = x.eier, selgN = E > 0 ? e * U / E : 0, gev = Math.max(0, P1 - x.inng) * selgN;
+    const utb = { aksjer: e * Pex, kont: e * dps, skatt: x.skatt2 ? tp * e * dps : 0 };
+    const behold = { aksjer: e * P1, kont: 0, skatt: 0 };
+    const selg = { aksjer: (e - selgN) * P1, kont: selgN * P1, skatt: x.skatt2 ? tg * gev : 0 };
+    return { E, P, dps, dpsMax, U, Pex, eps, pe0, pe1, fall, PexSk, nR, N1, P1, eps1, pe2, utb, behold, selg, selgN, gev, klippet: x.dps > dpsMax + 1e-9 };
+  }
+  function mB() {
+    const b = S.b, r = b.r / 100, cf1 = b.cf1 / b.N, cf2 = b.cf2 / b.N;
+    const P0 = cf1 / (1 + r) + cf2 / Math.pow(1 + r, 2), d1max = P0 * (1 + r);
+    const d1 = Math.max(0, Math.min(b.d1, d1max)), ekstra = (d1 - cf1) * b.N, d2 = (b.cf2 - ekstra * (1 + r)) / b.N;
+    const P0alt = d1 / (1 + r) + d2 / Math.pow(1 + r, 2);
+    const w1 = Math.max(0, Math.min(b.onsk, d1max)), diff = d1 - w1, w2 = d2 + diff * (1 + r), PV = w1 / (1 + r) + w2 / Math.pow(1 + r, 2);
+    const BP = 40, BD = 2, BE = 100, Pex = BP - BD, onsk = b.bekk, mangler = (onsk - BD) * BE, nSelg = mangler / Pex;
+    const bekk = { P: BP, D: BD, eier: BE, Pex, onsk, mangler, nSelg, aksjer: BE - nSelg, verdi: (BE - nSelg) * Pex, kont: BE * BD + mangler, hyp: { Pex: BP - onsk, verdi: BE * (BP - onsk), kont: BE * onsk } };
+    return { r, cf1, cf2, P0, d1max, d1, ekstra, d2, P0alt, w1, diff, w2, PV, bekk, klippet: b.d1 > d1max + 1e-9 };
+  }
+  function mulberry(seed) { let t0 = seed >>> 0; return function () { t0 = (t0 + 0x6D2B79F5) >>> 0; let t = t0; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+  function mL() {
+    const l = S.l; let eps = [];
+    if (l.sim) { const rnd = mulberry(Math.round(l.seed) * 7919 + 13); let e = l.eps0; for (let t = 1; t <= Math.round(l.aar); t++) { const u1 = Math.max(1e-9, rnd()), u2 = rnd(), z = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2); e = e * (1 + l.vekst / 100 + l.vol / 100 * z); eps.push(e); } }
+    else eps = l.eps.slice();
+    const b = l.b / 100, a = l.a / 100;
+    const konst = eps.map(e => Math.max(0, b * e)), resid = eps.map(e => Math.max(0, e - l.inv / (1 + l.de)));
+    const lint = []; let d = l.d0; eps.forEach(e => { d = Math.max(0, d + a * (Math.max(0, b * e) - d)); lint.push(d); });
+    const stat = arr => { let kutt = 0, maks = 0, prev = l.d0; arr.forEach(v => { if (v < prev - 1e-9) { kutt++; maks = Math.max(maks, prev > 1e-9 ? (prev - v) / prev : 1); } prev = v; }); const sumD = arr.reduce((s, v) => s + v, 0), sumE = eps.reduce((s, v) => s + Math.max(0, v), 0); return { kutt, maks, payout: sumE > 0 ? sumD / sumE : NaN, snitt: sumD / arr.length }; };
+    const aar = l.sim ? eps.map((_, i) => i + 1) : eps.map((_, i) => l.start + i);
+    return { eps, konst, resid, lint, faktisk: l.sim ? null : l.div, aar, st: { konst: stat(konst), resid: stat(resid), lint: stat(lint), faktisk: l.sim ? null : stat(l.div) }, b, a };
+  }
+  function mS() { const s = S.s, k = s.type === 'splitt' ? s.k : s.type === 'utbytte' ? 1 + s.pst / 100 : 1 / s.k; return { k, N1: s.N * k, P1: s.P / k, e1: s.eier * k, E: s.N * s.P, formue: s.eier * s.P }; }
+  function mK() {
+    const k = S.k, tu = k.tu / 100, sk = k.skjerm / 100, fr = k.fritak / 100, r = k.r / 100, D = k.D, P = k.P, f = P > 0 ? D / P : 0;
+    const gev = f * Math.max(0, P - k.inng), skjU = sk * k.inng, skjS = f * sk * k.inng, skjH = f * sk * k.inng * k.H, disk = Math.pow(1 + r, k.H);
+    const pers = { utb: D - tu * Math.max(0, D - skjU), selg: D - tu * Math.max(0, gev - skjS), behold: D - tu * Math.max(0, gev - skjH) / disk, skattU: tu * Math.max(0, D - skjU), skattS: tu * Math.max(0, gev - skjS), skattB: tu * Math.max(0, gev - skjH) / disk };
+    const hold = { utb: D * (1 - fr), selg: D, behold: D, skattU: D * fr, skattS: 0, skattB: 0 };
+    const fond = { utb: D, selg: D, behold: D, skattU: 0, skattS: 0, skattB: 0 };
+    return { D, P, f, gev, skjU, skjS, skjH, disk, pers, hold, fond };
+  }
+
+  /* ---------- SVG-hjelpere ---------- */
+  const W = 560, H = 330, ML = 58, MR = 16, MT = 18, MB = 44;
+  function tick(a, b, n) { const s0 = (b - a) / n, m = Math.pow(10, Math.floor(Math.log10(s0))), f = s0 / m, st = (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * m, t = []; for (let v = Math.ceil(a / st - 1e-9) * st; v <= b + 1e-9; v += st) t.push(+v.toFixed(8)); return { t, st }; }
+  const des = st => st >= 1 ? 0 : st >= 0.1 ? 1 : 2;
+  function akser(xmin, xmax, ymin, ymax, xl, yl, fx, fy, nx = 6) {
+    const X = v => ML + (v - xmin) / (xmax - xmin) * (W - ML - MR), Y = v => MT + (ymax - v) / (ymax - ymin) * (H - MT - MB);
+    const tx = tick(xmin, xmax, nx), ty = tick(ymin, ymax, 5);
+    fx = fx || (v => nf(v, des(tx.st))); fy = fy || (v => nf(v, des(ty.st)));
+    let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${yl} mot ${xl}">`;
+    tx.t.forEach(v => { s += `<line x1="${X(v)}" x2="${X(v)}" y1="${MT}" y2="${H - MB}" stroke="#ecece6"/><text x="${X(v)}" y="${H - MB + 16}" text-anchor="middle" font-size="11.5" fill="#6b7280">${fx(v)}</text>`; });
+    ty.t.forEach(v => { s += `<line x1="${ML}" x2="${W - MR}" y1="${Y(v)}" y2="${Y(v)}" stroke="#ecece6"/><text x="${ML - 7}" y="${Y(v) + 4}" text-anchor="end" font-size="11.5" fill="#6b7280">${fy(v)}</text>`; });
+    if (ymin < 0 && ymax > 0) s += `<line x1="${ML}" x2="${W - MR}" y1="${Y(0)}" y2="${Y(0)}" stroke="#9ca3af" stroke-width="1"/>`;
+    s += `<line x1="${ML}" x2="${W - MR}" y1="${H - MB}" y2="${H - MB}" stroke="#1a1a1a" stroke-width="1.2"/><line x1="${ML}" x2="${ML}" y1="${MT}" y2="${H - MB}" stroke="#1a1a1a" stroke-width="1.2"/>`;
+    s += `<text x="${(ML + W - MR) / 2}" y="${H - 5}" text-anchor="middle" font-size="12" fill="#4b5563">${xl}</text>`;
+    s += `<text x="13" y="${(MT + H - MB) / 2}" text-anchor="middle" font-size="12" fill="#4b5563" transform="rotate(-90 13 ${(MT + H - MB) / 2})">${yl}</text>`;
+    return { s, X, Y };
+  }
+  const sti = (pts, X, Y) => pts.map((p, i) => (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1)).join(' ');
+  const linje = (pts, X, Y, farge, bredde = 2.5, dash = '') => `<path d="${sti(pts, X, Y)}" fill="none" stroke="${farge}" stroke-width="${bredde}"${dash ? ` stroke-dasharray="${dash}"` : ''} stroke-linejoin="round"/>`;
+  const tekst = (x, y, t, c, anker = 'start', size = 11.5, w = 600) => `<text x="${x}" y="${y}" text-anchor="${anker}" font-size="${size}" font-weight="${w}" fill="${c}">${t}</text>`;
+  const punkt = (x, y, c, r = 5.5) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}" stroke="#fff" stroke-width="2"/>`;
+  const stabel = (deler, total, tittel) => `<div class="stabel-navn">${tittel}</div><div class="stabel">${deler.map(d => `<i style="width:${total > 0 ? Math.max(0, d.v) / total * 100 : 0}%;background:${d.c}" title="${d.n}">${total > 0 && d.v / total > 0.1 ? d.n + ' ' + nf(d.v, auto(d.v)) : ''}</i>`).join('')}</div>`;
+
+  /* ---------- DEL 1: utbyttedagen ---------- */
+  function tegnX() {
+    const x = S.x, m = mX(), g = x;
+    $('#x-navn').textContent = x.navn;
+    $('#x-dpsmax').textContent = per(m.dpsMax, g) + ' (hele kassen)'; $('#t-dpsmax').textContent = per(m.dpsMax, g) + ' (hele kassen)';
+    $('#x-s1').innerHTML = `E = kontanter + andre eiendeler − gjeld = ${bel(x.kont, g)} + ${bel(x.andre, g)} − ${bel(x.gjeld, g)} = <b>${bel(m.E, g)}</b><br>P<sub>før</sub> = E / N = ${bel(m.E, g)} / ${ant(x.N, g)} = <b>${per(m.P, g)}</b> &nbsp;·&nbsp; EPS = ${bel(x.ni, g)} / ${ant(x.N, g)} = <b>${per(m.eps, g)}</b> &nbsp;·&nbsp; P/E = <b>${nf(m.pe0, 1)}</b>`;
+    let tb = `<table class="tab"><tr><th></th><th>Før ex-dagen</th><th>Etter ex-dagen</th></tr>`;
+    tb += rad('Kontanter', [bel(x.kont, g), bel(x.kont - m.U, g)]) + rad('Andre eiendeler', [bel(x.andre, g), bel(x.andre, g)]) + rad('Gjeld', [bel(x.gjeld, g), bel(x.gjeld, g)]) + rad('Egenkapital E', [bel(m.E, g), bel(m.E - m.U, g)], 'sum');
+    tb += rad('Antall aksjer', [ant(x.N, g), ant(x.N, g)]) + rad('Kurs', [per(m.P, g), per(m.Pex, g)], 'sum') + rad('EPS', [per(m.eps, g), per(m.eps, g)]) + rad('P/E', [nf(m.pe0, 1), nf(m.pe1, 1)]) + '</table>';
+    $('#x-tab').innerHTML = tb;
+    $('#x-s2m').innerHTML = `Utbyttet er ${per(m.dps, g)} × ${ant(x.N, g)} = <b>${bel(m.U, g)}</b>. Kursen faller med nøyaktig utbyttet: ${per(m.P, g)} − ${per(m.dps, g)} = ${per(m.Pex, g)}. EPS er uendret, så P/E faller fra ${nf(m.pe0, 1)} til ${nf(m.pe1, 1)}. Aksjen er ikke blitt billigere, den har bare mindre kontanter bak seg.`;
+    const e = x.eier;
+    $('#x-form').innerHTML = `<table class="tab"><tr><th>${nf(e, 0)} aksjer</th><th>Før</th><th>Etter</th></tr>${rad('Aksjer', [per(e * m.P, g), per(e * m.Pex, g)]) + rad('Kontanter', [per(0, g), per(e * m.dps, g)]) + rad('Formue', [per(e * m.P, g), per(e * m.Pex + e * m.dps, g)], 'sum')}</table>`;
+    $('#x-s3m').innerHTML = x.skatt ? `Med skatt faller kursen bare med (1 − t<sub>P</sub>)/(1 − t<sub>G</sub>) × D = ${nf((1 - x.tp / 100) / (1 - x.tg / 100), 3)} × ${per(m.dps, g)} = <b>${per(m.fall, g)}</b>, til ${per(m.PexSk, g)}. Den marginale investoren er indifferent mellom å selge før ex-dagen og skatte av gevinsten, og å selge etter og skatte av utbyttet. ${x.tp > x.tg ? 'Utbytte skattes hardere enn gevinst, så kursfallet blir mindre enn utbyttet.' : x.tp < x.tg ? 'Gevinst skattes hardere enn utbytte, så kursfallet blir større enn utbyttet.' : 'Lik skatt gir likt fall.'}` : `Formuen er uendret. Det eneste som har skjedd, er at ${per(e * m.dps, g)} har flyttet fra aksjekursen til bankkontoen.`;
+    $('#x-res').innerHTML = `<div class="tall"><small>Kurs før → etter ex-dagen</small>${per(m.P, g)} → ${per(m.Pex, g)}</div><div class="bidrag">Aksjonærens formue: ${per(e * m.P, g)} før, ${per(e * m.Pex, g)} i aksjer pluss ${per(e * m.dps, g)} i kontanter etter. ${x.skatt ? `Med skatt blir kursen ${per(m.PexSk, g)}: fallet er ${pc(m.fall / m.dps * 100, 0)} av utbyttet.` : 'Ingen verdi er skapt eller tapt, bare flyttet.'}</div>`;
+    const adv = [];
+    if (m.klippet) adv.push(`Utbyttet overstiger kassen. Jeg har begrenset det til ${per(m.dpsMax, g)} per aksje. Utbytte finansiert med ny egenkapital er temaet i del 3.`);
+    if (m.E <= 0) adv.push('Egenkapitalen er null eller negativ. Øk eiendelene eller reduser gjelden.');
+    $('#x-adv').innerHTML = adv.join('<br>'); $('#x-adv').style.display = adv.length ? 'block' : 'none';
+    grafX(m);
+  }
+  function grafX(m) {
+    const x = S.x, g = x, lo = Math.min(m.Pex, m.PexSk) , hi = m.P, pad = Math.max((hi - lo) * 0.6, hi * 0.04);
+    const { s: s0, X, Y } = akser(-3.5, 3.5, lo - pad, hi + pad, 'Virkedager rundt ex-dagen', 'Kurs (' + g.val + ')', v => v === 0 ? 'Ex-dag' : (v > 0 ? '+' : '') + nf(v, 0), v => nf(v, auto(v) === 0 ? 0 : 2), 7);
+    let s = s0;
+    s += `<rect x="${X(-0.5)}" y="${Y(m.P)}" width="${X(0.5) - X(-0.5)}" height="${Math.max(0, Y(m.Pex) - Y(m.P))}" fill="#fde68a" opacity=".9"/>`;
+    s += linje([[-3.5, m.P], [0, m.P]], X, Y, '#046530', 3) + linje([[0, m.P], [0, m.Pex]], X, Y, '#046530', 1.5, '3 3') + linje([[0, m.Pex], [3.5, m.Pex]], X, Y, '#046530', 3);
+    if (x.skatt) s += linje([[0, m.PexSk], [3.5, m.PexSk]], X, Y, '#dc2626', 2.5, '7 5') + tekst(X(3.4), Y(m.PexSk) - 8, `med skatt ${per(m.PexSk, g)}`, '#dc2626', 'end');
+    s += tekst(X(-3.4), Y(m.P) - 8, `P før = ${per(m.P, g)}`, '#046530', 'start') + tekst(X(3.4), Y(m.Pex) + (x.skatt && m.PexSk < m.Pex ? -8 : 16), `P ex = ${per(m.Pex, g)}`, '#046530', 'end');
+    s += tekst(X(0.6), (Y(m.P) + Y(m.Pex)) / 2 + 4, `D = ${per(m.dps, g)}`, '#b45309', 'start');
+    $('#x-graf').innerHTML = s + '</svg>';
+    $('#x-sub').innerHTML = `Aksjen handles med rett til utbytte til og med dagen før ex-dagen. Fra ex-dagen tilfaller utbyttet den forrige eieren, og kursen åpner lavere. ${x.skatt ? 'Den stiplede linjen viser kursen når utbytte og gevinst skattes ulikt.' : ''}`;
+  }
+
+  /* ---------- DEL 2: utbytte eller tilbakekjøp ---------- */
+  function tegnT() {
+    const x = S.x, m = mX(), g = x, e = x.eier;
+    $('#t-firma').innerHTML = `<b>${x.navn}</b>: egenkapital ${bel(m.E, g)}, ${ant(x.N, g)}, kurs ${per(m.P, g)}, resultat ${bel(x.ni, g)}. Beløpet som deles ut er ${per(m.dps, g)} × ${ant(x.N, g)} = <b>${bel(m.U, g)}</b>. <a class="lenke" href="#exdag" data-del="exdag">Endre balansen i del 1.</a>`;
+    let tb = `<table class="tab"><tr><th></th><th>Før</th><th>Utbytte</th><th>Tilbakekjøp</th></tr>`;
+    tb += rad('Egenkapital', [bel(m.E, g), bel(m.E - m.U, g), bel(m.E - m.U, g)]) + rad('Antall aksjer', [ant(x.N, g), ant(x.N, g), ant(m.N1, g)]) + rad('Kurs', [per(m.P, g), per(m.Pex, g), per(m.P1, g)], 'sum') + rad('EPS', [per(m.eps, g), per(m.eps, g), per(m.eps1, g)]) + rad('P/E', [nf(m.pe0, 1), nf(m.pe1, 1), nf(m.pe2, 1)], 'sum') + '</table>';
+    $('#t-tab').innerHTML = tb;
+    $('#t-s1m').innerHTML = `Tilbakekjøpet fjerner ${bel(m.U, g)} / ${per(m.P, g)} = <b>${ant(m.nR, g)}</b>, og kursen blir ${bel(m.E - m.U, g)} / ${ant(m.N1, g)} = ${per(m.P1, g)}, uendret. EPS stiger fra ${per(m.eps, g)} til ${per(m.eps1, g)} fordi færre aksjer deler på resultatet, men P/E er ${nf(m.pe2, 1)} i begge tilfeller. Aksjen er ikke blitt billigere.`;
+    const sk = x.skatt2, tot = o => o.aksjer + o.kont - o.skatt;
+    let tf = `<table class="tab"><tr><th>${nf(e, 0)} aksjer</th><th>Får utbytte</th><th>Tilbakekjøp, beholder</th><th>Tilbakekjøp, selger ${nf(m.selgN, 2)} aksjer</th></tr>`;
+    tf += rad('Aksjer', [per(m.utb.aksjer, g), per(m.behold.aksjer, g), per(m.selg.aksjer, g)]) + rad('Kontanter', [per(m.utb.kont, g), per(0, g), per(m.selg.kont, g)]);
+    if (sk) tf += rad('− skatt nå', [per(-m.utb.skatt, g), per(0, g), per(-m.selg.skatt, g)]);
+    tf += rad(sk ? 'Formue etter skatt' : 'Formue', [per(tot(m.utb), g), per(tot(m.behold), g), per(tot(m.selg), g)], 'sum') + '</table>';
+    $('#t-form').innerHTML = tf;
+    $('#t-s2m').innerHTML = sk
+      ? `Utbyttet skattes med ${pc(x.tp, 2)} av hele beløpet: ${per(m.utb.skatt, g)}. Den som selger i tilbakekjøpet, skatter ${pc(x.tg, 2)} bare av gevinsten (${per(m.P1, g)} − ${per(x.inng, g)}) × ${nf(m.selgN, 2)} aksjer = ${per(m.gev, g)}: ${per(m.selg.skatt, g)}. Den som beholder, utsetter skatten til aksjene selges en gang i fremtiden.`
+      : `Uten skatt er de tre valgene like mye verdt: ${per(e * m.P, g)}. Den som selger sin andel ${nf(m.selgN, 2)} aksjer i tilbakekjøpet, ender nøyaktig som utbyttemottakeren: ${per(m.selg.aksjer, g)} i aksjer og ${per(m.selg.kont, g)} i kontanter. Tilbakekjøp er et utbytte du må be om.`;
+    const beste = sk ? [['utbytte', tot(m.utb)], ['å beholde aksjene i et tilbakekjøp', tot(m.behold)], ['å selge i tilbakekjøpet', tot(m.selg)]].sort((a, b) => b[1] - a[1]) : null;
+    $('#t-res').innerHTML = `<div class="tall"><small>EPS før → etter tilbakekjøp</small>${per(m.eps, g)} → ${per(m.eps1, g)}</div><div class="bidrag">${sk ? `Etter skatt kommer aksjonæren best ut med ${beste[0][0]}: ${per(beste[0][1], g)} mot ${per(beste[2][1], g)} for ${beste[2][0]}. Forskjellen er skatten som betales nå.` : `P/E er ${nf(m.pe2, 1)} både etter utbytte og etter tilbakekjøp. Økningen i EPS er regnskap, ikke verdi. Uten skatt er aksjonæren like rik uansett.`}</div>`;
+    $('#t-graf').innerHTML = stabel([{ n: 'Aksjer', v: m.utb.aksjer, c: '#dc2626' }, { n: 'Kontanter', v: m.utb.kont, c: '#f59e0b' }, { n: 'Skatt', v: m.utb.skatt, c: '#374151' }], e * m.P, 'Får utbytte')
+      + stabel([{ n: 'Aksjer', v: m.behold.aksjer, c: '#dc2626' }], e * m.P, 'Tilbakekjøp, beholder aksjene')
+      + stabel([{ n: 'Aksjer', v: m.selg.aksjer, c: '#dc2626' }, { n: 'Kontanter', v: m.selg.kont, c: '#f59e0b' }, { n: 'Skatt', v: m.selg.skatt, c: '#374151' }], e * m.P, 'Tilbakekjøp, selger sin andel');
+    $('#t-sub').innerHTML = `Hver stolpe er ${per(e * m.P, g)}, aksjonærens formue før utbetalingen. ${sk ? 'Det mørke feltet er skatt som betales nå.' : 'Bare sammensetningen er ulik.'}`;
+    const adv = []; if (m.klippet) adv.push(`Beløpet er begrenset til kassen, ${bel(S.x.kont, g)}.`);
+    $('#t-adv').innerHTML = adv.join('<br>'); $('#t-adv').style.display = adv.length ? 'block' : 'none';
+  }
+
+  /* ---------- DEL 3: hjemmelaget utbytte ---------- */
+  function tegnB() {
+    const b = S.b, m = mB(), g = { val: b.val, mill: false }, K = (v, d) => per(v, g, d), r = b.r / 100;
+    $('#b-d1max').textContent = K(m.d1max) + ' (alt nå)';
+    $('#b-s1').innerHTML = `D<sub>1</sub> = ${bel(b.cf1, g)} / ${nf(b.N, 0)} = ${K(m.cf1)} &nbsp;·&nbsp; D<sub>2</sub> = ${bel(b.cf2, g)} / ${nf(b.N, 0)} = ${K(m.cf2)}<br>P<sub>0</sub> = <span class="fr"><span>${K(m.cf1)}</span><span>${nf(1 + r, 2)}</span></span> + <span class="fr"><span>${K(m.cf2)}</span><span>${nf(1 + r, 2)}²</span></span> = ${K(m.cf1 / (1 + r))} + ${K(m.cf2 / Math.pow(1 + r, 2))} = <b>${K(m.P0)}</b> &nbsp;·&nbsp; hele selskapet: ${bel(m.P0 * b.N, g)}`;
+    const em = m.ekstra;
+    $('#b-s2').innerHTML = `D<sub>1</sub> = <b>${K(m.d1)}</b> per aksje, ${bel(m.d1 * b.N, g)} i alt, mot en kontantstrøm på ${bel(b.cf1, g)}.<br>${em > 1e-9 ? `Selskapet mangler ${bel(em, g)} og henter dem fra nye eiere, som krever ${bel(em, g)} × ${nf(1 + r, 2)} = ${bel(em * (1 + r), g)} i år 2.` : em < -1e-9 ? `Selskapet holder tilbake ${bel(-em, g)} og plasserer dem til ${pc(b.r, 1)}: ${bel(-em * (1 + r), g)} ekstra i år 2.` : 'Utbyttet er lik kontantstrømmen, ingenting å finansiere.'}<br>D<sub>2</sub> = (${bel(b.cf2, g)} − ${bel(em * (1 + r), g)}) / ${nf(b.N, 0)} = <b>${K(m.d2)}</b> &nbsp;·&nbsp; P<sub>0</sub> = ${K(m.d1)} / ${nf(1 + r, 2)} + ${K(m.d2)} / ${nf(1 + r, 2)}² = <b>${K(m.P0alt)}</b>`;
+    $('#b-s2m').innerHTML = `Verdien er ${Math.abs(m.P0alt - m.P0) < 1e-6 ? 'nøyaktig den samme' : 'den samme'} som før: det eierne får ekstra i år 1, mister de med renter i år 2. Det gjelder for alle valg av D<sub>1</sub> mellom 0 og ${K(m.d1max)}.`;
+    const w1 = m.w1, d = m.diff;
+    $('#b-tab').innerHTML = `<table class="tab"><tr><th>Per aksje</th><th>År 1</th><th>År 2</th><th>Nåverdi</th></tr>${rad('Selskapet betaler', [K(m.d1), K(m.d2), K(m.P0alt)]) + rad(d > 1e-9 ? `Investoren reinvesterer ${K(d)} til ${pc(b.r, 1)}` : d < -1e-9 ? `Investoren selger aksjer for ${K(-d)}` : 'Investoren gjør ingenting', [K(-d), K(d * (1 + r)), K(0)]) + rad('Investoren sitter igjen med', [K(w1), K(m.w2), K(m.PV)], 'sum')}</table>`;
+    $('#b-s3m').innerHTML = `Investoren ville ha ${K(w1)} i år 1 og får det, uansett hva selskapet bestemmer. ${d > 1e-9 ? `Overskuddet på ${K(d)} vokser til ${K(d * (1 + r))} i år 2.` : d < -1e-9 ? `Aksjene hun selger, ville gitt ${K(-d * (1 + r))} i år 2, så det gir hun fra seg.` : ''} Nåverdien er fortsatt ${K(m.PV)}. Det er hjemmelaget utbytte, og det er grunnen til at politikken er irrelevant.`;
+    $('#b-res').innerHTML = `<div class="tall"><small>Nåverdi per aksje, uansett politikk</small>${K(m.P0)}</div><div class="bidrag">Utbytte er ikke irrelevant: mer utbytte ett år med alt annet likt gir høyere verdi. Utbytte<i>politikk</i> er irrelevant: den bytter bare utbytte i år 1 mot utbytte i år 2 til avkastningskravet, og nåverdien står stille.</div>`;
+    const adv = []; if (m.klippet) adv.push(`D<sub>1</sub> kan ikke overstige ${K(m.d1max)}: da er det ingenting igjen til år 2.`);
+    $('#b-adv').innerHTML = adv.join('<br>'); $('#b-adv').style.display = adv.length ? 'block' : 'none';
+    const { s: s0, X, Y } = akser(0, m.d1max * 1.05, 0, m.d1max * (1 + r) * 1.08, 'Utbytte per aksje år 1', 'Utbytte per aksje år 2 (' + b.val + ')');
+    let s = s0 + linje([[0, m.d1max * (1 + r)], [m.d1max, 0]], X, Y, '#046530', 3);
+    const naer = Math.abs(X(m.d1) - X(w1)) < 40 && Math.abs(Y(m.d2) - Y(m.w2)) < 40;
+    s += punkt(X(m.cf1), Y(m.cf2), '#6b7280', 4.5) + tekst(X(m.cf1) - 14, Y(m.cf2) - 14, 'utbytte = kontantstrøm', '#6b7280', 'end', 11);
+    s += punkt(X(m.d1), Y(m.d2), '#dc2626', 6.5) + tekst(X(m.d1) + 10, Y(m.d2) - 12, `Selskapet: ${K(m.d1)} og ${K(m.d2)}`, '#dc2626');
+    s += punkt(X(w1), Y(m.w2), '#3b82f6', 6.5) + tekst(X(w1) + 10, Y(m.w2) + (naer ? 34 : 20), `Investoren: ${K(w1)} og ${K(m.w2)}`, '#1d4ed8');
+    $('#b-graf').innerHTML = s + '</svg>';
+    $('#b-sub').innerHTML = `Linjen har stigning −(1 + r) = −${nf(1 + r, 2)}: én krone mer i år 1 koster ${nf(1 + r, 2)} kroner i år 2. Alle punkter på linjen har nåverdi ${K(m.P0)}. Investoren kan flytte seg fritt langs den på egen hånd.`;
+    const q = m.bekk, gb = { val: 'kr', mill: false };
+    $('#b-bekk').innerHTML = `<table class="tab"><tr><th>Ønsket utbytte ${per(q.onsk, gb)}</th><th>Hjemmelaget</th><th>Hvis Bekk hadde betalt ${per(q.onsk, gb)}</th></tr>${rad('Kurs på ex-dagen', [per(q.Pex, gb), per(q.hyp.Pex, gb)]) + rad(q.nSelg > 1e-9 ? 'Selger aksjer' : q.nSelg < -1e-9 ? 'Kjøper aksjer for utbyttet' : 'Handler ikke', [nf(Math.abs(q.nSelg), 3) + ' à ' + per(q.Pex, gb), '—']) + rad('Aksjer', [nf(q.aksjer, 3) + ' × ' + per(q.Pex, gb) + ' = ' + per(q.verdi, gb), '100 × ' + per(q.hyp.Pex, gb) + ' = ' + per(q.hyp.verdi, gb)]) + rad('Kontanter', [per(q.kont, gb), per(q.hyp.kont, gb)]) + rad('Formue', [per(q.verdi + q.kont, gb), per(q.hyp.verdi + q.hyp.kont, gb)], 'sum')}</table><p class="hjelp">${q.onsk > q.D ? `Per vil ha ${per(q.onsk, gb)} og mangler ${per(q.mangler, gb)}. Han selger ${nf(q.nSelg, 3)} aksjer à ${per(q.Pex, gb)}.` : q.onsk < q.D ? `Lise vil ha ${per(q.onsk, gb)} og kjøper aksjer for ${per(-q.mangler, gb)} til ${per(q.Pex, gb)}: ${nf(-q.nSelg, 3)} aksjer.` : 'Ønsket er lik det Bekk betaler.'} Formuen er 4 000 kr uansett.</p>`;
+  }
+
+  /* ---------- DEL 4: politikk over tid ---------- */
+  function tegnL() {
+    const l = S.l, m = mL(), n = m.eps.length, i = n - 1, e = m.eps[i], prevL = i > 0 ? m.lint[i - 1] : l.d0;
+    $('#l-hjelp').textContent = l.sim ? 'EPS følger en tilfeldig bane med valgt trend og svingninger. Bytt banenummer for en ny bane.' : 'Equinors faktiske EPS og utbytte per aksje i USD, fra slide 34. Utbyttet for 2017 var 0,88.';
+    $('#l-s1').innerHTML = `${l.sim ? 'År ' + m.aar[i] : m.aar[i]}: EPS = <b>${nf(e, 2)}</b><br>Konstant andel: D = b × EPS = ${nf(m.b, 2)} × ${nf(e, 2)} = <b>${nf(m.konst[i], 2)}</b><br>Residual: D = EPS − investering/(1 + D/E) = ${nf(e, 2)} − ${nf(l.inv, 2)}/${nf(1 + l.de, 2)} = ${nf(e - l.inv / (1 + l.de), 2)} → <b>${nf(m.resid[i], 2)}</b> (aldri under null)<br>Lintner: D = D<sub>t−1</sub> + a (b × EPS − D<sub>t−1</sub>) = ${nf(prevL, 2)} + ${nf(m.a, 2)} × (${nf(m.b * e, 2)} − ${nf(prevL, 2)}) = <b>${nf(m.lint[i], 2)}</b>`;
+    const st = m.st, radS = (navn, s) => rad(navn, [nf(s.kutt, 0), s.kutt ? pc(s.maks * 100, 0) : '—', isFinite(s.payout) ? pc(s.payout * 100, 0) : '—', nf(s.snitt, 2)]);
+    $('#l-tab').innerHTML = `<table class="tab"><tr><th>Politikk</th><th>Antall kutt</th><th>Største kutt</th><th>Utdelingsforhold i snitt</th><th>Snitt utbytte</th></tr>${radS('Konstant andel', st.konst) + radS('Residual', st.resid) + radS('Lintner', st.lint) + (st.faktisk ? radS('Faktisk (Equinor)', st.faktisk) : '')}</table>`;
+    $('#l-s2m').innerHTML = `Lintner-utbyttet kuttes ${st.lint.kutt} ${st.lint.kutt === 1 ? 'gang' : 'ganger'} mot ${st.konst.kutt} for konstant andel og ${st.resid.kutt} for residualpolitikken. Utjevningen koster lite i gjennomsnittlig utbetaling, men sparer mange signaler om dårlige tider.${st.faktisk ? ' Equinor holdt utbyttet oppe gjennom 2019 og 2020 tross fallende resultat og tap, og løftet det kraftig først da resultatet eksploderte i 2022. Det er Lintners mønster.' : ''}`;
+    $('#l-res').innerHTML = `<div class="tall"><small>Kutt over perioden: Lintner mot konstant andel</small>${nf(st.lint.kutt, 0)} mot ${nf(st.konst.kutt, 0)}</div><div class="bidrag">Et konstant utdelingsforhold gir et utbytte som svinger like mye som resultatet. Residualpolitikken svinger enda mer, fordi investeringene går foran. Lintners regel henger etter resultatet og glatter ut toppene og bunnene. Det er slik de fleste selskaper faktisk oppfører seg.</div>`;
+    const adv = []; if (l.sim && m.eps.some(v => v <= 0)) adv.push('Banen har år med negativt resultat. Da er utbyttet null under konstant andel og residualpolitikk, mens Lintner-utbyttet bare justeres nedover.');
+    $('#l-adv').innerHTML = adv.join('<br>'); $('#l-adv').style.display = adv.length ? 'block' : 'none';
+    const alle = m.eps.concat(m.konst, m.resid, m.lint, m.faktisk || []), ymin = Math.min(0, ...alle), ymax = Math.max(...alle), pad = (ymax - ymin) * 0.1 || 1;
+    const x0 = m.aar[0], x1 = m.aar[n - 1];
+    const { s: s0, X, Y } = akser(x0 - 0.5, x1 + 0.5, ymin - pad * 0.5, ymax + pad, l.sim ? 'År' : '', 'Per aksje' + (l.sim ? '' : ' (USD)'), v => Math.abs(v - Math.round(v)) > 1e-6 ? '' : String(Math.round(v)), undefined, Math.min(8, n));
+    const pts = arr => arr.map((v, j) => [m.aar[j], v]);
+    let s = s0 + linje(pts(m.eps), X, Y, '#6b7280', 2.5) + linje(pts(m.konst), X, Y, '#f59e0b', 2, '6 4') + linje(pts(m.resid), X, Y, '#3b82f6', 2, '6 4') + linje(pts(m.lint), X, Y, '#046530', 3.5);
+    m.eps.forEach((v, j) => { s += `<circle cx="${X(m.aar[j])}" cy="${Y(v)}" r="3.5" fill="#6b7280"/>`; });
+    if (m.faktisk) m.faktisk.forEach((v, j) => { s += punkt(X(m.aar[j]), Y(v), '#dc2626', 6) + tekst(X(m.aar[j]), Y(v) - 10, nf(v, 2), '#dc2626', 'middle', 11); });
+    s += tekst(X(x1) + 4, Y(m.eps[n - 1]) + 4, 'EPS', '#6b7280', 'start', 11) ;
+    $('#l-graf').innerHTML = s + '</svg>';
+    $('#l-sub').innerHTML = l.sim ? `Grå linje er resultatet. Den grønne Lintner-linjen følger etter med justeringsfart ${pc(l.a, 0)} mot et mål på ${pc(l.b, 0)} av resultatet.` : `Røde punkter er Equinors faktiske utbytte. De tre politikkene er regnet på Equinors faktiske EPS med utbytte 0,88 i 2017 som start.`;
+  }
+
+  /* ---------- DEL 5: splitt og aksjeutbytte ---------- */
+  function tegnS() {
+    const s = S.s, m = mS(), g = s;
+    $('#s-lab').textContent = s.type === 'omvendt' ? 'Gamle aksjer per ny' : 'Nye aksjer per gammel';
+    $$('input[data-k="s.k"]').forEach(el => el.closest('.ctl').hidden = s.type === 'utbytte');
+    $$('input[data-k="s.pst"]').forEach(el => el.closest('.ctl').hidden = s.type !== 'utbytte');
+    const navn = s.type === 'splitt' ? `Aksjesplitt ${nf(s.k, s.k % 1 ? 1 : 0)} for 1` : s.type === 'utbytte' ? `Aksjeutbytte ${nf(s.pst, 0)} %` : `Omvendt splitt 1 for ${nf(s.k, s.k % 1 ? 1 : 0)}`;
+    $('#s-tittel').textContent = `${navn}: ${s.navn}`;
+    $('#s-s1').innerHTML = `Egenkapitalen er ${ant(s.N, g)} × ${per(s.P, g)} = <b>${bel(m.E, g)}</b>, og den endres ikke.<br>Nye aksjer = ${ant(s.N, g)} × ${nf(m.k, 3)} = <b>${ant(m.N1, g)}</b> &nbsp;·&nbsp; P<sub>etter</sub> = ${per(s.P, g)} × <span class="fr"><span>gamle</span><span>nye</span></span> = ${per(s.P, g)} / ${nf(m.k, 3)} = <b>${per(m.P1, g)}</b>`;
+    $('#s-tab').innerHTML = `<table class="tab"><tr><th></th><th>Før</th><th>Etter</th></tr>${rad('Antall aksjer i selskapet', [ant(s.N, g), ant(m.N1, g)]) + rad('Kurs', [per(s.P, g), per(m.P1, g)]) + rad('Egenkapital', [bel(m.E, g), bel(m.N1 * m.P1, g)], 'sum') + rad('Aksjonærens aksjer', [nf(s.eier, 0), nf(m.e1, m.e1 % 1 ? 1 : 0)]) + rad('Aksjonærens formue', [per(m.formue, g), per(m.e1 * m.P1, g)], 'sum')}</table>`;
+    $('#s-res').innerHTML = `<div class="tall"><small>Formue før → etter</small>${per(m.formue, g, 0)} → ${per(m.e1 * m.P1, g, 0)}</div><div class="bidrag">${s.type === 'omvendt' ? 'Færre aksjer, høyere kurs, samme verdi.' : 'Flere aksjer, lavere kurs, samme verdi.'} ${s.type === 'utbytte' ? 'Et aksjeutbytte er ikke et utbytte: ingen penger forlater selskapet.' : 'Som å veksle en 500-lapp i fem hundrelapper.'} Argumentet om et populært kursintervall er svakt: institusjonene bryr seg ikke, og likviditeten øker sjelden.</div>`;
+    const biter = (n, farge) => { const N = Math.min(Math.round(n), 240), w = 540 / N; let t = ''; for (let i = 0; i < N; i++) t += `<rect x="${10 + i * w}" y="8" width="${Math.max(0.5, w - 1)}" height="34" fill="${farge}" rx="2"/>`; return t; };
+    $('#s-graf').innerHTML = `<svg viewBox="0 0 560 120" style="width:100%;height:auto;display:block">${biter(s.eier, '#046530')}<text x="10" y="62" font-size="12" fill="#4b5563">Før: ${nf(s.eier, 0)} aksjer à ${per(s.P, g)} = ${per(m.formue, g, 0)}</text>${biter(m.e1, '#f59e0b').replace(/y="8"/g, 'y="72"')}<text x="10" y="118" font-size="12" fill="#4b5563">Etter: ${nf(m.e1, m.e1 % 1 ? 1 : 0)} aksjer à ${per(m.P1, g)} = ${per(m.e1 * m.P1, g, 0)}</text></svg>`;
+    $('#s-sub').innerHTML = `Aksjonærens eierandel er ${pc(s.eier / s.N * 100, s.N > 1e5 ? 3 : 2)} før og ${pc(m.e1 / m.N1 * 100, s.N > 1e5 ? 3 : 2)} etter. Samme andel av samme selskap.`;
+  }
+
+  /* ---------- DEL 6: skatt og klientell ---------- */
+  function tegnK() {
+    const k = S.k, m = mK(), K = v => kr(v, 'kr', 2);
+    const typer = [['Personlig aksjonær', m.pers], ['Holdingselskap', m.hold], ['Pensjonsfond', m.fond]];
+    let tb = `<table class="tab"><tr><th>Per aksje, ${K(m.D)} deles ut</th><th>Utbytte nå</th><th>Tilbakekjøp, selger nå</th><th>Tilbakekjøp, beholder og selger om ${nf(k.H, 0)} år</th></tr>`;
+    typer.forEach(([n, t]) => { const best = Math.max(t.utb, t.selg, t.behold); const c = v => `<b>${K(v)}</b>` + (v >= best - 1e-9 && !(Math.abs(t.utb - t.selg) < 1e-9 && Math.abs(t.selg - t.behold) < 1e-9) ? ' ✓' : ''); tb += rad(n, [c(t.utb), c(t.selg), c(t.behold)]); });
+    tb += rad('Skatt, personlig aksjonær', [K(m.pers.skattU), K(m.pers.skattS), K(m.pers.skattB) + ' i nåverdi'], 'diff') + '</table>';
+    $('#k-tab').innerHTML = tb;
+    $('#k-s1m').innerHTML = `Utbytte: skattepliktig er utbyttet minus skjerming ${nf(k.skjerm, 1)} % × ${K(k.inng)} = ${K(m.skjU)}. Salg: investoren selger andelen ${pc(m.f * 100, 1)} av aksjen for ${K(m.D)}, og bare gevinsten ${K(m.gev)} minus skjerming ${K(m.skjS)} skattes. Beholder hun aksjene, kommer samme skatt om ${nf(k.H, 0)} år, med ${nf(k.H, 0)} års skjerming, og nåverdien er delt på ${nf(m.disk, 2)}. Holdingselskapet skatter ${pc(k.fritak, 2)} av utbyttet og ingenting av gevinsten. Fondet skatter ingenting.`;
+    const pref = t => { const a = [['utbytte', t.utb], ['tilbakekjøp med salg nå', t.selg], ['tilbakekjøp og utsatt salg', t.behold]].sort((p, q) => q[1] - p[1]); return a[0][1] - a[2][1] < 1e-6 ? 'er indifferent' : `foretrekker ${a[0][0]} (${K(a[0][1])} mot ${K(a[2][1])} for ${a[2][0]})`; };
+    $('#k-res').innerHTML = `<div class="tall"><small>Personlig aksjonær, etter skatt per aksje</small>${K(m.pers.utb)} / ${K(m.pers.selg)} / ${K(m.pers.behold)}</div><div class="bidrag">Den personlige aksjonæren ${pref(m.pers)}. Holdingselskapet ${pref(m.hold)}. Pensjonsfondet ${pref(m.fond)}. Ulike eiere, ulike ønsker: det er klientelleffekten. Selskapet tiltrekker seg eierne som passer til politikken.</div>`;
+    const { s: s0, X, Y } = akser(0, 3, 0, m.D * 1.18, '', 'Etter skatt per aksje (kr)', () => '', undefined, 3);
+    let s = s0.replace(/<text x="[^"]+" y="[^"]+" text-anchor="middle" font-size="11.5" fill="#6b7280">[^<]*<\/text>/g, '');
+    const farger = ['#f59e0b', '#046530', '#0e7490'], bw = (X(1) - X(0)) / 4;
+    typer.forEach(([n, t], gi) => { [t.utb, t.selg, t.behold].forEach((v, j) => { const x = X(gi) + bw * (0.35 + j); s += `<rect x="${x}" y="${Y(v)}" width="${bw * 0.85}" height="${Math.max(0, Y(0) - Y(v))}" fill="${farger[j]}" rx="3"/>` + tekst(x + bw * 0.42, Y(v) - 5, nf(v, 2), '#1a1a1a', 'middle', 10.5); }); s += tekst(X(gi) + bw * 2, H - MB + 16, n, '#4b5563', 'middle', 11.5); });
+    s += linje([[0, m.D], [3, m.D]], X, Y, '#9ca3af', 1.5, '4 4') + tekst(X(0) + 4, Y(m.D) - 6, `før skatt ${K(m.D)}`, '#6b7280', 'start', 11);
+    $('#k-graf').innerHTML = s + '</svg>';
+    $('#k-sub').innerHTML = `Jo lenger den personlige aksjonæren utsetter salget, desto mindre er nåverdien av skatten. Med like satser på utbytte og gevinst er utsettelsen den viktigste forskjellen.`;
+  }
+
+  /* ---------- felles ---------- */
+  const FMT = { pc0: v => pc(v, 0), pc1: v => pc(v, 1), pc2: v => pc(v, 2), x2: v => nf(v, 2), n0: v => nf(v, 0), n2: v => nf(v, 2) };
+  function settKontroller() {
+    const mx = mX(), mb = mB();
+    $$('[data-k]').forEach(el => {
+      const k = el.dataset.k, v = get(S, k);
+      if (el.type === 'range') {
+        if (k === 'x.dps') { el.max = Math.max(0.05, +mx.dpsMax.toFixed(4)); el.step = mx.dpsMax > 20 ? 0.5 : mx.dpsMax > 5 ? 0.1 : mx.dpsMax > 1 ? 0.05 : 0.01; }
+        if (k === 'b.d1' || k === 'b.onsk') { el.max = Math.max(0.1, +mb.d1max.toFixed(3)); el.step = mb.d1max > 50 ? 0.5 : mb.d1max > 5 ? 0.1 : 0.01; }
+        el.value = Math.min(+el.max, Math.max(+el.min, v));
+      } else el.value = +(+v).toFixed(6);
+    });
+    $$('[data-r]').forEach(el => { el.checked = get(S, el.dataset.r) === el.value; });
+    $$('[data-c]').forEach(el => { el.checked = !!get(S, el.dataset.c); });
+    $$('[data-vis]').forEach(el => { el.hidden = !get(S, el.dataset.vis); });
+  }
+  function markerPreset() {
+    const lik = (a, b) => Object.keys(b).every(k => k === 'navn' || (Array.isArray(b[k]) ? true : typeof b[k] === 'string' || typeof b[k] === 'boolean' ? a[k] === b[k] : Math.abs(a[k] - b[k]) < 1e-9));
+    $$('.forhand .knapp').forEach(b => { const [gr, id] = b.dataset.pre.split(':'); b.classList.toggle('aktiv', lik(S[gr], PRE[gr][id])); });
+  }
+  function tegn() {
+    tegnX(); tegnT(); tegnB(); tegnL(); tegnS(); tegnK();
+    $$('[data-v]').forEach(b => { b.textContent = (FMT[b.dataset.f] || FMT.pc1)(get(S, b.dataset.v)); });
+    markerPreset();
+  }
+  $$('[data-k]').forEach(el => el.addEventListener('input', () => {
+    const k = el.dataset.k, v = parseFloat(el.value); if (!isFinite(v)) return;
+    set(S, k, v);
+    if (k[0] === 'x' || k[0] === 's' || k[0] === 'b') S[k[0]].navn = 'Eget eksempel';
+    if (el.type === 'number') settKontroller();
+    tegn();
+  }));
+  $$('[data-r]').forEach(el => el.addEventListener('change', () => { if (el.checked) { set(S, el.dataset.r, el.value); settKontroller(); tegn(); } }));
+  $$('[data-c]').forEach(el => el.addEventListener('change', () => { set(S, el.dataset.c, el.checked); settKontroller(); tegn(); }));
+  $$('[data-pre]').forEach(b => b.addEventListener('click', () => { const [gr, id] = b.dataset.pre.split(':'); Object.assign(S[gr], PRE[gr][id]); settKontroller(); tegn(); }));
+  $$('[data-sett]').forEach(b => b.addEventListener('click', () => { Object.entries(JSON.parse(b.dataset.sett)).forEach(([k, v]) => set(S, k, v)); settKontroller(); tegn(); }));
+  $$('[data-null]').forEach(b => b.addEventListener('click', () => {
+    const gr = b.dataset.null, std = { x: PRE.x.bekk, b: PRE.b.bristol, l: PRE.l.std, s: PRE.s.bekk20, k: PRE.k.std };
+    Object.assign(S[gr], std[gr]);
+    if (gr === 'x') Object.assign(S.x, { skatt: false, skatt2: false, tp: 37.84, tg: 20 });
+    if (gr === 'b') S.b.bekk = 4;
+    settKontroller(); tegn();
+  }));
+  /* prøv selv */
+  const tolkTall = s => { s = String(s).trim().replace(/[\s ]/g, '').replace(/%|kr|mill\.?|€|£|usd|aksjer/gi, '').replace('−', '-'); if (s.includes(',')) s = s.replace(/\./g, '').replace(',', '.'); return parseFloat(s); };
+  $$('.oppg .sjekk').forEach(b => b.addEventListener('click', () => {
+    const li = b.closest('.oppg'), fb = li.querySelector('.tilbake');
+    if (li.dataset.riktig !== undefined) {
+      const valgt = li.querySelector('input[type=radio]:checked');
+      if (!valgt) { fb.textContent = 'Velg et alternativ først.'; fb.className = 'tilbake'; return; }
+      const ok = valgt.value === li.dataset.riktig; fb.textContent = ok ? 'Riktig. ' + (li.dataset.hvorfor || '') : 'Ikke riktig. ' + (li.dataset.hint || 'Prøv igjen.'); fb.className = 'tilbake ' + (ok ? 'ok' : 'nei'); return;
+    }
+    const v = tolkTall(li.querySelector('input[type=text]').value), svar = parseFloat(li.dataset.svar), tol = parseFloat(li.dataset.tol || '0'), abs = parseFloat(li.dataset.abs || '0');
+    if (!isFinite(v)) { fb.textContent = 'Skriv inn et tall.'; fb.className = 'tilbake'; return; }
+    const ok = Math.abs(v - svar) <= Math.max(abs, tol * Math.abs(svar), 1e-9);
+    fb.textContent = ok ? 'Riktig.' : 'Ikke helt. Prøv igjen, eller vis løsningen.'; fb.className = 'tilbake ' + (ok ? 'ok' : 'nei');
+  }));
+  $$('.oppg .los').forEach(b => b.addEventListener('click', () => { const l = b.closest('.oppg').querySelector('.losning'); l.hidden = !l.hidden; b.textContent = l.hidden ? 'Vis løsning' : 'Skjul løsning'; }));
+  $$('.oppg input[type=text]').forEach(i => i.addEventListener('keydown', e => { if (e.key === 'Enter') i.closest('.oppg').querySelector('.sjekk').click(); }));
+  /* deler */
+  const DELER = ['exdag', 'tilbakekjop', 'hjemmelaget', 'politikk', 'splitt', 'skatt'];
+  function visDel(id, rull) {
+    if (!DELER.includes(id)) id = 'exdag';
+    $$('main.del').forEach(m => m.classList.toggle('aktiv', m.id === 'del-' + id));
+    $$('.deler button').forEach(b => b.classList.toggle('aktiv', b.dataset.del === id));
+    if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id);
+    if (rull) { const nav = $('.deler'); const y = nav.getBoundingClientRect().top + window.scrollY - 8; if (window.scrollY > y) window.scrollTo({ top: y }); }
+  }
+  $$('.deler button').forEach(b => b.addEventListener('click', () => visDel(b.dataset.del, true)));
+  $$('a[data-del]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); visDel(a.dataset.del, true); }));
+  window.addEventListener('hashchange', () => visDel(location.hash.slice(1), false));
+  window.__UT = { S, PRE, mX, mB, mL, mS, mK, tegn };
+  settKontroller(); tegn(); visDel(location.hash.slice(1) || 'exdag', false);
+})();
+</script>
+</body>
+</html>

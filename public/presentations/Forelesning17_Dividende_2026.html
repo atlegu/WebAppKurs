@@ -36,6 +36,11 @@
   .reveal .norsk-eksempel .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #b45309; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
   .reveal .folkelig { background: #fff7ed; border-left: 4px solid #ea580c; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
   .reveal .folkelig .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #c2410c; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal .modell { display: flex; align-items: center; gap: 14px; background: #fff; border: 2px solid var(--nmbu-green); border-radius: 10px; padding: 10px 18px; margin: 14px 0 0; text-align: left; font-size: 0.78em; font-family: 'Source Sans 3', Arial, sans-serif; }
+  .reveal .modell .ikon { font-size: 1.4em; }
+  .reveal .modell a, .reveal .definisjon a { color: var(--nmbu-green); font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--nmbu-green-light); }
+  .reveal .modell a:hover, .reveal .definisjon a:hover { border-bottom-color: var(--nmbu-green); }
+  .reveal .modell .hva { color: #4b5563; }
   .reveal table { margin: 16px auto; border-collapse: collapse; font-size: 0.78em; }
   .reveal table th { background: var(--nmbu-green); color: white; padding: 8px 12px; font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; }
   .reveal table td { padding: 6px 12px; border: 1px solid #d4d4d4; text-align: center; }
@@ -205,6 +210,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
     $$P_{\text{før}} = P_{\text{ex}} + \text{Div}$$
   </div>
   <div class="key-point">I perfekte markeder skal kursfallet være <strong>akkurat lik</strong> dividenden. Empirisk: kursfallet er ofte litt mindre enn dividenden — pga skatt.</div>
+  <div class="modell"><span class="ikon">🧮</span><span><a href="Modell_Utbytte_MM.html#exdag" target="_blank" rel="noopener">Interaktiv modell, del 1: Utbyttedagen</a> <span class="hva">· balansen før og etter, kursfallet, EPS og P/E, og kursfallet med skatt (Elton og Gruber). Bekk AS fra oppgavesett 8 ligger inne.</span></span></div>
 </section>
 
 <section>
@@ -256,8 +262,8 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
   <div class="formel">
     $50/30 = 1{,}67$ mill aksjer
   </div>
-  <p style="text-align:left"><strong>Etter tilbakekjøp:</strong></p>
-  <ul>
+  <p style="text-align:left; margin-bottom: 4px"><strong>Etter tilbakekjøp:</strong></p>
+  <ul style="font-size: 0.9em; margin: 4px 0">
     <li>Eiendeler: $500 - 50 = 450$ mill</li>
     <li>Gjeld: 200 mill</li>
     <li>Egenkapital: 250 mill</li>
@@ -282,6 +288,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
     <tr><td>Total per aksje (kurs + div)</td><td>160 kr</td><td>160 kr</td></tr>
   </table>
   <div class="key-point">I et perfekt marked: <strong>akkurat samme</strong> total verdi til aksjonærene — bare i ulik form. Tilbakekjøp er som «dividende du må be om».</div>
+  <div class="modell"><span class="ikon">🧮</span><span><a href="Modell_Utbytte_MM.html#tilbakekjop" target="_blank" rel="noopener">Interaktiv modell, del 2: Utbytte eller tilbakekjøp</a> <span class="hva">· samme sum ut på to måter: kurs, EPS, P/E og aksjonærens formue, med og uten skatt.</span></span></div>
 </section>
 
 <section class="section-divider">
@@ -344,8 +351,9 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
     <li>EK: $250$ mill, antall aksjer: $11{,}67$ mill</li>
     <li>Ny kurs: $250/11{,}67 = 21{,}43$ kr</li>
   </ul>
-  <p style="text-align:left">Eksisterende aksjonær: hadde 10 aksjer × 30 = 300 kr. Nå: 10 aksjer × 21,43 + 10×(100/10) = 214 + 100 = 314 kr? <strong>Nei — sjekk:</strong> utbyttet ble fordelt på <em>alle</em> nye+gamle aksjer (11,67 mill), så per gammel aksje: $100/11{,}67 \approx 8{,}57$.</p>
+  <p style="text-align:left">Utbyttet på 100 mill deles på <em>alle</em> 11,67 mill aksjer, også de nye: $100/11{,}67 \approx 8{,}57$ kr per aksje. En eksisterende aksjonær med 10 aksjer hadde 10 × 30 = 300 kr før.</p>
   <div class="key-point">Total verdi for gammel aksjonær: $10 \times 21{,}43 + 10 \times 8{,}57 = 300$ kr. <strong>Uendret</strong> — som MM3 forutsier.</div>
+  <div class="modell"><span class="ikon">🧮</span><span><a href="Modell_Utbytte_MM.html#hjemmelaget" target="_blank" rel="noopener">Interaktiv modell, del 3: Hjemmelaget utbytte</a> <span class="hva">· Bristol plc over to år: velg utbyttet i år 1 og se at nåverdien står stille. Per og Lise fra oppgave 11 ligger inne.</span></span></div>
 </section>
 
 <section class="section-divider">
@@ -367,6 +375,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
     <div class="label">Folkelig — norsk dobbeltbeskatning</div>
     Et overskudd på 100 kr i selskapet betales først 22 kr i selskapsskatt → 78 kr igjen. Hvis det betales ut som utbytte, betaler aksjonæren 22 % × 1,72 = ~30 kr ekstra → 48 kr igjen. <strong>Halvparten</strong> går til skatt.
   </div>
+  <div class="modell"><span class="ikon">🧮</span><span><a href="Modell_Utbytte_MM.html#skatt" target="_blank" rel="noopener">Interaktiv modell, del 6: Skatt og klientell</a> <span class="hva">· personlig aksjonær, holdingselskap og pensjonsfond etter skatt, med skjermingsfradrag og fritaksmetoden.</span></span></div>
 </section>
 
 <section>
@@ -494,6 +503,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
     <li>$b$ — målsatt utdelingsforhold</li>
   </ul>
   <div class="key-point">Resultatet: utbytte beveger seg <strong>tregere</strong> enn overskuddet. Stabile utbytter selv i magre år, langsom oppjustering i gode år.</div>
+  <div class="modell"><span class="ikon">🧮</span><span><a href="Modell_Utbytte_MM.html#politikk" target="_blank" rel="noopener">Interaktiv modell, del 4: Politikk over tid</a> <span class="hva">· konstant andel, residual og Lintner på samme resultatbane, og Equinors faktiske utbytte 2018 til 2023.</span></span></div>
 </section>
 
 <section>
@@ -522,6 +532,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
     For å gjøre aksjen mer «tilgjengelig» for små investorer. Hvis en aksje koster 5000 kr, kjøper folk én. Hvis den koster 50 kr, kjøper de 100. Større omsetning kan øke likviditet.<br><br>
     Aksjesplitt er kosmetisk — som å bytte en 500 kr-seddel mot 5 × 100 kr-sedler. Verdi: identisk.
   </div>
+  <div class="modell"><span class="ikon">🧮</span><span><a href="Modell_Utbytte_MM.html#splitt" target="_blank" rel="noopener">Interaktiv modell, del 5: Splitt og aksjeutbytte</a> <span class="hva">· Bekk AS, Eurasion og Apple: antall aksjer, kurs og formue før og etter.</span></span></div>
 </section>
 
 <section>
@@ -588,6 +599,10 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
   <div class="definisjon">
     <div class="term">Tenk over</div>
     Hvis du var styreleder i et nytt teknologiselskap som nettopp gikk i overskudd: ville du innført utbytte? Hvilke argumenter taler for, hvilke imot? Hvordan ville du eventuelt strukturert det?
+  </div>
+  <div class="definisjon" style="margin-top: 12px; padding: 12px 20px; font-size: 0.9em;">
+    <div class="term">Interaktiv modell</div>
+    <strong>Modell_Utbytte_MM.html</strong>, steg for steg gjennom kapittelet: <a href="Modell_Utbytte_MM.html#exdag" target="_blank" rel="noopener">1 Utbyttedagen</a> · <a href="Modell_Utbytte_MM.html#tilbakekjop" target="_blank" rel="noopener">2 Utbytte eller tilbakekjøp</a> · <a href="Modell_Utbytte_MM.html#hjemmelaget" target="_blank" rel="noopener">3 Hjemmelaget utbytte</a> · <a href="Modell_Utbytte_MM.html#politikk" target="_blank" rel="noopener">4 Politikk over tid</a> · <a href="Modell_Utbytte_MM.html#splitt" target="_blank" rel="noopener">5 Splitt og aksjeutbytte</a> · <a href="Modell_Utbytte_MM.html#skatt" target="_blank" rel="noopener">6 Skatt og klientell</a>. Med Bekk AS fra oppgavesett 8 og «prøv selv»-oppgaver.
   </div>
   <p style="text-align:center; color: var(--nmbu-green); margin-top: 10px"><strong>Neste:</strong> Forelesning 18 — Opsjoner og opsjonsprising.</p>
 </section>
