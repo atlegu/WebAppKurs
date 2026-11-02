@@ -32,6 +32,16 @@ export const modul8KapitalstrukturModule: Module = {
             { title: 'Kapitalstruktur', filename: 'Forelesning16_Kapitalstruktur_2026.html' },
             { title: 'Dividendepolitikk', filename: 'Forelesning17_Dividende_2026.html' }
           ]
+        } as PresentationContent,
+        {
+          id: 'kapitalstruktur-modell',
+          type: 'presentation',
+          order: 2,
+          title: 'Interaktiv modell: Modigliani og Miller steg for steg',
+          description: 'Seks deler som følger kapittel 15 i læreboka: giring og EPS, hjemmelaget giring, MM II uten skatt, MM med skatt, statisk teori og den utvidede pizzamodellen. Eksemplene fra oppgavesett 8 (Industri AS, Vekt AS, Tindra AS) ligger inne som forhåndsvalg, og hver del har «prøv selv»-oppgaver med fasit. Modellen dukker også opp del for del der stoffet gjennomgås nedenfor.',
+          slides: [
+            { title: 'Kapitalstruktur-modellen (alle seks deler)', filename: 'Modell_Kapitalstruktur_MM.html', kind: 'modell' }
+          ]
         } as PresentationContent
       ]
     },
@@ -221,6 +231,17 @@ export const modul8KapitalstrukturModule: Module = {
           text: 'En analogi: Tenk på et selskap som en pizza. MM Proposisjon I sier at den totale mengden pizza ikke endres av hvordan du deler den opp. Om du skjærer i 4 eller 8 stykker, har du like mye pizza. På samme måte endrer ikke fordelingen mellom gjeld og egenkapital den totale selskapsverdien.'
         },
         {
+          id: 'kapitalstruktur-8-2-modell-giring',
+          type: 'presentation',
+          order: 5.5,
+          title: 'Utforsk: giring og hjemmelaget gjeld',
+          description: 'Del 1 viser hvordan et lån som brukes til tilbakekjøp gjør EPS brattere i EBIT, og hvor break-even ligger. Del 2 viser at investoren kan lage den samme giringen selv, og hvorfor det tvinger verdien med og uten gjeld til å bli lik.',
+          slides: [
+            { title: 'Del 1: Giring og EPS (Industri AS fra oppgavesett 8)', filename: 'Modell_Kapitalstruktur_MM.html#giring', kind: 'modell' },
+            { title: 'Del 2: Hjemmelaget giring og arbitrasjen bak MM I', filename: 'Modell_Kapitalstruktur_MM.html#hjemmelaget', kind: 'modell' }
+          ]
+        } as PresentationContent,
+        {
           id: 'kapitalstruktur-8-2-heading-mm2',
           type: 'heading',
           order: 6,
@@ -280,6 +301,16 @@ export const modul8KapitalstrukturModule: Module = {
           explanation: 'Med mer gjeld blir ROE-linjen brattere: samme endring i driftsresultat (ROA) gir større utslag i ROE. Det er **finansiell gearing** – gjeld forsterker avkastningen til eierne.\n\nMen forsterkningen går begge veier: **når ROA er høyere enn gjeldsrenten** løfter gjeld ROE, **når ROA er lavere** trekker gjeld ROE kraftig ned (helt i minus). Alle linjene møtes ved break-even der ROA = gjeldsrenten. Høyere gjeld = høyere forventet ROE, men også høyere risiko – kjernen i kapitalstrukturvalget.'
         } as InteractiveModelContent,
         {
+          id: 'kapitalstruktur-8-2-modell-mm2',
+          type: 'presentation',
+          order: 9.7,
+          title: 'Utforsk: MM proposisjon II',
+          description: 'Dra i gjeldsgraden og se egenkapitalkostnaden stige langs en rett linje mens WACC ligger flatt. Ricard NV fra læreboka og Vekt AS fra oppgave 4 ligger inne, og du kan slå på koblingen til beta.',
+          slides: [
+            { title: 'Del 3: MM II uten skatt', filename: 'Modell_Kapitalstruktur_MM.html#mm2', kind: 'modell' }
+          ]
+        } as PresentationContent,
+        {
           id: 'kapitalstruktur-8-2-heading-skatt',
           type: 'heading',
           order: 10,
@@ -316,6 +347,16 @@ export const modul8KapitalstrukturModule: Module = {
           calculation: 'Skatteskjoldets verdi = 22% × 40 mill. = 8,8 mill. kr\n\nVerdi med gjeld = 100 + 8,8 = 108,8 mill. kr\n\nVed å ta opp gjeld øker selskapsverdien med nåverdien av fremtidige skattebesparelser.'
         },
         {
+          id: 'kapitalstruktur-8-2-modell-skatt',
+          type: 'presentation',
+          order: 14.5,
+          title: 'Utforsk: skatteskjoldet',
+          description: 'Firma U og Firma L år for år, nåverdien av skatteskjoldet, verdien med gjeld og WACC regnet på to måter. Tindra AS fra oppgave 6 og 7 ligger inne som forhåndsvalg.',
+          slides: [
+            { title: 'Del 4: MM med skatt', filename: 'Modell_Kapitalstruktur_MM.html#skatt', kind: 'modell' }
+          ]
+        } as PresentationContent,
+        {
           id: 'kapitalstruktur-8-2-heading-tradeoff',
           type: 'heading',
           order: 15,
@@ -335,6 +376,17 @@ export const modul8KapitalstrukturModule: Module = {
           term: 'Konkurskostnader',
           definition: 'Direkte kostnader (advokater, revisorer, rettsgebyr) og indirekte kostnader (tapt tillit, miste nøkkelpersoner, dårligere leverandørvilkår) ved finansielt stress og konkurs.'
         },
+        {
+          id: 'kapitalstruktur-8-2-modell-tradeoff',
+          type: 'presentation',
+          order: 17.5,
+          title: 'Utforsk: trade-off og pizzaen',
+          description: 'Del 5 legger krisekostnader oppå MM med skatt og finner optimal gjeld der marginal skattefordel er lik marginal krisekostnad. Del 6 viser hele pizzaen: aksjonærer, kreditorer, stat og konkursbo, der totalen er konstant uansett gjeld.',
+          slides: [
+            { title: 'Del 5: Statisk teori og optimal kapitalstruktur', filename: 'Modell_Kapitalstruktur_MM.html#tradeoff', kind: 'modell' },
+            { title: 'Del 6: Den utvidede pizzamodellen', filename: 'Modell_Kapitalstruktur_MM.html#pizza', kind: 'modell' }
+          ]
+        } as PresentationContent,
         {
           id: 'kapitalstruktur-8-2-keypoints',
           type: 'keypoint',
@@ -538,6 +590,12 @@ export const modul8KapitalstrukturModule: Module = {
           }],
           explanation: 'WACC-kurven viser trade-off-teorien i praksis: Litt gjeld gir skattefordeler og lavere WACC. Men for mye gjeld øker risikoen, egenkapitalkostnaden stiger, og WACC begynner å øke igjen. Det grønne punktet viser optimal gjeldsandel.'
         } as InteractiveModelContent,
+        {
+          id: 'kapitalstruktur-8-3-modell-henvisning',
+          type: 'text',
+          order: 19.5,
+          text: 'Simulatoren over er en forenklet illustrasjon av WACC-kurven. Den fullstendige modellen, der kurven bygges opp fra Modigliani-Miller-formlene med skatt og en eksplisitt krisekostnad, finner du i del 5 og 6 av den interaktive modellen i seksjonen om Modigliani-Miller.'
+        },
         {
           id: 'kapitalstruktur-8-3-exercise',
           type: 'exercise',

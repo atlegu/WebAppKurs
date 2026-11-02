@@ -36,6 +36,11 @@
   .reveal .norsk-eksempel .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; color: #b45309; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
   .reveal .folkelig { background: #fff7ed; border-left: 4px solid #ea580c; padding: 14px 20px; margin: 16px 0; text-align: left; border-radius: 0 6px 6px 0; font-size: 0.92em; }
   .reveal .folkelig .label { font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 700; color: #c2410c; font-size: 0.85em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reveal .modell { display: flex; align-items: center; gap: 14px; background: #fff; border: 2px solid var(--nmbu-green); border-radius: 10px; padding: 10px 18px; margin: 14px 0 0; text-align: left; font-size: 0.78em; font-family: 'Source Sans 3', Arial, sans-serif; }
+  .reveal .modell .ikon { font-size: 1.4em; }
+  .reveal .modell a, .reveal .definisjon a { color: var(--nmbu-green); font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--nmbu-green-light); }
+  .reveal .modell a:hover, .reveal .definisjon a:hover { border-bottom-color: var(--nmbu-green); }
+  .reveal .modell .hva { color: #4b5563; }
   .reveal table { margin: 16px auto; border-collapse: collapse; font-size: 0.78em; }
   .reveal table th { background: var(--nmbu-green); color: white; padding: 8px 12px; font-family: 'Source Sans 3', Arial, sans-serif; font-weight: 600; }
   .reveal table td { padding: 6px 12px; border: 1px solid #d4d4d4; text-align: center; }
@@ -246,6 +251,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
     </svg>
   </div>
   <p style="text-align:left">Den giret-linjen er <strong>brattere</strong> — gevinst og tap forsterkes. Skjæringspunktet er ROA = rentesats. <strong>Over</strong> er giring lønnsomt, <strong>under</strong> ulønnsomt.</p>
+  <div class="modell"><span class="ikon">🧮</span><span><a href="Modell_Kapitalstruktur_MM.html#giring" target="_blank" rel="noopener">Interaktiv modell, del 1: Giring og EPS</a> <span class="hva">· dra i gjeldsandelen og se EPS-linjene og break-even flytte seg. Industri AS ligger inne som eksempel.</span></span></div>
 </section>
 
 <section class="section-divider">
@@ -318,6 +324,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
     <tr><td><strong>Netto</strong></td><td>0</td><td>400</td><td>800</td></tr>
   </table>
   <div class="key-point">Identisk avkastningsprofil! Investorer kan «lage» giring selv → selskapet kan ikke skape verdi ved å gjøre det for dem.</div>
+  <div class="modell"><span class="ikon">🧮</span><span><a href="Modell_Kapitalstruktur_MM.html#hjemmelaget" target="_blank" rel="noopener">Interaktiv modell, del 2: Hjemmelaget giring</a> <span class="hva">· lag giringen selv, gir ned igjen, og se arbitrasjen som tvinger V<sub>L</sub> = V<sub>U</sub>.</span></span></div>
 </section>
 
 <section>
@@ -357,6 +364,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
     </svg>
   </div>
   <p style="text-align:left">$r_E$ stiger lineært, men WACC = $r_A$ er <strong>konstant</strong> — fordi billigere gjeld eksakt motvirkes av høyere $r_E$. Kapitalstruktur er irrelevant for WACC og verdi.</p>
+  <div class="modell"><span class="ikon">🧮</span><span><a href="Modell_Kapitalstruktur_MM.html#mm2" target="_blank" rel="noopener">Interaktiv modell, del 3: MM II uten skatt</a> <span class="hva">· r<sub>E</sub>, r<sub>D</sub> og WACC mot gjeldsgraden, med Ricard NV og Vekt AS fra oppgave 4.</span></span></div>
 </section>
 
 <section>
@@ -463,6 +471,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
   </div>
   <p style="text-align:left">Modellen tilsier <strong>100 % gjeld</strong> som optimum. Men det skjer ikke i virkeligheten. Hvorfor?</p>
   <div class="key-point">Vi har glemt en viktig kostnad: <strong>finansiell krise og konkurs</strong>.</div>
+  <div class="modell"><span class="ikon">🧮</span><span><a href="Modell_Kapitalstruktur_MM.html#skatt" target="_blank" rel="noopener">Interaktiv modell, del 4: MM med skatt</a> <span class="hva">· Firma U og L år for år, skatteskjoldet, V<sub>L</sub> = V<sub>U</sub> + t<sub>s</sub>D og WACC på to måter, med Tindra AS fra oppgave 6 og 7.</span></span></div>
 </section>
 
 <section class="section-divider">
@@ -532,6 +541,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
     </svg>
   </div>
   <p style="text-align:left">Faktisk verdi = $V_U + t_s D - PV(\text{krisekostnader})$. Optimum der marginal skattefordel = marginal krisekostnad.</p>
+  <div class="modell"><span class="ikon">🧮</span><span><a href="Modell_Kapitalstruktur_MM.html#tradeoff" target="_blank" rel="noopener">Interaktiv modell, del 5: Statisk teori</a> og <a href="Modell_Kapitalstruktur_MM.html#pizza" target="_blank" rel="noopener">del 6: Utvidet pizza</a> <span class="hva">· finn D* med skatt, krisekostnad og gjeldskapasitet, og se hvem som får hvilket stykke av pizzaen.</span></span></div>
 </section>
 
 <section>
@@ -712,6 +722,10 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
   <div class="definisjon">
     <div class="term">Tenk over</div>
     Hvilken kapitalstruktur ville du valgt for: (1) ny restaurant i Oslo? (2) Lakseoppdrettsselskap? (3) FoU-startup innen kreftmedisin? (4) Eiendomsselskap med stabile leieinntekter?
+  </div>
+  <div class="definisjon" style="margin-top: 12px; padding: 12px 20px; font-size: 0.9em;">
+    <div class="term">Interaktiv modell</div>
+    <strong>Modell_Kapitalstruktur_MM.html</strong>, steg for steg gjennom kapittelet: <a href="Modell_Kapitalstruktur_MM.html#giring" target="_blank" rel="noopener">1 Giring og EPS</a> · <a href="Modell_Kapitalstruktur_MM.html#hjemmelaget" target="_blank" rel="noopener">2 Hjemmelaget giring</a> · <a href="Modell_Kapitalstruktur_MM.html#mm2" target="_blank" rel="noopener">3 MM II</a> · <a href="Modell_Kapitalstruktur_MM.html#skatt" target="_blank" rel="noopener">4 MM med skatt</a> · <a href="Modell_Kapitalstruktur_MM.html#tradeoff" target="_blank" rel="noopener">5 Statisk teori</a> · <a href="Modell_Kapitalstruktur_MM.html#pizza" target="_blank" rel="noopener">6 Utvidet pizza</a>. Med eksemplene fra oppgavesett 8 og «prøv selv»-oppgaver.
   </div>
   <p style="text-align:center; color: var(--nmbu-green); margin-top: 10px"><strong>Neste:</strong> Forelesning 17 — Dividendepolitikk. Hvor mye av overskuddet bør betales ut?</p>
 </section>

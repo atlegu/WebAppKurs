@@ -224,6 +224,8 @@ export interface ExerciseSetContent extends BaseContent {
 export interface PresentationSlide {
   title: string;
   filename: string;
+  /** 'modell' = interaktiv HTML-modell (ikke reveal.js): høyere ramme, ingen presentasjonsmodus-knapp */
+  kind?: 'slides' | 'modell';
 }
 
 export interface PresentationContent extends BaseContent {

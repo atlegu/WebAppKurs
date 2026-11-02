@@ -7026,6 +7026,11 @@ a:hover {
   border-color: var(--primary);
 }
 
+.presentation-iframe.presentation-iframe--modell {
+  height: 85vh;
+  min-height: 640px;
+}
+
 .presentation-iframe {
   width: 100%;
   height: 70vh;

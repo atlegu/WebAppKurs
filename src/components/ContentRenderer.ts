@@ -548,7 +548,7 @@ export class ContentRenderer {
   }
 
   private renderPresentation(content: PresentationContent): string {
-    const slidesHtml = content.slides.map((slide, index) => `
+    const slidesHtml = content.slides.map((slide, index) => { const erModell = slide.kind === 'modell'; return `
       <div class="presentation-card" data-presentation-id="${content.id}-${index}">
         <button class="presentation-toggle" data-target="${content.id}-${index}">
           <div class="presentation-toggle-info">
@@ -574,7 +574,7 @@ export class ContentRenderer {
               </svg>
               Åpne i fullskjerm
             </a>
-            <a href="/presentations/${slide.filename}?view=slides" target="_blank" class="presentation-slides-btn">
+            ${erModell ? '' : `<a href="/presentations/${slide.filename}?view=slides" target="_blank" class="presentation-slides-btn">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="2" y="3" width="20" height="14" rx="2"></rect>
                 <path d="M8 21h8"></path>
@@ -582,12 +582,12 @@ export class ContentRenderer {
                 <path d="M7 8l5 3-5 3z"></path>
               </svg>
               Presentasjonsmodus
-            </a>
+            </a>`}
           </div>
-          <iframe class="presentation-iframe" data-src="/presentations/${slide.filename}" title="${slide.title}" sandbox="allow-scripts allow-same-origin"></iframe>
+          <iframe class="presentation-iframe${erModell ? ' presentation-iframe--modell' : ''}" data-src="/presentations/${slide.filename}" title="${slide.title}" sandbox="allow-scripts allow-same-origin"></iframe>
         </div>
       </div>
-    `).join('');
+    `; }).join('');
 
     return `
       <div class="presentation-section" id="${content.id}">

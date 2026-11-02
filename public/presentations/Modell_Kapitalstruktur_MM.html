@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kapitalstruktur: Modigliani og Miller — interaktiv modell · BUS 220</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --g: #046530; --g2: #0b7a3e; --gl: #f0f7f2; --gb: #cfe5d7; --ink: #1a1a1a; --mut: #4b5563; --mut2: #6b7280; --line: #e4e4df; --bg: #f7f7f4;
+          --rod: #dc2626; --gronn: #10b981; --indigo: #6366f1; --oransje: #d97706; --oransje2: #f59e0b; --lilla: #8b5cf6; --blaa: #3b82f6; --teal: #0e7490; --graa: #6b7280; --mork: #374151; --skifer: #94a3b8; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Source Serif 4', Georgia, serif; font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
+  header.topp { background: #fff; border-bottom: 1px solid var(--line); padding: 26px 0 18px; }
+  .brod { font-family: 'Source Sans 3', sans-serif; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--g); font-weight: 700; }
+  h1 { font-family: 'Source Sans 3', sans-serif; font-size: 34px; line-height: 1.15; margin: 6px 0 8px; }
+  .ingress { max-width: 900px; color: #2c2c2c; margin: 0 0 12px; font-size: 17px; }
+  .tags span { display: inline-block; font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 600; border-radius: 99px; padding: 3px 11px; margin: 0 6px 6px 0; background: var(--gl); color: var(--g); border: 1px solid var(--gb); }
+  .deler { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; font-family: 'Source Sans 3', sans-serif; }
+  .deler button { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--gb); background: var(--gl); color: var(--g); border-radius: 99px; padding: 5px 14px 5px 5px; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .deler button .n { width: 26px; height: 26px; border-radius: 50%; background: #fff; color: var(--g); display: inline-flex; align-items: center; justify-content: center; font-weight: 700; border: 1px solid var(--gb); font-size: 13px; }
+  .deler button:hover { background: #e1efe6; }
+  .deler button.aktiv { background: var(--g); color: #fff; border-color: var(--g); }
+  .deler button.aktiv .n { border-color: #fff; }
+  main.grid { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 24px; padding: 24px 20px 40px; }
+  main.del { display: none; } main.del.aktiv { display: grid; }
+  @media (max-width: 900px) { main.grid { grid-template-columns: minmax(0, 1fr); } }
+  .panel { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; }
+  .panel h2 { font-family: 'Source Sans 3', sans-serif; font-size: 18px; margin: 0 0 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .panel h2 button { border: 0; background: none; color: var(--g); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: underline; }
+  .gruppe { font-family: 'Source Sans 3', sans-serif; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--g); font-weight: 700; margin: 14px 0 8px; padding-top: 10px; border-top: 1px solid var(--line); }
+  .gruppe.forste { border-top: 0; padding-top: 0; margin-top: 0; }
+  .ctl { margin-bottom: 12px; font-family: 'Source Sans 3', sans-serif; }
+  .ctl label { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; font-weight: 600; color: var(--mut); margin-bottom: 2px; }
+  .ctl label b { color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .ctl input[type=range] { width: 100%; accent-color: var(--g); margin: 0; }
+  .ctl input[type=number], .ctl select { width: 100%; min-width: 0; font: inherit; font-size: 14px; padding: 6px 9px; border: 1px solid #cfcfc7; border-radius: 8px; background: #fff; color: var(--ink); }
+  .ctl .mm { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--mut2); margin-top: -2px; }
+  .ctl.valg { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--mut); margin-top: 6px; }
+  .ctl.valg input { accent-color: var(--g); width: 17px; height: 17px; margin: 0; flex-shrink: 0; }
+  .ctl.valg label { display: inline; }
+  .to { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .tre { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .forhand { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
+  .knapp { font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 600; border: 1px solid var(--gb); background: var(--gl); color: var(--g); border-radius: 7px; padding: 5px 10px; cursor: pointer; text-align: left; }
+  .knapp:hover { background: #e1efe6; }
+  .knapp.aktiv { background: var(--g); color: #fff; border-color: var(--g); }
+  .hjelp { font-size: 12.5px; color: var(--mut2); font-family: 'Source Sans 3', sans-serif; margin: 2px 0 0; }
+  .info { font-family: 'Source Sans 3', sans-serif; font-size: 14px; color: var(--mut); background: #fafaf7; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; margin-bottom: 10px; }
+  .info b { color: var(--ink); }
+  a.lenke { color: var(--g); font-weight: 600; }
+  .teori p { margin: 0 0 10px; font-size: 15px; }
+  .teori h3 { font-family: 'Source Sans 3', sans-serif; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--g); margin: 16px 0 6px; }
+  .teori ul, .teori ol { padding-left: 20px; margin: 0 0 10px; font-size: 15px; }
+  .teori li { margin-bottom: 5px; }
+  details.teori summary { cursor: pointer; font-family: 'Source Sans 3', sans-serif; font-size: 16px; font-weight: 700; color: var(--g); list-style: none; display: flex; justify-content: space-between; }
+  details.teori summary::after { content: '+'; font-size: 20px; line-height: 1; }
+  details.teori[open] summary::after { content: '−'; }
+  details.teori summary::-webkit-details-marker { display: none; }
+  details.teori[open] summary { margin-bottom: 10px; }
+  .f { font-family: 'Source Serif 4', serif; font-style: italic; }
+  .fr { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; margin: 0 3px; line-height: 1.15; }
+  .fr > span:first-child { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .fr > span:last-child { padding: 1px 4px 0; }
+  .formel { background: var(--gl); border-left: 4px solid var(--g); border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 8px 0 12px; font-size: 17px; overflow-x: auto; }
+  .steg { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; }
+  .steg .nr { width: 36px; height: 36px; border-radius: 50%; background: var(--g); color: #fff; font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 17px; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .steg h3 { font-family: 'Source Sans 3', sans-serif; font-size: 17px; margin: 0 0 4px; }
+  .steg .hva { font-size: 14.5px; color: var(--mut); margin: 0 0 8px; }
+  .steg .regn { font-family: 'Source Serif 4', serif; font-size: 17px; background: #fafaf7; border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; overflow-x: auto; white-space: normal; line-height: 1.9; }
+  .steg .regn b { color: var(--g); }
+  .steg .merk { font-family: 'Source Sans 3', sans-serif; font-size: 13.5px; color: var(--mut); margin: 8px 0 0; }
+  .steg .merk.adv { color: #9a3412; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 8px; padding: 6px 10px; }
+  .res { background: var(--g); color: #fff; border-radius: 12px; padding: 18px 22px; margin-bottom: 14px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 20px; align-items: center; }
+  @media (max-width: 600px) { .res { grid-template-columns: 1fr; } }
+  .res .tall { font-family: 'Source Sans 3', sans-serif; font-size: 40px; font-weight: 700; line-height: 1; white-space: nowrap; }
+  .res .tall small { font-size: 15px; font-weight: 600; display: block; opacity: .85; margin-bottom: 4px; white-space: normal; }
+  .res .bidrag { font-family: 'Source Sans 3', sans-serif; font-size: 14px; }
+  .res .bar { display: flex; height: 22px; border-radius: 6px; overflow: hidden; margin: 6px 0 4px; background: rgba(255,255,255,.2); }
+  .res .bar i { display: block; height: 100%; }
+  .graf-boks { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; }
+  .graf-boks h3 { font-family: 'Source Sans 3', sans-serif; font-size: 17px; margin: 0; }
+  .graf-boks .sub { font-family: 'Source Sans 3', sans-serif; font-size: 13.5px; color: var(--mut); margin: 3px 0 8px; }
+  .graf-boks svg { width: 100%; height: auto; display: block; }
+  .graf-boks svg text, .steg svg text, .boks svg text { font-family: 'Source Sans 3', sans-serif; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: 'Source Sans 3', sans-serif; font-size: 13px; color: var(--mut); margin-top: 6px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+  .legend i.l { height: 3px; width: 18px; border-radius: 2px; vertical-align: 3px; }
+  .legend i.ld { height: 0; width: 18px; border-top: 3px dashed; vertical-align: 3px; }
+  .legend i.k { border-radius: 2px; }
+  .to-kol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  @media (max-width: 1100px) { .to-kol { grid-template-columns: 1fr; } }
+  .boks { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px 20px 10px; margin-bottom: 14px; }
+  .boks h3 { font-family: 'Source Sans 3', sans-serif; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--g); margin: 0 0 8px; }
+  .boks.prov { border-top: 4px solid var(--g); }
+  .boks.arb { border-top: 4px solid var(--lilla); } .boks.arb h3 { color: #6d28d9; }
+  .boks p { font-size: 15px; margin: 0 0 8px; }
+  .boks ol, .boks ul { margin: 0 0 8px; padding-left: 22px; font-size: 15px; }
+  .boks li { margin-bottom: 6px; }
+  button.lite { font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 600; border: 1px solid var(--gb); background: var(--gl); color: var(--g); border-radius: 7px; padding: 3px 9px; cursor: pointer; }
+  button.lite:hover { background: #e1efe6; }
+  .tabwrap { overflow-x: auto; margin: 6px 0 4px; }
+  table.tab { border-collapse: collapse; font-family: 'Source Sans 3', sans-serif; font-size: 14px; min-width: 100%; white-space: nowrap; }
+  table.tab th, table.tab td { padding: 5px 10px; text-align: right; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+  table.tab th { font-weight: 700; color: var(--mut); background: #fafaf7; }
+  table.tab th:first-child, table.tab td:first-child { text-align: left; }
+  table.tab tr.hode td { font-weight: 700; color: var(--g); background: var(--gl); text-align: left; }
+  table.tab td.neg { color: var(--rod); }
+  table.tab tr.sum td { font-weight: 700; border-top: 2px solid #cfcfc7; }
+  table.tab tr.diff td { color: var(--mut2); font-style: italic; }
+  .oppg { margin-bottom: 12px; }
+  .oppg .rad { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 4px; }
+  .oppg input[type=text] { font: inherit; font-size: 14px; padding: 5px 9px; border: 1px solid #cfcfc7; border-radius: 8px; width: 140px; min-width: 0; }
+  .oppg .tilbake { font-family: 'Source Sans 3', sans-serif; font-size: 14px; margin-top: 4px; color: var(--mut); }
+  .oppg .tilbake.ok { color: var(--g); font-weight: 600; } .oppg .tilbake.nei { color: var(--rod); font-weight: 600; }
+  .oppg .losning { font-family: 'Source Sans 3', sans-serif; font-size: 14px; color: var(--mut); background: #fafaf7; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; margin-top: 6px; }
+  .oppg label.alt { display: block; font-size: 14.5px; font-family: 'Source Sans 3', sans-serif; margin: 2px 0; cursor: pointer; }
+  .oppg label.alt input { accent-color: var(--g); margin-right: 6px; }
+  .advarsel { background: #fffbea; border: 1px solid #f1e3a4; color: #7a5a06; border-radius: 10px; padding: 10px 14px; font-family: 'Source Sans 3', sans-serif; font-size: 14px; margin-bottom: 12px; display: none; }
+  .stabel { display: flex; height: 30px; border-radius: 6px; overflow: hidden; font-family: 'Source Sans 3', sans-serif; font-size: 12.5px; font-weight: 700; color: #fff; margin: 6px 0 2px; }
+  .stabel i { display: flex; align-items: center; justify-content: center; height: 100%; font-style: normal; overflow: hidden; white-space: nowrap; }
+  .stabel-navn { font-family: 'Source Sans 3', sans-serif; font-size: 13px; color: var(--mut); margin-top: 10px; }
+  footer { font-family: 'Source Sans 3', sans-serif; font-size: 13px; color: var(--mut2); text-align: center; padding: 10px 20px 30px; }
+  @media print {
+    body { background: #fff; font-size: 13px; }
+    .deler, .knapp, button.lite, .oppg input, .oppg .rad { display: none !important; }
+    main.del { display: grid !important; grid-template-columns: 1fr; gap: 12px; padding: 10px 0; page-break-before: always; }
+    .steg, .graf-boks, .boks, .res, .panel { break-inside: avoid; box-shadow: none; }
+    .res { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topp"><div class="wrap">
+  <div class="brod">BUS 220 · Interaktiv modell</div>
+  <h1>Kapitalstruktur: Modigliani og Miller steg for steg</h1>
+  <p class="ingress">Modigliani og Miller viste i 1958 at i et perfekt kapitalmarked er selskapets verdi uavhengig av hvordan det er finansiert. Her følger du resonnementet i samme rekkefølge som læreboka: først hva giring gjør med eiernes avkastning og risiko, så hvorfor investorene kan lage giringen selv, hva skatten endrer, og til slutt hvorfor krisekostnader gir et optimum. Alle tall oppdateres mens du drar i kontrollene.</p>
+  <div class="tags"><span>Middels til krevende</span><span>MM I og II</span><span>Hjemmelaget giring</span><span>Skatteskjold</span><span>Statisk teori</span><span>HRWJ kapittel 15</span></div>
+  <nav class="deler" aria-label="Deler">
+    <button data-del="giring"><span class="n">1</span>Giring og EPS</button>
+    <button data-del="hjemmelaget"><span class="n">2</span>Hjemmelaget giring</button>
+    <button data-del="mm2"><span class="n">3</span>MM II uten skatt</button>
+    <button data-del="skatt"><span class="n">4</span>MM med skatt</button>
+    <button data-del="tradeoff"><span class="n">5</span>Statisk teori</button>
+    <button data-del="pizza"><span class="n">6</span>Utvidet pizza</button>
+  </nav>
+</div></header>
+
+<!-- ===================== DEL 1 ===================== -->
+<main class="wrap grid del" id="del-giring">
+  <aside>
+    <section class="panel">
+      <h2>Selskapet <button data-null="g">Tilbakestill</button></h2>
+      <div class="gruppe forste">Eksempler</div>
+      <div class="forhand">
+        <button class="knapp aktiv" data-pre="g:industriSett">Industri AS (oppgavesett 8)</button>
+        <button class="knapp" data-pre="g:industriSlides">Industri AS (forelesning 16)</button>
+        <button class="knapp" data-pre="g:autoveloce">Autoveloce (HRWJ tab. 15.3)</button>
+        <button class="knapp" data-pre="g:mpd">MPD plc (HRWJ eks. 15.1)</button>
+      </div>
+      <div class="gruppe">I dag: bare egenkapital</div>
+      <div class="to">
+        <div class="ctl"><label><span>Antall aksjer</span></label><input type="number" data-k="g.N0" min="1" step="1"></div>
+        <div class="ctl"><label><span>Aksjekurs</span></label><input type="number" data-k="g.P" min="0.01" step="1"></div>
+      </div>
+      <div class="gruppe">Forslaget: lån og kjøp tilbake aksjer</div>
+      <div class="ctl"><label><span>Gjeldsandel etter restrukturering (D/V)</span> <b data-v="g.dv" data-f="pc0"></b></label><input type="range" data-k="g.dv" min="0" max="90" step="1"><div class="mm"><span>0 %</span><span>90 %</span></div></div>
+      <div class="ctl"><label><span>Lånebeløp D</span></label><input type="number" data-k="g.D" min="0" step="100"></div>
+      <div class="ctl"><label><span>Lånerente (R<sub>D</sub>)</span> <b data-v="g.rd" data-f="pc1"></b></label><input type="range" data-k="g.rd" min="0" max="15" step="0.25"><div class="mm"><span>0 %</span><span>15 %</span></div></div>
+      <div class="gruppe">Driftsresultat (EBIT) i tre scenarier</div>
+      <div class="tre">
+        <div class="ctl"><label><span>Nedgang</span></label><input type="number" data-k="g.e1" step="100"></div>
+        <div class="ctl"><label><span>Forventet</span></label><input type="number" data-k="g.e2" step="100"></div>
+        <div class="ctl"><label><span>Oppgang</span></label><input type="number" data-k="g.e3" step="100"></div>
+      </div>
+      <div class="gruppe">Skatt</div>
+      <div class="ctl"><label><span>Selskapsskatt (T<sub>C</sub>)</span> <b data-v="g.t" data-f="pc0"></b></label><input type="range" data-k="g.t" min="0" max="35" step="1"><div class="mm"><span>0 %</span><span>35 %</span></div></div>
+      <p class="hjelp">Boka ser bort fra skatt i delkapittel 15.2. Prøv å slå på skatt: tallene krymper, men break-even flytter seg ikke.</p>
+    </section>
+    <details class="panel teori">
+      <summary>Teori og formler</summary>
+      <h3>Finansiell giring</h3>
+      <p>Selskapet låner og bruker pengene til å kjøpe tilbake aksjer. Eiendelene er de samme, men færre aksjer deler på et resultat som nå er belastet med renter.</p>
+      <div class="formel"><span class="f">EPS<sub>U</sub> = <span class="fr"><span>EBIT</span><span>N</span></span> &nbsp;&nbsp; EPS<sub>L</sub> = <span class="fr"><span>EBIT − R<sub>D</sub> · D</span><span>N<sub>L</sub></span></span></span></div>
+      <p>Linjen med gjeld er brattere: hver krone ekstra EBIT deles på færre aksjer. Derfor forsterker gjeld både oppturer og nedturer.</p>
+      <h3>Break-even</h3>
+      <div class="formel"><span class="f">EBIT* = R<sub>D</sub> · V</span></div>
+      <p>Der linjene krysser, er EPS lik i begge strukturer. Da tjener selskapet akkurat lånerenten på eiendelene. Over dette punktet lønner giring seg, under taper eierne på den.</p>
+      <h3>Bokas fire konklusjoner</h3>
+      <ol>
+        <li>Effekten av giring avhenger av EBIT. Høy EBIT: giring hjelper.</li>
+        <li>I forventet scenario øker giring både ROE og EPS.</li>
+        <li>Eierne bærer mer risiko: EPS og ROE svinger mer.</li>
+        <li>Derfor er kapitalstruktur viktig for eierne.</li>
+      </ol>
+      <p>De tre første er riktige. Den fjerde følger ikke, og det er poenget i del 2.</p>
+    </details>
+  </aside>
+
+  <section>
+    <div class="advarsel" id="g-adv"></div>
+    <div class="steg"><div class="nr">1</div><div>
+      <h3>Restruktureringen: <span id="g-navn"></span></h3>
+      <p class="hva">Selskapet låner og kjøper tilbake aksjer til dagens kurs. Eiendelene og driften er uendret.</p>
+      <div class="regn" id="g-s1"></div>
+    </div></div>
+    <div class="steg"><div class="nr">2</div><div>
+      <h3>EPS og ROE i tre scenarier</h3>
+      <p class="hva">Samme EBIT, to måter å dele det på. Rentene må betales uansett.</p>
+      <div class="tabwrap" id="g-tab"></div>
+    </div></div>
+    <div class="steg"><div class="nr">3</div><div>
+      <h3>Break-even EBIT</h3>
+      <p class="hva">Sett EPS lik i de to strukturene og løs for EBIT.</p>
+      <div class="regn" id="g-s3"></div>
+      <p class="merk" id="g-s3m"></p>
+    </div></div>
+    <div class="res" id="g-res"></div>
+    <div class="graf-boks">
+      <h3>EPS som funksjon av EBIT (HRWJ figur 15.1)</h3>
+      <p class="sub" id="g-sub"></p>
+      <div id="g-graf"></div>
+      <div class="legend"><span><i class="l" style="background:var(--graa)"></i>Uten gjeld</span><span><i class="l" style="background:var(--g)"></i>Med gjeld</span><span><i style="background:var(--rod)"></i>Break-even</span><span><i class="ld" style="border-color:#c7c7bf"></i>De tre scenariene</span></div>
+    </div>
+    <div class="boks prov">
+      <h3>Prøv selv</h3>
+      <ol>
+        <li class="oppg" data-svar="800000" data-tol="0.005">Industri AS i oppgavesett 8 har 1 000 000 aksjer à 10 kr og vurderer et lån på 5 mill. kr til 8 %. Hva er break-even EBIT?
+          <div class="rad"><input type="text" inputmode="decimal" placeholder="kr"><button class="lite sjekk">Sjekk</button><button class="lite los">Vis løsning</button></div><div class="tilbake"></div>
+          <div class="losning" hidden>EBIT/1 000 000 = (EBIT − 400 000)/500 000 gir EBIT* = 800 000 kr. Snarvei: R<sub>D</sub> × V = 8 % × 10 mill. = 800 000 kr. EPS er da 0,80 kr i begge strukturer.</div></li>
+        <li class="oppg" data-svar="2.2" data-abs="0.011">Samme selskap, oppgangsscenariet med EBIT 1,5 mill. kr: hva blir EPS med den foreslåtte strukturen?
+          <div class="rad"><input type="text" inputmode="decimal" placeholder="kr per aksje"><button class="lite sjekk">Sjekk</button><button class="lite los">Vis løsning</button></div><div class="tilbake"></div>
+          <div class="losning" hidden>(1 500 000 − 400 000) / 500 000 = 2,20 kr, mot 1,50 kr uten gjeld.</div></li>
+        <li>Dra gjeldsandelen mot 80 %. Hva skjer med EPS i nedgangsscenariet, og hvor krysser linjene? <button class="lite" data-sett='{"g.D":8000000}'>D/V = 80 %</button> <button class="lite" data-sett='{"g.D":5000000}'>Tilbake til 50 %</button></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== DEL 2 ===================== -->
+<main class="wrap grid del" id="del-hjemmelaget">
+  <aside>
+    <section class="panel">
+      <h2>Investoren <button data-null="h">Tilbakestill</button></h2>
+      <div class="info" id="h-firma"></div>
+      <div class="gruppe forste">Hva vil investoren?</div>
+      <div class="ctl valg"><input type="radio" name="h-modus" id="h-opp" data-r="h.modus" value="opp"><label for="h-opp">Gire opp: selskapet er ugiret, men jeg vil ha giret avkastning</label></div>
+      <div class="ctl valg"><input type="radio" name="h-modus" id="h-ned" data-r="h.modus" value="ned"><label for="h-ned">Gire ned: selskapet er giret, men jeg vil ha ugiret avkastning</label></div>
+      <div class="gruppe">Investorens tall</div>
+      <div class="ctl"><label><span>Beløp investert i aksjer</span></label><input type="number" data-k="h.X" min="1" step="100"></div>
+      <div class="ctl"><label><span>Rente investoren kan låne og låne ut til</span> <b data-v="h.rp" data-f="pc2"></b></label><input type="range" data-k="h.rp" min="0" max="15" step="0.25"><div class="mm"><span>0 %</span><span>15 %</span></div></div>
+      <button class="knapp" id="h-lik">Sett lik selskapets rente</button>
+      <p class="hjelp">MM forutsetter at investorer låner til samme rente som selskapet. Endre renten og se at kopien ikke lenger er perfekt.</p>
+      <div class="gruppe">Arbitrasjen</div>
+      <div class="ctl"><label><span>Markedets prising av det girede selskapet, V<sub>L</sub> i prosent av V<sub>U</sub></span> <b data-v="h.f" data-f="pc0"></b></label><input type="range" data-k="h.f" min="85" max="115" step="1"><div class="mm"><span>85 %</span><span>115 %</span></div></div>
+    </section>
+    <details class="panel teori">
+      <summary>Teori og formler</summary>
+      <h3>Hjemmelaget giring</h3>
+      <p>Investoren bruker personlig lån til å endre hvor mye giring hun er utsatt for. Oppskriften: lån slik at din egen gjeldsgrad blir lik den selskapet vurderer, og kjøp aksjer for lånet pluss egne penger.</p>
+      <div class="formel"><span class="f">Lån = X · <span class="fr"><span>D</span><span>E<sub>L</sub></span></span></span></div>
+      <p>Netto inntekt blir identisk i hvert eneste scenario. Vil du fjerne giring, gjør du det motsatte: selg andelen D/V av aksjene og lån ut pengene.</p>
+      <h3>Hvorfor beviser dette MM I?</h3>
+      <p>Hvis to pakker gir nøyaktig samme fremtidige inntekt, må de koste det samme i dag. Ellers selger investorene den dyre pakken og kjøper den billige til prisene er like. Dermed må <span class="f">V<sub>L</sub> = V<sub>U</sub></span>: selskapet kan ikke skape verdi ved å gjøre noe investorene kan gjøre selv, gratis.</p>
+      <h3>Forutsetninger</h3>
+      <ul><li>Investorer låner til samme rente som selskapet.</li><li>Ingen skatt og ingen transaksjonskostnader.</li><li>Ingen konkurskostnader og lik informasjon.</li></ul>
+    </details>
+  </aside>
+
+  <section>
+    <div class="advarsel" id="h-adv"></div>
+    <div class="steg"><div class="nr">1</div><div>
+      <h3 id="h-t1"></h3>
+      <p class="hva" id="h-h1"></p>
+      <div class="regn" id="h-s1"></div>
+    </div></div>
+    <div class="steg"><div class="nr">2</div><div>
+      <h3 id="h-t2"></h3>
+      <p class="hva" id="h-h2"></p>
+      <div class="regn" id="h-s2"></div>
+    </div></div>
+    <div class="steg"><div class="nr">3</div><div>
+      <h3>Sammenlign inntektene i de tre scenariene</h3>
+      <p class="hva">Samme netto investering i begge strategier. Er inntektene like?</p>
+      <div class="tabwrap" id="h-tab"></div>
+    </div></div>
+    <div class="res" id="h-res"></div>
+    <div class="graf-boks">
+      <h3>Inntekt som funksjon av EBIT</h3>
+      <p class="sub" id="h-sub"></p>
+      <div id="h-graf"></div>
+      <div class="legend"><span><i class="l" style="background:var(--rod)"></i>Strategi A</span><span><i class="ld" style="border-color:var(--blaa)"></i>Strategi B (hjemmelaget)</span></div>
+    </div>
+    <div class="boks arb">
+      <h3>Arbitrasjen som tvinger V<sub>L</sub> = V<sub>U</sub></h3>
+      <div id="h-arb"></div>
+    </div>
+    <div class="boks prov">
+      <h3>Prøv selv</h3>
+      <ol>
+        <li class="oppg" data-svar="2000" data-tol="0.005">Anne eier 200 aksjer à 10 kr i det ugirede Industri AS (oppgavesett 8, oppgave 5). Hvor mye må hun låne for å kopiere den foreslåtte strukturen med D/E = 1?
+          <div class="rad"><input type="text" inputmode="decimal" placeholder="kr"><button class="lite sjekk">Sjekk</button><button class="lite los">Vis løsning</button></div><div class="tilbake"></div>
+          <div class="losning" hidden>Hun har 2 000 kr i egenkapital og skal ha D/E = 1, så hun låner 2 000 kr og kjøper 200 aksjer til. Hun eier 400 aksjer og skylder 2 000 kr.</div></li>
+        <li class="oppg" data-svar="240" data-abs="0.6">Hva blir Annes netto inntekt i forventet scenario (EBIT 1 mill. kr) med hjemmelaget giring?
+          <div class="rad"><input type="text" inputmode="decimal" placeholder="kr"><button class="lite sjekk">Sjekk</button><button class="lite los">Vis løsning</button></div><div class="tilbake"></div>
+          <div class="losning" hidden>400 × 1,00 − 8 % × 2 000 = 400 − 160 = 240 kr. Det samme som 200 aksjer i det girede selskapet: 200 × 1,20 = 240 kr.</div></li>
+        <li>Sett investorens rente til 10 % mens selskapet låner til 8 %. Hvem tjener nå på at selskapet girer seg? <button class="lite" data-sett='{"h.rp":10}'>10 %</button> <button class="lite" data-sett='{"h.rp":8}'>Tilbake til 8 %</button></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== DEL 3 ===================== -->
+<main class="wrap grid del" id="del-mm2">
+  <aside>
+    <section class="panel">
+      <h2>Forutsetninger <button data-null="m">Tilbakestill</button></h2>
+      <div class="gruppe forste">Eksempler</div>
+      <div class="forhand">
+        <button class="knapp aktiv" data-pre="m:ricard">Ricard NV (HRWJ eks. 15.3, slide 21)</button>
+        <button class="knapp" data-pre="m:vekt">Vekt AS (oppgavesett 8, oppgave 4)</button>
+      </div>
+      <div class="gruppe">Eiendelene og gjelden</div>
+      <div class="ctl"><label><span>Avkastningskrav på eiendelene (R<sub>A</sub> = WACC)</span> <b data-v="m.rA" data-f="pc1"></b></label><input type="range" data-k="m.rA" min="4" max="20" step="0.5"><div class="mm"><span>4 %</span><span>20 %</span></div></div>
+      <div class="ctl"><label><span>Lånerente (R<sub>D</sub>)</span> <b data-v="m.rd" data-f="pc1"></b></label><input type="range" data-k="m.rd" min="0" max="15" step="0.5"><div class="mm"><span>0 %</span><span>15 %</span></div></div>
+      <div class="gruppe">Kapitalstrukturen</div>
+      <div class="ctl"><label><span>Gjeldsgrad (D/E)</span> <b data-v="m.de" data-f="x2"></b></label><input type="range" data-k="m.de" min="0" max="3" step="0.05"><div class="mm"><span>0 (bare EK)</span><span>3</span></div></div>
+      <div class="ctl valg"><input type="checkbox" id="m-beta" data-c="m.visBeta"><label for="m-beta">Vis sammenhengen med beta</label></div>
+      <div data-vis="m.visBeta" hidden>
+        <div class="to">
+          <div class="ctl"><label><span>Risikofri rente</span> <b data-v="m.rf" data-f="pc1"></b></label><input type="range" data-k="m.rf" min="0" max="8" step="0.25"></div>
+          <div class="ctl"><label><span>Markedspremie</span> <b data-v="m.mrp" data-f="pc1"></b></label><input type="range" data-k="m.mrp" min="2" max="9" step="0.25"></div>
+        </div>
+      </div>
+      <p class="hjelp">Ingen skatt i denne delen. Avkastningskravet på eiendelene bestemmes av forretningsrisikoen og er uavhengig av finansieringen.</p>
+    </section>
+    <details class="panel teori">
+      <summary>Teori og formler</summary>
+      <h3>WACC er avkastningskravet på eiendelene</h3>
+      <div class="formel"><span class="f">R<sub>A</sub> = WACC = <span class="fr"><span>E</span><span>V</span></span> R<sub>E</sub> + <span class="fr"><span>D</span><span>V</span></span> R<sub>D</sub></span></div>
+      <p>Uten skatt er WACC rett og slett det eierne og kreditorene krever til sammen, og det bestemmes av risikoen i eiendelene. Løs likningen for R<sub>E</sub>:</p>
+      <div class="formel"><span class="f">R<sub>E</sub> = R<sub>A</sub> + (R<sub>A</sub> − R<sub>D</sub>) · <span class="fr"><span>D</span><span>E</span></span></span></div>
+      <p>Dette er MM proposisjon II: egenkapitalkostnaden stiger lineært med gjeldsgraden, med stigningstall R<sub>A</sub> − R<sub>D</sub>.</p>
+      <h3>To typer risiko</h3>
+      <p><strong>Forretningsrisiko</strong> ligger i R<sub>A</sub> og kommer fra driften. <strong>Finansiell risiko</strong> er leddet (R<sub>A</sub> − R<sub>D</sub>) · D/E og kommer fra finansieringen. Mer gjeld gir høyere R<sub>E</sub> fordi eierne står sist i køen.</p>
+      <h3>Hvorfor WACC ikke faller</h3>
+      <p>Gjeld er billigere enn egenkapital, men hver krone gjeld gjør egenkapitalen dyrere. De to effektene opphever hverandre nøyaktig. Det er MM I sagt med avkastningskrav.</p>
+      <h3>Koblingen til beta</h3>
+      <div class="formel"><span class="f">β<sub>E</sub> = β<sub>A</sub> + (β<sub>A</sub> − β<sub>D</sub>) · <span class="fr"><span>D</span><span>E</span></span></span></div>
+      <p>Med risikofri gjeld blir dette β<sub>E</sub> = β<sub>A</sub>(1 + D/E), oppgave 15.21 i boka. Det er samme linje som MM II, bare målt i beta i stedet for prosent.</p>
+    </details>
+  </aside>
+
+  <section>
+    <div class="advarsel" id="m-adv"></div>
+    <div class="steg"><div class="nr">1</div><div>
+      <h3>Eiendelene bestemmer avkastningskravet</h3>
+      <p class="hva">Uten skatt er WACC lik R<sub>A</sub>, uansett hvordan eiendelene er finansiert.</p>
+      <div class="regn" id="m-s1"></div>
+    </div></div>
+    <div class="steg"><div class="nr">2</div><div>
+      <h3>MM proposisjon II: egenkapitalkostnaden</h3>
+      <p class="hva">Løs WACC-likningen for R<sub>E</sub> ved den valgte gjeldsgraden.</p>
+      <div class="regn" id="m-s2"></div>
+      <p class="merk" id="m-s2m"></p>
+    </div></div>
+    <div class="steg"><div class="nr">3</div><div>
+      <h3>Kontroll: WACC er uendret</h3>
+      <p class="hva">Vekt R<sub>E</sub> og R<sub>D</sub> med markedsverdiandelene.</p>
+      <div class="regn" id="m-s3"></div>
+      <div id="m-beta-ut"></div>
+    </div></div>
+    <div class="res" id="m-res"></div>
+    <div class="to-kol">
+      <div class="graf-boks">
+        <h3>R<sub>E</sub>, R<sub>D</sub> og WACC mot gjeldsgraden (HRWJ figur 15.3)</h3>
+        <p class="sub" id="m-sub"></p>
+        <div id="m-graf"></div>
+        <div class="legend"><span><i class="l" style="background:var(--rod)"></i>R<sub>E</sub></span><span><i class="l" style="background:var(--g)"></i>WACC = R<sub>A</sub></span><span><i class="l" style="background:var(--oransje2)"></i>R<sub>D</sub></span><span><i class="ld" style="border-color:var(--lilla)"></i>Finansiell risikopremie</span></div>
+      </div>
+      <div class="graf-boks">
+        <h3>Tabell: fire gjeldsgrader</h3>
+        <p class="sub">Samme regnestykke som i oppgave 4 i oppgavesett 8.</p>
+        <div class="tabwrap" id="m-tab"></div>
+      </div>
+    </div>
+    <div class="boks prov">
+      <h3>Prøv selv</h3>
+      <ol>
+        <li class="oppg" data-svar="24" data-abs="0.06">Vekt AS har R<sub>A</sub> = 12 % og R<sub>D</sub> = 6 %. Hva er R<sub>E</sub> ved D/E = 2?
+          <div class="rad"><input type="text" inputmode="decimal" placeholder="%"><button class="lite sjekk">Sjekk</button><button class="lite los">Vis løsning</button></div><div class="tilbake"></div>
+          <div class="losning" hidden>R<sub>E</sub> = 12 % + (12 % − 6 %) × 2 = 24 %. WACC: (1/3) × 24 % + (2/3) × 6 % = 8 % + 4 % = 12 %, uendret.</div></li>
+        <li class="oppg" data-svar="16" data-abs="0.06">Ricard NV har WACC 12 % og låner til 8 %. Hva er R<sub>E</sub> med 50 % gjeld?
+          <div class="rad"><input type="text" inputmode="decimal" placeholder="%"><button class="lite sjekk">Sjekk</button><button class="lite los">Vis løsning</button></div><div class="tilbake"></div>
+          <div class="losning" hidden>D/E = 0,5/0,5 = 1, så R<sub>E</sub> = 12 % + (12 % − 8 %) × 1 = 16 %. Med 20 % gjeld er D/E = 0,25 og R<sub>E</sub> = 13 %.</div></li>
+        <li>Sett lånerenten lik R<sub>A</sub>. Hva skjer med R<sub>E</sub>-linjen, og hvorfor er det urealistisk? <button class="lite" data-sett='{"m.rd":12}'>R<sub>D</sub> = 12 %</button> <button class="lite" data-sett='{"m.rd":8}'>Tilbake</button></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== DEL 4 ===================== -->
+<main class="wrap grid del" id="del-skatt">
+  <aside>
+    <section class="panel">
+      <h2>Forutsetninger <button data-null="t">Tilbakestill</button></h2>
+      <div class="gruppe forste">Eksempler</div>
+      <div class="forhand">
+        <button class="knapp aktiv" data-pre="t:tindra">Tindra AS (oppgavesett 8, oppgave 6 og 7)</button>
+        <button class="knapp" data-pre="t:hrwj">Firma U og L (HRWJ 15.4)</button>
+        <button class="knapp" data-pre="t:slide">Eksempelet på slide 25</button>
+        <button class="knapp" data-pre="t:gypco">Gypco (HRWJ selvtest 15.3)</button>
+      </div>
+      <div class="gruppe">Driften</div>
+      <div class="ctl"><label><span>Forventet EBIT per år, evig</span></label><input type="number" data-k="t.ebit" min="0" step="1"></div>
+      <div class="ctl"><label><span>Selskapsskatt (T<sub>C</sub>)</span> <b data-v="t.t" data-f="pc0"></b></label><input type="range" data-k="t.t" min="0" max="40" step="1"><div class="mm"><span>0 %</span><span>40 %</span></div></div>
+      <div class="ctl"><label><span>Avkastningskrav uten gjeld (R<sub>U</sub>)</span> <b data-v="t.ru" data-f="pc1"></b></label><input type="range" data-k="t.ru" min="4" max="25" step="0.5"><div class="mm"><span>4 %</span><span>25 %</span></div></div>
+      <div class="gruppe">Gjelden (evigvarende)</div>
+      <div class="ctl"><label><span>Gjeld i prosent av V<sub>U</sub></span> <b data-v="t.dvu" data-f="pc0"></b></label><input type="range" data-k="t.dvu" min="0" max="100" step="1"><div class="mm"><span>0 %</span><span>100 %</span></div></div>
+      <div class="ctl"><label><span>Gjeld D</span></label><input type="number" data-k="t.D" min="0" step="1"></div>
+      <div class="ctl"><label><span>Lånerente (R<sub>D</sub>)</span> <b data-v="t.rd" data-f="pc1"></b></label><input type="range" data-k="t.rd" min="0" max="15" step="0.5"><div class="mm"><span>0 %</span><span>15 %</span></div></div>
+      <p class="hjelp">Alle kontantstrømmer er evige. Ingen avskrivninger, investeringer eller konkurskostnader, akkurat som i boka.</p>
+    </section>
+    <details class="panel teori">
+      <summary>Teori og formler</summary>
+      <h3>Rentens skatteskjold</h3>
+      <p>Renter er fradragsberettiget, utbytte er det ikke. Firma L betaler mindre skatt enn Firma U, og differansen går til kapitaleierne.</p>
+      <div class="formel"><span class="f">Skatteskjold per år = T<sub>C</sub> · R<sub>D</sub> · D</span></div>
+      <p>Med evig gjeld er skjoldet en evig kontantstrøm med samme risiko som gjelden. Diskontert med R<sub>D</sub> blir nåverdien T<sub>C</sub> · D.</p>
+      <h3>MM I med skatt</h3>
+      <div class="formel"><span class="f">V<sub>L</sub> = V<sub>U</sub> + T<sub>C</sub> · D &nbsp;&nbsp; der &nbsp; V<sub>U</sub> = <span class="fr"><span>EBIT (1 − T<sub>C</sub>)</span><span>R<sub>U</sub></span></span></span></div>
+      <p>Hver krone gjeld øker verdien med T<sub>C</sub> kroner. Tatt bokstavelig anbefaler modellen 100 % gjeld.</p>
+      <h3>MM II med skatt</h3>
+      <div class="formel"><span class="f">R<sub>E</sub> = R<sub>U</sub> + (R<sub>U</sub> − R<sub>D</sub>)(1 − T<sub>C</sub>) · <span class="fr"><span>D</span><span>E</span></span></span></div>
+      <p>Linjen er slakere enn uten skatt. Derfor faller WACC når gjelden øker:</p>
+      <div class="formel"><span class="f">WACC = <span class="fr"><span>E</span><span>V</span></span> R<sub>E</sub> + <span class="fr"><span>D</span><span>V</span></span> R<sub>D</sub>(1 − T<sub>C</sub>) = R<sub>U</sub> <span style="font-style:normal">(</span>1 − T<sub>C</sub> <span class="fr"><span>D</span><span>V<sub>L</sub></span></span><span style="font-style:normal">)</span></span></div>
+      <p>Den siste formelen er oppgave 15.19 i boka og oppgave 7c i oppgavesett 8.</p>
+    </details>
+  </aside>
+
+  <section>
+    <div class="advarsel" id="t-adv"></div>
+    <div class="steg"><div class="nr">1</div><div>
+      <h3>Skatteskjoldet: Firma U og Firma L år for år</h3>
+      <p class="hva">To selskaper med samme eiendeler og samme EBIT. Det ene har lånt.</p>
+      <div class="tabwrap" id="t-tab"></div>
+      <p class="merk" id="t-s1m"></p>
+    </div></div>
+    <div class="steg"><div class="nr">2</div><div>
+      <h3>Verdien uten gjeld</h3>
+      <p class="hva">En evig kontantstrøm etter skatt, diskontert med R<sub>U</sub>.</p>
+      <div class="regn" id="t-s2"></div>
+    </div></div>
+    <div class="steg"><div class="nr">3</div><div>
+      <h3>MM I med skatt: verdien med gjeld</h3>
+      <p class="hva">Nåverdien av skatteskjoldet legges til. Egenkapitalen er det som blir igjen etter gjelden.</p>
+      <div class="regn" id="t-s3"></div>
+      <p class="merk" id="t-s3m"></p>
+    </div></div>
+    <div class="steg"><div class="nr">4</div><div>
+      <h3>MM II med skatt: egenkapitalkostnaden</h3>
+      <p class="hva">Mer gjeld gir høyere R<sub>E</sub>, men skatteskjoldet demper økningen.</p>
+      <div class="regn" id="t-s4"></div>
+    </div></div>
+    <div class="steg"><div class="nr">5</div><div>
+      <h3>WACC på to måter</h3>
+      <p class="hva">Vektet gjennomsnitt, og snarveien R<sub>U</sub>(1 − T<sub>C</sub> · D/V<sub>L</sub>). Begge må gi det samme.</p>
+      <div class="regn" id="t-s5"></div>
+      <p class="merk" id="t-s5m"></p>
+    </div></div>
+    <div class="res" id="t-res"></div>
+    <div class="to-kol">
+      <div class="graf-boks">
+        <h3>Verdien stiger med gjelden (HRWJ figur 15.4)</h3>
+        <p class="sub" id="t-subA"></p>
+        <div id="t-grafA"></div>
+        <div class="legend"><span><i class="ld" style="border-color:var(--graa)"></i>V<sub>U</sub></span><span><i class="l" style="background:var(--g)"></i>V<sub>L</sub> = V<sub>U</sub> + T<sub>C</sub>D</span><span><i class="k" style="background:#bbf7d0"></i>Skatteskjoldets nåverdi</span></div>
+      </div>
+      <div class="graf-boks">
+        <h3>Avkastningskrav mot gjeldsgrad (HRWJ figur 15.5)</h3>
+        <p class="sub" id="t-subB"></p>
+        <div id="t-grafB"></div>
+        <div class="legend"><span><i class="l" style="background:var(--rod)"></i>R<sub>E</sub></span><span><i class="l" style="background:var(--g)"></i>WACC</span><span><i class="ld" style="border-color:var(--graa)"></i>R<sub>U</sub></span><span><i class="l" style="background:var(--oransje2)"></i>R<sub>D</sub>(1 − T<sub>C</sub>)</span></div>
+      </div>
+    </div>
+    <div class="boks prov">
+      <h3>Prøv selv</h3>
+      <ol>
+        <li class="oppg" data-svar="89" data-abs="0.3">Tindra AS: EBIT 10 mill. kr evig, gjeld 50 mill. kr til 6 %, skatt 22 %, R<sub>U</sub> = 10 %. Hva er V<sub>L</sub>?
+          <div class="rad"><input type="text" inputmode="decimal" placeholder="mill. kr"><button class="lite sjekk">Sjekk</button><button class="lite los">Vis løsning</button></div><div class="tilbake"></div>
+          <div class="losning" hidden>V<sub>U</sub> = 10 × 0,78 / 0,10 = 78. V<sub>L</sub> = 78 + 0,22 × 50 = 89 mill. kr. Egenkapitalen er 89 − 50 = 39 mill. kr.</div></li>
+        <li class="oppg" data-svar="8.76" data-abs="0.03">Hva er Tindras WACC?
+          <div class="rad"><input type="text" inputmode="decimal" placeholder="%"><button class="lite sjekk">Sjekk</button><button class="lite los">Vis løsning</button></div><div class="tilbake"></div>
+          <div class="losning" hidden>R<sub>E</sub> = 10 % + (10 % − 6 %) × 0,78 × 50/39 = 14,0 %. WACC = (39/89) × 14 % + (50/89) × 6 % × 0,78 = 8,76 %. Snarvei: 10 % × (1 − 0,22 × 50/89) = 8,76 %.</div></li>
+        <li>Sett skattesatsen til 0. Da er V<sub>L</sub> = V<sub>U</sub> og WACC = R<sub>U</sub>: vi er tilbake i del 3. <button class="lite" data-sett='{"t.t":0}'>T<sub>C</sub> = 0</button> <button class="lite" data-sett='{"t.t":22}'>T<sub>C</sub> = 22 %</button></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== DEL 5 ===================== -->
+<main class="wrap grid del" id="del-tradeoff">
+  <aside>
+    <section class="panel">
+      <h2>Forutsetninger <button data-null="s">Tilbakestill</button></h2>
+      <div class="info">Verdiene måles i prosent av verdien uten gjeld, V<sub>U</sub> = 100. Krisekostnadene er en illustrativ funksjon; boka understreker at den statiske modellen ikke gir et presist optimum.</div>
+      <div class="gruppe forste">Skattefordelen</div>
+      <div class="ctl"><label><span>Selskapsskatt (T<sub>C</sub>)</span> <b data-v="s.t" data-f="pc0"></b></label><input type="range" data-k="s.t" min="0" max="40" step="1"><div class="mm"><span>0 %</span><span>40 %</span></div></div>
+      <div class="gruppe">Krisekostnadene</div>
+      <div class="ctl"><label><span>Verditap ved finansiell krise (andel av V<sub>U</sub>)</span> <b data-v="s.c" data-f="pc0"></b></label><input type="range" data-k="s.c" min="0" max="60" step="1"><div class="mm"><span>0 %</span><span>60 %</span></div></div>
+      <p class="hjelp">Direkte kostnader (advokater, bostyrer) er typisk 3–10 % av verdien, indirekte (tapte kunder, ansatte, investeringer) 10–25 %.</p>
+      <div class="ctl"><label><span>Gjeldskapasitet (κ)</span> <b data-v="s.kappa" data-f="x2"></b></label><input type="range" data-k="s.kappa" min="0.5" max="1.5" step="0.05"><div class="mm"><span>0,5 lav</span><span>1,5 høy</span></div></div>
+      <p class="hjelp">Høy for stabile kontantstrømmer og pantbare eiendeler (eiendom, kraft). Lav for volatile inntekter og immaterielle eiendeler (bioteknologi, programvare).</p>
+      <div class="gruppe">Til WACC-kurven og pizzaen</div>
+      <div class="ctl"><label><span>Avkastningskrav uten gjeld (R<sub>U</sub>)</span> <b data-v="s.ru" data-f="pc1"></b></label><input type="range" data-k="s.ru" min="5" max="20" step="0.5"><div class="mm"><span>5 %</span><span>20 %</span></div></div>
+      <div class="ctl"><label><span>Gjeld å undersøke (D, prosent av V<sub>U</sub>)</span> <b data-v="s.D" data-f="pc0"></b></label><input type="range" data-k="s.D" min="0" max="100" step="1"><div class="mm"><span>0</span><span>100</span></div></div>
+    </section>
+    <details class="panel teori">
+      <summary>Teori og formler</summary>
+      <h3>Den statiske teorien</h3>
+      <div class="formel"><span class="f">V<sub>L</sub> = V<sub>U</sub> + T<sub>C</sub> · D − PV(krisekostnader)</span></div>
+      <p>Selskapet låner til det punktet der skattefordelen av én krone ekstra gjeld er lik økningen i forventede krisekostnader. Der er verdien størst og WACC lavest.</p>
+      <h3>Tre historier i én figur</h3>
+      <ul>
+        <li><strong>Tilfelle I</strong>, MM uten skatt: verdien er flat. Kapitalstruktur er irrelevant.</li>
+        <li><strong>Tilfelle II</strong>, MM med skatt: verdien stiger med T<sub>C</sub> per krone gjeld. Optimum er 100 % gjeld.</li>
+        <li><strong>Tilfelle III</strong>, statisk teori: krisekostnadene vokser raskere enn skattefordelen. Et indre optimum D* oppstår.</li>
+      </ul>
+      <h3>Hva modellen her antar</h3>
+      <div class="formel"><span class="f">PV(krisekostnader) = c · V<sub>U</sub> · <span style="font-style:normal">(</span><span class="fr"><span>D</span><span>κ · V<sub>U</sub></span></span><span style="font-style:normal">)</span><sup>3</sup></span></div>
+      <p>c er verditapet hvis krisen inntreffer, og κ fanger hvor mye gjeld selskapet tåler før krisen blir sannsynlig. Kubikken gir den konvekse formen boka tegner. Optimum blir D*/V<sub>U</sub> = √(T<sub>C</sub> κ³ / 3c).</p>
+      <h3>Bokas råd til ledelsen</h3>
+      <ul><li>Skattefordelen krever at selskapet faktisk betaler skatt. Høyere skattesats, mer gjeld.</li><li>Jo mer volatil EBIT, desto mindre gjeld.</li><li>Materielle eiendeler som kan selges uten stort tap tåler mer gjeld enn immaterielle.</li></ul>
+    </details>
+  </aside>
+
+  <section>
+    <div class="advarsel" id="s-adv"></div>
+    <div class="steg"><div class="nr">1</div><div>
+      <h3>Optimum: der marginal skattefordel er lik marginal krisekostnad</h3>
+      <p class="hva">Deriver V<sub>L</sub> med hensyn på D og sett lik null.</p>
+      <div class="regn" id="s-s1"></div>
+      <p class="merk" id="s-s1m"></p>
+    </div></div>
+    <div class="steg"><div class="nr">2</div><div>
+      <h3>Verdien ved den gjelden du undersøker</h3>
+      <p class="hva">Skatteskjoldet legges til, krisekostnadene trekkes fra.</p>
+      <div class="regn" id="s-s2"></div>
+      <div id="s-stabel"></div>
+    </div></div>
+    <div class="res" id="s-res"></div>
+    <div class="to-kol">
+      <div class="graf-boks">
+        <h3>Verdien av selskapet mot gjelden (HRWJ figur 15.6 og 15.8)</h3>
+        <p class="sub" id="s-subA"></p>
+        <div id="s-grafA"></div>
+        <div class="legend"><span><i class="ld" style="border-color:var(--graa)"></i>I: MM uten skatt</span><span><i class="ld" style="border-color:var(--blaa)"></i>II: MM med skatt</span><span><i class="l" style="background:var(--g)"></i>III: statisk teori</span><span><i style="background:var(--rod)"></i>Optimum D*</span></div>
+      </div>
+      <div class="graf-boks">
+        <h3>WACC mot gjeldsgraden (HRWJ figur 15.7)</h3>
+        <p class="sub" id="s-subB"></p>
+        <div id="s-grafB"></div>
+        <div class="legend"><span><i class="ld" style="border-color:var(--graa)"></i>I: WACC = R<sub>U</sub></span><span><i class="ld" style="border-color:var(--blaa)"></i>II: faller mot null gjeldskostnad</span><span><i class="l" style="background:var(--g)"></i>III: U-formet</span><span><i style="background:var(--rod)"></i>Minimum WACC*</span></div>
+      </div>
+    </div>
+    <div class="boks">
+      <h3>Hva flytter optimum?</h3>
+      <div class="tabwrap" id="s-tab"></div>
+      <p class="hjelp">Tabellen holder alt annet fast og endrer én ting om gangen.</p>
+    </div>
+    <div class="boks prov">
+      <h3>Prøv selv</h3>
+      <ol>
+        <li class="oppg" data-riktig="0" data-hvorfor="Skattefordelen per krone gjeld øker, krisekostnadene er uendret, så optimum flytter seg mot mer gjeld." data-hint="Tenk på hva skattesatsen gjør med stigningen på linjen for tilfelle II.">Skattesatsen øker fra 22 % til 30 %. Hva skjer med optimal gjeld D*?
+          <label class="alt"><input type="radio" name="s-mc1" value="0">D* øker</label><label class="alt"><input type="radio" name="s-mc1" value="1">D* synker</label><label class="alt"><input type="radio" name="s-mc1" value="2">D* er uendret</label>
+          <div class="rad"><button class="lite sjekk">Sjekk</button></div><div class="tilbake"></div></li>
+        <li class="oppg" data-riktig="1" data-hvorfor="Patenter og forskere forsvinner i en konkurs, så krisekostnaden er høy og gjeldskapasiteten lav. Eiendom kan selges." data-hint="Hvilke eiendeler kan kreditorene faktisk ta over og selge?">Hvilket selskap bør ha lavest gjeldsandel ifølge den statiske teorien?
+          <label class="alt"><input type="radio" name="s-mc2" value="0">Et eiendomsselskap med stabile leieinntekter</label><label class="alt"><input type="radio" name="s-mc2" value="1">Et bioteknologiselskap med patenter og forskere</label><label class="alt"><input type="radio" name="s-mc2" value="2">De bør ha like mye gjeld</label>
+          <div class="rad"><button class="lite sjekk">Sjekk</button></div><div class="tilbake"></div></li>
+        <li>Sett krisekostnaden til 0. Da forsvinner optimum, og modellen anbefaler 100 % gjeld, som i del 4. <button class="lite" data-sett='{"s.c":0}'>c = 0</button> <button class="lite" data-sett='{"s.c":25}'>c = 25 %</button></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== DEL 6 ===================== -->
+<main class="wrap grid del" id="del-pizza">
+  <aside>
+    <section class="panel">
+      <h2>Pizzaen</h2>
+      <div class="info">Bruker de samme forutsetningene som del 5: skatt <b data-v="s.t" data-f="pc0"></b>, verditap <b data-v="s.c" data-f="pc0"></b>, gjeldskapasitet <b data-v="s.kappa" data-f="x2"></b>, R<sub>U</sub> <b data-v="s.ru" data-f="pc1"></b>. Endre dem i <a class="lenke" href="#tradeoff" data-del="tradeoff">del 5</a>.</div>
+      <div class="ctl"><label><span>Gjeld D (prosent av V<sub>U</sub>)</span> <b data-v="s.D" data-f="pc0"></b></label><input type="range" data-k="s.D" min="0" max="100" step="1"><div class="mm"><span>0</span><span>100</span></div></div>
+      <p class="hjelp">Hele pizzaen er nåverdien av EBIT: alt driften skaper, før noen får sitt stykke.</p>
+    </section>
+    <details class="panel teori" open>
+      <summary>Teori og formler</summary>
+      <h3>Den utvidede pizzamodellen</h3>
+      <p>Kritikerne sier MM faller sammen så snart vi tar med skatt og konkurs. Bokas svar: skatt og konkurskostnader er bare flere krav på den samme kontantstrømmen.</p>
+      <div class="formel"><span class="f">CF = til aksjonærene + til kreditorene + til staten + til konkursboet</span></div>
+      <p>Pizzaen er like stor uansett. Kapitalstrukturen bestemmer bare hvor store stykkene blir.</p>
+      <h3>Omsettelige og ikke-omsettelige krav</h3>
+      <p>Aksjer og gjeld kan kjøpes og selges: <strong>omsettelige krav</strong>, V<sub>M</sub>. Statens og konkursboets krav kan ikke: <strong>ikke-omsettelige</strong>, V<sub>N</sub>.</p>
+      <div class="formel"><span class="f">V<sub>T</sub> = V<sub>M</sub> + V<sub>N</sub> &nbsp; er konstant</span></div>
+      <p>Det vi kaller selskapets verdi er V<sub>M</sub>. Den er størst der V<sub>N</sub> er minst. Optimal kapitalstruktur er den som gir staten og advokatene minst mulig av pizzaen. MM-intuisjonen overlever: finansieringen skaper ikke verdi, den flytter den.</p>
+    </details>
+  </aside>
+
+  <section>
+    <div class="graf-boks">
+      <h3>Slik deles pizzaen når gjelden øker (HRWJ figur 15.9)</h3>
+      <p class="sub" id="p-sub"></p>
+      <div id="p-graf"></div>
+      <div class="legend"><span><i class="k" style="background:var(--rod)"></i>Aksjonærene (E)</span><span><i class="k" style="background:var(--oransje2)"></i>Kreditorene (D)</span><span><i class="k" style="background:var(--mork)"></i>Konkursboet (B)</span><span><i class="k" style="background:var(--skifer)"></i>Staten (G)</span></div>
+    </div>
+    <div class="steg"><div class="nr">1</div><div>
+      <h3>Tre kutt av samme pizza</h3>
+      <p class="hva">Uten gjeld, ved optimum, og ved gjelden du har valgt. Totalen er den samme hver gang.</p>
+      <div id="p-stabler"></div>
+    </div></div>
+    <div class="res" id="p-res"></div>
+    <div class="boks prov">
+      <h3>Prøv selv</h3>
+      <ol>
+        <li class="oppg" data-riktig="0" data-hvorfor="Aksjer og obligasjoner handles i markedet. Skatt og konkurskostnader kan ingen kjøpe." data-hint="Hvilke krav kan du kjøpe på børsen?">Hvilke krav er omsettelige?
+          <label class="alt"><input type="radio" name="p-mc1" value="0">Egenkapitalen og gjelden</label><label class="alt"><input type="radio" name="p-mc1" value="1">Statens og konkursboets krav</label><label class="alt"><input type="radio" name="p-mc1" value="2">Alle fire</label>
+          <div class="rad"><button class="lite sjekk">Sjekk</button></div><div class="tilbake"></div></li>
+        <li class="oppg" data-riktig="0" data-hvorfor="Totalen er fast. Det eierne og kreditorene får til sammen, er det som er igjen etter staten og konkursboet." data-hint="Pizzaen er like stor hele tiden.">Når er E + D størst?
+          <label class="alt"><input type="radio" name="p-mc2" value="0">Når G + B er minst</label><label class="alt"><input type="radio" name="p-mc2" value="1">Når gjelden er størst</label><label class="alt"><input type="radio" name="p-mc2" value="2">Når skatteskjoldet er størst</label>
+          <div class="rad"><button class="lite sjekk">Sjekk</button></div><div class="tilbake"></div></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer>BUS 220 Finansiering og investering, NMBU · Interaktiv modell for kapitalstruktur · Pensum: Hillier m.fl., <em>Fundamentals of Corporate Finance</em>, kapittel 15 · Alle beregninger skjer i nettleseren, filen kan åpnes uten nett</footer>
+
+<script>
+(function () {
+  'use strict';
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  const nf = (x, d = 1) => isFinite(x) ? new Intl.NumberFormat('nb-NO', { minimumFractionDigits: d, maximumFractionDigits: d }).format(x).replace(/-/g, '−') : '—';
+  const pc = (x, d = 2) => isFinite(x) ? nf(x, d) + ' %' : '—';
+  const auto = x => Math.abs(x) >= 1000 ? 0 : Math.abs(x) >= 100 ? 1 : 2;
+  const kr = (x, e, d) => isFinite(x) ? nf(x, d === undefined ? auto(x) : d) + (e ? ' ' + e : '') : '—';
+  const get = (o, p) => p.split('.').reduce((a, k) => a[k], o);
+  const set = (o, p, v) => { const ks = p.split('.'), l = ks.pop(); ks.reduce((a, k) => a[k], o)[l] = v; };
+  const neg = s => /^−/.test(s) ? ' class="neg"' : '';
+  const rad = (navn, celler, cls) => `<tr${cls ? ` class="${cls}"` : ''}><td>${navn}</td>${celler.map(c => `<td${neg(String(c))}>${c}</td>`).join('')}</tr>`;
+  const SC = ['Nedgang', 'Forventet', 'Oppgang'];
+
+  /* ---------- forhåndsvalg og tilstand ---------- */
+  const PRE = {
+    g: {
+      industriSett: { navn: 'Industri AS (oppgavesett 8)', N0: 1000000, P: 10, D: 5000000, rd: 8, e1: 500000, e2: 1000000, e3: 1500000, t: 0, enhet: 'kr' },
+      industriSlides: { navn: 'Industri AS (forelesning 16)', N0: 400, P: 20, D: 4000, rd: 10, e1: 400, e2: 1200, e3: 2000, t: 0, enhet: 'kr' },
+      autoveloce: { navn: 'Autoveloce SpA (HRWJ tabell 15.3)', N0: 400000, P: 20, D: 4000000, rd: 10, e1: 500000, e2: 1000000, e3: 1500000, t: 0, enhet: '€' },
+      mpd: { navn: 'MPD plc (HRWJ eksempel 15.1)', N0: 200000, P: 20, D: 1000000, rd: 9, e1: 250000, e2: 360000, e3: 500000, t: 0, enhet: '£' }
+    },
+    m: {
+      ricard: { navn: 'Ricard NV', rA: 12, rd: 8, de: 0.25, rf: 3, mrp: 5 },
+      vekt: { navn: 'Vekt AS', rA: 12, rd: 6, de: 1, rf: 3, mrp: 5 }
+    },
+    t: {
+      tindra: { navn: 'Tindra AS', ebit: 10, t: 22, ru: 10, rd: 6, D: 50, enhet: 'mill. kr' },
+      hrwj: { navn: 'Firma L', ebit: 1000, t: 30, ru: 10, rd: 8, D: 1000, enhet: '€' },
+      slide: { navn: 'Selskapet på slide 25', ebit: 153.85, t: 35, ru: 20, rd: 10, D: 200, enhet: 'kr' },
+      gypco: { navn: 'Gypco', ebit: 10000, t: 35, ru: 17, rd: 7, D: 15000, enhet: '€' }
+    },
+    s: { std: { t: 22, c: 25, kappa: 1, ru: 10, D: 50 } }
+  };
+  const S = {
+    g: Object.assign({}, PRE.g.industriSett),
+    h: { X: 2000, rp: 8, modus: 'opp', f: 100 },
+    m: Object.assign({ visBeta: false }, PRE.m.ricard),
+    t: Object.assign({}, PRE.t.tindra),
+    s: Object.assign({}, PRE.s.std)
+  };
+
+  /* ---------- modeller ---------- */
+  function mGiring() {
+    const g = S.g, V = g.N0 * g.P, D = Math.min(Math.max(0, g.D), V * 0.95), nR = D / g.P, N1 = g.N0 - nR, E = V - D, I = g.rd / 100 * D, t = g.t / 100;
+    const sc = [g.e1, g.e2, g.e3].map(ebit => {
+      const niU = ebit * (1 - t), niL = (ebit - I) * (1 - t);
+      return { ebit, skU: ebit * t, skL: (ebit - I) * t, niU, niL, roeU: niU / V * 100, roeL: niL / E * 100, epsU: niU / g.N0, epsL: niL / N1 };
+    });
+    const be = g.rd / 100 * V, epsBE = be * (1 - t) / g.N0;
+    const dfl = sc[1].ebit - I > 0 ? sc[1].ebit / (sc[1].ebit - I) : Infinity;
+    return { V, D, nR, N1, E, I, t, sc, be, epsBE, dfl, de: E > 0 ? D / E : Infinity, klippet: g.D > V * 0.95 };
+  }
+  function mHjem(mg) {
+    const h = S.h, P = S.g.P, X = h.X, rp = h.rp / 100;
+    if (h.modus === 'opp') {
+      const nA = X / P, B = mg.E > 0 ? X * mg.D / mg.E : 0, nB = (X + B) / P;
+      const rows = mg.sc.map(s => ({ a: nA * s.epsL, brutto: nB * s.epsU, rente: rp * B, b: nB * s.epsU - rp * B }));
+      return { nA, B, nB, rows, laan: B };
+    }
+    const nA = X / P, selg = nA * mg.D / mg.V, L = selg * P, behold = nA - selg;
+    const rows = mg.sc.map(s => ({ a: nA * s.epsU, brutto: behold * s.epsL, rente: rp * L, b: behold * s.epsL + rp * L }));
+    return { nA, selg, L, behold, rows, laan: L };
+  }
+  function mMM2() {
+    const m = S.m, rE = m.rA + (m.rA - m.rd) * m.de, wE = 1 / (1 + m.de), wD = m.de / (1 + m.de), wacc = wE * rE + wD * m.rd;
+    const bA = (m.rA - m.rf) / m.mrp, bD = Math.max(0, (m.rd - m.rf) / m.mrp), bE = bA + (bA - bD) * m.de;
+    return { rE, wE, wD, wacc, prem: (m.rA - m.rd) * m.de, bA, bD, bE };
+  }
+  function mSkatt() {
+    const q = S.t, t = q.t / 100, ru = q.ru / 100, rd = q.rd / 100, D = Math.max(0, q.D);
+    const I = rd * D, VU = ru > 0 ? q.ebit * (1 - t) / ru : NaN, skjold = t * I, PVs = t * D, VL = VU + PVs, E = VL - D, ok = E > 0;
+    const rE = ok ? (ru + (ru - rd) * (1 - t) * D / E) * 100 : NaN;
+    const wacc = ok ? (E / VL * rE / 100 + D / VL * rd * (1 - t)) * 100 : NaN, wacc2 = ok ? ru * (1 - t * D / VL) * 100 : NaN;
+    return { D, I, VU, skjold, PVs, VL, E, ok, rE, wacc, wacc2, niU: q.ebit * (1 - t), niL: (q.ebit - I) * (1 - t), skU: q.ebit * t, skL: (q.ebit - I) * t, cfL: (q.ebit - I) * (1 - t) + I, de: ok ? D / E : NaN, sjekk: ok ? q.ebit * (1 - t) / (wacc / 100) : NaN };
+  }
+  const fd = x => S.s.c / 100 * 100 * Math.pow(x / S.s.kappa, 3);          // nåverdi av krisekostnader, V_U = 100
+  const vl3 = x => 100 + S.s.t / 100 * 100 * x - fd(x);                     // tilfelle III
+  const vl2 = x => 100 + S.s.t / 100 * 100 * x;                             // tilfelle II
+  function mStat() {
+    const s = S.s, t = s.t / 100, c = s.c / 100, x = s.D / 100;
+    const xs = c > 0 ? Math.sqrt(t * Math.pow(s.kappa, 3) / (3 * c)) : Infinity;
+    const finnes = isFinite(xs) && xs <= 1, xStar = finnes ? xs : NaN, Ds = xStar * 100, VLs = finnes ? vl3(xStar) : NaN, Es = VLs - Ds;
+    const GU = t < 1 ? t * 100 / (1 - t) : NaN, VT = 100 + GU;
+    const ved = D => { const xx = D / 100, V = vl3(xx), B = fd(xx), G = GU - t * D, E = V - D; return { D, V, B, G, E }; };
+    return { t, c, xs, finnes, xStar, Ds, VLs, Es, dvs: finnes ? Ds / VLs : NaN, waccS: finnes ? s.ru * 100 / VLs : NaN, x, skjold: t * s.D, fdD: fd(x), VLd: vl3(x), GU, VT, ved };
+  }
+
+  /* ---------- SVG-hjelpere ---------- */
+  const W = 560, H = 330, ML = 58, MR = 16, MT = 18, MB = 44;
+  function tick(a, b, n) { const s0 = (b - a) / n, m = Math.pow(10, Math.floor(Math.log10(s0))), f = s0 / m, st = (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * m, t = []; for (let v = Math.ceil(a / st - 1e-9) * st; v <= b + 1e-9; v += st) t.push(+v.toFixed(8)); return { t, st }; }
+  const des = st => st >= 1 ? 0 : st >= 0.1 ? 1 : 2;
+  function akser(xmin, xmax, ymin, ymax, xl, yl, fx, fy) {
+    const X = v => ML + (v - xmin) / (xmax - xmin) * (W - ML - MR), Y = v => MT + (ymax - v) / (ymax - ymin) * (H - MT - MB);
+    const tx = tick(xmin, xmax, 6), ty = tick(ymin, ymax, 5);
+    fx = fx || (v => nf(v, des(tx.st))); fy = fy || (v => nf(v, des(ty.st)));
+    let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${yl} mot ${xl}">`;
+    tx.t.forEach(v => { s += `<line x1="${X(v)}" x2="${X(v)}" y1="${MT}" y2="${H - MB}" stroke="#ecece6"/><text x="${X(v)}" y="${H - MB + 16}" text-anchor="middle" font-size="11.5" fill="#6b7280">${fx(v)}</text>`; });
+    ty.t.forEach(v => { s += `<line x1="${ML}" x2="${W - MR}" y1="${Y(v)}" y2="${Y(v)}" stroke="#ecece6"/><text x="${ML - 7}" y="${Y(v) + 4}" text-anchor="end" font-size="11.5" fill="#6b7280">${fy(v)}</text>`; });
+    if (ymin < 0 && ymax > 0) s += `<line x1="${ML}" x2="${W - MR}" y1="${Y(0)}" y2="${Y(0)}" stroke="#9ca3af" stroke-width="1"/>`;
+    s += `<line x1="${ML}" x2="${W - MR}" y1="${H - MB}" y2="${H - MB}" stroke="#1a1a1a" stroke-width="1.2"/><line x1="${ML}" x2="${ML}" y1="${MT}" y2="${H - MB}" stroke="#1a1a1a" stroke-width="1.2"/>`;
+    s += `<text x="${(ML + W - MR) / 2}" y="${H - 5}" text-anchor="middle" font-size="12" fill="#4b5563">${xl}</text>`;
+    s += `<text x="13" y="${(MT + H - MB) / 2}" text-anchor="middle" font-size="12" fill="#4b5563" transform="rotate(-90 13 ${(MT + H - MB) / 2})">${yl}</text>`;
+    return { s, X, Y };
+  }
+  const sti = (pts, X, Y) => pts.map((p, i) => (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1)).join(' ');
+  const linje = (pts, X, Y, farge, bredde = 2.5, dash = '') => `<path d="${sti(pts, X, Y)}" fill="none" stroke="${farge}" stroke-width="${bredde}"${dash ? ` stroke-dasharray="${dash}"` : ''} stroke-linejoin="round"/>`;
+  const tekst = (x, y, t, c, anker = 'start', size = 11.5, w = 600) => `<text x="${x}" y="${y}" text-anchor="${anker}" font-size="${size}" font-weight="${w}" fill="${c}">${t}</text>`;
+  const punkt = (x, y, c, r = 5.5) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}" stroke="#fff" stroke-width="2"/>`;
+  const skala = xmax => xmax >= 2e6 ? [1e6, ' (mill.)'] : xmax >= 2e4 ? [1e3, ' (tusen)'] : [1, ''];
+
+  /* ---------- DEL 1 ---------- */
+  function tegnGiring() {
+    const g = S.g, m = mGiring(), e = g.enhet, K = (x, d) => kr(x, e, d), sc = m.sc;
+    $('#g-navn').textContent = g.navn;
+    $('#g-s1').innerHTML = `V = N × P = ${nf(g.N0, 0)} × ${K(g.P, 2)} = <b>${K(m.V, 0)}</b><br>Lånet på ${K(m.D, 0)} kjøper tilbake ${K(m.D, 0)} / ${K(g.P, 2)} = <b>${nf(m.nR, 0)} aksjer</b>, så N<sub>L</sub> = ${nf(m.N1, 0)} aksjer blir igjen<br>E = V − D = <b>${K(m.E, 0)}</b> &nbsp;·&nbsp; D/E = <b>${nf(m.de, 2)}</b> &nbsp;·&nbsp; Renter per år: I = R<sub>D</sub> × D = ${pc(g.rd, 1)} × ${K(m.D, 0)} = <b>${K(m.I, 0)}</b>`;
+    let tb = `<table class="tab"><tr><th></th>${SC.map(n => `<th>${n}</th>`).join('')}</tr>`;
+    tb += `<tr class="hode"><td colspan="4">Dagens struktur: ingen gjeld, ${nf(g.N0, 0)} aksjer</td></tr>`;
+    tb += rad('EBIT', sc.map(s => K(s.ebit, 0))) + rad('Renter', sc.map(() => K(0, 0)));
+    if (m.t > 0) tb += rad(`Skatt (${nf(g.t, 0)} %)`, sc.map(s => K(s.skU, 0)));
+    tb += rad('Resultat', sc.map(s => K(s.niU, 0))) + rad('ROE', sc.map(s => pc(s.roeU, 2))) + rad('EPS', sc.map(s => K(s.epsU, 2)), 'sum');
+    tb += `<tr class="hode"><td colspan="4">Foreslått struktur: gjeld ${K(m.D, 0)}, ${nf(m.N1, 0)} aksjer</td></tr>`;
+    tb += rad('EBIT', sc.map(s => K(s.ebit, 0))) + rad('Renter', sc.map(() => K(-m.I, 0)));
+    if (m.t > 0) tb += rad(`Skatt (${nf(g.t, 0)} %)`, sc.map(s => K(s.skL, 0)));
+    tb += rad('Resultat', sc.map(s => K(s.niL, 0))) + rad('ROE', sc.map(s => pc(s.roeL, 2))) + rad('EPS', sc.map(s => K(s.epsL, 2)), 'sum') + '</table>';
+    $('#g-tab').innerHTML = tb;
+    $('#g-s3').innerHTML = `<span class="fr"><span>EBIT</span><span>${nf(g.N0, 0)}</span></span> = <span class="fr"><span>EBIT − ${K(m.I, 0)}</span><span>${nf(m.N1, 0)}</span></span> &nbsp;⇒&nbsp; EBIT* = I × <span class="fr"><span>N</span><span>N − N<sub>L</sub></span></span> = ${K(m.I, 0)} × <span class="fr"><span>${nf(g.N0, 0)}</span><span>${nf(m.nR, 0)}</span></span> = <b>${K(m.be, 0)}</b>`;
+    $('#g-s3m').innerHTML = `Ved break-even er EPS ${K(m.epsBE, 2)} i begge strukturer. Snarvei: EBIT* = R<sub>D</sub> × V = ${pc(g.rd, 1)} × ${K(m.V, 0)} = ${K(m.be, 0)}. Selskapet tjener da akkurat lånerenten på eiendelene (EBIT/V = ${pc(g.rd, 1)}), så lånet verken hjelper eller skader eierne.${m.t > 0 ? ' Skatten flytter ikke break-even: begge sider av likningen ganges med (1 − T<sub>C</sub>).' : ''}`;
+    const spU = sc[2].epsU - sc[0].epsU, spL = sc[2].epsL - sc[0].epsL, faktor = spU !== 0 ? spL / spU : NaN;
+    $('#g-res').innerHTML = `<div class="tall"><small>Forventet EPS, uten gjeld → med gjeld</small>${K(sc[1].epsU, 2)} → ${K(sc[1].epsL, 2)}</div><div class="bidrag">Uten gjeld svinger EPS fra ${K(sc[0].epsU, 2)} til ${K(sc[2].epsU, 2)}, et spenn på ${K(spU, 2)}. Med gjeld svinger den fra ${K(sc[0].epsL, 2)} til ${K(sc[2].epsL, 2)}, et spenn på ${K(spL, 2)}: <b>${nf(faktor, 2)} ganger så stort</b> (= N/N<sub>L</sub>). ${isFinite(m.dfl) ? `Giringsgraden i forventet scenario er EBIT/(EBIT − I) = ${nf(m.dfl, 2)}: en endring på 1 % i EBIT gir ${nf(m.dfl, 2)} % endring i EPS.` : 'I forventet scenario dekker ikke EBIT rentene.'}</div>`;
+    const adv = [];
+    if (m.klippet) adv.push(`Lånet kan ikke være større enn selskapet. Jeg har begrenset D til 95 % av V = ${K(m.V, 0)}.`);
+    if (sc[1].ebit <= m.I) adv.push('Forventet EBIT dekker ikke rentene. Da er EPS negativ i normalår, og selskapet er i realiteten insolvent.');
+    if (sc[0].ebit > sc[1].ebit || sc[1].ebit > sc[2].ebit) adv.push('Scenariene bør være stigende: nedgang < forventet < oppgang.');
+    $('#g-adv').innerHTML = adv.join('<br>'); $('#g-adv').style.display = adv.length ? 'block' : 'none';
+    grafGiring(m);
+  }
+  function grafGiring(m) {
+    const g = S.g, t = m.t, xmax = Math.max(g.e3 * 1.15, m.be * 1.35, m.I * 1.3, 1);
+    const epsU = x => x * (1 - t) / g.N0, epsL = x => (x - m.I) * (1 - t) / m.N1;
+    const ys = [epsL(0), epsU(xmax), epsL(xmax), 0], ymin0 = Math.min(...ys), ymax0 = Math.max(...ys), pad = (ymax0 - ymin0) * 0.1 || 1;
+    const [sk, skl] = skala(xmax);
+    const { s: s0, X, Y } = akser(0, xmax, ymin0 - pad, ymax0 + pad, 'EBIT' + skl, 'EPS (' + g.enhet + ')', v => nf(v / sk, sk === 1 ? 0 : xmax / sk < 20 ? 1 : 0));
+    let s = s0;
+    s += linje([[0, epsU(0)], [xmax, epsU(xmax)]], X, Y, '#6b7280', 2.5) + linje([[0, epsL(0)], [xmax, epsL(xmax)]], X, Y, '#046530', 3);
+    m.sc.forEach((sc, i) => { const x = X(sc.ebit); s += `<line x1="${x}" x2="${x}" y1="${MT}" y2="${H - MB}" stroke="#c7c7bf" stroke-dasharray="3 4"/>` + tekst(x, H - MB - 8 - (i % 2) * 12, SC[i], '#6b7280', 'middle', 11) + punkt(x, Y(sc.epsU), '#6b7280', 4.5) + punkt(x, Y(sc.epsL), '#046530', 4.5); });
+    const hoyre = X(m.be) > ML + (W - ML - MR) * 0.62;
+    s += punkt(X(m.be), Y(m.epsBE), '#dc2626', 6.5) + tekst(X(m.be) + (hoyre ? -11 : 11), Y(m.epsBE) - 10, `Break-even: EBIT* = ${kr(m.be, g.enhet, 0)}`, '#dc2626', hoyre ? 'end' : 'start');
+    if (m.I > 0) s += `<circle cx="${X(m.I)}" cy="${Y(0)}" r="4" fill="#fff" stroke="#046530" stroke-width="2"/>` + tekst(X(m.I), Y(0) + 15, 'EPS = 0 når EBIT = I', '#046530', 'middle', 11);
+    s += tekst(X(xmax) - 4, Y(epsL(xmax)) - 7, 'Med gjeld', '#046530', 'end') + tekst(X(xmax) - 4, Y(epsU(xmax)) + 15, 'Uten gjeld', '#6b7280', 'end');
+    $('#g-graf').innerHTML = s + '</svg>';
+    $('#g-sub').innerHTML = `Linjen med gjeld er ${nf(g.N0 / m.N1, 2)} ganger så bratt og starter i minus: med EBIT = 0 er EPS ${kr(epsL(0), g.enhet, 2)}. Til høyre for break-even gir gjeld høyere EPS, til venstre lavere.`;
+  }
+
+  /* ---------- DEL 2 ---------- */
+  function tegnHjem() {
+    const g = S.g, h = S.h, mg = mGiring(), r = mHjem(mg), e = g.enhet, K = (x, d) => kr(x, e, d), opp = h.modus === 'opp';
+    $('#h-firma').innerHTML = `<b>${g.navn}</b> fra del 1: V = ${K(mg.V, 0)}, foreslått gjeld ${K(mg.D, 0)} til ${pc(g.rd, 1)}, aksjekurs ${K(g.P, 2)}. EPS uten gjeld ${mg.sc.map(s => K(s.epsU, 2)).join(' / ')}, med gjeld ${mg.sc.map(s => K(s.epsL, 2)).join(' / ')}. <a class="lenke" href="#giring" data-del="giring">Endre selskapet i del 1.</a>`;
+    if (opp) {
+      $('#h-t1').textContent = 'Strategi A: kjøp aksjer i det girede selskapet';
+      $('#h-h1').textContent = 'Investoren vil ha den girede avkastningen og kjøper rett og slett aksjer i selskapet etter restruktureringen.';
+      $('#h-s1').innerHTML = `${K(h.X, 0)} / ${K(g.P, 2)} = <b>${nf(r.nA, 0)} aksjer</b> i det girede selskapet &nbsp;·&nbsp; inntekt = ${nf(r.nA, 0)} × EPS<sub>L</sub>`;
+      $('#h-t2').textContent = 'Strategi B: lag giringen selv i det ugirede selskapet';
+      $('#h-h2').textContent = 'Lån slik at din egen gjeldsgrad blir lik selskapets foreslåtte D/E, og kjøp aksjer for alt.';
+      $('#h-s2').innerHTML = `Lån = X × D/E = ${K(h.X, 0)} × ${nf(mg.de, 2)} = <b>${K(r.B, 0)}</b> til ${pc(h.rp, 2)}<br>Kjøp (${K(h.X, 0)} + ${K(r.B, 0)}) / ${K(g.P, 2)} = <b>${nf(r.nB, 0)} aksjer</b> i det ugirede selskapet &nbsp;·&nbsp; netto inntekt = ${nf(r.nB, 0)} × EPS<sub>U</sub> − ${pc(h.rp, 2)} × ${K(r.B, 0)}`;
+    } else {
+      $('#h-t1').textContent = 'Strategi A: det investoren egentlig vil ha, aksjer i et ugiret selskap';
+      $('#h-h1').textContent = 'Målet er den ugirede inntekten. Men selskapet har valgt å gire seg.';
+      $('#h-s1').innerHTML = `${K(h.X, 0)} / ${K(g.P, 2)} = <b>${nf(r.nA, 0)} aksjer</b> i et ugiret selskap ville gitt inntekt ${nf(r.nA, 0)} × EPS<sub>U</sub>`;
+      $('#h-t2').textContent = 'Strategi B: fjern giringen selv';
+      $('#h-h2').textContent = 'Eier du aksjer i det girede selskapet, selger du andelen D/V av dem og låner ut pengene. Da har du gjort om selskapets lån til ditt eget utlån.';
+      $('#h-s2').innerHTML = `Selg D/V = ${nf(mg.D / mg.V * 100, 0)} % av ${nf(r.nA, 0)} aksjer = <b>${nf(r.selg, 0)} aksjer</b> for ${K(r.L, 0)}, lån ut beløpet til ${pc(h.rp, 2)}<br>Behold ${nf(r.behold, 0)} aksjer &nbsp;·&nbsp; inntekt = ${nf(r.behold, 0)} × EPS<sub>L</sub> + ${pc(h.rp, 2)} × ${K(r.L, 0)}`;
+    }
+    const rows = r.rows;
+    let tb = `<table class="tab"><tr><th></th>${SC.map(n => `<th>${n}</th>`).join('')}</tr>`;
+    tb += `<tr class="hode"><td colspan="4">Strategi A${opp ? `: ${nf(r.nA, 0)} aksjer i det girede selskapet, kostnad ${K(h.X, 0)}` : `: ${nf(r.nA, 0)} aksjer i et ugiret selskap, kostnad ${K(h.X, 0)}`}</td></tr>`;
+    tb += rad(opp ? 'EPS med gjeld' : 'EPS uten gjeld', mg.sc.map(s => K(opp ? s.epsL : s.epsU, 2))) + rad('Inntekt A', rows.map(x => K(x.a, 2)), 'sum');
+    tb += `<tr class="hode"><td colspan="4">Strategi B${opp ? `: lån ${K(r.B, 0)}, ${nf(r.nB, 0)} aksjer i det ugirede selskapet, netto kostnad ${K(h.X, 0)}` : `: ${nf(r.behold, 0)} aksjer i det girede selskapet pluss ${K(r.L, 0)} lånt ut, netto kostnad ${K(h.X, 0)}`}</td></tr>`;
+    tb += rad(opp ? 'EPS uten gjeld' : 'EPS med gjeld', mg.sc.map(s => K(opp ? s.epsU : s.epsL, 2))) + rad('Inntekt fra aksjene', rows.map(x => K(x.brutto, 2))) + rad(opp ? '− renter på lånet' : '+ renter på utlånet', rows.map(x => K(opp ? -x.rente : x.rente, 2))) + rad('Netto inntekt B', rows.map(x => K(x.b, 2)), 'sum');
+    tb += rad('Differanse A − B', rows.map(x => K(x.a - x.b, 2)), 'diff') + '</table>';
+    $('#h-tab').innerHTML = tb;
+    const maksDiff = Math.max(...rows.map(x => Math.abs(x.a - x.b))), lik = maksDiff < 1e-6 * Math.max(1, h.X);
+    const d1 = rows[0].a - rows[0].b;
+    $('#h-res').innerHTML = lik
+      ? `<div class="tall"><small>Resultat</small>Identisk inntekt</div><div class="bidrag">Investoren får nøyaktig samme inntekt i alle scenarier, for samme netto investering. ${opp ? 'Selskapet trenger ikke å låne for henne, hun låner selv.' : 'Selskapets lån kan hun nøytralisere på egen hånd.'} Siden hvem som helst kan gjøre dette gratis, kan ikke kapitalstrukturen være verdt noe. Det er MM proposisjon I.</div>`
+      : `<div class="tall"><small>Resultat</small>${d1 > 0 ? 'A gir mest' : 'B gir mest'}</div><div class="bidrag">Kopien er ikke lenger perfekt: forskjellen er ${K(Math.abs(d1), 2)} i hvert scenario${mg.t > 0 && Math.abs(h.rp - g.rd) < 1e-9 ? ', fordi selskapet får skattefradrag for rentene og det får ikke investoren. Den forskjellen er selskapets skatteskjold, temaet i del 4.' : ', fordi investoren og selskapet låner til ulik rente. ' + (d1 > 0 ? 'Når investorene låner dyrere enn selskapet, kan selskapets giring faktisk være verdt noe for dem.' : 'Når investorene låner billigere enn selskapet, gjør de giringen bedre selv.')}</div>`;
+    const adv = [];
+    if (mg.t > 0) adv.push('Del 1 har skatt slått på. MM-argumentet uten skatt forutsetter at verken selskapet eller investoren betaler skatt. Sett skatten til 0 i del 1 for den rene versjonen.');
+    $('#h-adv').innerHTML = adv.join('<br>'); $('#h-adv').style.display = adv.length ? 'block' : 'none';
+    grafHjem(mg, r, opp);
+    arbitrasje(mg);
+  }
+  function grafHjem(mg, r, opp) {
+    const g = S.g, h = S.h, t = mg.t, rp = h.rp / 100, xmax = Math.max(g.e3 * 1.15, mg.be * 1.35, mg.I * 1.3, 1);
+    const epsU = x => x * (1 - t) / g.N0, epsL = x => (x - mg.I) * (1 - t) / mg.N1;
+    const A = x => opp ? r.nA * epsL(x) : r.nA * epsU(x), B = x => opp ? r.nB * epsU(x) - rp * r.B : r.behold * epsL(x) + rp * r.L;
+    const ys = [A(0), B(0), A(xmax), B(xmax), 0], ymin0 = Math.min(...ys), ymax0 = Math.max(...ys), pad = (ymax0 - ymin0) * 0.1 || 1;
+    const [sk, skl] = skala(xmax);
+    const { s: s0, X, Y } = akser(0, xmax, ymin0 - pad, ymax0 + pad, 'EBIT' + skl, 'Inntekt til investoren (' + g.enhet + ')', v => nf(v / sk, sk === 1 ? 0 : xmax / sk < 20 ? 1 : 0));
+    let s = s0 + linje([[0, A(0)], [xmax, A(xmax)]], X, Y, '#dc2626', 3.5) + linje([[0, B(0)], [xmax, B(xmax)]], X, Y, '#3b82f6', 2.5, '7 5');
+    mg.sc.forEach((sc, i) => { const x = X(sc.ebit); s += `<line x1="${x}" x2="${x}" y1="${MT}" y2="${H - MB}" stroke="#c7c7bf" stroke-dasharray="3 4"/>` + tekst(x, H - MB - 8 - (i % 2) * 12, SC[i], '#6b7280', 'middle', 11) + punkt(x, Y(A(sc.ebit)), '#dc2626', 5) + `<circle cx="${x}" cy="${Y(B(sc.ebit))}" r="4" fill="#fff" stroke="#3b82f6" stroke-width="2"/>`; });
+    $('#h-graf').innerHTML = s + '</svg>';
+    const lik = Math.abs(A(xmax) - B(xmax)) < 1e-6 * Math.max(1, h.X) && Math.abs(A(0) - B(0)) < 1e-6 * Math.max(1, h.X);
+    $('#h-sub').innerHTML = lik ? 'De to linjene ligger nøyaktig oppå hverandre, ikke bare i de tre scenariene, men for alle verdier av EBIT. Kopien er perfekt.' : 'Linjene er parallelle, men ikke sammenfallende. Avstanden er rentedifferansen ganger lånebeløpet, og den er lik i alle scenarier.';
+  }
+  function arbitrasje(mg) {
+    const g = S.g, f = S.h.f / 100, e = g.enhet, K = (x, d) => kr(x, e, d), VU = mg.V, VL = f * VU, EL = VL - mg.D, and = 0.01;
+    const kostA = and * EL, kostB = and * (VU - mg.D), diff = kostA - kostB;
+    const innt = mg.sc.map(s => and * (s.ebit - mg.I) * (1 - mg.t));
+    let html = `<p>Tenk deg at markedet priser det girede selskapet til <b>${K(VL, 0)}</b> (${nf(S.h.f, 0)} % av V<sub>U</sub> = ${K(VU, 0)}), så egenkapitalen E<sub>L</sub> er verdt ${K(EL, 0)}. Sammenlign to måter å sikre seg 1 % av inntekten etter renter på:</p>`;
+    html += `<div class="tabwrap"><table class="tab"><tr><th></th><th>Kostnad i dag</th>${SC.map(n => `<th>Inntekt, ${n.toLowerCase()}</th>`).join('')}</tr>`;
+    html += rad('Kjøp 1 % av E<sub>L</sub> i det girede selskapet', [K(kostA, 0), ...innt.map(x => K(x, 2))]);
+    html += rad(`Kjøp 1 % av det ugirede selskapet (${K(and * VU, 0)}) og lån 1 % av D (${K(and * mg.D, 0)}) til ${pc(g.rd, 1)}`, [K(kostB, 0), ...innt.map(x => K(x, 2))]);
+    html += rad('Differanse', [K(diff, 0), ...innt.map(() => K(0, 2))], 'diff') + '</table></div>';
+    if (Math.abs(diff) < 1e-9 * Math.max(1, VU)) html += `<p><b>Ingen gevinst.</b> Når V<sub>L</sub> = V<sub>U</sub>, koster de to pakkene det samme. Det er likevekten MM I beskriver: ingen kan tjene risikofritt på å flytte seg mellom dem.</p>`;
+    else if (diff > 0) html += `<p><b>Arbitrasje:</b> samme fremtidige inntekt, men den girede aksjen koster ${K(diff, 0)} mer per prosent eierandel. Selg den girede aksjen, kjøp den ugirede og lån selv: du sitter igjen med ${K(diff, 0)} i dag uten risiko. Alle gjør det samme, kursen på den girede aksjen faller, og V<sub>L</sub> presses ned til V<sub>U</sub>.</p>`;
+    else html += `<p><b>Arbitrasje:</b> samme fremtidige inntekt, men den girede aksjen er ${K(-diff, 0)} billigere per prosent eierandel. Kjøp den girede aksjen og selg den hjemmelagde pakken (selg det ugirede, lån ut): ${K(-diff, 0)} i lommen i dag uten risiko. Etterspørselen løfter V<sub>L</sub> opp til V<sub>U</sub>.</p>`;
+    if (mg.t > 0) html += `<p class="hjelp">Med selskapsskatt er inntektene i tabellen regnet etter skatt, og MM I uten skatt gjelder ikke lenger. Se del 4.</p>`;
+    $('#h-arb').innerHTML = html;
+  }
+
+  /* ---------- DEL 3 ---------- */
+  function tegnMM2() {
+    const m = S.m, r = mMM2();
+    $('#m-s1').innerHTML = `R<sub>A</sub> = WACC = <span class="fr"><span>E</span><span>V</span></span> R<sub>E</sub> + <span class="fr"><span>D</span><span>V</span></span> R<sub>D</sub> = <b>${pc(m.rA, 1)}</b> &nbsp;·&nbsp; med D/E = ${nf(m.de, 2)} er E/V = ${nf(r.wE, 3)} og D/V = ${nf(r.wD, 3)}`;
+    $('#m-s2').innerHTML = `R<sub>E</sub> = R<sub>A</sub> + (R<sub>A</sub> − R<sub>D</sub>) × D/E = ${pc(m.rA, 1)} + (${pc(m.rA, 1)} − ${pc(m.rd, 1)}) × ${nf(m.de, 2)} = ${pc(m.rA, 1)} + ${pc(r.prem, 2)} = <b>${pc(r.rE, 2)}</b>`;
+    $('#m-s2m').innerHTML = `Forretningsrisikoen gir ${pc(m.rA, 1)}. Den finansielle risikoen legger til ${pc(r.prem, 2)}: stigningstallet (R<sub>A</sub> − R<sub>D</sub>) = ${pc(m.rA - m.rd, 1)} ganger gjeldsgraden ${nf(m.de, 2)}.`;
+    $('#m-s3').innerHTML = `WACC = ${nf(r.wE, 3)} × ${pc(r.rE, 2)} + ${nf(r.wD, 3)} × ${pc(m.rd, 1)} = ${pc(r.wE * r.rE, 2)} + ${pc(r.wD * m.rd, 2)} = <b>${pc(r.wacc, 2)}</b> = R<sub>A</sub>`;
+    $('#m-beta-ut').innerHTML = m.visBeta ? `<div class="regn" style="margin-top:8px">β<sub>A</sub> = (R<sub>A</sub> − R<sub>f</sub>)/MRP = (${pc(m.rA, 1)} − ${pc(m.rf, 2)}) / ${pc(m.mrp, 2)} = <b>${nf(r.bA, 2)}</b> &nbsp;·&nbsp; β<sub>D</sub> = ${nf(r.bD, 2)}<br>β<sub>E</sub> = β<sub>A</sub> + (β<sub>A</sub> − β<sub>D</sub>) × D/E = ${nf(r.bA, 2)} + ${nf(r.bA - r.bD, 2)} × ${nf(m.de, 2)} = <b>${nf(r.bE, 2)}</b>${r.bD === 0 ? ` &nbsp;(= β<sub>A</sub>(1 + D/E) når gjelden er risikofri)` : ''}</div><p class="merk">Samme linje som MM II, målt i beta: CAPM gir R<sub>E</sub> = ${pc(m.rf, 2)} + ${nf(r.bE, 2)} × ${pc(m.mrp, 2)} = ${pc(m.rf + r.bE * m.mrp, 2)}.</p>` : '';
+    $('#m-res').innerHTML = `<div class="tall"><small>Egenkapitalkostnad ved D/E = ${nf(m.de, 2)}</small>${pc(r.rE, 2)}</div><div class="bidrag">Forretningsrisiko ${pc(m.rA, 1)} + finansiell risiko ${pc(r.prem, 2)}<div class="bar"><i style="width:${r.rE > 0 ? Math.min(100, m.rA / r.rE * 100) : 0}%;background:#fde68a"></i><i style="width:${r.rE > 0 ? Math.max(0, r.prem / r.rE * 100) : 0}%;background:#fca5a5"></i></div>Gjelden er billigere, men den gjør egenkapitalen dyrere med akkurat like mye. WACC blir ${pc(r.wacc, 2)} uansett gjeldsgrad.</div>`;
+    const adv = [];
+    if (m.rd > m.rA) adv.push('Lånerenten er høyere enn avkastningskravet på eiendelene. Da faller R<sub>E</sub> med gjeld, noe som ikke kan skje i likevekt: kreditorene bærer mindre risiko enn eierne og må kreve mindre.');
+    $('#m-adv').innerHTML = adv.join('<br>'); $('#m-adv').style.display = adv.length ? 'block' : 'none';
+    const xmax = Math.max(3, m.de * 1.25), rE = x => m.rA + (m.rA - m.rd) * x;
+    const ys = [m.rd, m.rA, rE(xmax), rE(0)], ymin = Math.min(0, ...ys), ymax = Math.max(...ys) + 2;
+    const { s: s0, X, Y } = akser(0, xmax, ymin, ymax, 'Gjeldsgrad D/E', 'Avkastningskrav (%)', v => nf(v, 1));
+    let s = s0 + linje([[0, m.rd], [xmax, m.rd]], X, Y, '#f59e0b', 2.5) + linje([[0, m.rA], [xmax, m.rA]], X, Y, '#046530', 3) + linje([[0, rE(0)], [xmax, rE(xmax)]], X, Y, '#dc2626', 3);
+    s += `<line x1="${X(m.de)}" x2="${X(m.de)}" y1="${Y(m.rA)}" y2="${Y(r.rE)}" stroke="#8b5cf6" stroke-width="2" stroke-dasharray="4 4"/>`;
+    if (r.prem > (ymax - ymin) * 0.06) s += tekst(X(m.de) + 8, (Y(m.rA) + Y(r.rE)) / 2 + 4, `finansiell risiko ${pc(r.prem, 1)}`, '#6d28d9', 'start', 11);
+    s += punkt(X(m.de), Y(r.rE), '#dc2626') + tekst(X(m.de) - 9, Y(r.rE) - 9, `R E = ${pc(r.rE, 1)}`, '#dc2626', 'end') + punkt(X(m.de), Y(m.rA), '#046530') + punkt(X(m.de), Y(m.rd), '#f59e0b');
+    s += tekst(X(xmax) - 4, Y(m.rA) - 7, `WACC = R A = ${pc(m.rA, 1)}`, '#046530', 'end') + tekst(X(xmax) - 4, Y(m.rd) + 15, `R D = ${pc(m.rd, 1)}`, '#b45309', 'end');
+    $('#m-graf').innerHTML = s + '</svg>';
+    $('#m-sub').innerHTML = `R<sub>E</sub> starter i R<sub>A</sub> når selskapet er uten gjeld, og stiger med ${pc(m.rA - m.rd, 1)} for hver enhet D/E. WACC-linjen er flat: det er MM I tegnet som avkastningskrav.`;
+    const des4 = [0, 0.5, 1, 2];
+    $('#m-tab').innerHTML = `<table class="tab"><tr><th>D/E</th><th>E/V</th><th>D/V</th><th>R<sub>E</sub></th><th>WACC</th></tr>${des4.map(x => { const wE = 1 / (1 + x), re = rE(x); return rad(nf(x, 1), [nf(wE, 3), nf(1 - wE, 3), pc(re, 1), pc(wE * re + (1 - wE) * m.rd, 1)]); }).join('')}</table>`;
+  }
+
+  /* ---------- DEL 4 ---------- */
+  function tegnSkatt() {
+    const q = S.t, r = mSkatt(), e = q.enhet, K = (x, d) => kr(x, e, d), T = `${nf(q.t, 0)} %`;
+    let tb = `<table class="tab"><tr><th></th><th>Firma U (uten gjeld)</th><th>Firma L (gjeld ${K(r.D, 0)})</th></tr>`;
+    tb += rad('EBIT', [K(q.ebit), K(q.ebit)]) + rad('Renter', [K(0, 2), K(-r.I)]) + rad('Skattbar inntekt', [K(q.ebit), K(q.ebit - r.I)]) + rad(`Skatt (${T})`, [K(-r.skU), K(-r.skL)]) + rad('Resultat til aksjonærene', [K(r.niU), K(r.niL)], 'sum');
+    tb += `<tr class="hode"><td colspan="3">Kontantstrøm til kapitaleierne</td></tr>` + rad('Til aksjonærene', [K(r.niU), K(r.niL)]) + rad('Til kreditorene', [K(0, 2), K(r.I)]) + rad('Totalt', [K(r.niU), K(r.cfL)], 'sum') + rad('Skatteskjold = T<sub>C</sub> × renter', ['', K(r.skjold)], 'diff') + '</table>';
+    $('#t-tab').innerHTML = tb;
+    $('#t-s1m').innerHTML = `Firma L betaler ${K(r.skjold)} mindre i skatt hvert år: ${T} × ${K(r.I)} i renter. Kapitaleierne i L får ${K(r.cfL)} mot ${K(r.niU)} i U. Samme eiendeler, mer igjen til dem som har skutt inn kapital.`;
+    $('#t-s2').innerHTML = `V<sub>U</sub> = <span class="fr"><span>EBIT (1 − T<sub>C</sub>)</span><span>R<sub>U</sub></span></span> = <span class="fr"><span>${K(q.ebit)} × ${nf(1 - q.t / 100, 2)}</span><span>${nf(q.ru / 100, 3)}</span></span> = <span class="fr"><span>${K(r.niU)}</span><span>${nf(q.ru / 100, 3)}</span></span> = <b>${K(r.VU)}</b>`;
+    $('#t-s3').innerHTML = `PV(skatteskjold) = <span class="fr"><span>T<sub>C</sub> × R<sub>D</sub> × D</span><span>R<sub>D</sub></span></span> = T<sub>C</sub> × D = ${nf(q.t / 100, 2)} × ${K(r.D)} = <b>${K(r.PVs)}</b><br>V<sub>L</sub> = V<sub>U</sub> + T<sub>C</sub> D = ${K(r.VU)} + ${K(r.PVs)} = <b>${K(r.VL)}</b> &nbsp;·&nbsp; E = V<sub>L</sub> − D = ${K(r.VL)} − ${K(r.D)} = <b>${K(r.E)}</b>`;
+    $('#t-s3m').innerHTML = `Skjoldet har samme risiko som gjelden og diskonteres med R<sub>D</sub>. Hver krone gjeld øker verdien med ${nf(q.t, 0)} øre. Tatt bokstavelig: lån så mye som mulig. Det er grunnen til at vi trenger del 5.`;
+    if (r.ok) {
+      $('#t-s4').innerHTML = `R<sub>E</sub> = R<sub>U</sub> + (R<sub>U</sub> − R<sub>D</sub>)(1 − T<sub>C</sub>) × D/E = ${pc(q.ru, 1)} + (${pc(q.ru, 1)} − ${pc(q.rd, 1)}) × ${nf(1 - q.t / 100, 2)} × <span class="fr"><span>${K(r.D)}</span><span>${K(r.E)}</span></span> = ${pc(q.ru, 1)} + ${pc(r.rE - q.ru, 2)} = <b>${pc(r.rE, 2)}</b>`;
+      $('#t-s5').innerHTML = `WACC = <span class="fr"><span>${K(r.E)}</span><span>${K(r.VL)}</span></span> × ${pc(r.rE, 2)} + <span class="fr"><span>${K(r.D)}</span><span>${K(r.VL)}</span></span> × ${pc(q.rd, 1)} × ${nf(1 - q.t / 100, 2)} = ${pc(r.E / r.VL * r.rE, 2)} + ${pc(r.D / r.VL * q.rd * (1 - q.t / 100), 2)} = <b>${pc(r.wacc, 2)}</b><br>Snarvei: R<sub>U</sub> (1 − T<sub>C</sub> × D/V<sub>L</sub>) = ${pc(q.ru, 1)} × (1 − ${nf(q.t / 100, 2)} × ${nf(r.D / r.VL, 4)}) = <b>${pc(r.wacc2, 2)}</b>`;
+      $('#t-s5m').innerHTML = `Kontroll: EBIT(1 − T<sub>C</sub>)/WACC = ${K(r.niU)} / ${nf(r.wacc / 100, 4)} = ${K(r.sjekk)} = V<sub>L</sub>. WACC har falt fra ${pc(q.ru, 1)} uten gjeld til ${pc(r.wacc, 2)}, og hele fallet skyldes skatteskjoldet.`;
+      $('#t-res').innerHTML = `<div class="tall"><small>Verdien med gjeld, V<sub>L</sub></small>${K(r.VL)}</div><div class="bidrag">V<sub>U</sub> ${K(r.VU)} + skatteskjold ${K(r.PVs)}<div class="bar"><i style="width:${r.VU / r.VL * 100}%;background:#a7f3d0"></i><i style="width:${r.PVs / r.VL * 100}%;background:#fde68a"></i></div>Egenkapital ${K(r.E)} (${pc(r.E / r.VL * 100, 1)}) og gjeld ${K(r.D)} (${pc(r.D / r.VL * 100, 1)}). Eierne sitter igjen med ${K(r.E)} i aksjer pluss ${K(r.D)} de fikk utbetalt da lånet ble brukt til tilbakekjøp: ${K(r.E + r.D)} mot ${K(r.VU)} før. Gevinsten er skatteskjoldet.</div>`;
+    } else {
+      $('#t-s4').innerHTML = $('#t-s5').innerHTML = '<b>Gjelden overstiger verdien av selskapet.</b>'; $('#t-s5m').innerHTML = ''; $('#t-res').innerHTML = `<div class="tall"><small>Verdien med gjeld</small>—</div><div class="bidrag">Reduser gjelden.</div>`;
+    }
+    const adv = [];
+    if (!r.ok) adv.push('Gjelden er større enn V<sub>L</sub>, så egenkapitalen ville vært negativ. Reduser D.');
+    if (r.ok && q.rd > q.ru) adv.push('Lånerenten er høyere enn R<sub>U</sub>. Da faller R<sub>E</sub> med gjeld, som er urealistisk.');
+    $('#t-adv').innerHTML = adv.join('<br>'); $('#t-adv').style.display = adv.length ? 'block' : 'none';
+    grafSkattA(q, r); grafSkattB(q, r);
+  }
+  function grafSkattA(q, r) {
+    if (!isFinite(r.VU)) { $('#t-grafA').innerHTML = ''; return; }
+    const t = q.t / 100, xmax = Math.max(r.D * 1.3, r.VU * 0.5, 1), e = q.enhet;
+    const ymin = r.VU * 0.94, ymax = (r.VU + t * xmax) * 1.03 + (t === 0 ? r.VU * 0.08 : 0);
+    const [sk, skl] = skala(xmax), fx = v => nf(v / sk, sk === 1 ? auto(xmax) === 2 ? 0 : 0 : xmax / sk < 20 ? 1 : 0);
+    const { s: s0, X, Y } = akser(0, xmax, ymin, ymax, 'Gjeld D' + skl, 'Verdi (' + e + ')', fx, v => nf(v / sk, sk === 1 ? 0 : 1));
+    let s = s0;
+    if (r.D > 0 && t > 0) s += `<path d="M${X(0)} ${Y(r.VU)} L${X(r.D)} ${Y(r.VU)} L${X(r.D)} ${Y(r.VL)} Z" fill="#bbf7d0" opacity=".8"/>`;
+    s += linje([[0, r.VU], [xmax, r.VU]], X, Y, '#6b7280', 2, '6 5') + linje([[0, r.VU], [xmax, r.VU + t * xmax]], X, Y, '#046530', 3);
+    s += tekst(X(xmax) - 4, Y(r.VU) + 15, `V U = ${kr(r.VU, e)}`, '#6b7280', 'end');
+    if (r.D > 0) {
+      s += `<line x1="${X(r.D)}" x2="${X(r.D)}" y1="${Y(r.VU)}" y2="${H - MB}" stroke="#c7c7bf" stroke-dasharray="3 4"/>`;
+      s += punkt(X(r.D), Y(r.VL), '#046530', 6.5) + tekst(X(r.D) - 9, Y(r.VL) - 9, `V L = ${kr(r.VL, e)}`, '#046530', 'end');
+      if (t > 0) s += tekst(X(r.D) + 8, (Y(r.VU) + Y(r.VL)) / 2 + 4, `T C × D = ${kr(r.PVs, e)}`, '#047857', 'start', 11);
+    }
+    $('#t-grafA').innerHTML = s + '</svg>';
+    $('#t-subA').innerHTML = `Stigningstallet er T<sub>C</sub> = ${nf(t, 2)}: hver krone gjeld gir ${nf(t, 2)} kroner høyere verdi. Avstanden mellom linjene ved D = ${kr(r.D, e)} er nåverdien av skatteskjoldet, ${kr(r.PVs, e)}.`;
+  }
+  function grafSkattB(q, r) {
+    const t = q.t / 100, ru = q.ru, rd = q.rd, xmax = Math.max(1.5, (isFinite(r.de) ? r.de : 0) * 1.3);
+    const rE = x => ru + (ru - rd) * (1 - t) * x, wacc = x => ru * (1 - t * x / (1 + x)), rde = rd * (1 - t);
+    const pts = [], pw = []; for (let i = 0; i <= 60; i++) { const x = xmax * i / 60; pts.push([x, rE(x)]); pw.push([x, wacc(x)]); }
+    const ymin = Math.min(0, rde, wacc(xmax)) , ymax = Math.max(rE(xmax), ru) + 2;
+    const { s: s0, X, Y } = akser(0, xmax, ymin, ymax, 'Gjeldsgrad D/E', 'Avkastningskrav (%)', v => nf(v, 1));
+    let s = s0 + linje([[0, ru], [xmax, ru]], X, Y, '#6b7280', 2, '6 5') + linje([[0, rde], [xmax, rde]], X, Y, '#f59e0b', 2.5) + linje(pw, X, Y, '#046530', 3) + linje(pts, X, Y, '#dc2626', 3);
+    s += tekst(X(xmax) - 4, Y(ru) - 7, `R U = ${pc(ru, 1)}`, '#6b7280', 'end') + tekst(X(xmax) - 4, Y(rde) + 15, `R D (1 − T C ) = ${pc(rde, 2)}`, '#b45309', 'end');
+    if (r.ok && r.de <= xmax) s += punkt(X(r.de), Y(r.rE), '#dc2626') + tekst(X(r.de) - 9, Y(r.rE) - 9, `R E = ${pc(r.rE, 2)}`, '#dc2626', 'end') + punkt(X(r.de), Y(r.wacc), '#046530') + tekst(X(r.de) + 9, Y(r.wacc) + 16, `WACC = ${pc(r.wacc, 2)}`, '#046530', 'start');
+    $('#t-grafB').innerHTML = s + '</svg>';
+    $('#t-subB').innerHTML = t > 0 ? `R<sub>E</sub> stiger med (R<sub>U</sub> − R<sub>D</sub>)(1 − T<sub>C</sub>) = ${pc((ru - rd) * (1 - t), 2)} per enhet D/E, slakere enn uten skatt. WACC faller mot R<sub>D</sub>(1 − T<sub>C</sub>) når gjelden går mot 100 %.` : 'Uten skatt er dette figuren fra del 3: WACC er flat og lik R<sub>U</sub>.';
+  }
+
+  /* ---------- DEL 5 ---------- */
+  function tegnStat() {
+    const s = S.s, r = mStat();
+    $('#s-s1').innerHTML = `<span class="fr"><span>dV<sub>L</sub></span><span>dD</span></span> = T<sub>C</sub> − 3c <span class="fr"><span>D²</span><span>κ³ V<sub>U</sub>²</span></span> = 0 &nbsp;⇒&nbsp; <span class="fr"><span>D*</span><span>V<sub>U</sub></span></span> = <span style="font-size:1.3em;vertical-align:-2px">√</span><span style="border-top:1.5px solid currentColor;padding:0 3px">T<sub>C</sub> κ³ / 3c</span> = <span style="font-size:1.3em;vertical-align:-2px">√</span><span style="border-top:1.5px solid currentColor;padding:0 3px">${nf(r.t, 2)} × ${nf(Math.pow(s.kappa, 3), 3)} / ${nf(3 * r.c, 2)}</span> = <b>${r.finnes ? nf(r.xStar, 3) : (isFinite(r.xs) ? nf(r.xs, 2) + ' (utenfor området)' : 'ingen løsning')}</b>`;
+    $('#s-s1m').innerHTML = r.finnes
+      ? `Optimal gjeld er D* = ${nf(r.Ds, 1)} (av V<sub>U</sub> = 100). Da er V<sub>L</sub>* = 100 + ${nf(r.t * r.Ds, 1)} − ${nf(fd(r.xStar), 1)} = <b>${nf(r.VLs, 1)}</b>, egenkapitalen ${nf(r.Es, 1)}, gjeldsandelen D*/V<sub>L</sub>* = <b>${pc(r.dvs * 100, 0)}</b> og WACC* = R<sub>U</sub> V<sub>U</sub>/V<sub>L</sub>* = <b>${pc(r.waccS, 2)}</b>. Verdien er ${nf(r.VLs - 100, 1)} høyere enn uten gjeld: skatteskjoldet ${nf(r.t * r.Ds, 1)} minus krisekostnader ${nf(fd(r.xStar), 1)}.`
+      : (r.c === 0 ? 'Uten krisekostnader finnes det ikke noe indre optimum. Verdien stiger med gjelden hele veien, og modellen anbefaler 100 % gjeld, akkurat som MM med skatt i del 4.' : 'Med så lave krisekostnader eller så høy gjeldskapasitet ligger optimum utenfor området, over 100 % av V<sub>U</sub>. Øk c eller reduser κ.');
+    $('#s-s2').innerHTML = `V<sub>L</sub>(${nf(s.D, 0)}) = V<sub>U</sub> + T<sub>C</sub> D − c V<sub>U</sub> (D/κV<sub>U</sub>)³ = 100 + ${nf(r.t, 2)} × ${nf(s.D, 0)} − ${nf(r.c, 2)} × 100 × (${nf(r.x, 2)}/${nf(s.kappa, 2)})³ = 100 + ${nf(r.skjold, 1)} − ${nf(r.fdD, 1)} = <b>${nf(r.VLd, 1)}</b>`;
+    const tot = 100 + r.skjold, wU = 100 / tot * 100, wS = r.skjold / tot * 100, wF = Math.min(100, r.fdD / tot * 100);
+    $('#s-stabel').innerHTML = `<div class="stabel" style="margin-top:10px"><i style="width:${wU}%;background:#9ca3af">V<sub>U</sub> = 100</i><i style="width:${wS}%;background:#10b981">${wS > 9 ? '+ ' + nf(r.skjold, 1) : ''}</i></div><div class="stabel" style="margin-top:4px"><i style="width:${Math.max(0, 100 - wF)}%;background:#046530">V<sub>L</sub> = ${nf(r.VLd, 1)}</i><i style="width:${wF}%;background:#dc2626">${wF > 9 ? '− ' + nf(r.fdD, 1) : ''}</i></div><p class="stabel-navn">Øverst: verdien uten gjeld pluss skatteskjoldet (tilfelle II). Nederst: det som blir igjen når krisekostnadene er trukket fra (tilfelle III).</p>`;
+    $('#s-res').innerHTML = r.finnes
+      ? `<div class="tall"><small>Optimal gjeldsandel D*/V<sub>L</sub>*</small>${pc(r.dvs * 100, 0)}</div><div class="bidrag">Ved optimum er V<sub>L</sub>* = ${nf(r.VLs, 1)} og WACC* = ${pc(r.waccS, 2)}, mot ${pc(s.ru, 1)} uten gjeld. ${r.x < r.xStar - 0.02 ? `Du undersøker D = ${nf(s.D, 0)}, under optimum: mer gjeld ville økt verdien.` : r.x > r.xStar + 0.02 ? `Du undersøker D = ${nf(s.D, 0)}, over optimum: krisekostnadene vokser raskere enn skattefordelen.` : `Du undersøker D = ${nf(s.D, 0)}, omtrent ved optimum.`}</div>`
+      : `<div class="tall"><small>Optimal gjeldsandel</small>${r.c === 0 ? '100 %' : '—'}</div><div class="bidrag">${r.c === 0 ? 'Ingen krisekostnader, ingen grense for gjelden.' : 'Optimum ligger utenfor området.'}</div>`;
+    const adv = []; if (r.t === 0 && r.c > 0) adv.push('Uten skatt er det ingen fordel med gjeld i denne modellen, bare krisekostnader. Optimum er null gjeld.');
+    $('#s-adv').innerHTML = adv.join('<br>'); $('#s-adv').style.display = adv.length ? 'block' : 'none';
+    grafStatA(r); grafStatB(r); tabellStat(r);
+  }
+  function grafStatA(r) {
+    const s = S.s, p1 = [], p2 = [], p3 = [];
+    for (let i = 0; i <= 100; i++) { const x = i / 100; p1.push([i, 100]); p2.push([i, vl2(x)]); p3.push([i, vl3(x)]); }
+    const ymin = Math.min(100, ...p3.map(p => p[1])) - 3, ymax = Math.max(100, vl2(1)) + 3;
+    const { s: s0, X, Y } = akser(0, 100, ymin, ymax, 'Gjeld D (prosent av V U )', 'Verdi (V U = 100)', v => nf(v, 0));
+    let s1 = s0 + linje(p1, X, Y, '#6b7280', 2, '6 5') + linje(p2, X, Y, '#3b82f6', 2, '6 5') + linje(p3, X, Y, '#046530', 3);
+    const D = s.D, vII = vl2(D / 100), vIII = vl3(D / 100);
+    s1 += `<line x1="${X(D)}" x2="${X(D)}" y1="${MT}" y2="${H - MB}" stroke="#c7c7bf" stroke-dasharray="3 4"/>`;
+    if (r.fdD > (ymax - ymin) * 0.01) s1 += `<line x1="${X(D)}" x2="${X(D)}" y1="${Y(vII)}" y2="${Y(vIII)}" stroke="#dc2626" stroke-width="3"/>` + tekst(X(D) + 7, Y(vII) - 6, `krisekostnader ${nf(r.fdD, 1)}`, '#dc2626', 'start', 11);
+    s1 += punkt(X(D), Y(vIII), '#046530') + tekst(X(D) - 8, Y(vIII) + (vIII >= 100 ? 16 : -9), `V L = ${nf(vIII, 1)}`, '#046530', 'end', 11.5);
+    if (r.finnes) s1 += `<line x1="${X(r.Ds)}" x2="${X(r.Ds)}" y1="${Y(r.VLs)}" y2="${H - MB}" stroke="#dc2626" stroke-dasharray="2 3"/>` + punkt(X(r.Ds), Y(r.VLs), '#dc2626', 6.5) + tekst(X(r.Ds), H - MB - 8, `D* = ${nf(r.Ds, 0)}`, '#dc2626', 'middle');
+    s1 += tekst(X(100) - 4, Y(100) + 15, 'I: V U', '#6b7280', 'end') + tekst(X(100) - 4, Y(vl2(1)) - 7, 'II: V U + T C D', '#1d4ed8', 'end');
+    $('#s-grafA').innerHTML = s1 + '</svg>';
+    $('#s-subA').innerHTML = `Avstanden fra II ned til III er nåverdien av krisekostnadene. Avstanden fra I opp til III er gevinsten av gjeld netto. ${r.finnes ? `Den er størst ved D* = ${nf(r.Ds, 0)}.` : ''}`;
+  }
+  function grafStatB(r) {
+    const s = S.s, ru = s.ru, c1 = [], c2 = [], c3 = [];
+    for (let i = 0; i <= 190; i++) { const D = i / 2, x = D / 100; const V2 = vl2(x), V3 = vl3(x); if (100 - D > 0.5 && D / (100 - D) <= 3) c1.push([D / (100 - D), ru]); if (V2 - D > 0.5 && D / (V2 - D) <= 3) c2.push([D / (V2 - D), ru * 100 / V2]); if (V3 - D > 0.5 && D / (V3 - D) <= 3) c3.push([D / (V3 - D), ru * 100 / V3]); }
+    const alle = c1.concat(c2, c3).map(p => p[1]), ymin = Math.min(...alle) - 0.6, ymax = Math.max(...alle) + 0.6;
+    const { s: s0, X, Y } = akser(0, 3, ymin, ymax, 'Gjeldsgrad D/E', 'WACC (%)', v => nf(v, 1), v => nf(v, 1));
+    let s1 = s0 + linje(c1, X, Y, '#6b7280', 2, '6 5') + linje(c2, X, Y, '#3b82f6', 2, '6 5') + linje(c3, X, Y, '#046530', 3);
+    if (r.finnes && r.Es > 0) { const de = r.Ds / r.Es; if (de <= 3) s1 += punkt(X(de), Y(r.waccS), '#dc2626', 6.5) + tekst(X(de), Y(r.waccS) + 20, `WACC* = ${pc(r.waccS, 2)} ved D/E = ${nf(de, 2)}`, '#dc2626', 'middle'); }
+    const Dd = s.D, V3d = vl3(Dd / 100); if (V3d - Dd > 0.5 && Dd / (V3d - Dd) <= 3) s1 += punkt(X(Dd / (V3d - Dd)), Y(ru * 100 / V3d), '#046530');
+    s1 += tekst(X(3) - 4, Y(ru) - 7, `I: R U = ${pc(ru, 1)}`, '#6b7280', 'end');
+    $('#s-grafB').innerHTML = s1 + '</svg>';
+    $('#s-subB').innerHTML = `WACC = R<sub>U</sub> V<sub>U</sub>/V<sub>L</sub>: høyest verdi betyr lavest kapitalkostnad. Kurven for tilfelle III faller først fordi skatteskjoldet dominerer, og stiger igjen når krisekostnadene tar over.`;
+  }
+  function tabellStat(r) {
+    const s = S.s, base = { t: s.t, c: s.c, kappa: s.kappa };
+    const opt = o => { const t = o.t / 100, c = o.c / 100; if (c <= 0) return null; const x = Math.sqrt(t * Math.pow(o.kappa, 3) / (3 * c)); if (x > 1) return null; const V = 100 + t * 100 * x - c * 100 * Math.pow(x / o.kappa, 3); return { D: x * 100, V, dv: x * 100 / V }; };
+    const rader = [['Som nå', base], ['Skattesats 10 prosentpoeng høyere', Object.assign({}, base, { t: Math.min(60, s.t + 10) })], ['Skattesats 0', Object.assign({}, base, { t: 0 })], ['Verditap dobbelt så stort', Object.assign({}, base, { c: s.c * 2 })], ['Gjeldskapasitet 0,7 (volatil drift, immaterielle eiendeler)', Object.assign({}, base, { kappa: 0.7 })], ['Gjeldskapasitet 1,3 (stabil drift, pantbare eiendeler)', Object.assign({}, base, { kappa: 1.3 })]];
+    $('#s-tab').innerHTML = `<table class="tab"><tr><th>Endring</th><th>D* (av V<sub>U</sub>)</th><th>V<sub>L</sub>*</th><th>D*/V<sub>L</sub>*</th></tr>${rader.map(([n, o]) => { const q = opt(o); return rad(n, q ? [nf(q.D, 0), nf(q.V, 1), pc(q.dv * 100, 0)] : o.c <= 0 ? ['ubegrenset', '—', '100 %'] : o.t === 0 ? ['0', '100,0', '0 %'] : ['> 100', '—', '—']); }).join('')}</table>`;
+  }
+
+  /* ---------- DEL 6 ---------- */
+  function tegnPizza() {
+    const s = S.s, r = mStat();
+    if (!isFinite(r.VT)) { $('#p-graf').innerHTML = ''; return; }
+    const lag = [];
+    for (let i = 0; i <= 100; i++) { const v = r.ved(i); lag.push({ D: i, E: Math.max(0, v.E), Dd: i, B: Math.max(0, v.B), G: Math.max(0, v.G) }); }
+    const ymax = r.VT * 1.04;
+    const { s: s0, X, Y } = akser(0, 100, 0, ymax, 'Gjeld D (prosent av V U )', 'Nåverdi (V U = 100)', v => nf(v, 0));
+    const omr = (nedre, ovre, farge) => { const fram = lag.map((l, i) => (i ? 'L' : 'M') + X(l.D).toFixed(1) + ' ' + Y(ovre(l)).toFixed(1)).join(' '), tilbake = lag.slice().reverse().map(l => 'L' + X(l.D).toFixed(1) + ' ' + Y(nedre(l)).toFixed(1)).join(' '); return `<path d="${fram} ${tilbake} Z" fill="${farge}" opacity=".9"/>`; };
+    let s1 = s0;
+    s1 += omr(() => 0, l => l.E, '#dc2626') + omr(l => l.E, l => l.E + l.Dd, '#f59e0b') + omr(l => l.E + l.Dd, l => l.E + l.Dd + l.B, '#374151') + omr(l => l.E + l.Dd + l.B, l => l.E + l.Dd + l.B + l.G, '#94a3b8');
+    s1 += linje([[0, r.VT], [100, r.VT]], X, Y, '#1a1a1a', 1.5) + tekst(X(50), Y(r.VT) - 6, `Hele pizzaen: PV(EBIT) = ${nf(r.VT, 1)}, konstant`, '#1a1a1a', 'middle');
+    if (r.finnes) s1 += `<line x1="${X(r.Ds)}" x2="${X(r.Ds)}" y1="${Y(r.VT)}" y2="${H - MB}" stroke="#fff" stroke-width="2" stroke-dasharray="4 4"/>` + tekst(X(r.Ds), H - MB - 6, `D* = ${nf(r.Ds, 0)}`, '#fff', 'middle', 11.5, 700);
+    s1 += `<line x1="${X(s.D)}" x2="${X(s.D)}" y1="${Y(r.VT)}" y2="${H - MB}" stroke="#1a1a1a" stroke-width="1.5"/>`;
+    const v = r.ved(s.D), merk = (y0, y1, t) => (y1 - y0 > 0.09 * ymax ? tekst(X(s.D) + 6, (Y(y0) + Y(y1)) / 2 + 4, t, '#fff', 'start', 11.5, 700) : '');
+    s1 += merk(0, v.E, `E ${nf(v.E, 1)}`) + merk(v.E, v.E + v.D, `D ${nf(v.D, 1)}`) + merk(v.E + v.D, v.E + v.D + v.B, `B ${nf(v.B, 1)}`) + merk(v.E + v.D + v.B, r.VT, `G ${nf(v.G, 1)}`);
+    $('#p-graf').innerHTML = s1 + '</svg>';
+    $('#p-sub').innerHTML = `Nederst eierne, så kreditorene, konkursboet og staten. Gjeld flytter verdi fra staten (mindre skatt) til eierne og kreditorene, men etter hvert vokser konkursboets stykke. ${r.finnes ? `Omsettelige krav E + D er størst ved D* = ${nf(r.Ds, 0)}.` : ''}`;
+    const bar = (navn, v) => { const seg = (val, farge, lab) => `<i style="width:${Math.max(0, val) / r.VT * 100}%;background:${farge}">${val / r.VT > 0.09 ? lab + ' ' + nf(val, 1) : ''}</i>`; return `<div class="stabel-navn">${navn}: E + D = <b>${nf(v.E + v.D, 1)}</b>, G + B = ${nf(v.G + v.B, 1)}, totalt ${nf(v.E + v.D + v.G + v.B, 1)}</div><div class="stabel">${seg(v.E, '#dc2626', 'E')}${seg(v.D, '#f59e0b', 'D')}${seg(v.B, '#374151', 'B')}${seg(v.G, '#94a3b8', 'G')}</div>`; };
+    $('#p-stabler').innerHTML = bar('Uten gjeld', r.ved(0)) + (r.finnes ? bar(`Ved optimum D* = ${nf(r.Ds, 0)}`, r.ved(r.Ds)) : '') + bar(`Ved valgt gjeld D = ${nf(s.D, 0)}`, v);
+    $('#p-res').innerHTML = `<div class="tall"><small>Omsettelige krav ved D = ${nf(s.D, 0)}</small>${nf(v.E + v.D, 1)}</div><div class="bidrag">Ikke-omsettelige krav: staten ${nf(v.G, 1)} og konkursboet ${nf(v.B, 1)}. Summen av alle fire er ${nf(r.VT, 1)} uansett gjeld. ${r.finnes ? `Maksimum for E + D er ${nf(r.VLs, 1)} ved D* = ${nf(r.Ds, 0)}: der er G + B minst.` : ''} Finansieringen skaper ikke verdi, den bestemmer hvem som får den.</div>`;
+  }
+
+  /* ---------- felles ---------- */
+  const FMT = { pc0: v => pc(v, 0), pc1: v => pc(v, 1), pc2: v => pc(v, 2), x2: v => nf(v, 2), n0: v => nf(v, 0) };
+  function verdiAv(k) { if (k === 'g.dv') { const m = mGiring(); return m.D / m.V * 100; } if (k === 't.dvu') { const r = mSkatt(); return isFinite(r.VU) && r.VU > 0 ? S.t.D / r.VU * 100 : 0; } return get(S, k); }
+  function settKontroller() {
+    $$('[data-k]').forEach(el => { const v = verdiAv(el.dataset.k); if (el.type === 'range') el.value = Math.min(+el.max, Math.max(+el.min, v)); else el.value = +(+v).toFixed(6); });
+    $$('[data-r]').forEach(el => { el.checked = get(S, el.dataset.r) === el.value; });
+    $$('[data-c]').forEach(el => { el.checked = !!get(S, el.dataset.c); });
+    $$('[data-vis]').forEach(el => { el.hidden = !get(S, el.dataset.vis); });
+  }
+  function markerPreset() {
+    const lik = (a, b) => Object.keys(b).every(k => k === 'navn' || (typeof b[k] === 'string' ? a[k] === b[k] : Math.abs(a[k] - b[k]) < 1e-9));
+    $$('.forhand .knapp').forEach(b => { const [gr, id] = b.dataset.pre.split(':'); b.classList.toggle('aktiv', lik(S[gr], PRE[gr][id])); });
+  }
+  function tegn() {
+    tegnGiring(); tegnHjem(); tegnMM2(); tegnSkatt(); tegnStat(); tegnPizza();
+    $$('[data-v]').forEach(b => { b.textContent = (FMT[b.dataset.f] || FMT.pc1)(verdiAv(b.dataset.v)); });
+    markerPreset();
+  }
+  $$('[data-k]').forEach(el => el.addEventListener('input', () => {
+    const k = el.dataset.k, v = parseFloat(el.value); if (!isFinite(v)) return;
+    if (k === 'g.dv') S.g.D = v / 100 * S.g.N0 * S.g.P;
+    else if (k === 't.dvu') { const r = mSkatt(); if (isFinite(r.VU)) S.t.D = v / 100 * r.VU; }
+    else set(S, k, el.type === 'number' && v < 0 && k !== 'g.e1' ? 0 : v);
+    const gr = k[0]; if (gr === 'g' || gr === 't' || gr === 'm') S[gr].navn = 'Eget eksempel';
+    if (el.type === 'number') { $$('[data-v]').forEach(b => { b.textContent = (FMT[b.dataset.f] || FMT.pc1)(verdiAv(b.dataset.v)); }); $$('input[type=range][data-k]').forEach(r => { r.value = Math.min(+r.max, Math.max(+r.min, verdiAv(r.dataset.k))); }); }
+    else $$('input[type=number][data-k]').forEach(n => { if (n.dataset.k === 'g.D' || n.dataset.k === 't.D') n.value = +(+get(S, n.dataset.k)).toFixed(4); });
+    tegn();
+  }));
+  $$('[data-r]').forEach(el => el.addEventListener('change', () => { if (el.checked) { set(S, el.dataset.r, el.value); tegn(); } }));
+  $$('[data-c]').forEach(el => el.addEventListener('change', () => { set(S, el.dataset.c, el.checked); settKontroller(); tegn(); }));
+  $$('.forhand .knapp').forEach(b => b.addEventListener('click', () => { const [gr, id] = b.dataset.pre.split(':'); Object.assign(S[gr], PRE[gr][id]); if (gr === 'g') S.h.rp = S.g.rd; settKontroller(); tegn(); }));
+  $$('[data-sett]').forEach(b => b.addEventListener('click', () => { Object.entries(JSON.parse(b.dataset.sett)).forEach(([k, v]) => set(S, k, v)); settKontroller(); tegn(); }));
+  $$('[data-null]').forEach(b => b.addEventListener('click', () => {
+    const gr = b.dataset.null, std = { g: PRE.g.industriSett, m: PRE.m.ricard, t: PRE.t.tindra, s: PRE.s.std };
+    if (gr === 'h') Object.assign(S.h, { X: 2000, rp: S.g.rd, modus: 'opp', f: 100 }); else Object.assign(S[gr], std[gr]);
+    if (gr === 'g') S.h.rp = S.g.rd; if (gr === 'm') S.m.visBeta = false;
+    settKontroller(); tegn();
+  }));
+  $('#h-lik').addEventListener('click', () => { S.h.rp = S.g.rd; settKontroller(); tegn(); });
+  /* prøv selv */
+  const tolkTall = s => { s = String(s).trim().replace(/[\s ]/g, '').replace(/%|kr|mill\.?|€|£/gi, '').replace('−', '-'); if (s.includes(',')) s = s.replace(/\./g, '').replace(',', '.'); return parseFloat(s); };
+  $$('.oppg .sjekk').forEach(b => b.addEventListener('click', () => {
+    const li = b.closest('.oppg'), fb = li.querySelector('.tilbake');
+    if (li.dataset.riktig !== undefined) {
+      const valgt = li.querySelector('input[type=radio]:checked');
+      if (!valgt) { fb.textContent = 'Velg et alternativ først.'; fb.className = 'tilbake'; return; }
+      const ok = valgt.value === li.dataset.riktig; fb.textContent = ok ? 'Riktig. ' + (li.dataset.hvorfor || '') : 'Ikke riktig. ' + (li.dataset.hint || 'Prøv igjen.'); fb.className = 'tilbake ' + (ok ? 'ok' : 'nei'); return;
+    }
+    const v = tolkTall(li.querySelector('input[type=text]').value), svar = parseFloat(li.dataset.svar), tol = parseFloat(li.dataset.tol || '0'), abs = parseFloat(li.dataset.abs || '0');
+    if (!isFinite(v)) { fb.textContent = 'Skriv inn et tall.'; fb.className = 'tilbake'; return; }
+    const ok = Math.abs(v - svar) <= Math.max(abs, tol * Math.abs(svar), 1e-9);
+    fb.textContent = ok ? 'Riktig.' : 'Ikke helt. Prøv igjen, eller vis løsningen.'; fb.className = 'tilbake ' + (ok ? 'ok' : 'nei');
+  }));
+  $$('.oppg .los').forEach(b => b.addEventListener('click', () => { const l = b.closest('.oppg').querySelector('.losning'); l.hidden = !l.hidden; b.textContent = l.hidden ? 'Vis løsning' : 'Skjul løsning'; }));
+  $$('.oppg input[type=text]').forEach(i => i.addEventListener('keydown', e => { if (e.key === 'Enter') i.closest('.oppg').querySelector('.sjekk').click(); }));
+  /* deler */
+  const DELER = ['giring', 'hjemmelaget', 'mm2', 'skatt', 'tradeoff', 'pizza'];
+  function visDel(id, rull) {
+    if (!DELER.includes(id)) id = 'giring';
+    $$('main.del').forEach(m => m.classList.toggle('aktiv', m.id === 'del-' + id));
+    $$('.deler button').forEach(b => b.classList.toggle('aktiv', b.dataset.del === id));
+    if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id);
+    if (rull) { const nav = $('.deler'); const y = nav.getBoundingClientRect().top + window.scrollY - 8; if (window.scrollY > y) window.scrollTo({ top: y }); }
+  }
+  $$('.deler button').forEach(b => b.addEventListener('click', () => visDel(b.dataset.del, true)));
+  $$('a[data-del]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); visDel(a.dataset.del, true); }));
+  window.addEventListener('hashchange', () => visDel(location.hash.slice(1), false));
+  window.__MM = { S, PRE, mGiring, mHjem, mMM2, mSkatt, mStat, tegn };
+  settKontroller(); tegn(); visDel(location.hash.slice(1) || 'giring', false);
+})();
+</script>
+</body>
+</html>
