@@ -1,5 +1,6 @@
 import { ModuleQuiz, ModuleQuizQuestion } from '../types/course';
 import { renderLatex } from '../utils/latex';
+import { shuffleOptions } from '../utils/shuffleOptions';
 
 interface QuizState {
   currentQuestion: number;
@@ -64,9 +65,10 @@ export class ModuleQuizHandler {
     const questionsToShow = quiz.questionsToShow || quiz.questions.length;
     const numToSelect = Math.min(questionsToShow, quiz.questions.length);
 
-    // Shuffle all questions and take the first N
+    // Shuffle all questions and take the first N, and shuffle each question's
+    // answer options so the correct answer isn't always in the same position
     const shuffled = this.shuffleArray(quiz.questions);
-    return shuffled.slice(0, numToSelect);
+    return shuffled.slice(0, numToSelect).map(q => shuffleOptions(q));
   }
 
   private render(previousScore?: number): void {

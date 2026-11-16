@@ -12,6 +12,7 @@ import { ChatWidget } from './components/ChatWidget';
 import { HomePage } from './components/HomePage';
 import { Onboarding } from './components/Onboarding';
 import { FormulaSheet } from './components/FormulaSheet';
+import { shuffleOptions } from './utils/shuffleOptions';
 import { ProgressTracker } from './services/ProgressTracker';
 import { AuthService } from './services/auth/AuthService';
 import { LoginPage } from './components/auth/LoginPage';
@@ -509,11 +510,17 @@ class SustainableFinanceApp {
     this.renderSectionHeader();
 
     // Render content
-    this.contentRenderer.renderContent(section.content);
+    // Stokk svaralternativene i quizene (en kopi – dataene endres ikke), så
+    // riktig svar ikke alltid står på samme bokstav. Samme kopi brukes til
+    // visning og retting.
+    const sectionContent = section.content.map(c =>
+      c.type === 'quiz' ? shuffleOptions(c as QuizContent) : c
+    );
+    this.contentRenderer.renderContent(sectionContent);
 
     // Register quizzes and attach event listeners
     this.quizHandler.reset();
-    section.content.forEach(content => {
+    sectionContent.forEach(content => {
       if (content.type === 'quiz') {
         this.quizHandler.registerQuiz(content as QuizContent);
       }
@@ -521,7 +528,7 @@ class SustainableFinanceApp {
 
     // Register drag games and attach event listeners
     this.gameHandler.reset();
-    section.content.forEach(content => {
+    sectionContent.forEach(content => {
       if (content.type === 'draggame') {
         this.gameHandler.registerGame(content as DragGameContent);
       }
@@ -529,7 +536,7 @@ class SustainableFinanceApp {
 
     // Register calculators and attach event listeners
     this.calculatorHandler.reset();
-    section.content.forEach(content => {
+    sectionContent.forEach(content => {
       if (content.type === 'calculator') {
         this.calculatorHandler.registerCalculator(content as CalculatorContent);
       }
@@ -537,7 +544,7 @@ class SustainableFinanceApp {
 
     // Register interactive models and attach event listeners
     this.interactiveModelHandler.reset();
-    section.content.forEach(content => {
+    sectionContent.forEach(content => {
       if (content.type === 'interactive-model') {
         this.interactiveModelHandler.registerModel(content as InteractiveModelContent);
       }
