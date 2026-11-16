@@ -493,9 +493,9 @@ window.MathJax = {
       <p class="caption">Etter 10 år har 27 500 vokst til 43 772 — en gevinst på over 16 000 kr fra ett innskudd.</p>
     </section>
 
-    <!-- ============ SLIDE 11: ENKEL VS SAMMENSATT ============ -->
+    <!-- ============ SLIDE 11: ENKEL RENTE VS RENTES RENTE ============ -->
     <section>
-      <h2>Enkle vs. sammensatte renter</h2>
+      <h2>Enkel rente vs. rentes rente</h2>
       <div class="two-col">
         <div class="definisjon">
           <div class="term">Enkel rente</div>
@@ -504,7 +504,7 @@ window.MathJax = {
           Lineær vekst.
         </div>
         <div class="definisjon">
-          <div class="term">Sammensatt rente</div>
+          <div class="term">Rentes rente</div>
           Rente beregnes <strong>også på opptjent rente</strong>.
           $$FV = PV \times (1+r)^n$$
           Eksponentiell vekst.
@@ -512,16 +512,16 @@ window.MathJax = {
       </div>
       <p style="text-align:left; margin-top:24px"><strong>Eksempel:</strong> 10 000 kr i 30 år, 6 %:</p>
       <table>
-        <tr><th></th><th>Enkel rente</th><th>Sammensatt rente</th></tr>
+        <tr><th></th><th>Enkel rente</th><th>Rentes rente</th></tr>
         <tr><td>FV</td><td>$10\,000 \times (1+0{,}06 \times 30) = 28\,000$</td><td>$10\,000 \times 1{,}06^{30} = 57\,435$</td></tr>
       </table>
-      <p class="caption">Sammensatt rente gir over dobbel så stor sluttverdi som enkel rente over 30 år. Dette er hvorfor lang sparehorisont er så viktig.</p>
+      <p class="caption">Rentes rente gir over dobbelt så stor sluttverdi som enkel rente over 30 år. Dette er hvorfor lang sparehorisont er så viktig.</p>
     </section>
 
     <!-- ============ SLIDE 12: GRAF KOMPOUNDING ============ -->
     <section>
       <h2>Pensjonssparingens kraft</h2>
-      <p style="text-align:left">10 000 kr investert med 7 % sammensatt rente:</p>
+      <p style="text-align:left">10 000 kr investert til 7 % med rentes rente:</p>
       <div class="tidslinje">
         <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
           <!-- Axes -->
@@ -545,7 +545,7 @@ window.MathJax = {
           <text x="600" y="200" font-family="Source Sans 3" font-size="13" fill="#6b7280">Enkel rente</text>
           <!-- Compound curve (7%) -->
           <path d="M 60 280 Q 200 270 300 220 T 540 100 L 660 50" stroke="#046530" stroke-width="3" fill="none"/>
-          <text x="500" y="80" font-family="Source Sans 3" font-size="13" fill="#046530" font-weight="600">Sammensatt 7 %</text>
+          <text x="450" y="80" font-family="Source Sans 3" font-size="13" fill="#046530" font-weight="600">Rentes rente 7 %</text>
           <!-- Title -->
           <text x="360" y="25" text-anchor="middle" font-family="Source Sans 3" font-size="13" font-style="italic" fill="#4b5563">Verdi av 10 000 kr investert i dag (NOK)</text>
         </svg>
@@ -867,21 +867,17 @@ window.MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-const useSlides = params.get('view') === 'slides';
 Reveal.initialize({
-  hash: !useSlides,
-  slideNumber: useSlides ? 'c/t' : false,
+  hash: true,
+  slideNumber: 'c/t',
   width: 1280,
   height: 800,
   margin: 0.06,
-  controls: useSlides,
-  progress: useSlides,
-  center: useSlides,
-  transition: useSlides ? 'slide' : 'none',
-  view: useSlides ? undefined : 'scroll',
-  scrollProgress: !useSlides,
-  plugins: typeof RevealNotes !== 'undefined' ? [ RevealNotes ] : []
+  controls: true,
+  progress: true,
+  center: true,
+  transition: 'slide',
+  plugins: [ RevealNotes ]
 });
 </script>
 </body>
