@@ -108,7 +108,7 @@ export class LandingPage {
               <span class="trust-icon">📝</span>
               <div>
                 <div class="trust-title">Skriftlig eksamen</div>
-                <div class="trust-sub">Gjennomføres ved nærmeste eksamenssted</div>
+                <div class="trust-sub">Gjennomføres på NMBU</div>
               </div>
             </div>
             <div class="trust-item">
@@ -236,7 +236,7 @@ export class LandingPage {
           </div>
           <div class="faq-list">
             ${this.renderFaq('Hvordan fungerer eksamen?',
-              'Kurset avsluttes med en offisiell skriftlig skoleeksamen som gir 7,5 studiepoeng fra NMBU. Eksamen kan normalt avlegges ved nærmeste universitet, høgskole eller samarbeidende eksamenssted i Norge. Karakterskala A–F.')}
+              'Kurset avsluttes med en offisiell skriftlig skoleeksamen som gir 7,5 studiepoeng fra NMBU. Eksamen avlegges på NMBU. Karakterskala A–F.')}
             ${this.renderFaq('Hvor mye tid krever kurset?',
               'Vi anbefaler 8–10 timer per uke i et semester, men tempoet er fleksibelt. Alt innhold er tilgjengelig når du logger inn, og du kan studere på kvelder, helger eller i ferier.')}
             ${this.renderFaq('Hvilke forkunnskaper trenger jeg?',
