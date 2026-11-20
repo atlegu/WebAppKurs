@@ -3,6 +3,10 @@
 import { ChatService, ChatContext } from '../services/ChatService';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
+import { redactPersonalData } from '../utils/redactPersonalData';
+
+// Øk versjonen hvis teksten i samtykket endres vesentlig, så alle må godta på nytt.
+const CONSENT_KEY = 'birger-consent-v1';
 
 export class ChatWidget {
   private chatService: ChatService;
@@ -12,6 +16,21 @@ export class ChatWidget {
   private messagesContainer: HTMLElement | null = null;
   private inputElement: HTMLTextAreaElement | null = null;
   private currentContext: ChatContext = { type: 'general' };
+  private consentGiven = ChatWidget.readConsent();
+
+  private static readConsent(): boolean {
+    try { return !!localStorage.getItem(CONSENT_KEY); } catch { return false; }
+  }
+
+  /** Viser samtykketeksten i stedet for samtalen til studenten har godtatt. */
+  private updateConsentView(): void {
+    const consent = this.container?.querySelector('.chat-consent') as HTMLElement | null;
+    const messages = this.container?.querySelector('.chat-messages') as HTMLElement | null;
+    const input = this.container?.querySelector('.chat-input-area') as HTMLElement | null;
+    if (consent) consent.hidden = this.consentGiven;
+    if (messages) messages.hidden = !this.consentGiven;
+    if (input) input.hidden = !this.consentGiven;
+  }
 
   constructor(apiEndpoint?: string) {
     this.chatService = new ChatService(apiEndpoint);
@@ -21,6 +40,7 @@ export class ChatWidget {
   private init(): void {
     this.createWidget();
     this.attachEventListeners();
+    this.updateConsentView();
   }
 
   private createWidget(): void {
@@ -79,6 +99,23 @@ export class ChatWidget {
         <div class="chat-context-bar" style="display: none;">
           <span class="chat-context-label"></span>
           <button class="chat-context-clear">✕</button>
+        </div>
+
+        <div class="chat-consent" hidden>
+          <img class="chat-welcome-mascot" src="/birger.png" alt="" />
+          <h3>Før du bruker Birger</h3>
+          <p>Birger er en AI-assistent. Det du skriver, sendes til språkmodellen GPT-4o mini fra OpenAI via en proxy hos Cloudflare, og behandles i USA.</p>
+          <ul>
+            <li>Det sendes ikke navn, e-post eller bruker-ID fra kurset.</li>
+            <li><strong>Ikke skriv personopplysninger</strong> om deg selv eller andre. E-post, telefon-, fødsels- og kontonummer fjernes automatisk før sending.</li>
+            <li>Samtalen lagres ikke i kurset eller i proxyen. OpenAI bruker ikke dataene til trening og sletter dem innen 30 dager.</li>
+            <li>Svarene kan være feil. Sjekk mot kursstoffet.</li>
+            <li>Det er frivillig å bruke Birger. Kurset virker fullt ut uten.</li>
+          </ul>
+          <div class="chat-consent-actions">
+            <button type="button" class="chat-consent-accept">Jeg forstår, start Birger</button>
+            <button type="button" class="chat-consent-decline">Ikke nå</button>
+          </div>
         </div>
 
         <div class="chat-messages">
@@ -165,6 +202,15 @@ export class ChatWidget {
         }
       });
     });
+
+    // Samtykke
+    this.container.querySelector('.chat-consent-accept')?.addEventListener('click', () => {
+      try { localStorage.setItem(CONSENT_KEY, new Date().toISOString()); } catch { /* privat modus */ }
+      this.consentGiven = true;
+      this.updateConsentView();
+      this.inputElement?.focus();
+    });
+    this.container.querySelector('.chat-consent-decline')?.addEventListener('click', () => this.close());
 
     // Context clear button
     const contextClear = this.container.querySelector('.chat-context-clear');
@@ -335,8 +381,13 @@ export class ChatWidget {
   private async sendMessage(): Promise<void> {
     if (!this.inputElement || !this.messagesContainer) return;
 
-    const message = this.inputElement.value.trim();
-    if (!message) return;
+    if (!this.consentGiven) { this.updateConsentView(); return; }
+
+    const raw = this.inputElement.value.trim();
+    if (!raw) return;
+
+    // Dataminimering: fjern personopplysninger FØR noe vises eller sendes
+    const { text: message, redacted } = redactPersonalData(raw);
 
     // Clear welcome screen on first message
     const welcome = this.messagesContainer.querySelector('.chat-welcome');
@@ -346,6 +397,9 @@ export class ChatWidget {
 
     // Add user message
     this.addMessage('user', message);
+    if (redacted.length) {
+      this.addNotice(`Av personvernhensyn ble dette fjernet før sending: ${redacted.join(', ')}.`);
+    }
 
     // Clear input
     this.inputElement.value = '';
@@ -363,6 +417,15 @@ export class ChatWidget {
       this.addMessage('assistant', 'Beklager, det oppstod en feil. Prøv igjen senere.');
       console.error('Chat error:', error);
     }
+  }
+
+  private addNotice(text: string): void {
+    if (!this.messagesContainer) return;
+    const el = document.createElement('div');
+    el.className = 'chat-privacy-notice';
+    el.textContent = text;
+    this.messagesContainer.appendChild(el);
+    this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
   }
 
   private addMessage(role: 'user' | 'assistant', content: string): void {

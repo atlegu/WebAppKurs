@@ -1,3 +1,4 @@
+import { redactPersonalData } from '../utils/redactPersonalData';
 // ChatService.ts - Handles communication with AI API
 
 export interface ChatMessage {
@@ -110,7 +111,10 @@ Svar alltid på norsk. Vær pedagogisk og tålmodig. Hvis studenten ber om det, 
     this.conversationHistory = [];
   }
 
-  async sendMessage(userMessage: string): Promise<string> {
+  async sendMessage(rawMessage: string): Promise<string> {
+    // Dobbel sikring: fjern personopplysninger også her (widgeten gjør det først)
+    const userMessage = redactPersonalData(rawMessage).text;
+
     // Add user message to history
     this.conversationHistory.push({
       role: 'user',

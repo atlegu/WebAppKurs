@@ -4,3 +4,8 @@ compatibility_date = "2024-01-01"
 
 # API key stored as secret (not in code)
 # Run: npx wrangler secret put OPENAI_API_KEY
+
+# Personvern: ingen lagring av forespørselslogger i Cloudflare (Workers Logs av).
+# Proxyen sender ikke studentens IP-adresse videre til OpenAI.
+[observability]
+enabled = false
