@@ -42,6 +42,11 @@
   .reveal .slide-number { font-family: 'Source Sans 3', Arial, sans-serif; color: var(--nmbu-green); background: transparent; }
   .reveal mjx-container { font-size: 1.0em !important; }
   .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+  .reveal .slides section.tett h2 { margin-bottom: 0.3em; }
+  .reveal .slides section.tett p, .reveal .slides section.tett li { margin-top: 0.25em; margin-bottom: 0.25em; }
+  .reveal .slides section.tett mjx-container[display="true"] { margin: 0.35em 0 !important; }
+  .reveal .slides section.tett .tavle-marker, .reveal .slides section.tett .definisjon, .reveal .slides section.tett .key-point, .reveal .slides section.tett .norsk-eksempel, .reveal .slides section.tett .folkelig, .reveal .slides section.tett .interactive-model { margin-top: 8px; margin-bottom: 8px; padding-top: 8px; padding-bottom: 8px; }
+  .reveal .slides section.tett table { margin-top: 6px; margin-bottom: 6px; }
 </style>
 <script>
 window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }, svg: { fontCache: 'global' }, startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { if (window.Reveal) Reveal.layout(); }); } } };
@@ -209,7 +214,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
   <p style="text-align:left">Hva hvis selskapet i tillegg har <em>gode investeringsmuligheter</em>? Da bør det beholde noe av overskuddet og reinvestere. Verdien stiger med ekstra verdien fra disse reinvesteringene — <strong>nåverdien av vekstmulighetene</strong>.</p>
 </section>
 
-<section>
+<section class="tett">
   <h2>PVGO — definert</h2>
   <div class="definisjon">
     <div class="term">PVGO — Present Value of Growth Opportunities</div>
@@ -284,7 +289,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
   <h2>P/E-forholdet</h2>
 </section>
 
-<section>
+<section class="tett">
   <h2>Price-Earnings (P/E) ratio</h2>
   <div class="definisjon">
     <div class="term">P/E — Pris/Fortjeneste</div>
@@ -372,7 +377,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
   <p class="caption">Tallene varierer mye over tid. Sjekk Nordnet, Børshandel eller Finansavisen for oppdaterte tall.</p>
 </section>
 
-<section>
+<section class="tett">
   <h2>Eksempel: Sammenhenger</h2>
   <div class="norsk-eksempel">
     <div class="label">Eksempel</div>
@@ -459,7 +464,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
   </div>
 </section>
 
-<section>
+<section class="tett">
   <h2>EV/EBITDA</h2>
   <div class="definisjon">
     <div class="term">EV — Enterprise Value</div>

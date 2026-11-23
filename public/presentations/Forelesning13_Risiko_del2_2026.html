@@ -45,6 +45,11 @@
   .reveal mjx-container { font-size: 1.0em !important; }
   .reveal .big-formula mjx-container { font-size: 1.3em !important; }
   .reveal blockquote { background: var(--nmbu-green-light); border-left: 4px solid var(--nmbu-green); padding: 14px 22px; margin: 16px 0; font-style: italic; font-size: 0.95em; text-align: left; border-radius: 0 6px 6px 0; box-shadow: none; }
+  .reveal .slides section.tett h2 { margin-bottom: 0.3em; }
+  .reveal .slides section.tett p, .reveal .slides section.tett li { margin-top: 0.25em; margin-bottom: 0.25em; }
+  .reveal .slides section.tett mjx-container[display="true"] { margin: 0.35em 0 !important; }
+  .reveal .slides section.tett .tavle-marker, .reveal .slides section.tett .definisjon, .reveal .slides section.tett .key-point, .reveal .slides section.tett .norsk-eksempel, .reveal .slides section.tett .folkelig, .reveal .slides section.tett .interactive-model { margin-top: 8px; margin-bottom: 8px; padding-top: 8px; padding-bottom: 8px; }
+  .reveal .slides section.tett table { margin-top: 6px; margin-bottom: 6px; }
 </style>
 <script>
 window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }, svg: { fontCache: 'global' }, startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { if (window.Reveal) Reveal.layout(); }); } } };
@@ -191,9 +196,9 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
 <section>
   <h2>Interaktiv modell: To-aksjers portefølje</h2>
   <div class="interactive-model">
-    <div class="label">Online interaktiv modell</div>
+    <div class="label">Interaktiv modell</div>
     <p>Eksperimenter selv med vektfordeling, forventede avkastninger, standardavvik og korrelasjon for to aksjer. Modellen viser hvordan porteføljens E(R) og σ endrer seg, samt visualiserer det effisiente settet.</p>
-    <p><strong>Lenke:</strong> <a href="https://www.econmodels.online/model/portfolio-two-asset" target="_blank">econmodels.online/model/portfolio-two-asset</a></p>
+    <p><strong>Åpne:</strong> <a href="Modell_Portefolje_To_Aktiva.html" target="_blank" rel="noopener">Porteføljevalg med to aktiva</a></p>
   </div>
   <p style="text-align:left"><strong>Forsøk dette:</strong></p>
   <ul>
@@ -203,7 +208,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
   </ul>
 </section>
 
-<section>
+<section class="tett">
   <h2>Eksempel: regn porteføljerisiko fra historikk</h2>
   <p style="text-align:left">For aksje X og Y har du fire scenarier:</p>
   <table>
@@ -219,7 +224,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
     <p>Kovarians:</p>
     $$\sigma_{XY} = 0{,}25(28-14)(10-11{,}5) + 0{,}5(15-14)(13-11{,}5) + 0{,}25(-2-14)(10-11{,}5)$$
     $$= -5{,}25 + 0{,}75 + 6 = 1{,}50$$
-    <p>Korrelasjon: $\rho_{XY} = 1{,}50 / (10{,}65 \times 1{,}52) = 0{,}09$</p>
+    <p>Korrelasjon: $\rho_{XY} = 1{,}50 / (10{,}65 \times 1{,}50) = 0{,}09$</p>
   </div>
 </section>
 
@@ -228,7 +233,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
   <h2>Effisient frontier</h2>
 </section>
 
-<section>
+<section class="tett">
   <h2>Mange aksjer — formeleksplosjon</h2>
   <p style="text-align:left">Med <em>$n$</em> aksjer i porteføljen får vi:</p>
   <div class="formel big-formula">
@@ -487,7 +492,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
   </div>
   <div class="definisjon">
     <div class="term">Interaktiv øvelse</div>
-    Bruk modellen på <a href="https://www.econmodels.online/model/portfolio-two-asset" target="_blank">econmodels.online/model/portfolio-two-asset</a>. Test korrelasjonens effekt — hva skjer når ρ går fra +1 til −1?
+    Bruk modellen <a href="Modell_Portefolje_To_Aktiva.html" target="_blank" rel="noopener">Porteføljevalg med to aktiva</a>. Test korrelasjonens effekt — hva skjer når ρ går fra +1 til −1?
   </div>
   <div class="definisjon">
     <div class="term">Pensum</div>

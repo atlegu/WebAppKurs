@@ -72,6 +72,11 @@
 
   .reveal mjx-container { font-size: 1.0em !important; }
   .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+  .reveal .slides section.tett h2 { margin-bottom: 0.3em; }
+  .reveal .slides section.tett p, .reveal .slides section.tett li { margin-top: 0.25em; margin-bottom: 0.25em; }
+  .reveal .slides section.tett mjx-container[display="true"] { margin: 0.35em 0 !important; }
+  .reveal .slides section.tett .tavle-marker, .reveal .slides section.tett .definisjon, .reveal .slides section.tett .key-point, .reveal .slides section.tett .norsk-eksempel, .reveal .slides section.tett .folkelig, .reveal .slides section.tett .interactive-model { margin-top: 8px; margin-bottom: 8px; padding-top: 8px; padding-bottom: 8px; }
+  .reveal .slides section.tett table { margin-top: 6px; margin-bottom: 6px; }
 </style>
 
 <script>
@@ -221,7 +226,7 @@ window.MathJax = {
     </section>
 
     <!-- ============ 8: EKSEMPEL SPOTRENTER ============ -->
-    <section>
+    <section class="tett">
       <h2>Eksempel: Spotrenter fra nullkupongobligasjoner</h2>
       <div class="norsk-eksempel">
         <div class="label">Eksempel</div>
@@ -303,7 +308,7 @@ window.MathJax = {
     </section>
 
     <!-- ============ 12: EKSEMPEL FORWARDRENTE ============ -->
-    <section>
+    <section class="tett">
       <h2>Eksempel: Forwardrenter fra spotkurven</h2>
       <p style="text-align:left">Med spotrentene fra slide 8 (8,00 %, 8,50 %, 9,00 %, 9,49 %):</p>
       <div class="tavle-marker">
@@ -513,7 +518,7 @@ window.MathJax = {
     </section>
 
     <!-- ============ 24: MACAULAY ============ -->
-    <section>
+    <section class="tett">
       <h2>Macaulay-durasjon</h2>
       <p style="text-align:left">For hver kontantstrøm $C_t$ på tid $t$ regner vi en <em>vekt</em> = andelen av prisen den utgjør:</p>
       <div class="formel">
@@ -528,7 +533,7 @@ window.MathJax = {
     </section>
 
     <!-- ============ 25: EKSEMPEL DURASJON 1 ============ -->
-    <section>
+    <section class="tett">
       <h2>Eksempel: Macaulay-durasjon</h2>
       <div class="norsk-eksempel">
         <div class="label">Eksempel</div>
@@ -552,7 +557,7 @@ window.MathJax = {
     </section>
 
     <!-- ============ 26: MODIFISERT DURASJON ============ -->
-    <section>
+    <section class="tett">
       <h2>Modifisert durasjon</h2>
       <p style="text-align:left">Modifisert durasjon er en justert versjon som direkte måler <strong>prosentvis prisendring</strong> ved en gitt renteendring:</p>
       <div class="formel big-formula">
@@ -567,7 +572,7 @@ window.MathJax = {
     </section>
 
     <!-- ============ 27: EKSEMPEL MODIFISERT ============ -->
-    <section>
+    <section class="tett">
       <h2>Eksempel: Modifisert durasjon i bruk</h2>
       <div class="norsk-eksempel">
         <div class="label">Eksempel (HRWJ)</div>
@@ -614,7 +619,7 @@ window.MathJax = {
     </section>
 
     <!-- ============ 29: DURASJON PERPETUITET ============ -->
-    <section>
+    <section class="tett">
       <h2>Durasjon for perpetuitet</h2>
       <p style="text-align:left">En perpetuitet betaler $K$ hvert år for evig. Kontantstrømmen er konstant, men diskonteringsfaktoren faller — så vektene tilfaller tidlige tidspunkter mest.</p>
       <div class="formel big-formula">

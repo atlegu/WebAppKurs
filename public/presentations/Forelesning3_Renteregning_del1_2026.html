@@ -254,6 +254,11 @@
   /* MathJax adjustments */
   .reveal mjx-container { font-size: 1.0em !important; }
   .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+  .reveal .slides section.tett h2 { margin-bottom: 0.3em; }
+  .reveal .slides section.tett p, .reveal .slides section.tett li { margin-top: 0.25em; margin-bottom: 0.25em; }
+  .reveal .slides section.tett mjx-container[display="true"] { margin: 0.35em 0 !important; }
+  .reveal .slides section.tett .tavle-marker, .reveal .slides section.tett .definisjon, .reveal .slides section.tett .key-point, .reveal .slides section.tett .norsk-eksempel, .reveal .slides section.tett .folkelig, .reveal .slides section.tett .interactive-model { margin-top: 8px; margin-bottom: 8px; padding-top: 8px; padding-bottom: 8px; }
+  .reveal .slides section.tett table { margin-top: 6px; margin-bottom: 6px; }
 </style>
 
 <script>
@@ -487,10 +492,10 @@ window.MathJax = {
       <div class="tavle-marker">
         <div class="tavle-label">Vi regner sammen</div>
         $$FV = 27\,500 \times (1{,}0475)^{10}$$
-        $$= 27\,500 \times 1{,}5917$$
-        $$= \text{kr } 43\,772$$
+        $$= 27\,500 \times 1{,}5905$$
+        $$= \text{kr } 43\,739$$
       </div>
-      <p class="caption">Etter 10 år har 27 500 vokst til 43 772 — en gevinst på over 16 000 kr fra ett innskudd.</p>
+      <p class="caption">Etter 10 år har 27 500 vokst til 43 739 — en gevinst på over 16 000 kr fra ett innskudd.</p>
     </section>
 
     <!-- ============ SLIDE 11: ENKEL RENTE VS RENTES RENTE ============ -->
@@ -519,11 +524,11 @@ window.MathJax = {
     </section>
 
     <!-- ============ SLIDE 12: GRAF KOMPOUNDING ============ -->
-    <section>
+    <section class="tett">
       <h2>Pensjonssparingens kraft</h2>
       <p style="text-align:left">10 000 kr investert til 7 % med rentes rente:</p>
       <div class="tidslinje">
-        <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" style="max-height:510px">
           <!-- Axes -->
           <line x1="60" y1="280" x2="660" y2="280" stroke="#1a1a1a" stroke-width="1.5"/>
           <line x1="60" y1="280" x2="60" y2="40" stroke="#1a1a1a" stroke-width="1.5"/>

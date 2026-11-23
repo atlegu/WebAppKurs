@@ -45,6 +45,11 @@
   .reveal mjx-container { font-size: 1.0em !important; }
   .reveal .big-formula mjx-container { font-size: 1.3em !important; }
   .reveal blockquote { background: var(--nmbu-green-light); border-left: 4px solid var(--nmbu-green); padding: 14px 22px; margin: 16px 0; font-style: italic; font-size: 0.95em; text-align: left; border-radius: 0 6px 6px 0; box-shadow: none; }
+  .reveal .slides section.tett h2 { margin-bottom: 0.3em; }
+  .reveal .slides section.tett p, .reveal .slides section.tett li { margin-top: 0.25em; margin-bottom: 0.25em; }
+  .reveal .slides section.tett mjx-container[display="true"] { margin: 0.35em 0 !important; }
+  .reveal .slides section.tett .tavle-marker, .reveal .slides section.tett .definisjon, .reveal .slides section.tett .key-point, .reveal .slides section.tett .norsk-eksempel, .reveal .slides section.tett .folkelig, .reveal .slides section.tett .interactive-model { margin-top: 8px; margin-bottom: 8px; padding-top: 8px; padding-bottom: 8px; }
+  .reveal .slides section.tett table { margin-top: 6px; margin-bottom: 6px; }
 </style>
 <script>
 window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] }, svg: { fontCache: 'global' }, startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { if (window.Reveal) Reveal.layout(); }); } } };
@@ -284,7 +289,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
   <h2>Security Market Line</h2>
 </section>
 
-<section>
+<section class="tett">
   <h2>Security Market Line (SML)</h2>
   <p style="text-align:left">CAPM gir en lineær sammenheng mellom <strong>beta</strong> og forventet avkastning — denne kalles <strong>SML</strong>.</p>
   <div style="margin: 16px auto; text-align: center;">
@@ -352,12 +357,12 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
   <div class="interactive-model">
     <div class="label">Interaktiv modell — CAPM/SML</div>
     Utforsk Security Market Line interaktivt:<br>
-    <a href="https://www.econmodels.online/model/capm-sml" target="_blank">econmodels.online/model/capm-sml</a><br>
+    <a href="Modell_CAPM_SML.html" target="_blank" rel="noopener">CAPM og verdipapirmarkedslinjen</a><br>
     Endre risikofri rente, markedsavkastning og beta — se hvordan E(R) og SML-posisjon endrer seg.
   </div>
 </section>
 
-<section>
+<section class="tett">
   <h2>Beta for en portefølje</h2>
   <p style="text-align:left">Portefølje-betaen er det <strong>vektede gjennomsnittet</strong> av enkeltbetaene:</p>
   <div class="formel big-formula">
@@ -406,7 +411,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
   </ol>
 </section>
 
-<section>
+<section class="tett">
   <h2>Sharpe ratio</h2>
   <div class="definisjon">
     <div class="term">Sharpe ratio</div>
@@ -427,7 +432,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
   </div>
 </section>
 
-<section>
+<section class="tett">
   <h2>Treynor ratio</h2>
   <div class="definisjon">
     <div class="term">Treynor ratio</div>
@@ -448,7 +453,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
   </div>
 </section>
 
-<section>
+<section class="tett">
   <h2>Jensens alfa</h2>
   <div class="definisjon">
     <div class="term">Jensens alfa ($\alpha$)</div>
@@ -571,8 +576,8 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [
   </div>
   <div class="definisjon">
     <div class="term">Interaktive øvelser</div>
-    <a href="https://www.econmodels.online/model/portfolio-two-asset" target="_blank">econmodels.online/model/portfolio-two-asset</a> — porteføljevalg<br>
-    <a href="https://www.econmodels.online/model/capm-sml" target="_blank">econmodels.online/model/capm-sml</a> — CAPM/SML
+    <a href="Modell_Portefolje_To_Aktiva.html" target="_blank" rel="noopener">Porteføljevalg med to aktiva</a><br>
+    <a href="Modell_CAPM_SML.html" target="_blank" rel="noopener">CAPM og verdipapirmarkedslinjen</a>
   </div>
   <div class="definisjon">
     <div class="term">Pensum</div>

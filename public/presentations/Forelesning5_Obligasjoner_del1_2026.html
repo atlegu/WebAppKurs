@@ -69,6 +69,11 @@
 
   .reveal mjx-container { font-size: 1.0em !important; }
   .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+  .reveal .slides section.tett h2 { margin-bottom: 0.3em; }
+  .reveal .slides section.tett p, .reveal .slides section.tett li { margin-top: 0.25em; margin-bottom: 0.25em; }
+  .reveal .slides section.tett mjx-container[display="true"] { margin: 0.35em 0 !important; }
+  .reveal .slides section.tett .tavle-marker, .reveal .slides section.tett .definisjon, .reveal .slides section.tett .key-point, .reveal .slides section.tett .norsk-eksempel, .reveal .slides section.tett .folkelig, .reveal .slides section.tett .interactive-model { margin-top: 8px; margin-bottom: 8px; padding-top: 8px; padding-bottom: 8px; }
+  .reveal .slides section.tett table { margin-top: 6px; margin-bottom: 6px; }
 </style>
 
 <script>
@@ -292,7 +297,7 @@ window.MathJax = {
     </section>
 
     <!-- ============ 13: FLERE TERMINER PER ÅR ============ -->
-    <section>
+    <section class="tett">
       <h2>Flere terminer per år</h2>
       <p style="text-align:left">Mange obligasjoner betaler kupong oftere enn årlig — typisk halvårlig (US-statsobligasjoner) eller årlig (norske).</p>
       <p style="text-align:left">Hvis det er $n$ terminer per år og samlet løpetid er $T$ år, blir det $n \cdot T$ terminer totalt, og vi diskonterer med periodisk rente $r/n$ per termin:</p>
@@ -410,7 +415,7 @@ window.MathJax = {
     </section>
 
     <!-- ============ 20: KONSOLL ============ -->
-    <section>
+    <section class="tett">
       <h2>Konsoll (evigvarende obligasjon)</h2>
       <div class="definisjon">
         <div class="term">Konsoll</div>
@@ -544,11 +549,11 @@ window.MathJax = {
     </section>
 
     <!-- ============ 27: PRIS VS RENTE GRAF ============ -->
-    <section>
+    <section class="tett">
       <h2>Pris som funksjon av rente</h2>
       <p style="text-align:left">Sammenhengen er <em>monotont fallende</em> og <em>konveks</em>:</p>
       <div style="margin: 20px auto; text-align: center;">
-        <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" style="max-height:510px">
           <line x1="80" y1="280" x2="660" y2="280" stroke="#1a1a1a" stroke-width="1.5"/>
           <line x1="80" y1="280" x2="80" y2="40" stroke="#1a1a1a" stroke-width="1.5"/>
           <!-- X labels (rate %) -->

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Porteføljevalg med to aktiva — interaktiv modell · BUS 220</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']] }, svg: { fontCache: 'global' }, options: { enableMenu: false } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+<style>
+  :root { --g: #046530; --g2: #0b7a3e; --gl: #f0f7f2; --gb: #cfe5d7; --ink: #1a1a1a; --mut: #4b5563; --mut2: #6b7280; --line: #e4e4df; --bg: #f7f7f4;
+          --rod: #dc2626; --gronn: #10b981; --indigo: #6366f1; --oransje: #f59e0b; --lilla: #8b5cf6; --blaa: #3b82f6; --teal: #0e7490; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Source Serif 4', Georgia, serif; font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
+  header.topp { background: #fff; border-bottom: 1px solid var(--line); padding: 26px 0 20px; }
+  .brod { font-family: 'Source Sans 3', sans-serif; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--g); font-weight: 700; }
+  h1 { font-family: 'Source Sans 3', sans-serif; font-size: 34px; line-height: 1.15; margin: 6px 0 8px; }
+  .ingress { max-width: 860px; color: #2c2c2c; margin: 0 0 12px; font-size: 17px; }
+  .tags span { display: inline-block; font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 600; border-radius: 99px; padding: 3px 11px; margin: 0 6px 6px 0; background: var(--gl); color: var(--g); border: 1px solid var(--gb); }
+  main.grid { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 24px; padding: 24px 20px 40px; }
+  @media (max-width: 900px) { main.grid { grid-template-columns: 1fr; } }
+  .panel { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; }
+  .faner { display: flex; flex-wrap: wrap; gap: 4px; background: #ecece6; padding: 4px; border-radius: 10px; margin-bottom: 12px; font-family: 'Source Sans 3', sans-serif; }
+  .faner button { flex: 1 1 0; border: 0; background: transparent; padding: 7px 6px; border-radius: 7px; font: inherit; font-size: 13.5px; font-weight: 600; color: var(--mut); cursor: pointer; white-space: nowrap; }
+  .faner button.aktiv { background: #fff; color: var(--g); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  .panel h2 { font-family: 'Source Sans 3', sans-serif; font-size: 18px; margin: 0 0 12px; color: var(--ink); display: flex; justify-content: space-between; align-items: center; }
+  .panel h2 button { border: 0; background: none; color: var(--g); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: underline; }
+  .ctl { margin-bottom: 14px; font-family: 'Source Sans 3', sans-serif; }
+  .ctl label { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; color: var(--mut); margin-bottom: 2px; }
+  .ctl label b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .ctl input[type=range] { width: 100%; accent-color: var(--g); margin: 0; }
+  .ctl .mm { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--mut2); margin-top: -2px; }
+  .ctl.valg { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--mut); margin-top: 6px; }
+  .ctl.valg input { accent-color: var(--g); width: 17px; height: 17px; margin: 0; }
+  .ctl.valg label { display: inline; }
+  .hjelp { font-size: 12.5px; color: var(--mut2); font-family: 'Source Sans 3', sans-serif; margin: 2px 0 0; }
+  .teori p { margin: 0 0 10px; font-size: 15px; }
+  .teori h3 { font-family: 'Source Sans 3', sans-serif; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--g); margin: 16px 0 6px; }
+  .teori ul { padding-left: 20px; margin: 0 0 10px; font-size: 15px; }
+  .teori li { margin-bottom: 4px; }
+  .teori .formel { background: var(--gl); border-left: 4px solid var(--g); border-radius: 0 8px 8px 0; padding: 8px 12px; margin: 8px 0 12px; overflow-x: auto; }
+  .kort-rad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+  @media (max-width: 1100px) { .kort-rad { grid-template-columns: repeat(2, 1fr); } }
+  .kort { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; text-align: center; font-family: 'Source Sans 3', sans-serif; }
+  .kort .v { font-size: 24px; font-weight: 700; color: var(--g); line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .kort .k { font-size: 12.5px; color: var(--mut2); margin-top: 3px; }
+  .kort .u { font-size: 11.5px; color: var(--mut2); }
+  .graf-boks { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; position: relative; }
+  .graf-boks h3 { font-family: 'Source Sans 3', sans-serif; font-size: 18px; margin: 0; }
+  .graf-boks .sub { font-family: 'Source Sans 3', sans-serif; font-size: 13.5px; color: var(--mut); margin: 3px 0 8px; }
+  #graf svg { width: 100%; height: auto; display: block; }
+  #graf text { font-family: 'Source Sans 3', sans-serif; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: center; font-family: 'Source Sans 3', sans-serif; font-size: 13px; color: var(--mut); margin-top: 8px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+  .legend i.l { height: 3px; width: 18px; border-radius: 2px; vertical-align: 3px; }
+  .legend i.ld { height: 0; width: 18px; border-top: 3px dashed var(--rod); vertical-align: 3px; }
+  .tip { position: absolute; pointer-events: none; background: #1a1a1a; color: #fff; font-family: 'Source Sans 3', sans-serif; font-size: 12.5px; padding: 5px 9px; border-radius: 6px; white-space: nowrap; display: none; z-index: 5; }
+  .advarsel { background: #fef2f2; border: 1px solid #f5c9c9; color: #991b1b; border-radius: 10px; padding: 10px 14px; font-family: 'Source Sans 3', sans-serif; font-size: 14px; margin-bottom: 12px; display: none; }
+  .prov { background: #fff; border: 1px solid var(--line); border-top: 4px solid var(--g); border-radius: 12px; padding: 14px 20px 6px; margin-top: 16px; }
+  .prov h3 { font-family: 'Source Sans 3', sans-serif; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--g); margin: 0 0 8px; }
+  .prov ol { margin: 0 0 8px; padding-left: 22px; font-size: 15px; }
+  .prov li { margin-bottom: 6px; }
+  .prov button { font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 600; border: 1px solid var(--gb); background: var(--gl); color: var(--g); border-radius: 7px; padding: 3px 9px; cursor: pointer; margin-left: 6px; }
+  .prov button:hover { background: #e1efe6; }
+  footer { font-family: 'Source Sans 3', sans-serif; font-size: 13px; color: var(--mut2); text-align: center; padding: 10px 20px 30px; }
+  @media print { .faner, .prov button { display: none; } main.grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="topp"><div class="wrap">
+  <div class="brod">BUS 220 · Interaktiv modell</div>
+  <h1>Porteføljevalg med to aktiva</h1>
+  <p class="ingress">Forventet avkastning mot risiko (mean–variance). Sett sammen porteføljer av to risikable aktiva, se hvordan korrelasjonen bøyer porteføljefronten, finn minimum-variansporteføljen og tangentporteføljen, og legg til et risikofritt aktivum for å få kapitalmarkedslinjen.</p>
+  <div class="tags"><span>Middels</span><span>Porteføljeteori</span><span>Diversifisering</span><span>Effisient front</span><span>Kapitalmarkedslinjen</span></div>
+</div></header>
+
+<main class="wrap grid">
+  <aside>
+    <nav class="faner" aria-label="Faner">
+      <button class="aktiv" data-fane="kontroller">🎛️ Kontroller</button>
+      <button data-fane="teori">📖 Teori</button>
+      <button data-fane="forutsetninger">📋 Forutsetninger</button>
+      <button data-fane="anvendelser">🌍 Anvendelser</button>
+      <button data-fane="referanser">📚 Referanser</button>
+    </nav>
+
+    <section class="panel" id="fane-kontroller">
+      <h2>Modellparametere <button id="nullstill">Tilbakestill</button></h2>
+      <div class="ctl"><label><span>Forventet avkastning, aktivum A (μ<sub>A</sub>)</span> <b data-v="muA"></b></label><input type="range" data-k="muA" min="0" max="20" step="0.5" value="10"><div class="mm"><span>0 %</span><span>20 %</span></div></div>
+      <div class="ctl"><label><span>Standardavvik, aktivum A (σ<sub>A</sub>)</span> <b data-v="sA"></b></label><input type="range" data-k="sA" min="1" max="40" step="0.5" value="20"><div class="mm"><span>1 %</span><span>40 %</span></div></div>
+      <div class="ctl"><label><span>Forventet avkastning, aktivum B (μ<sub>B</sub>)</span> <b data-v="muB"></b></label><input type="range" data-k="muB" min="0" max="20" step="0.5" value="5"><div class="mm"><span>0 %</span><span>20 %</span></div></div>
+      <div class="ctl"><label><span>Standardavvik, aktivum B (σ<sub>B</sub>)</span> <b data-v="sB"></b></label><input type="range" data-k="sB" min="1" max="40" step="0.5" value="10"><div class="mm"><span>1 %</span><span>40 %</span></div></div>
+      <div class="ctl"><label><span>Korrelasjon (ρ)</span> <b data-v="rho"></b></label><input type="range" data-k="rho" min="-1" max="1" step="0.01" value="0.3"><div class="mm"><span>−1</span><span>+1</span></div></div>
+      <div class="ctl"><label><span>Risikofri rente (r<sub>f</sub>)</span> <b data-v="rf"></b></label><input type="range" data-k="rf" min="0" max="10" step="0.1" value="2"><div class="mm"><span>0 %</span><span>10 %</span></div></div>
+      <div class="ctl"><label><span>Andel i aktivum A (w<sub>A</sub>)</span> <b data-v="w"></b></label><input type="range" data-k="w" min="0" max="100" step="1" value="50"><div class="mm"><span>0 % (alt i B)</span><span>100 % (alt i A)</span></div></div>
+      <div class="ctl valg"><input type="checkbox" id="short"><label for="short" style="margin:0">Tillat shortsalg (w<sub>A</sub> fra −50 % til 150 %)</label></div>
+      <div class="ctl valg"><input type="checkbox" id="spok"><label for="spok" style="margin:0">Vis fronten for ρ = −1, 0 og +1</label></div>
+      <p class="hjelp">Alle tall er årlige og i prosent. Med shortsalg kan du også dra andelen i A utenfor 0–100 %.</p>
+    </section>
+
+    <section class="panel teori" id="fane-teori" hidden>
+      <h2>Teori</h2>
+      <h3>Læringsmål</h3>
+      <ul>
+        <li>Sette sammen porteføljer av to aktiva og tegne forventet avkastning mot standardavvik</li>
+        <li>Forstå hvordan korrelasjonen bestemmer formen på porteføljefronten</li>
+        <li>Finne minimum-variansporteføljen (MVP) og den effisiente fronten</li>
+        <li>Legge til et risikofritt aktivum og utlede kapitalmarkedslinjen (CML)</li>
+        <li>Finne tangentporteføljen og forstå Sharpe-forholdet</li>
+      </ul>
+      <h3>To risikable aktiva</h3>
+      <p>Med andel $w$ i aktivum A og $1-w$ i aktivum B er porteføljens forventede avkastning et vektet gjennomsnitt:</p>
+      <div class="formel">$$\mu_p = w\,\mu_A + (1-w)\,\mu_B$$</div>
+      <p>Variansen er derimot <em>ikke</em> et vektet gjennomsnitt. Den inneholder et samvariasjonsledd:</p>
+      <div class="formel">$$\sigma_p^2 = w^2\sigma_A^2 + (1-w)^2\sigma_B^2 + 2\,w(1-w)\,\rho\,\sigma_A\sigma_B$$</div>
+      <p>Når $\rho &lt; 1$, blir $\sigma_p$ lavere enn det vektede gjennomsnittet av $\sigma_A$ og $\sigma_B$. Det er diversifiseringsgevinsten. Med $\rho = 1$ er fronten en rett linje, med $\rho = -1$ kan risikoen fjernes helt.</p>
+      <h3>Minimum-variansporteføljen</h3>
+      <p>Porteføljen med lavest standardavvik har andelen</p>
+      <div class="formel">$$w_A^{*} = \frac{\sigma_B^2 - \rho\,\sigma_A\sigma_B}{\sigma_A^2 + \sigma_B^2 - 2\rho\,\sigma_A\sigma_B}$$</div>
+      <p>Den <strong>effisiente fronten</strong> er delen av kurven som ligger over MVP: for hvert risikonivå gir den høyest forventet avkastning.</p>
+      <h3>Risikofritt aktivum og kapitalmarkedslinjen</h3>
+      <p>Kombinerer du en risikabel portefølje med et risikofritt aktivum, ligger mulighetene på en rett linje fra $(0, r_f)$. Den bratteste linjen tangerer fronten i <strong>tangentporteføljen</strong>, som har høyest Sharpe-forhold:</p>
+      <div class="formel">$$S = \frac{\mu_p - r_f}{\sigma_p}, \qquad \mathbf{w}_T \propto \Sigma^{-1}(\boldsymbol{\mu} - r_f\mathbf{1})$$</div>
+      <p>Kapitalmarkedslinjen (CML) er $\mu = r_f + S_T\,\sigma$. Alle investorer bør holde tangentporteføljen og justere risikoen med det risikofrie aktivumet (Tobins separasjonsteorem). Når alle gjør det, er tangentporteføljen markedsporteføljen, og vi er ved kapitalverdimodellen.</p>
+    </section>
+
+    <section class="panel teori" id="fane-forutsetninger" hidden>
+      <h2>Forutsetninger</h2>
+      <ul>
+        <li>Investorene bryr seg bare om forventet avkastning og varians (mean–variance-preferanser)</li>
+        <li>Forventet avkastning, standardavvik og korrelasjon er kjent</li>
+        <li>Én periode, ingen rebalansering underveis</li>
+        <li>Ingen transaksjonskostnader eller skatt</li>
+        <li>Aktivaene er fullt delbare og likvide</li>
+        <li>Ubegrenset inn- og utlån til den risikofrie renten</li>
+        <li>Shortsalg er ikke tillatt med mindre du slår det på</li>
+      </ul>
+    </section>
+
+    <section class="panel teori" id="fane-anvendelser" hidden>
+      <h2>Anvendelser</h2>
+      <ul>
+        <li>Fordelingen mellom aksjer og obligasjoner i en pensjonsportefølje</li>
+        <li>Hvor mye diversifisering du får av å eie to aksjer i ulike bransjer</li>
+        <li>Internasjonal diversifisering: norske og globale aksjer med lav korrelasjon</li>
+        <li>Grunnlaget for Oljefondets referanseindeks med aksjer og obligasjoner</li>
+        <li>Sharpe-forholdet som mål på risikojustert avkastning i fond</li>
+      </ul>
+      <p>I BUS 220 er modellen utgangspunktet for forelesning 13 (porteføljeteori) og 14 (kapitalverdimodellen).</p>
+    </section>
+
+    <section class="panel teori" id="fane-referanser" hidden>
+      <h2>Referanser</h2>
+      <p>Markowitz, H. (1952). Portfolio Selection. <em>Journal of Finance</em>, 7(1), 77–91. Artikkelen som etablerte mean–variance-optimering og den effisiente fronten.</p>
+      <p>Sharpe, W. F. (1964). Capital Asset Prices: A Theory of Market Equilibrium under Conditions of Risk. <em>Journal of Finance</em>, 19(3), 425–442. Kapitalverdimodellen og kapitalmarkedslinjen.</p>
+      <p>Tobin, J. (1958). Liquidity Preference as Behavior Towards Risk. <em>Review of Economic Studies</em>, 25(2), 65–86. Viser hvordan et risikofritt aktivum gjør fronten lineær.</p>
+      <p>Hillier, Clacher, Ross, Westerfield, Jaffe og Jordan: <em>Fundamentals of Corporate Finance</em>, kapittel 11 og 12.</p>
+    </section>
+  </aside>
+
+  <section>
+    <div class="advarsel" id="advarsel"></div>
+    <div class="kort-rad" id="kort"></div>
+    <div class="graf-boks">
+      <h3>Porteføljefronten</h3>
+      <p class="sub" id="sub"></p>
+      <div id="graf"></div>
+      <div class="tip" id="tip"></div>
+      <div class="legend">
+        <span><i class="l" style="background:var(--blaa)"></i>Porteføljefront (effisient del heltrukket)</span>
+        <span><i class="ld"></i>Kapitalmarkedslinjen</span>
+        <span><i style="background:var(--rod)"></i>Aktivum A</span>
+        <span><i style="background:var(--gronn)"></i>Aktivum B</span>
+        <span><i style="background:var(--indigo)"></i>Risikofritt</span>
+        <span><i style="background:var(--teal)"></i>Minimum varians (MVP)</span>
+        <span><i style="background:var(--lilla)"></i>Tangentportefølje</span>
+        <span><i style="background:var(--oransje)"></i>Din portefølje</span>
+      </div>
+    </div>
+    <div class="prov">
+      <h3>Prøv dette</h3>
+      <ol>
+        <li>Dra korrelasjonen fra +1 til −1 og se hvordan fronten bøyer seg. Ved ρ = −1 finnes en portefølje uten risiko. <button data-sett='{"rho":1}'>ρ = +1</button><button data-sett='{"rho":0}'>ρ = 0</button><button data-sett='{"rho":-1}'>ρ = −1</button></li>
+        <li>Sett andelen i A til MVP-andelen (se kortet) og flytt litt til hver side. Hvorfor er porteføljene under MVP aldri effisiente?</li>
+        <li>Øk den risikofrie renten. Tangentporteføljen flytter seg oppover fronten, og kapitalmarkedslinjen blir slakere. <button data-sett='{"rf":2}'>r<sub>f</sub> = 2 %</button><button data-sett='{"rf":6}'>r<sub>f</sub> = 6 %</button></li>
+        <li>Gi B like høy avkastning som A. Hvorfor forsvinner da ønsket om å eie A i det hele tatt? <button data-sett='{"muB":10}'>μ<sub>B</sub> = 10 %</button><button data-sett='{"muB":5}'>μ<sub>B</sub> = 5 %</button></li>
+      </ol>
+    </div>
+  </section>
+</main>
+<footer>Gjenskapt fra econmodels.online/model/portfolio-two-asset (2025) · BUS 220 Finansiering og investering, NMBU · Alle beregninger skjer i nettleseren</footer>
+
+<script>
+(function () {
+  'use strict';
+  const nf = (x, d = 1) => new Intl.NumberFormat('nb-NO', { minimumFractionDigits: d, maximumFractionDigits: d }).format(x).replace(/-/g, '−');
+  const pc = (x, d = 1) => nf(x, d) + ' %';
+  const STD = { muA: 10, sA: 20, muB: 5, sB: 10, rho: 0.3, rf: 2, w: 50 };
+  const P = Object.assign({}, STD);
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+
+  /* ---------- modellen (alle tall i prosent) ---------- */
+  function moments(w, p) {
+    const mu = w * p.muA + (1 - w) * p.muB;
+    const v = w * w * p.sA * p.sA + (1 - w) * (1 - w) * p.sB * p.sB + 2 * w * (1 - w) * p.rho * p.sA * p.sB;
+    return { mu, s: Math.sqrt(Math.max(v, 0)), w };
+  }
+  function mvpVekt(p) {
+    const den = p.sA * p.sA + p.sB * p.sB - 2 * p.rho * p.sA * p.sB;
+    if (Math.abs(den) < 1e-9) return p.sA <= p.sB ? 1 : 0;
+    return (p.sB * p.sB - p.rho * p.sA * p.sB) / den;
+  }
+  function tangentVekt(p, short) {
+    // analytisk: w ∝ Σ⁻¹(μ − r_f·1)
+    const A = p.sA * p.sA, C = p.sB * p.sB, B = p.rho * p.sA * p.sB, D = A * C - B * B;
+    const m1 = p.muA - p.rf, m2 = p.muB - p.rf;
+    let w = null;
+    if (D > 1e-9) {
+      const w1 = (C * m1 - B * m2) / D, w2 = (-B * m1 + A * m2) / D, sum = w1 + w2;
+      if (Math.abs(sum) > 1e-12) { w = w1 / sum; if (moments(w, p).mu < p.rf) w = null; }
+    }
+    const lo = short ? -0.5 : 0, hi = short ? 1.5 : 1;
+    if (w === null || w < lo || w > hi) {
+      // søk over fronten
+      let best = -Infinity, bw = null;
+      for (let i = 0; i <= 400; i++) { const ww = lo + (hi - lo) * i / 400, m = moments(ww, p); if (m.s > 1e-9) { const S = (m.mu - p.rf) / m.s; if (S > best) { best = S; bw = ww; } } }
+      w = bw;
+      // ved ρ = −1 ligger maksimum i den risikofrie porteføljen: bruk MVP-vekten eksakt
+      if (w !== null) { const wm = Math.min(hi, Math.max(lo, mvpVekt(p))); if (moments(wm, p).s < 1e-6 && moments(wm, p).mu > p.rf) w = wm; }
+    }
+    return w;
+  }
+
+  /* ---------- graf ---------- */
+  const W = 760, H = 440, ML = 58, MR = 20, MT = 18, MB = 46;
+  let punkter = [];
+  function tegn() {
+    const short = $('#short').checked, spok = $('#spok').checked, w = P.w / 100;
+    const lo = short ? -0.5 : 0, hi = short ? 1.5 : 1;
+    const front = []; for (let i = 0; i <= 300; i++) front.push(moments(lo + (hi - lo) * i / 300, P));
+    const wm = mvpVekt(P), wmC = Math.min(hi, Math.max(lo, wm)), mvp = moments(wmC, P);
+    const wt = tangentVekt(P, short), tan = wt === null ? null : moments(wt, P);
+    const cur = moments(w, P);
+    const sharpeCur = cur.s > 1e-9 ? (cur.mu - P.rf) / cur.s : NaN;
+    // Når fronten når σ ≈ 0 med μ > r_f (ρ = −1), finnes en risikofri arbitrasje: Sharpe → ∞ og CML blir loddrett
+    const arbitrasje = !!tan && tan.s < 0.05 && tan.mu > P.rf;
+    const sharpeTan = arbitrasje ? Infinity : (tan && tan.s > 1e-9 ? (tan.mu - P.rf) / tan.s : NaN);
+    // akser
+    const xs = front.map(f => f.s).concat([P.sA, P.sB, cur.s, tan ? tan.s : 0]);
+    const ys = front.map(f => f.mu).concat([P.muA, P.muB, P.rf, cur.mu, tan ? tan.mu : 0, 0]);
+    const xmax = Math.max(5, Math.max(...xs) * 1.18), ymin = Math.min(...ys) - 1, ymax = Math.max(...ys) * 1.12 + 0.5;
+    const X = v => ML + v / xmax * (W - ML - MR), Y = v => MT + (ymax - v) / (ymax - ymin) * (H - MT - MB);
+    const tick = (a, b, n) => { const s0 = (b - a) / n, m = Math.pow(10, Math.floor(Math.log10(s0))), f = s0 / m, st = (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * m, t = []; for (let v = Math.ceil(a / st) * st; v <= b + 1e-9; v += st) t.push(+v.toFixed(6)); return t; };
+    let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Porteføljefront">`;
+    tick(0, xmax, 7).forEach(v => { s += `<line x1="${X(v)}" x2="${X(v)}" y1="${MT}" y2="${H - MB}" stroke="#ecece6"/><text x="${X(v)}" y="${H - MB + 17}" text-anchor="middle" font-size="12" fill="#6b7280">${nf(v, 0)}</text>`; });
+    tick(ymin, ymax, 6).forEach(v => { s += `<line x1="${ML}" x2="${W - MR}" y1="${Y(v)}" y2="${Y(v)}" stroke="#ecece6"/><text x="${ML - 8}" y="${Y(v) + 4}" text-anchor="end" font-size="12" fill="#6b7280">${nf(v, 0)}</text>`; });
+    if (ymin < 0) s += `<line x1="${ML}" x2="${W - MR}" y1="${Y(0)}" y2="${Y(0)}" stroke="#9ca3af"/>`;
+    s += `<line x1="${ML}" x2="${W - MR}" y1="${H - MB}" y2="${H - MB}" stroke="#1a1a1a" stroke-width="1.2"/><line x1="${ML}" x2="${ML}" y1="${MT}" y2="${H - MB}" stroke="#1a1a1a" stroke-width="1.2"/>`;
+    s += `<text x="${(ML + W - MR) / 2}" y="${H - 6}" text-anchor="middle" font-size="13" fill="#4b5563">Risiko: standardavvik σ (%)</text>`;
+    s += `<text x="14" y="${(MT + H - MB) / 2}" text-anchor="middle" font-size="13" fill="#4b5563" transform="rotate(-90 14 ${(MT + H - MB) / 2})">Forventet avkastning μ (%)</text>`;
+    const sti = pts => pts.map((q, i) => (i ? 'L' : 'M') + X(q.s).toFixed(1) + ' ' + Y(q.mu).toFixed(1)).join(' ');
+    // spøkelsesfronter
+    if (spok) [[-1, '#9ca3af'], [0, '#9ca3af'], [1, '#9ca3af']].forEach(([r, c]) => {
+      const q = Object.assign({}, P, { rho: r }), pts = []; for (let i = 0; i <= 200; i++) pts.push(moments(i / 200, q));
+      s += `<path d="${sti(pts)}" fill="none" stroke="${c}" stroke-width="1.5" stroke-dasharray="4 4" opacity=".8"/>`;
+      const e = pts[Math.round(r === -1 ? 60 : r === 0 ? 100 : 140)]; s += `<text x="${X(e.s) + 5}" y="${Y(e.mu) - 5}" font-size="11.5" fill="#6b7280">ρ = ${r === 1 ? '+1' : r === 0 ? '0' : '−1'}</text>`;
+    });
+    // CML
+    if (tan && tan.s > 1e-9 && isFinite(sharpeTan)) {
+      const S = sharpeTan, xEnd = xmax, yEnd = P.rf + S * xEnd;
+      let x2 = xEnd, y2 = yEnd; if (y2 > ymax) { y2 = ymax; x2 = (ymax - P.rf) / S; }
+      s += `<line x1="${X(0)}" y1="${Y(P.rf)}" x2="${X(x2)}" y2="${Y(y2)}" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 5"/>`;
+    }
+    // fronten: ineffisient del (under MVP) tynn, effisient del tykk
+    const under = front.filter(f => f.w <= wmC + 1e-9), over = front.filter(f => f.w >= wmC - 1e-9);
+    const nedre = P.muA >= P.muB ? under : over, ovre = P.muA >= P.muB ? over : under;
+    s += `<path d="${sti(nedre)}" fill="none" stroke="#3b82f6" stroke-width="1.6" stroke-dasharray="3 4"/>`;
+    s += `<path d="${sti(ovre)}" fill="none" stroke="#3b82f6" stroke-width="3"/>`;
+    const prikk = (x, y, c, lab, dx = 10, dy = 4, anker = 'start') => `<circle cx="${X(x)}" cy="${Y(y)}" r="6" fill="${c}" stroke="#fff" stroke-width="2"/><text x="${X(x) + dx}" y="${Y(y) + dy}" text-anchor="${anker}" font-size="12.5" font-weight="600" fill="${c}">${lab}</text>`;
+    s += prikk(P.sA, P.muA, '#dc2626', 'A') + prikk(P.sB, P.muB, '#10b981', 'B') + prikk(0, P.rf, '#6366f1', 'r f', 10, -8);
+    s += prikk(mvp.s, mvp.mu, '#0e7490', 'MVP', -10, 16, 'end');
+    if (tan) s += prikk(tan.s, tan.mu, '#8b5cf6', 'T', -9, -8, 'end');
+    s += `<circle cx="${X(cur.s)}" cy="${Y(cur.mu)}" r="9" fill="rgba(245,158,11,.25)"/>` + prikk(cur.s, cur.mu, '#f59e0b', 'Din', 12, 4);
+    s += '</svg>';
+    $('#graf').innerHTML = s;
+    punkter = front.map(f => ({ x: X(f.s), y: Y(f.mu), f }));
+    // kort og tekst
+    const dash = '—';
+    $('#kort').innerHTML = [
+      [pc(cur.mu, 2), 'Porteføljens forventede avkastning', ''], [pc(cur.s, 2), 'Porteføljens standardavvik', ''],
+      [pc(P.w, 0), 'Andel i A', ''], [pc(100 - P.w, 0), 'Andel i B', ''],
+      [isFinite(sharpeCur) ? nf(sharpeCur, 3) : dash, 'Sharpe-forhold, din portefølje', '(μ − r f) / σ'],
+      [pc(wmC * 100, 1), 'Andel i A i MVP', 'σ = ' + pc(mvp.s, 2) + ', μ = ' + pc(mvp.mu, 2)],
+      [tan ? pc(wt * 100, 1) : dash, 'Andel i A i tangentporteføljen', tan ? 'σ = ' + pc(tan.s, 2) + ', μ = ' + pc(tan.mu, 2) : 'finnes ikke'],
+      [arbitrasje ? '∞' : isFinite(sharpeTan) ? nf(sharpeTan, 3) : dash, 'Sharpe-forhold, tangentportefølje', arbitrasje ? 'risikofri arbitrasje' : 'stigningen til CML']
+    ].map(([v, k, u]) => `<div class="kort"><div class="v">${v}</div><div class="k">${k}</div>${u ? `<div class="u">${u}</div>` : ''}</div>`).join('');
+    $('#sub').textContent = `Aktivum A (σ ${pc(P.sA)}, μ ${pc(P.muA)}) og aktivum B (σ ${pc(P.sB)}, μ ${pc(P.muB)}), korrelasjon ρ = ${nf(P.rho, 2)}. Vektet snitt av standardavvikene for din portefølje: ${pc(w * P.sA + (1 - w) * P.sB, 2)} — faktisk standardavvik: ${pc(cur.s, 2)}.`;
+    const adv = [];
+    if (!short && (wm < 0 || wm > 1)) adv.push(`Minimum-variansporteføljen ligger utenfor 0–100 % (w<sub>A</sub> = ${pc(wm * 100, 1)}). Uten shortsalg er den klemt til nærmeste ende.`);
+    if (arbitrasje) adv.push(`Med ρ = ${nf(P.rho, 2)} finnes en portefølje uten risiko (w<sub>A</sub> = ${pc(wt * 100, 1)}) som gir ${pc(tan.mu, 2)} — mer enn den risikofrie renten. Det er en arbitrasje: i et marked i likevekt kan det ikke vare. Kapitalmarkedslinjen blir loddrett og tegnes ikke.`);
+    if (tan === null) adv.push('Ingen portefølje gir høyere forventet avkastning enn den risikofrie renten — tangentporteføljen finnes ikke.');
+    else if (P.rf >= Math.max(P.muA, P.muB)) adv.push('Den risikofrie renten er minst like høy som begge aktivaene. Da er det ikke lønnsomt å ta risiko.');
+    $('#advarsel').innerHTML = adv.join('<br>'); $('#advarsel').style.display = adv.length ? 'block' : 'none';
+    $$('[data-v]').forEach(b => { const k = b.dataset.v; b.textContent = k === 'rho' ? nf(P[k], 2) : k === 'w' ? pc(P[k], 0) : pc(P[k], 1); });
+  }
+
+  /* ---------- hendelser ---------- */
+  $$('input[type=range]').forEach(r => r.addEventListener('input', () => { P[r.dataset.k] = +r.value; tegn(); }));
+  $('#short').addEventListener('change', () => { const r = $('[data-k=w]'); r.min = $('#short').checked ? -50 : 0; r.max = $('#short').checked ? 150 : 100; if (!$('#short').checked) { P.w = Math.min(100, Math.max(0, P.w)); r.value = P.w; } tegn(); });
+  $('#spok').addEventListener('change', tegn);
+  $('#nullstill').addEventListener('click', () => { Object.assign(P, STD); $$('input[type=range]').forEach(r => r.value = P[r.dataset.k]); tegn(); });
+  $$('[data-sett]').forEach(b => b.addEventListener('click', () => { const o = JSON.parse(b.dataset.sett); Object.assign(P, o); Object.keys(o).forEach(k => { $(`[data-k=${k}]`).value = P[k]; }); tegn(); }));
+  $$('.faner button').forEach(b => b.addEventListener('click', () => { $$('.faner button').forEach(x => x.classList.toggle('aktiv', x === b)); $$('aside .panel').forEach(p => p.hidden = p.id !== 'fane-' + b.dataset.fane); }));
+  // verktøytips på fronten
+  const graf = $('#graf'), tip = $('#tip');
+  graf.addEventListener('mousemove', e => {
+    const svg = graf.querySelector('svg'); if (!svg || !punkter.length) return;
+    const r = svg.getBoundingClientRect(), sx = W / r.width, mx = (e.clientX - r.left) * sx, my = (e.clientY - r.top) * sx;
+    let best = null, bd = 1e9; punkter.forEach(p => { const d = (p.x - mx) ** 2 + (p.y - my) ** 2; if (d < bd) { bd = d; best = p; } });
+    if (best && bd < 400) { tip.style.display = 'block'; tip.innerHTML = `w<sub>A</sub> = ${pc(best.f.w * 100, 0)} · σ = ${pc(best.f.s, 2)} · μ = ${pc(best.f.mu, 2)}`; const br = graf.getBoundingClientRect(); tip.style.left = (e.clientX - br.left + 14) + 'px'; tip.style.top = (e.clientY - br.top - 30) + 'px'; }
+    else tip.style.display = 'none';
+  });
+  graf.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+  tegn();
+})();
+</script>
+</body>
+</html>

@@ -218,6 +218,11 @@
 
   .reveal mjx-container { font-size: 1.0em !important; }
   .reveal .big-formula mjx-container { font-size: 1.3em !important; }
+  .reveal .slides section.tett h2 { margin-bottom: 0.3em; }
+  .reveal .slides section.tett p, .reveal .slides section.tett li { margin-top: 0.25em; margin-bottom: 0.25em; }
+  .reveal .slides section.tett mjx-container[display="true"] { margin: 0.35em 0 !important; }
+  .reveal .slides section.tett .tavle-marker, .reveal .slides section.tett .definisjon, .reveal .slides section.tett .key-point, .reveal .slides section.tett .norsk-eksempel, .reveal .slides section.tett .folkelig, .reveal .slides section.tett .interactive-model { margin-top: 8px; margin-bottom: 8px; padding-top: 8px; padding-bottom: 8px; }
+  .reveal .slides section.tett table { margin-top: 6px; margin-bottom: 6px; }
 </style>
 
 <script>
@@ -494,7 +499,7 @@ window.MathJax = {
     </section>
 
     <!-- ============ SLIDE 14: EKSEMPEL HUSLÅN ============ -->
-    <section>
+    <section class="tett">
       <h2>Eksempel: Huslån</h2>
       <div class="norsk-eksempel">
         <div class="label">Norsk kontekst</div>
@@ -508,10 +513,10 @@ window.MathJax = {
       </div>
       <div class="tavle-marker">
         <div class="tavle-label">Vi regner sammen</div>
-        <p>Månedlig rente: $r_m = (1{,}048)^{1/12} - 1 = 0{,}3914\,\%$</p>
+        <p>Månedlig rente: $r_m = (1{,}048)^{1/12} - 1 = 0{,}3915\,\%$</p>
         <p>Antall terminer: $n = 25 \times 12 = 300$</p>
-        $$C = \frac{3\,000\,000 \times 0{,}003914}{1 - 1{,}003914^{-300}} = \frac{11\,743}{0{,}6906}$$
-        $$\approx \text{kr } 17\,005 \text{ per måned}$$
+        $$C = \frac{3\,000\,000 \times 0{,}0039146}{1 - 1{,}0039146^{-300}} = \frac{11\,744}{0{,}6903}$$
+        $$\approx \text{kr } 17\,013 \text{ per måned}$$
       </div>
     </section>
 
@@ -521,12 +526,12 @@ window.MathJax = {
       <p style="text-align:left">Hver termin: rente beregnet på <em>resterende</em> lånebeløp, deretter avdrag.</p>
       <table style="font-size:0.78em">
         <tr><th>Termin</th><th>IB lån</th><th>Termin</th><th>Rente</th><th>Avdrag</th><th>UB lån</th></tr>
-        <tr><td>1</td><td>3 000 000</td><td>17 005</td><td>11 742</td><td>5 263</td><td>2 994 737</td></tr>
-        <tr><td>2</td><td>2 994 737</td><td>17 005</td><td>11 722</td><td>5 283</td><td>2 989 454</td></tr>
-        <tr><td>3</td><td>2 989 454</td><td>17 005</td><td>11 701</td><td>5 304</td><td>2 984 149</td></tr>
-        <tr><td>12</td><td>2 940 057</td><td>17 005</td><td>11 508</td><td>5 497</td><td>2 934 560</td></tr>
-        <tr><td>120</td><td>2 191 824</td><td>17 005</td><td>8 580</td><td>8 425</td><td>2 183 399</td></tr>
-        <tr><td>300</td><td>16 939</td><td>17 005</td><td>66</td><td>16 939</td><td>0</td></tr>
+        <tr><td>1</td><td>3 000 000</td><td>17 013</td><td>11 744</td><td>5 269</td><td>2 994 731</td></tr>
+        <tr><td>2</td><td>2 994 731</td><td>17 013</td><td>11 723</td><td>5 290</td><td>2 989 441</td></tr>
+        <tr><td>3</td><td>2 989 441</td><td>17 013</td><td>11 702</td><td>5 311</td><td>2 984 130</td></tr>
+        <tr><td>12</td><td>2 940 890</td><td>17 013</td><td>11 512</td><td>5 501</td><td>2 935 389</td></tr>
+        <tr><td>120</td><td>2 203 268</td><td>17 013</td><td>8 625</td><td>8 388</td><td>2 194 880</td></tr>
+        <tr><td>300</td><td>16 947</td><td>17 013</td><td>66</td><td>16 947</td><td>0</td></tr>
       </table>
       <div class="key-point">Etter 10 år (120 terminer) er rente og avdrag omtrent like store. Det er først nå du «virkelig» begynner å betale ned lånet.</div>
     </section>
@@ -537,12 +542,12 @@ window.MathJax = {
       <p style="text-align:left">Hovedforskjell: <strong>avdraget er konstant</strong>. Eksempel — 3 000 000 over 25 år månedlig:</p>
       <ul>
         <li>Avdrag = $3\,000\,000 / 300 = 10\,000$ kr hver måned (konstant)</li>
-        <li>Termin 1: Avdrag 10 000 + Rente 11 742 = <strong>21 742</strong> kr</li>
+        <li>Termin 1: Avdrag 10 000 + Rente 11 744 = <strong>21 744</strong> kr</li>
         <li>Termin 300: Avdrag 10 000 + Rente 39 = <strong>10 039</strong> kr</li>
       </ul>
       <p style="text-align:left; margin-top:20px"><strong>Effekt:</strong></p>
       <ul>
-        <li>Høyere belastning i starten (21 742 vs 17 005 i annuitetslån)</li>
+        <li>Høyere belastning i starten (21 744 vs 17 013 i annuitetslån)</li>
         <li>Lavere belastning senere</li>
         <li><strong>Totalt</strong> betaler du <em>mindre i renter</em> over hele lånet, fordi gjennomsnittlig restgjeld er lavere</li>
       </ul>
@@ -553,10 +558,10 @@ window.MathJax = {
       <h2>Annuitetslån vs serielån — hvilket er best?</h2>
       <table>
         <tr><th></th><th>Annuitetslån</th><th>Serielån</th></tr>
-        <tr><td>Termin 1</td><td>17 005</td><td>21 742</td></tr>
-        <tr><td>Termin 300</td><td>17 005</td><td>10 039</td></tr>
-        <tr><td>Sum betalt (25 år)</td><td>5 101 547</td><td>4 762 500</td></tr>
-        <tr><td>Sum renter</td><td>2 101 547</td><td>1 762 500</td></tr>
+        <tr><td>Termin 1</td><td>17 013</td><td>21 744</td></tr>
+        <tr><td>Termin 300</td><td>17 013</td><td>10 039</td></tr>
+        <tr><td>Sum betalt (25 år)</td><td>5 103 932</td><td>4 767 445</td></tr>
+        <tr><td>Sum renter</td><td>2 103 932</td><td>1 767 445</td></tr>
       </table>
       <p style="text-align:left; margin-top:20px"><strong>Men:</strong> Du kan ikke konkludere uten å vurdere <em>nåverdi</em> av betalingsstrømmene:</p>
       <div class="key-point">Hvis du sammenligner NV av begge betalingsstrømmer ved samme rente $r$, blir de like (begge tilbakebetaler samme lånebeløp). Forskjellen er kun fordelingen av byrden over tid.</div>
@@ -570,9 +575,9 @@ window.MathJax = {
         <div class="label">Eksempel — lån 1 mill., 6,14 % effektiv, 10 år</div>
         <table style="font-size:0.85em">
           <tr><th>Frekvens</th><th>Antall terminer</th><th>Termin (kr)</th><th>Sum betalt</th></tr>
-          <tr><td>Årlig</td><td>10</td><td>135 868</td><td>1 358 685</td></tr>
-          <tr><td>Kvartalsvis</td><td>40</td><td>33 537</td><td>1 341 482</td></tr>
-          <tr><td>Månedlig</td><td>120</td><td>11 156</td><td>1 338 738</td></tr>
+          <tr><td>Årlig</td><td>10</td><td>136 771</td><td>1 367 706</td></tr>
+          <tr><td>Kvartalsvis</td><td>40</td><td>33 432</td><td>1 337 297</td></tr>
+          <tr><td>Månedlig</td><td>120</td><td>11 089</td><td>1 330 662</td></tr>
         </table>
       </div>
       <p style="text-align:left">Sum betalt synker litt med oftere betalinger — fordi du betaler ned hovedstolen raskere og dermed har lavere gjennomsnittlig rentegrunnlag.</p>

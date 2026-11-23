@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kapitalverdimodellen og verdipapirmarkedslinjen — interaktiv modell · BUS 220</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']] }, svg: { fontCache: 'global' }, options: { enableMenu: false } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+<style>
+  :root { --g: #046530; --g2: #0b7a3e; --gl: #f0f7f2; --gb: #cfe5d7; --ink: #1a1a1a; --mut: #4b5563; --mut2: #6b7280; --line: #e4e4df; --bg: #f7f7f4;
+          --rod: #dc2626; --gronn: #10b981; --indigo: #6366f1; --oransje: #f59e0b; --lilla: #8b5cf6; --blaa: #3b82f6; --teal: #0e7490; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Source Serif 4', Georgia, serif; font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
+  header.topp { background: #fff; border-bottom: 1px solid var(--line); padding: 26px 0 20px; }
+  .brod { font-family: 'Source Sans 3', sans-serif; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--g); font-weight: 700; }
+  h1 { font-family: 'Source Sans 3', sans-serif; font-size: 34px; line-height: 1.15; margin: 6px 0 8px; }
+  .ingress { max-width: 860px; color: #2c2c2c; margin: 0 0 12px; font-size: 17px; }
+  .tags span { display: inline-block; font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 600; border-radius: 99px; padding: 3px 11px; margin: 0 6px 6px 0; background: var(--gl); color: var(--g); border: 1px solid var(--gb); }
+  main.grid { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 24px; padding: 24px 20px 40px; }
+  @media (max-width: 900px) { main.grid { grid-template-columns: 1fr; } }
+  .panel { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; }
+  .faner { display: flex; flex-wrap: wrap; gap: 4px; background: #ecece6; padding: 4px; border-radius: 10px; margin-bottom: 12px; font-family: 'Source Sans 3', sans-serif; }
+  .faner button { flex: 1 1 0; border: 0; background: transparent; padding: 7px 6px; border-radius: 7px; font: inherit; font-size: 13.5px; font-weight: 600; color: var(--mut); cursor: pointer; white-space: nowrap; }
+  .faner button.aktiv { background: #fff; color: var(--g); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  .panel h2 { font-family: 'Source Sans 3', sans-serif; font-size: 18px; margin: 0 0 12px; color: var(--ink); display: flex; justify-content: space-between; align-items: center; }
+  .panel h2 button { border: 0; background: none; color: var(--g); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: underline; }
+  .ctl { margin-bottom: 14px; font-family: 'Source Sans 3', sans-serif; }
+  .ctl label { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; font-weight: 600; color: var(--mut); margin-bottom: 2px; }
+  .ctl label b { color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .ctl input[type=range] { width: 100%; accent-color: var(--g); margin: 0; }
+  .ctl .mm { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--mut2); margin-top: -2px; }
+  .ctl select, .ctl input[type=text] { width: 100%; font: inherit; font-size: 14px; padding: 6px 9px; border: 1px solid #cfcfc7; border-radius: 8px; background: #fff; color: var(--ink); }
+  .ctl.valg { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--mut); margin-top: 6px; }
+  .ctl.valg input { accent-color: var(--g); width: 17px; height: 17px; margin: 0; }
+  .ctl.valg label { display: inline; }
+  .gruppe { font-family: 'Source Sans 3', sans-serif; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--g); font-weight: 700; margin: 14px 0 8px; padding-top: 10px; border-top: 1px solid var(--line); }
+  details.avansert { font-family: 'Source Sans 3', sans-serif; margin-top: 10px; border-top: 1px solid var(--line); padding-top: 8px; }
+  details.avansert summary { cursor: pointer; font-size: 13.5px; font-weight: 600; color: var(--g); }
+  .hjelp { font-size: 12.5px; color: var(--mut2); font-family: 'Source Sans 3', sans-serif; margin: 2px 0 0; }
+  .knapp { font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 600; border: 1px solid var(--gb); background: var(--gl); color: var(--g); border-radius: 7px; padding: 5px 10px; cursor: pointer; }
+  .knapp:hover { background: #e1efe6; }
+  .knapp.pri { background: var(--g); color: #fff; border-color: var(--g); }
+  .knapp.pri:hover { background: var(--g2); }
+  .teori p { margin: 0 0 10px; font-size: 15px; }
+  .teori h3 { font-family: 'Source Sans 3', sans-serif; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--g); margin: 16px 0 6px; }
+  .teori ul { padding-left: 20px; margin: 0 0 10px; font-size: 15px; }
+  .teori li { margin-bottom: 4px; }
+  .teori .formel { background: var(--gl); border-left: 4px solid var(--g); border-radius: 0 8px 8px 0; padding: 8px 12px; margin: 8px 0 12px; overflow-x: auto; }
+  .kort-rad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+  @media (max-width: 1100px) { .kort-rad { grid-template-columns: repeat(2, 1fr); } }
+  .kort { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; text-align: center; font-family: 'Source Sans 3', sans-serif; }
+  .kort .v { font-size: 24px; font-weight: 700; color: var(--g); line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .kort .v.rod { color: var(--rod); }
+  .kort .k { font-size: 12.5px; color: var(--mut2); margin-top: 3px; }
+  .kort .u { font-size: 11.5px; color: var(--mut2); }
+  .graf-boks { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; position: relative; margin-bottom: 16px; }
+  .graf-boks h3 { font-family: 'Source Sans 3', sans-serif; font-size: 18px; margin: 0; }
+  .graf-boks .sub { font-family: 'Source Sans 3', sans-serif; font-size: 13.5px; color: var(--mut); margin: 3px 0 8px; }
+  .graf-boks svg { width: 100%; height: auto; display: block; }
+  .graf-boks svg text { font-family: 'Source Sans 3', sans-serif; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: center; font-family: 'Source Sans 3', sans-serif; font-size: 13px; color: var(--mut); margin-top: 8px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+  .legend i.l { height: 3px; width: 18px; border-radius: 2px; vertical-align: 3px; }
+  .legend i.ld { height: 0; width: 18px; border-top: 3px dashed var(--rod); vertical-align: 3px; }
+  .advarsel { background: #fffbea; border: 1px solid #f1e3a4; color: #7a5a06; border-radius: 10px; padding: 10px 14px; font-family: 'Source Sans 3', sans-serif; font-size: 14px; margin-bottom: 12px; display: none; }
+  table.liste { width: 100%; border-collapse: collapse; font-family: 'Source Sans 3', sans-serif; font-size: 14px; margin-top: 8px; }
+  table.liste th { background: var(--g); color: #fff; text-align: left; padding: 6px 10px; font-weight: 600; }
+  table.liste td { border-bottom: 1px solid var(--line); padding: 5px 10px; }
+  table.liste td.r, table.liste th.r { text-align: right; font-variant-numeric: tabular-nums; }
+  table.liste button { border: 0; background: none; color: var(--rod); cursor: pointer; font-size: 15px; }
+  .prov { background: #fff; border: 1px solid var(--line); border-top: 4px solid var(--g); border-radius: 12px; padding: 14px 20px 6px; }
+  .prov h3 { font-family: 'Source Sans 3', sans-serif; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--g); margin: 0 0 8px; }
+  .prov ol { margin: 0 0 8px; padding-left: 22px; font-size: 15px; }
+  .prov li { margin-bottom: 6px; }
+  .prov button { font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 600; border: 1px solid var(--gb); background: var(--gl); color: var(--g); border-radius: 7px; padding: 3px 9px; cursor: pointer; margin-left: 6px; }
+  .prov button:hover { background: #e1efe6; }
+  footer { font-family: 'Source Sans 3', sans-serif; font-size: 13px; color: var(--mut2); text-align: center; padding: 10px 20px 30px; }
+  @media print { .faner, .prov button, .knapp { display: none; } main.grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="topp"><div class="wrap">
+  <div class="brod">BUS 220 · Interaktiv modell</div>
+  <h1>Kapitalverdimodellen og verdipapirmarkedslinjen</h1>
+  <p class="ingress">CAPM sier at forventet avkastning bare avhenger av systematisk risiko: $E[R_i] = r_f + \beta_i\,(E[R_M] - r_f)$. Verdipapirmarkedslinjen (SML) tegner denne sammenhengen. Flytt renten, markedspremien og betaen, og se hvor en aksje havner i forhold til linjen — og hva alfa betyr.</p>
+  <div class="tags"><span>Middels</span><span>Kapitalverdimodellen</span><span>Beta</span><span>Alfa</span><span>Avkastningskrav</span></div>
+</div></header>
+
+<main class="wrap grid">
+  <aside>
+    <nav class="faner" aria-label="Faner">
+      <button class="aktiv" data-fane="kontroller">🎛️ Kontroller</button>
+      <button data-fane="teori">📖 Teori</button>
+      <button data-fane="forutsetninger">📋 Forutsetninger</button>
+      <button data-fane="anvendelser">🌍 Anvendelser</button>
+      <button data-fane="referanser">📚 Referanser</button>
+    </nav>
+
+    <section class="panel" id="fane-kontroller">
+      <h2>Modellparametere <button id="nullstill">Tilbakestill</button></h2>
+      <div class="gruppe" style="border-top:0;padding-top:0;margin-top:0">Markedet</div>
+      <div class="ctl"><label><span>Hvordan oppgis markedet?</span></label><select data-k="modus"><option value="erp">Risikofri rente + markedspremie</option><option value="erm">Risikofri rente + forventet markedsavkastning</option></select></div>
+      <div class="ctl"><label><span>Risikofri rente (r<sub>f</sub>)</span> <b data-v="rf"></b></label><input type="range" data-k="rf" min="-2" max="12" step="0.1" value="2"><div class="mm"><span>−2 %</span><span>12 %</span></div></div>
+      <div class="ctl" data-vis="erp"><label><span>Markedets risikopremie (E[R<sub>M</sub>] − r<sub>f</sub>)</span> <b data-v="erp"></b></label><input type="range" data-k="erp" min="0" max="15" step="0.1" value="6"><div class="mm"><span>0 %</span><span>15 %</span></div></div>
+      <div class="ctl" data-vis="erm" hidden><label><span>Forventet markedsavkastning (E[R<sub>M</sub>])</span> <b data-v="erm"></b></label><input type="range" data-k="erm" min="-5" max="25" step="0.1" value="8"><div class="mm"><span>−5 %</span><span>25 %</span></div></div>
+      <div class="ctl"><label><span>Markedets standardavvik (σ<sub>M</sub>)</span> <b data-v="sM"></b></label><input type="range" data-k="sM" min="1" max="50" step="0.5" value="18"><div class="mm"><span>1 %</span><span>50 %</span></div></div>
+      <div class="gruppe">Aksjen</div>
+      <div class="ctl"><label><span>Navn</span></label><input type="text" data-k="navn" value="Aksje A" maxlength="24"></div>
+      <div class="ctl"><label><span>Beta (β)</span> <b data-v="beta"></b></label><input type="range" data-k="beta" min="-1" max="3" step="0.05" value="1.2"><div class="mm"><span>−1</span><span>3</span></div></div>
+      <div class="ctl valg"><input type="checkbox" id="obsPaa" checked><label for="obsPaa">Vis faktisk (observert) avkastning — gir alfa</label></div>
+      <div class="ctl" data-vis="obs"><label><span>Faktisk avkastning (R<sub>i</sub>)</span> <b data-v="obs"></b></label><input type="range" data-k="obs" min="-20" max="40" step="0.5" value="12"><div class="mm"><span>−20 %</span><span>40 %</span></div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px"><button class="knapp pri" id="leggTil">Legg aksjen til i listen</button><button class="knapp" id="tomListe">Tøm listen</button></div>
+      <p class="hjelp">Listen under grafen samler flere aksjer med ulik beta og faktisk avkastning — nyttig for å sammenligne over og under linjen.</p>
+      <details class="avansert">
+        <summary>Avansert: nullbeta-CAPM og akse</summary>
+        <div class="ctl valg" style="margin-top:10px"><input type="checkbox" id="nullbeta"><label for="nullbeta">Nullbeta-CAPM (Black): erstatt r<sub>f</sub> med R<sub>0</sub></label></div>
+        <div class="ctl" data-vis="r0" hidden><label><span>Nullbeta-avkastning (R<sub>0</sub>)</span> <b data-v="r0"></b></label><input type="range" data-k="r0" min="-5" max="15" step="0.1" value="3"><div class="mm"><span>−5 %</span><span>15 %</span></div></div>
+        <div class="ctl"><label><span>Beta-aksen fra</span> <b data-v="bmin"></b></label><input type="range" data-k="bmin" min="-3" max="0" step="0.5" value="-1"></div>
+        <div class="ctl"><label><span>Beta-aksen til</span> <b data-v="bmax"></b></label><input type="range" data-k="bmax" min="1" max="5" step="0.5" value="3"></div>
+      </details>
+    </section>
+
+    <section class="panel teori" id="fane-teori" hidden>
+      <h2>Teori</h2>
+      <h3>Læringsmål</h3>
+      <ul>
+        <li>Forstå CAPM-sammenhengen $E[R_i] = r_f + \beta_i\,(E[R_M] - r_f)$</li>
+        <li>Se hvordan forventet avkastning endres med beta og markedspremien</li>
+        <li>Tolke alfa som den loddrette avstanden mellom faktisk avkastning og SML</li>
+        <li>Koble SML til kapitalmarkedslinjen og markedets Sharpe-forhold</li>
+      </ul>
+      <h3>Kapitalverdimodellen</h3>
+      <p>I likevekt belønnes bare risiko som ikke kan diversifiseres bort. Den måles med beta, aksjens følsomhet for markedet:</p>
+      <div class="formel">$$E[R_i] = r_f + \beta_i\,\big(E[R_M] - r_f\big)$$</div>
+      <p>Markedsporteføljen har $\beta = 1$ og forventet avkastning $E[R_M]$. Et risikofritt aktivum har $\beta = 0$. Leddet $E[R_M] - r_f$ er markedets risikopremie.</p>
+      <h3>Verdipapirmarkedslinjen (SML)</h3>
+      <p>Tegner vi $E[R]$ mot $\beta$, får vi en rett linje med skjæringspunkt $r_f$ og stigning lik markedspremien. <strong>Alle</strong> riktig prisede aktiva ligger på linjen — enkeltaksjer så vel som porteføljer.</p>
+      <h3>Alfa</h3>
+      <div class="formel">$$\alpha_i = R_i^{\text{faktisk}} - E[R_i]$$</div>
+      <p>Ligger en aksje <strong>over</strong> SML, gir den mer enn risikoen tilsier: den er underpriset, og etterspørselen vil presse prisen opp og avkastningen ned til linjen. Ligger den <strong>under</strong>, er den overpriset. I likevekt er alfa null.</p>
+      <h3>SML og kapitalmarkedslinjen</h3>
+      <p>Kapitalmarkedslinjen (CML) gjelder bare effisiente porteføljer og bruker totalrisiko $\sigma$ på aksen. SML gjelder alle aktiva og bruker $\beta$. Markedets Sharpe-forhold er stigningen til CML:</p>
+      <div class="formel">$$S_M = \frac{E[R_M] - r_f}{\sigma_M}$$</div>
+      <h3>Nullbeta-CAPM (Black 1972)</h3>
+      <p>Kan ingen låne til den risikofrie renten, erstattes $r_f$ av avkastningen på en portefølje med beta null, $R_0$: $E[R_i] = R_0 + \beta_i\,(E[R_M] - R_0)$. Linjen blir flatere.</p>
+    </section>
+
+    <section class="panel teori" id="fane-forutsetninger" hidden>
+      <h2>Forutsetninger</h2>
+      <ul>
+        <li>Investorene bryr seg bare om forventet avkastning og varians</li>
+        <li>Alle har samme forventninger om avkastning, risiko og korrelasjon</li>
+        <li>Alle kan låne og plassere ubegrenset til den risikofrie renten</li>
+        <li>Ingen transaksjonskostnader eller skatt, og alle aktiva er delbare</li>
+        <li>Markedsporteføljen inneholder alle risikable aktiva, vektet med markedsverdi</li>
+        <li>Beta er stabil over investeringshorisonten</li>
+      </ul>
+      <p>Empirisk er sammenhengen mellom beta og avkastning svakere enn modellen sier (Fama og French 1992). Modellen brukes likevel som standard for avkastningskrav, fordi den er enkel og logisk konsistent.</p>
+    </section>
+
+    <section class="panel teori" id="fane-anvendelser" hidden>
+      <h2>Anvendelser</h2>
+      <ul>
+        <li>Avkastningskrav til egenkapital i verdsetting og i WACC (forelesning 15)</li>
+        <li>Diskonteringsrente for investeringsprosjekter med ulik risiko</li>
+        <li>Evaluering av fond: positiv alfa betyr meravkastning utover det risikoen tilsier</li>
+        <li>Vurdering av om en aksje er dyr eller billig gitt betaen</li>
+        <li>Regulering: avkastningskrav for nettselskaper og andre regulerte bransjer</li>
+      </ul>
+      <p>I BUS 220 er modellen hovedtemaet i forelesning 14, og grunnlaget for kapitalkostnaden i forelesning 15.</p>
+    </section>
+
+    <section class="panel teori" id="fane-referanser" hidden>
+      <h2>Referanser</h2>
+      <p>Sharpe, W. F. (1964). Capital Asset Prices: A Theory of Market Equilibrium under Conditions of Risk. <em>Journal of Finance</em>, 19(3), 425–442. Artikkelen som innførte CAPM.</p>
+      <p>Lintner, J. (1965). The Valuation of Risk Assets and the Selection of Risky Investments in Stock Portfolios and Capital Budgets. <em>Review of Economics and Statistics</em>, 47(1), 13–37.</p>
+      <p>Black, F. (1972). Capital Market Equilibrium with Restricted Borrowing. <em>Journal of Business</em>, 45(3), 444–455. Nullbeta-varianten.</p>
+      <p>Fama, E. F. og French, K. R. (1992). The Cross-Section of Expected Stock Returns. <em>Journal of Finance</em>, 47(2), 427–465. Empirisk kritikk.</p>
+      <p>Hillier, Clacher, Ross, Westerfield, Jaffe og Jordan: <em>Fundamentals of Corporate Finance</em>, kapittel 12 og 13.</p>
+    </section>
+  </aside>
+
+  <section>
+    <div class="advarsel" id="advarsel"></div>
+    <div class="kort-rad" id="kort"></div>
+    <div class="graf-boks">
+      <h3>Verdipapirmarkedslinjen (SML)</h3>
+      <p class="sub" id="sub"></p>
+      <div id="graf"></div>
+      <div class="legend">
+        <span><i class="l" style="background:var(--blaa)"></i>SML: forventet avkastning etter CAPM</span>
+        <span><i style="background:var(--indigo)"></i>Risikofritt (β = 0)</span>
+        <span><i style="background:var(--lilla)"></i>Markedet (β = 1)</span>
+        <span><i style="background:var(--gronn)"></i>Aksjens CAPM-avkastning</span>
+        <span><i style="background:var(--rod)"></i>Aksjens faktiske avkastning</span>
+        <span><i class="l" style="background:var(--oransje)"></i>Alfa</span>
+      </div>
+      <div id="liste"></div>
+    </div>
+    <div class="graf-boks">
+      <h3>Hvilken beta ville gjort avkastningen riktig?</h3>
+      <p class="sub" id="sub2"></p>
+      <div id="graf2"></div>
+    </div>
+    <div class="prov">
+      <h3>Prøv dette</h3>
+      <ol>
+        <li>Sett beta til 0, 1 og 2 og les av avkastningskravet. Hvorfor er det nøyaktig r<sub>f</sub>, E[R<sub>M</sub>] og r<sub>f</sub> + 2 × premien? <button data-sett='{"beta":0}'>β = 0</button><button data-sett='{"beta":1}'>β = 1</button><button data-sett='{"beta":2}'>β = 2</button></li>
+        <li>Øk den risikofrie renten. Hele linjen løftes parallelt — hva skjer med alfa til en aksje som fortsatt gir 12 %? <button data-sett='{"rf":2}'>r<sub>f</sub> = 2 %</button><button data-sett='{"rf":5}'>r<sub>f</sub> = 5 %</button></li>
+        <li>Øk markedspremien. Linjen blir brattere: aksjer med høy beta rammes mest. <button data-sett='{"erp":6}'>Premie 6 %</button><button data-sett='{"erp":9}'>Premie 9 %</button></li>
+        <li>Legg tre aksjer i listen: «Bank» med β 0,8 og 10 %, «Olje» med β 1,4 og 9 %, «Teknologi» med β 1,8 og 16 %. Hvilke er under- og overpriset? <button id="demo">Legg inn de tre</button></li>
+      </ol>
+    </div>
+  </section>
+</main>
+<footer>Gjenskapt fra econmodels.online/model/capm-sml (2025) · BUS 220 Finansiering og investering, NMBU · Alle beregninger skjer i nettleseren</footer>
+
+<script>
+(function () {
+  'use strict';
+  const nf = (x, d = 1) => new Intl.NumberFormat('nb-NO', { minimumFractionDigits: d, maximumFractionDigits: d }).format(x).replace(/-/g, '−');
+  const pc = (x, d = 1) => nf(x, d) + ' %';
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const STD = { modus: 'erp', rf: 2, erp: 6, erm: 8, sM: 18, navn: 'Aksje A', beta: 1.2, obs: 12, r0: 3, bmin: -1, bmax: 3 };
+  const P = Object.assign({}, STD);
+  let aksjer = [];
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+
+  /* ---------- modellen (prosent) ---------- */
+  function marked() {
+    const erp = P.modus === 'erp' ? P.erp : P.erm - P.rf, erm = P.modus === 'erp' ? P.rf + P.erp : P.erm;
+    const nb = $('#nullbeta').checked, basis = nb ? P.r0 : P.rf, stign = erm - basis;
+    return { erp, erm, basis, stign, nb };
+  }
+  const forventet = (beta, m) => m.basis + beta * m.stign;
+
+  /* ---------- graf 1: SML ---------- */
+  const W = 760, H = 430, ML = 58, MR = 20, MT = 18, MB = 46;
+  const tick = (a, b, n) => { const s0 = (b - a) / n, m = Math.pow(10, Math.floor(Math.log10(s0))), f = s0 / m, st = (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * m, t = []; for (let v = Math.ceil(a / st - 1e-9) * st; v <= b + 1e-9; v += st) t.push(+v.toFixed(6)); return t; };
+  function akser(xmin, xmax, ymin, ymax, xl, yl, svgH) {
+    const X = v => ML + (v - xmin) / (xmax - xmin) * (W - ML - MR), Y = v => MT + (ymax - v) / (ymax - ymin) * (svgH - MT - MB);
+    let s = `<svg viewBox="0 0 ${W} ${svgH}" role="img" aria-label="${yl} mot ${xl}">`;
+    tick(xmin, xmax, 8).forEach(v => { s += `<line x1="${X(v)}" x2="${X(v)}" y1="${MT}" y2="${svgH - MB}" stroke="#ecece6"/><text x="${X(v)}" y="${svgH - MB + 17}" text-anchor="middle" font-size="12" fill="#6b7280">${nf(v, Math.abs(xmax - xmin) <= 4 ? 1 : 0)}</text>`; });
+    tick(ymin, ymax, 6).forEach(v => { s += `<line x1="${ML}" x2="${W - MR}" y1="${Y(v)}" y2="${Y(v)}" stroke="#ecece6"/><text x="${ML - 8}" y="${Y(v) + 4}" text-anchor="end" font-size="12" fill="#6b7280">${nf(v, 0)}</text>`; });
+    if (ymin < 0 && ymax > 0) s += `<line x1="${ML}" x2="${W - MR}" y1="${Y(0)}" y2="${Y(0)}" stroke="#9ca3af"/>`;
+    if (xmin < 0 && xmax > 0) s += `<line x1="${X(0)}" x2="${X(0)}" y1="${MT}" y2="${svgH - MB}" stroke="#9ca3af"/>`;
+    s += `<line x1="${ML}" x2="${W - MR}" y1="${svgH - MB}" y2="${svgH - MB}" stroke="#1a1a1a" stroke-width="1.2"/><line x1="${ML}" x2="${ML}" y1="${MT}" y2="${svgH - MB}" stroke="#1a1a1a" stroke-width="1.2"/>`;
+    s += `<text x="${(ML + W - MR) / 2}" y="${svgH - 6}" text-anchor="middle" font-size="13" fill="#4b5563">${xl}</text>`;
+    s += `<text x="14" y="${(MT + svgH - MB) / 2}" text-anchor="middle" font-size="13" fill="#4b5563" transform="rotate(-90 14 ${(MT + svgH - MB) / 2})">${yl}</text>`;
+    return { s, X, Y };
+  }
+  const prikk = (X, Y, x, y, c, lab, dx = 10, dy = 4, anker = 'start') => `<circle cx="${X(x)}" cy="${Y(y)}" r="6" fill="${c}" stroke="#fff" stroke-width="2"/><text x="${X(x) + dx}" y="${Y(y) + dy}" text-anchor="${anker}" font-size="12.5" font-weight="600" fill="${c}">${esc(lab)}</text>`;
+
+  function tegn() {
+    const m = marked(), obsPaa = $('#obsPaa').checked, E = forventet(P.beta, m), alfa = obsPaa ? P.obs - E : NaN, sharpe = m.erp / P.sM;
+    const bmin = Math.min(P.bmin, P.beta - 0.2, ...aksjer.map(a => a.beta - 0.2)), bmax = Math.max(P.bmax, P.beta + 0.2, ...aksjer.map(a => a.beta + 0.2));
+    const ys = [forventet(bmin, m), forventet(bmax, m), m.basis, m.erm, E, 0].concat(obsPaa ? [P.obs] : [], aksjer.map(a => a.obs));
+    const ymin = Math.min(...ys) - 1.5, ymax = Math.max(...ys) + 1.5;
+    const { s: s0, X, Y } = akser(bmin, bmax, ymin, ymax, 'Beta (β)', 'Forventet avkastning (%)', H);
+    let s = s0;
+    s += `<line x1="${X(bmin)}" y1="${Y(forventet(bmin, m))}" x2="${X(bmax)}" y2="${Y(forventet(bmax, m))}" stroke="#3b82f6" stroke-width="3"/>`;
+    // stigningslabel
+    const bx = bmin + (bmax - bmin) * 0.78; s += `<text x="${X(bx)}" y="${Y(forventet(bx, m)) - 12}" text-anchor="middle" font-size="12" fill="#3b82f6" font-weight="600">stigning = ${m.nb ? 'E[Rₘ] − R₀' : 'markedspremien'} = ${pc(m.stign)}</text>`;
+    s += prikk(X, Y, 0, m.basis, '#6366f1', m.nb ? 'R₀ (β = 0)' : 'r f (β = 0)', 10, 16) + prikk(X, Y, 1, m.erm, '#8b5cf6', 'Markedet (β = 1)', 10, 18);
+    // andre aksjer i listen
+    aksjer.forEach(a => { const e = forventet(a.beta, m), al = a.obs - e; s += `<line x1="${X(a.beta)}" y1="${Y(e)}" x2="${X(a.beta)}" y2="${Y(a.obs)}" stroke="#f59e0b" stroke-width="2" stroke-dasharray="3 3"/>`; s += `<circle cx="${X(a.beta)}" cy="${Y(e)}" r="4" fill="#10b981" stroke="#fff" stroke-width="1.5"/>`; s += prikk(X, Y, a.beta, a.obs, al >= 0 ? '#dc2626' : '#b91c1c', a.navn, 9, al >= 0 ? -7 : 15); });
+    // aksjen
+    if (obsPaa) { s += `<line x1="${X(P.beta)}" y1="${Y(E)}" x2="${X(P.beta)}" y2="${Y(P.obs)}" stroke="#f59e0b" stroke-width="3.5"/>`; s += `<text x="${X(P.beta) + 10}" y="${Y((E + P.obs) / 2) + 4}" font-size="12.5" font-weight="700" fill="#b45309">α = ${pc(alfa, 2)}</text>`; }
+    s += prikk(X, Y, P.beta, E, '#10b981', 'CAPM: ' + pc(E, 2), -10, alfa >= 0 || !obsPaa ? 18 : -10, 'end');
+    if (obsPaa) s += prikk(X, Y, P.beta, P.obs, '#dc2626', P.navn + ': ' + pc(P.obs, 1), -10, alfa >= 0 ? -10 : 18, 'end');
+    s += '</svg>';
+    $('#graf').innerHTML = s;
+    // kort
+    const dash = '—', dom = !obsPaa ? '' : alfa > 0.005 ? 'over SML → underpriset → kjøp' : alfa < -0.005 ? 'under SML → overpriset → selg' : 'på SML → riktig priset';
+    $('#kort').innerHTML = [
+      [pc(E, 2), `Avkastningskrav for ${esc(P.navn)} (CAPM)`, `${pc(m.basis, 1)} + ${nf(P.beta, 2)} × ${pc(m.stign, 1)}`, ''],
+      [obsPaa ? (alfa >= 0 ? '+' : '') + pc(alfa, 2) : dash, 'Alfa (faktisk − CAPM)', dom, obsPaa && alfa < -0.005 ? 'rod' : ''],
+      [pc(m.erm, 2), 'Forventet markedsavkastning E[Rₘ]', 'β = 1', ''],
+      [pc(m.erp, 2), 'Markedets risikopremie', 'E[Rₘ] − r f', ''],
+      [pc(P.rf, 2), 'Risikofri rente', m.nb ? 'nullbeta-CAPM bruker R₀ = ' + pc(P.r0, 1) : 'β = 0', ''],
+      [isFinite(sharpe) ? nf(sharpe, 3) : dash, 'Markedets Sharpe-forhold', 'premie / σₘ — stigningen til CML', '']
+    ].map(([v, k, u, cls]) => `<div class="kort"><div class="v ${cls}">${v}</div><div class="k">${k}</div>${u ? `<div class="u">${u}</div>` : ''}</div>`).join('');
+    $('#sub').textContent = `Risikofri rente ${pc(P.rf)}, markedspremie ${pc(m.erp)} (E[Rₘ] = ${pc(m.erm)}). ${esc(P.navn)} har β = ${nf(P.beta, 2)} og skal etter CAPM gi ${pc(E, 2)}.` + (obsPaa ? ` Faktisk avkastning ${pc(P.obs)} gir α = ${pc(alfa, 2)}.` : '');
+    // liste
+    if (aksjer.length) {
+      $('#liste').innerHTML = '<table class="liste"><tr><th>Aksje</th><th class="r">β</th><th class="r">CAPM</th><th class="r">Faktisk</th><th class="r">α</th><th>Vurdering</th><th></th></tr>' +
+        aksjer.map((a, i) => { const e = forventet(a.beta, m), al = a.obs - e; return `<tr><td>${esc(a.navn)}</td><td class="r">${nf(a.beta, 2)}</td><td class="r">${pc(e, 2)}</td><td class="r">${pc(a.obs, 1)}</td><td class="r" style="color:${al >= 0 ? '#046530' : '#b91c1c'};font-weight:600">${(al >= 0 ? '+' : '') + pc(al, 2)}</td><td>${al > 0.005 ? 'underpriset (over SML)' : al < -0.005 ? 'overpriset (under SML)' : 'riktig priset'}</td><td><button data-fjern="${i}" title="Fjern">✕</button></td></tr>`; }).join('') + '</table>';
+    } else $('#liste').innerHTML = '';
+    // advarsler
+    const adv = [];
+    if (m.erp < 0.5) adv.push('Markedspremien er under 0,5 %. Linjen blir nesten flat, og beta betyr lite.');
+    if (P.modus === 'erm' && P.erm < P.rf) adv.push('Forventet markedsavkastning er lavere enn den risikofrie renten. Da er markedspremien negativ, og linjen faller.');
+    if (obsPaa && Math.abs(alfa) > 5) adv.push(`Alfa er ${pc(alfa, 1)} — svært stort. Sjekk at tallene er i prosent og gjelder samme periode.`);
+    if (m.nb && P.r0 > m.erm) adv.push('Nullbeta-avkastningen er høyere enn markedsavkastningen. Linjen faller — det stemmer ikke med likevekt.');
+    $('#advarsel').innerHTML = adv.join('<br>'); $('#advarsel').style.display = adv.length ? 'block' : 'none';
+    tegn2(m, obsPaa, E);
+    $$('[data-v]').forEach(b => { const k = b.dataset.v; b.textContent = k === 'beta' ? nf(P[k], 2) : (k === 'bmin' || k === 'bmax') ? nf(P[k], 1) : pc(P[k], 1); });
+  }
+
+  /* ---------- graf 2: implisitt beta ---------- */
+  function tegn2(m, obsPaa, E) {
+    const H2 = 300;
+    const bmin = P.bmin, bmax = P.bmax;
+    if (!obsPaa) { $('#graf2').innerHTML = ''; $('#sub2').textContent = 'Slå på faktisk avkastning i kontrollene for å se denne grafen.'; return; }
+    const bImpl = Math.abs(m.stign) > 1e-9 ? (P.obs - m.basis) / m.stign : NaN;
+    const ys = [forventet(bmin, m), forventet(bmax, m), P.obs, 0];
+    const ymin = Math.min(...ys) - 1.5, ymax = Math.max(...ys) + 1.5;
+    const { s: s0, X, Y } = akser(bmin, bmax, ymin, ymax, 'Beta (β)', 'Avkastning (%)', H2);
+    let s = s0;
+    s += `<line x1="${X(bmin)}" y1="${Y(forventet(bmin, m))}" x2="${X(bmax)}" y2="${Y(forventet(bmax, m))}" stroke="#3b82f6" stroke-width="3"/>`;
+    s += `<line x1="${X(bmin)}" y1="${Y(P.obs)}" x2="${X(bmax)}" y2="${Y(P.obs)}" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 5"/>`;
+    s += `<text x="${X(bmax) - 6}" y="${Y(P.obs) - 7}" text-anchor="end" font-size="12" fill="#dc2626" font-weight="600">faktisk avkastning ${pc(P.obs)}</text>`;
+    if (isFinite(bImpl) && bImpl >= bmin && bImpl <= bmax) {
+      s += `<line x1="${X(bImpl)}" y1="${Y(P.obs)}" x2="${X(bImpl)}" y2="${H2 - MB}" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+      s += prikk(X, Y, bImpl, P.obs, '#8b5cf6', 'β = ' + nf(bImpl, 2), 10, -8);
+    }
+    s += prikk(X, Y, P.beta, E, '#10b981', 'β = ' + nf(P.beta, 2), 10, 18);
+    s += '</svg>';
+    $('#graf2').innerHTML = s;
+    $('#sub2').textContent = isFinite(bImpl)
+      ? `${esc(P.navn)} gir ${pc(P.obs)}. Det ville vært riktig pris for en aksje med beta ${nf(bImpl, 2)}. Aksjen har beta ${nf(P.beta, 2)} — ${bImpl > P.beta + 0.005 ? 'den gir altså avkastning som om risikoen var høyere enn den er: underpriset' : bImpl < P.beta - 0.005 ? 'den gir avkastning som om risikoen var lavere enn den er: overpriset' : 'akkurat riktig'}.`
+      : 'Med flat linje finnes ingen beta som gir denne avkastningen.';
+  }
+
+  /* ---------- hendelser ---------- */
+  function visSkjul() {
+    $$('[data-vis=erp]').forEach(e => e.hidden = P.modus !== 'erp'); $$('[data-vis=erm]').forEach(e => e.hidden = P.modus !== 'erm');
+    $$('[data-vis=obs]').forEach(e => e.hidden = !$('#obsPaa').checked); $$('[data-vis=r0]').forEach(e => e.hidden = !$('#nullbeta').checked);
+  }
+  $$('input[type=range]').forEach(r => r.addEventListener('input', () => { P[r.dataset.k] = +r.value; if (P.bmin >= P.bmax) { if (r.dataset.k === 'bmin') P.bmin = P.bmax - 0.5; else P.bmax = P.bmin + 0.5; r.value = P[r.dataset.k]; } tegn(); }));
+  $('[data-k=navn]').addEventListener('input', e => { P.navn = e.target.value.trim() || 'Aksje A'; tegn(); });
+  $('[data-k=modus]').addEventListener('change', e => { P.modus = e.target.value; if (P.modus === 'erm') { P.erm = +(P.rf + P.erp).toFixed(1); $('[data-k=erm]').value = P.erm; } else { P.erp = +Math.max(0, P.erm - P.rf).toFixed(1); $('[data-k=erp]').value = P.erp; } visSkjul(); tegn(); });
+  $('#obsPaa').addEventListener('change', () => { visSkjul(); tegn(); });
+  $('#nullbeta').addEventListener('change', () => { visSkjul(); tegn(); });
+  $('#leggTil').addEventListener('click', () => { if (aksjer.length >= 8) return; aksjer.push({ navn: P.navn, beta: P.beta, obs: P.obs }); tegn(); });
+  $('#tomListe').addEventListener('click', () => { aksjer = []; tegn(); });
+  $('#liste').addEventListener('click', e => { const b = e.target.closest('[data-fjern]'); if (b) { aksjer.splice(+b.dataset.fjern, 1); tegn(); } });
+  $('#demo').addEventListener('click', () => { aksjer = [{ navn: 'Bank', beta: 0.8, obs: 10 }, { navn: 'Olje', beta: 1.4, obs: 9 }, { navn: 'Teknologi', beta: 1.8, obs: 16 }]; tegn(); });
+  $('#nullstill').addEventListener('click', () => { Object.assign(P, STD); aksjer = []; $$('input[type=range]').forEach(r => r.value = P[r.dataset.k]); $('[data-k=navn]').value = P.navn; $('[data-k=modus]').value = P.modus; $('#obsPaa').checked = true; $('#nullbeta').checked = false; visSkjul(); tegn(); });
+  $$('[data-sett]').forEach(b => b.addEventListener('click', () => { const o = JSON.parse(b.dataset.sett); Object.assign(P, o); Object.keys(o).forEach(k => { const el = $(`[data-k=${k}]`); if (el) el.value = P[k]; }); if (o.erp !== undefined && P.modus === 'erm') { P.erm = P.rf + P.erp; $('[data-k=erm]').value = P.erm; } tegn(); }));
+  $$('.faner button').forEach(b => b.addEventListener('click', () => { $$('.faner button').forEach(x => x.classList.toggle('aktiv', x === b)); $$('aside .panel').forEach(p => p.hidden = p.id !== 'fane-' + b.dataset.fane); }));
+  visSkjul(); tegn();
+})();
+</script>
+</body>
+</html>
