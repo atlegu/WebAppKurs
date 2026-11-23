@@ -881,6 +881,14 @@ export const modul3ObligasjonerModule: Module = {
           ]
         },
         {
+          id: '3-5-formula-macaulay',
+          type: 'formula',
+          name: 'Macaulay-durasjon',
+          order: 6.5,
+          formula: '$$D_{\\text{Macaulay}} = \\dfrac{1}{P} \\sum_{t=1}^{n} \\dfrac{t \\cdot C_t}{(1+r)^t}$$',
+          description: 'Der $C_t$ = kontantstrømmen i år $t$ (kupong, og pålydende i siste år), $r$ = markedsrente per periode, $n$ = antall perioder og $P$ = obligasjonens pris (summen av nåverdiene).\n\nHver nåverdi vektes med tidspunktet den kommer, og summen deles på prisen. Resultatet er den vektede gjennomsnittlige tiden til pengene kommer tilbake.\n\nEksempel (figuren over): 5-årig obligasjon, kupong 50, pålydende 1 000, $r$ = 5 %, så $P$ = 1 000:\n$D = (1 \\cdot 47{,}6 + 2 \\cdot 45{,}4 + 3 \\cdot 43{,}2 + 4 \\cdot 41{,}1 + 5 \\cdot 822{,}7)/1\\,000 \\approx 4{,}55$ år'
+        },
+        {
           id: '3-5-formula-modifisert',
           type: 'formula',
           name: 'Modifisert durasjon',
