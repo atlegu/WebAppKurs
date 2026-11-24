@@ -75,9 +75,9 @@ $$\\text{YTM} \\approx \\frac{60 + \\frac{1\\,000 - 1\\,070}{4}}{\\frac{1\\,000 
 
 Verifisering ved prøving og feiling:
 
-$$\\begin{array}{|c|c|} \\hline \\textbf{Rente} & \\textbf{Beregnet pris} \\\\ \\hline \\text{4,0 \\%} & \\text{1 072,60} \\\\ \\text{4,1 \\%} & \\text{1 068,79} \\\\ \\hline \\end{array}$$
+$$\\begin{array}{|c|c|} \\hline \\textbf{Rente} & \\textbf{Beregnet pris} \\\\ \\hline \\text{4,0 \\%} & \\text{1 072,60} \\\\ \\text{4,1 \\%} & \\text{1 068,81} \\\\ \\hline \\end{array}$$
 
-Ved interpolering: $r \\approx 4{,}0\\% + \\frac{1\\,072{,}60 - 1\\,070}{1\\,072{,}60 - 1\\,068{,}79} \\times 0{,}1\\% \\approx 4{,}07\\,\\%$
+Ved interpolering: $r \\approx 4{,}0\\% + \\frac{1\\,072{,}60 - 1\\,070}{1\\,072{,}60 - 1\\,068{,}81} \\times 0{,}1\\% \\approx 4{,}07\\,\\%$
 
 Naboens effektive rente er ca. 4,1 %, altså lavere enn markedsrenten (4,5 %) — hun «betaler for mye».` },
       ],
@@ -143,7 +143,7 @@ Obligasjonen står i overkurs fordi kupongrenten (5,5 %) er høyere enn markedsr
       id: "os2-5",
       number: 5,
       difficulty: "medium",
-      problemText: `En norsk statsobligasjon har pålydende kr 1 000, kupongrente 6 % som utbetales halvårlig (3 % per halvår), og forfaller om 5 år. Obligasjonen omsettes i dag for kr 937,50.`,
+      problemText: `En obligasjon har pålydende kr 1 000, kupongrente 6 % som utbetales halvårlig (3 % per halvår), og forfaller om 5 år. Obligasjonen omsettes i dag for kr 937,50.`,
       subParts: [
         { label: "a", text: `Hva er obligasjonens yield to maturity (YTM) per halvår?`, solution: `Halvårlig kupong = 30, antall halvår = 10, F = 1 000, P = 937,50.
 
@@ -208,7 +208,7 @@ $\${}_0r_3 = 1{,}15752^{1/3} - 1 = 1{,}04995 - 1 \\approx \\class{final-answer}{
 
 $$P = \\frac{50}{1{,}04} + \\frac{50}{(1{,}04)(1{,}05)} + \\frac{1\\,050}{(1{,}04)(1{,}05)(1{,}06)}$$
 $$= \\frac{50}{1{,}04} + \\frac{50}{1{,}092} + \\frac{1\\,050}{1{,}15752}$$
-$$= 48{,}08 + 45{,}79 + 907{,}03 = \\class{final-answer}{1\\,000{,}90 \\approx \\text{kr}\\;1\\,001}$$
+$$= 48{,}08 + 45{,}79 + 907{,}11 = \\class{final-answer}{1\\,000{,}98 \\approx \\text{kr}\\;1\\,001}$$
 
 Prisen er svært nær pålydende. Det gir mening fordi kupongrenten (5 %) er tilnærmet lik 3-års spotrenten (5,0 %).` },
       ],
@@ -303,12 +303,12 @@ Vi kan verifisere for alternativ 1 (N = 5):
 $$P = 60 \\times 4{,}2124 + 1\\,000 \\times 0{,}7473 = 252{,}74 + 747{,}26 = 1\\,000{,}00 \\;\\checkmark$$` },
         { label: "b", text: `Anta at markedsrenten umiddelbart etter utstedelsen stiger til 7 %. Hva blir den nye markedsprisen for hver obligasjon?`, solution: `**Alternativ 1** (5 år):
 
-$$P_1 = 60 \\times 4{,}1002 + 1\\,000 \\times 0{,}7130 = 246{,}01 + 713{,}01 = \\class{final-answer}{959{,}02}$$
+$$P_1 = 60 \\times 4{,}1002 + 1\\,000 \\times 0{,}71299 = 246{,}01 + 712{,}99 = \\class{final-answer}{959{,}00}$$
 
 **Alternativ 2** (10 år):
 
 $$P_2 = 60 \\times 7{,}0236 + 1\\,000 \\times 0{,}5083 = 421{,}41 + 508{,}35 = \\class{final-answer}{929{,}76}$$` },
-        { label: "c", text: `Hvilken obligasjon har størst prosentvis prisfall? Forklar sammenhengen mellom løpetid og renterisiko.`, solution: `**Alternativ 1:** $(959{,}02 - 1\\,000) / 1\\,000 =$ −4,10 %
+        { label: "c", text: `Hvilken obligasjon har størst prosentvis prisfall? Forklar sammenhengen mellom løpetid og renterisiko.`, solution: `**Alternativ 1:** $(959{,}00 - 1\\,000) / 1\\,000 =$ −4,10 %
 
 **Alternativ 2:** $(929{,}76 - 1\\,000) / 1\\,000 =$ −7,02 %
 

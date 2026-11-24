@@ -242,7 +242,7 @@ $$\\text{NPV} = 82{,}70 - 80 = 2{,}70 \\text{ mill. kr}$$
 
 **Svar:** NPV > 0 → prosjektet bør gjennomføres.
 
-Differansen er likevel relativt liten (2,70 mill. på en investering på 80 mill., ca. 3,4 %). Sensitiviteten mot WACC-estimatet er betydelig — en økning i WACC til 8,75 % ville være tilstrekkelig til at NPV blir negativ.` },
+Differansen er likevel relativt liten (2,70 mill. på en investering på 80 mill., ca. 3,4 %). Sensitiviteten mot WACC-estimatet er betydelig — ved en WACC på 8,75 % blir NPV null ($7/0{,}0875 = 80$), og med en WACC over 8,75 % blir NPV negativ.` },
       ],
       solution: ``
     }

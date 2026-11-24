@@ -46,7 +46,7 @@ $$0{,}5 \\times \\text{EBIT} = \\text{EBIT} - 400\\,000$$
 $$0{,}5 \\times \\text{EBIT} = 400\\,000$$
 
 **Svar:** $$\\text{EBIT}^* = 800\\,000$$` },
-        { label: "b", text: `Tegn EPS som funksjon av EBIT for de to strukturene. Hvor ligger break-even? Når lønner finansiell gearing seg, og når ikke?`, solution: `Under break-even EBIT på 800 000 kr lønner det seg å være ugearet (lavere risiko, samme EPS). Over break-even lønner gearing seg (høyere EPS).
+        { label: "b", text: `Tegn EPS som funksjon av EBIT for de to strukturene. Hvor ligger break-even? Når lønner finansiell gearing seg, og når ikke?`, solution: `Under break-even EBIT på 800 000 kr lønner det seg å være ugearet (lavere risiko og høyere EPS). Over break-even lønner gearing seg (høyere EPS).
 
 Den foreslåtte strukturen er attraktiv for ledelse som forventer EBIT > 800 000 kr.` },
         { label: "c", text: `Hvilken EPS oppnås ved break-even-punktet, og hvilken sammenheng har dette med lånerenten?`, solution: `EPS ved break-even: $800\\,000 / 1\\,000\\,000 = 0{,}80$
@@ -61,7 +61,7 @@ Tolkning: Ved break-even tjener selskapet akkurat så mye på de ekstra aktivene
       id: "os8-3",
       number: 3,
       difficulty: "easy",
-      problemText: `Selskapet Stang AS er fullt egenkapitalfinansiert med en markedsverdi $V_U = 100$ mill. kr. Det vurderes en restrukturering der selskapet utsteder gjeld for 30 mill. kr og bruker proviniten til å betale ut et engangs-utbytte til aksjonærene. Se bort fra skatt og konkurskostnader.`,
+      problemText: `Selskapet Stang AS er fullt egenkapitalfinansiert med en markedsverdi $V_U = 100$ mill. kr. Det vurderes en restrukturering der selskapet utsteder gjeld for 30 mill. kr og bruker provenyet til å betale ut et engangs-utbytte til aksjonærene. Se bort fra skatt og konkurskostnader.`,
       subParts: [
         { label: "a", text: `Ifølge M&amp;M Proposisjon I, hva blir selskapets samlede verdi etter restruktureringen?`, solution: `M&amp;M Proposisjon I (uten skatt): selskapets verdi er uavhengig av kapitalstrukturen.
 
@@ -294,7 +294,7 @@ $$\\begin{array}{|c|c|c|} \\hline \\textbf{} & \\textbf{Utbytte} & \\textbf{Tilb
 Uten skatt: ingen forskjell. (Hvis aksjonæren selger sine 5 aksjer ved tilbakekjøp, får hun 200 kr i kontanter og har 95 aksjer × 40 = 3 800 — også 4 000 i sum.)` },
         { label: "d", text: `Hva er den viktigste praktiske forskjellen mellom dividende og tilbakekjøp med skatt? Hvilket alternativ foretrekker aksjonærer normalt, og hvorfor?`, solution: `Med skatt foretrekkes typisk **tilbakekjøp**:
 
-• **Dividende** beskattes umiddelbart hos alle aksjonærer (med utbytteskatt, ofte 25–35 %).
+• **Dividende** beskattes umiddelbart hos alle aksjonærer (for personlige aksjonærer var den effektive skattesatsen på utbytte 37,84 % i 2026, etter skjermingsfradraget).
 • **Tilbakekjøp** beskattes kun hos de som selger, og bare på gevinsten (ikke hele beløpet). De som ikke selger, betaler ingen skatt.
 
 I tillegg gir tilbakekjøp aksjonæren valgfrihet: hver enkelt aksjonær kan velge om vedkommende vil ha kontanter eller ikke. Dette er en del av forklaringen på hvorfor tilbakekjøp har vokst sterkt internasjonalt de siste 30 årene.` },
@@ -376,7 +376,7 @@ Hvorfor gjør selskaper dette?
 
 • **«Trading range»-argumentet:** Aksjer som blir for dyre kan skremme bort småinvestorer. Splitt holder prisen i et «attraktivt» intervall.
 • **Signaleffekt:** Selskaper splitter typisk når de er optimistiske om fremtiden — markedet kan oppfatte splitten som et signal om vekst.
-• **Likviditet:** Flere aksjer i omløp kan øke handelsvolumet og redusere spread.
+• **Likviditet:** Selskapene sier ofte at flere og billigere aksjer gir mer handel, men studier finner sjelden at likviditeten øker etter en splitt.
 
 Merk: under IFRS behandles aksjeutbytte som et kontantutbytte etterfulgt av et samtidig kjøp av aksjer fra eierne — i motsetning til amerikansk regnskapsføring.` },
         { label: "d", text: `Konseptuelt: Forklar kort hva «klienteleffekten» (clientele effect) betyr i sammenheng med utbyttepolitikk. Hva er «informasjonsinnholdet i utbytte» (information content effect)?`, solution: `**Klienteleffekten (clientele effect):** Ulike grupper investorer foretrekker ulike utbyttenivåer (f.eks. pensjonister vil ha utbytte; rike investorer vil unngå skatt). Selskaper tiltrekker seg en bestemt klientel basert på sin utbyttepolitikk. Når klientelene først er «satt», er ytterligere endringer i policy uten verdi — det vil bare bytte ut den ene klientelen mot en annen.
